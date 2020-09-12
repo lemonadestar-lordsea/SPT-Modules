@@ -10,9 +10,9 @@ using EFT.UI.Screens;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils.Reflection;
 using MenuController = GClass1144;
-using WeatherSettings = GStruct86;
-using BotsSettings = GStruct219;
-using WavesSettings = GStruct87;
+using WeatherSettings = GStruct87;
+using BotsSettings = GStruct220;
+using WavesSettings = GStruct88;
 
 namespace SPTarkov.SinglePlayer.Patches.ScavMode
 {
@@ -20,9 +20,9 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
 
     public class LoadOfflineRaidScreenPatch : GenericPatch<LoadOfflineRaidScreenPatch>
     {
-        private static readonly string kBotsSettingsFieldName = "gstruct219_0";
-        private static readonly string kWeatherSettingsFieldName = "gstruct86_0";
-        private static readonly string kWavesSettingsFieldName = "gstruct87_0";
+        private static readonly string kBotsSettingsFieldName = "gstruct220_0";
+        private static readonly string kWeatherSettingsFieldName = "gstruct87_0";
+        private static readonly string kWavesSettingsFieldName = "gstruct88_0";
 
         private const string kMainControllerFieldName = "gclass1144_0";
         private const string kMenuControllerInnerType = "Class781";

@@ -18,7 +18,7 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
 
         public override MethodInfo TargetMethod()
         {
-            return PatcherConstants.MainApplicationType.GetMethod("method_37", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            return PatcherConstants.MainApplicationType.GetMethod("method_38", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
         public static void Prefix(ESideType ___esideType_0, Result<ExitStatus, TimeSpan, ClientMetrics> result)
