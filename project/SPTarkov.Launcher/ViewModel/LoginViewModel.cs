@@ -56,7 +56,7 @@ namespace SPTarkov.Launcher.ViewModel
                     break;
 
                 case -1:
-                    MessageBox.Show($"Wrong email and/or password\n\nEmail: {login.Email}\nPassword: {login.Password}");
+                    MessageBox.Show(LocalizationProvider.Instance.incorrect_login);
                     return;
 
                 case -2:

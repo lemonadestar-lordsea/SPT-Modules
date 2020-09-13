@@ -15,7 +15,7 @@ namespace SPTarkov.Launcher.Helpers
 
         public static ServerSetting GetDefaultServer()
         {
-            return Instance.ServerCollection.Where(x => x.IsDefault).FirstOrDefault();   
+            return Instance.ServerCollection.Where(x => x.IsDefault).FirstOrDefault();
         }
 
         public static Settings Instance { get; } = Json.Load<Settings>(DefaultSettingsFileLocation) ?? new Settings();
@@ -39,6 +39,8 @@ namespace SPTarkov.Launcher.Helpers
         {
             Json.SaveWithFormatting(LauncherSettingsProvider.DefaultSettingsFileLocation, this, Formatting.Indented);
         }
+
+        public string DefaultLocale { get; set; } = "English";
 
         public void SetDefaultServerAndSave(ServerSetting serverSetting)
         {

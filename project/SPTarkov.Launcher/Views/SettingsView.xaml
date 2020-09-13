@@ -13,29 +13,45 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="AUTO"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="AUTO" MinWidth="250"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="AUTO"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="AUTO"/>
         </Grid.RowDefinitions>
 
         <Image Source="/Resources/bg-alpha.png" RenderOptions.BitmapScalingMode="Fant"
-               Grid.RowSpan="3" Grid.ColumnSpan="3" Stretch="UniformToFill"
+               Grid.RowSpan="2" Grid.ColumnSpan="2" Stretch="UniformToFill"
                Width="{Binding ActualWidth, ElementName=main}"
                />
-        
-        <CheckBox VerticalAlignment="Center" FontSize="18"
-                      Content="Hide to system tray on game start"
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
+            </Grid.RowDefinitions>
+
+            <CheckBox VerticalAlignment="Center" FontSize="18"
+                      Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                                Path=hide_to_tray}"
                       HorizontalAlignment="Left" Margin="10"
                       IsChecked="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
                                   Path=HideToTrayOnGameStart}"
                   />
 
-        <cc:ServerListControl Grid.RowSpan="3" Grid.Column="2"
+            <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                             Path=default_language}" Grid.Row="1"/>
+            <ComboBox Grid.Row="2" HorizontalAlignment="Left" Margin="10 0" MinWidth="200"
+                      ItemsSource="{Binding Locales.AvailableLocales}"
+                      SelectedItem="{Binding Locales.SelectedLocale}"
+                      />
+        </Grid>
+
+        
+
+        <cc:ServerListControl Grid.RowSpan="3" Grid.Column="1"
                               SourceList="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
                                                    Path=ServerCollection}"
                               AddCommand="{Binding AddServerCommand}"
@@ -43,7 +59,7 @@
                               SetDefaultCommand="{Binding SetServerAsDefaultCommand}"
                               />
 
-        <cc:AddServerControl Grid.RowSpan="3" Grid.Column="2" 
+        <cc:AddServerControl Grid.RowSpan="3" Grid.Column="1" 
                              Visibility="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
                                           Path=IsAddingServer, Converter={StaticResource BoolToVisibility}}"
                              BackCommand="{Binding ShowServerListCommand}"
@@ -55,7 +71,9 @@
                              />
 
         <Button x:Name="exitSettings" Grid.Row="2" Style="{StaticResource IconButtonStyle}" HorizontalAlignment="Left"
-                Command="{Binding BackCommand}" Margin="5" ToolTip="Exit Settings"
+                ToolTip="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                          Path=exit_settings_tooltip}"
+                Command="{Binding BackCommand}" Margin="5" 
                 >
             <Path Data="{StaticResource AppExit}" Fill="{Binding ElementName=exitSettings, Path=Foreground}"/>
         </Button>

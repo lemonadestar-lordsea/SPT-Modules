@@ -25,7 +25,8 @@
         </Grid.RowDefinitions>
 
         <!-- Profile Email -->
-        <Label Content="Email: "
+        <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                         Path=email}"
                />
         
         <Label Grid.Column="1">
@@ -33,7 +34,8 @@
         </Label>
         
         <!-- Profile Edition -->
-        <Label Content="Edition: " Grid.Row="1"
+        <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                         Path=edition}" Grid.Row="1"
                />
         
         <Label Grid.Column="1" Grid.Row="1">
@@ -41,7 +43,8 @@
         </Label>
 
         <!-- Profile ID -->
-        <Label Content="ID: " Grid.Row="2"
+        <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                         Path=id}" Grid.Row="2"
                />
 
         <Label Grid.Column="1" Grid.Row="2">
@@ -69,15 +72,18 @@
                />
 
             <!-- Addtional Controls -->
-            <Button Grid.Row="1" Grid.Column="1" Content="Edit Profile"
+            <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                Path=edit_profile}" Grid.Row="1" Grid.Column="1"
                 Command="{Binding EditProfileCommand}"
                     />
             
-            <Button Grid.Row="1" Grid.Column="3" Content="Logout"
+            <Button  Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                               Path=logout}" Grid.Row="1" Grid.Column="3"
                 Command="{Binding LogoutCommand}"
                     />
             
-            <Button Content="Start Game" Grid.Row="5" Grid.ColumnSpan="5"
+            <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                Path=start_game}" Grid.Row="5" Grid.ColumnSpan="5"
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 Style="{StaticResource SPTBigButtonStyle}"
                 Command="{Binding StartGameCommand}"

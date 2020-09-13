@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:SPTarkov.Launcher.Helpers"
              xmlns:local="clr-namespace:SPTarkov.Launcher.Custom_Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -36,11 +37,13 @@
                                   RelativeSource={
                                   RelativeSource
                                   AncestorType=UserControl}}"
-                ToolTip="Back to server list">
+                ToolTip="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                          Path=server_list_back_arrow_tooltip}">
             <Path Data="{StaticResource BackArrow}" Fill="{Binding ElementName=backButton, Path=Foreground}"/>
         </Button>
         
-        <Label Content="New Server" Grid.Column="0" Grid.ColumnSpan="3"
+        <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                         Path=new_server}" Grid.Column="0" Grid.ColumnSpan="3"
                HorizontalAlignment="Center"
                />
 
@@ -53,14 +56,16 @@
                 <Path Data="{StaticResource Save}" Fill="{Binding ElementName=saveButton, Path=Foreground}"
                       VerticalAlignment="Center" HorizontalAlignment="Center"
                       />
-                <Label Content="Save" HorizontalAlignment="Center" VerticalAlignment="Center"
+                <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                                 Path=save}" HorizontalAlignment="Center" VerticalAlignment="Center"
                        Foreground="{Binding ElementName=saveButton, Path=Foreground}"
                        Margin="0 5"
                        />
             </StackPanel>
         </Button>
 
-        <Label Content="Name" Grid.Row="1" Margin="2"
+        <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                         Path=name}" Grid.Row="1" Margin="2"
                />
 
         <TextBox x:Name="nameBox" Grid.Row="2" Grid.ColumnSpan="4" Margin="5 0"
@@ -76,7 +81,8 @@
                                AncestorType=UserControl}}"
                  />
 
-        <Label Content="Url" Grid.Row="3" Margin="2"
+        <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                         Path=url}" Grid.Row="3" Margin="2"
                />
 
         <TextBox Grid.Row="4" Grid.ColumnSpan="4" Margin="5 0" 
@@ -88,7 +94,8 @@
                                 AncestorType=UserControl}}"
                  />
 
-        <CheckBox Content="Make Default" Grid.Row="5" Margin="5 10"
+        <CheckBox Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                            Path=make_default}" Grid.Row="5" Margin="5 10"
                IsChecked="{Binding IsDefault,
                                           RelativeSource={
                                           RelativeSource
