@@ -77,10 +77,13 @@
     <Compile Include="Generics\AsyncCommand\DelegateCommand.cs" />
     <Compile Include="Generics\GenericICommand.cs" />
     <Compile Include="Helpers\LauncherSettingsProvider.cs" />
+    <Compile Include="Helpers\LocalizationProvider.cs" />
+    <Compile Include="Helpers\ResourceProvider.cs" />
     <Compile Include="Interfaces\IAsyncCommand.cs" />
     <Compile Include="Interfaces\IRaiseCanExecuteChange.cs" />
     <Compile Include="Models\Launcher\ConnectServerModel.cs" />
     <Compile Include="Models\Launcher\EditionCollection.cs" />
+    <Compile Include="Models\Launcher\LocaleCollection.cs" />
     <Compile Include="Models\Launcher\LoginModel.cs" />
     <Compile Include="Models\Launcher\RegisterModel.cs" />
     <Compile Include="Models\Launcher\ServerSetting.cs" />
@@ -150,7 +153,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\bg.png" />
+    <None Include="Launcher_Data\Images\bg.png" />
     <Resource Include="Resources\bg-alpha.png" />
   </ItemGroup>
   <ItemGroup>
@@ -218,7 +221,10 @@
     <Resource Include="Resources\bg-footer.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icon.ico" />
+    <Resource Include="Resources\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Launcher_Data\Locales\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -232,6 +238,6 @@
   <PropertyGroup>
     <PostBuildEvent>
       xcopy /Y /I "$(TargetDir)*.exe" "$(SolutionDir)\Build\"
-</PostBuildEvent>
+      xcopy /Y /I /S "$(ProjectDir)\Launcher_Data\" "$(SolutionDir)\Build\Launcher_Data"</PostBuildEvent>
   </PropertyGroup>
 </Project>

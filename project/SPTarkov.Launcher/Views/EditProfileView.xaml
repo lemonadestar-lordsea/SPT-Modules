@@ -2,7 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:SPTarkov.Launcher.Helpers"
              xmlns:local="clr-namespace:SPTarkov.Launcher.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
@@ -31,14 +32,16 @@
                />
 
         <!-- Email Controls -->
-        <Label Content="Email" Grid.Column="1" Grid.Row="1"
+        <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                         Path=email}" Grid.Column="1" Grid.Row="1"
                    />
         <TextBox Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1"
                  Text="{Binding login.Email}"
                  />
 
         <!-- Password Controls -->
-        <Label Content="Password" Grid.Column="1" Grid.Row="2"
+        <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                         Path=password}" Grid.Column="1" Grid.Row="2"
                />
         
         <TextBox Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2"
@@ -46,14 +49,16 @@
                  />
 
         <!-- Addtional Controls -->
-        <Button Content="Back" Grid.Column="2" Grid.Row="4"
+        <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                         Path=back}" Grid.Column="2" Grid.Row="4"
                 Command="{Binding BackCommand}"
                 />
         <Button Content="Wipe Profile" Grid.Row="4" Grid.Column="3" Margin="5"
                 Command="{Binding WipeProfileCommand}"
                 />
-        
-        <Button Content="Update" Grid.Row="6" Grid.ColumnSpan="6" Style="{StaticResource SPTBigButtonStyle}"
+
+        <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                         Path=update}" Grid.Row="6" Grid.ColumnSpan="6" Style="{StaticResource SPTBigButtonStyle}"
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 Command="{Binding UpdateCommand}"
                 />

@@ -57,6 +57,7 @@ namespace SPTarkov.Launcher.ViewModel
             if(emailStatus == "CONNECTION_ERROR" || passStatus == "CONNECTION_ERROR")
             {
                 navigationViewModel.SelectedViewModel = new ConnectServerViewModel(navigationViewModel);
+                return;
             }
 
             if(emailStatus == "OK" && passStatus == "OK")
@@ -65,7 +66,8 @@ namespace SPTarkov.Launcher.ViewModel
             }
             else
             {
-                MessageBox.Show($"Some Issues occurred while updating your profile.\n\nEmail Update: {emailStatus}\nPassword Update: {passStatus}", "Update Errors Occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(LocalizationProvider.Instance.edit_profile_update_error); 
+                //$"Some Issues occurred while updating your profile.\n\nEmail Update: {emailStatus}\nPassword Update: {passStatus}", "Update Errors Occured", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
