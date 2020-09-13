@@ -1,0 +1,88 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"tasks":{
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "Build",
+				"group": {
+					"kind": "build",
+					"isDefault": true
+				},
+				"dependsOn": ["cleanup"]
+			},
+			{
+				"label": "cleanup",
+				"type": "shell",
+				"command": "Scripts/Cleanup.ps1",
+				"presentation": {
+					"reveal": "silent"
+				},
+				"dependsOn": ["rebuild"]
+			},
+			{
+				"label": "rebuild",
+				"type": "shell",
+				"command": "msbuild",
+				"args": [
+					"/property:GenerateFullPaths=true",
+					"/consoleloggerparameters:NoSummary",
+					"/t:rebuild",
+					"/p:Configuration=Release",
+					"Modules.sln"
+				],
+				"dependsOn":["nuget"],
+				"presentation": {
+					"reveal": "silent"
+				},
+				"problemMatcher": "$msCompile",
+			},
+			{
+				"label": "nuget",
+				"type": "shell",
+				"command": "msbuild",
+				"args": [
+					"/property:GenerateFullPaths=true",
+					"/consoleloggerparameters:NoSummary",
+					"/t:restore",
+					"/p:Configuration=Release",
+					"Modules.sln"
+				],
+				"dependsOn": ["setup"],
+				"presentation": {
+					"reveal": "silent"
+				},
+				"problemMatcher": "$msCompile"
+			},
+			{
+				"label": "setup",
+				"type": "shell",
+				"command": "Scripts/Setup.ps1",
+				"presentation": {
+					"reveal": "silent"
+				}
+			}
+		]
+	},
+	"extensions": {
+		"recommendations": [
+			"jRichardeau.vscode-vsproj",
+			"tintoy.msbuild-project-tools",
+			"mhutchie.git-graph"
+		]
+	},
+	"settings": {
+		"window.title": "SPT-AKI Modules",
+		"git-graph.commitDetailsViewLocation": "Docked to Bottom",
+		"terminal.integrated.shellArgs.windows": ["-ExecutionPolicy ByPass"],
+		"vsproj.enabled": true,
+		"vsproj.projExtension": "csproj",
+		"vsproj.encoding": "utf8",
+		"vsproj.itemType": {".cs": "Compile", "*": "Content"},
+		"vsproj.excludeRegex": "Scripts"
+	}
+}
