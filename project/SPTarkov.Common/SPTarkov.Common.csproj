@@ -75,7 +75,6 @@
     <Compile Include="Utils\App\ProcessMonitor.cs" />
     <Compile Include="Utils\Hook\Loader.cs" />
     <Compile Include="Utils\HTTP\Request.cs" />
-    <Compile Include="Utils\Patching\AbstractPatch.cs" />
     <Compile Include="Utils\Patching\GenericPatch.cs" />
     <Compile Include="Utils\Patching\PatcherConstants.cs" />
     <Compile Include="Utils\Patching\PatcherUtil.cs" />

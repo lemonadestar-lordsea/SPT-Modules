@@ -7,35 +7,28 @@ using BotDifficultyHandler = GClass280;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
 {
-	public class BotDifficultyPatch : AbstractPatch
-	{
-		public BotDifficultyPatch()
-		{
-			methodName = "LoadDifficultyStringInternal";
-			flags = BindingFlags.Public | BindingFlags.Static;
-		}
+    public class BotDifficultyPatch : GenericPatch<BotDifficultyPatch>
+    {
+        public BotDifficultyPatch() : base(prefix: nameof(PatchPrefix))
+        {
+        }
 
-		public override MethodInfo TargetMethod()
-		{
-			return typeof(BotDifficultyHandler).GetMethod(methodName, flags);
-		}
+        protected override MethodBase GetTargetMethod()
+        {
+            return typeof(BotDifficultyHandler).GetMethod("LoadDifficultyStringInternal", BindingFlags.Public | BindingFlags.Static);
+        }
 
-		public static bool Prefix(ref string __result, BotDifficulty botDifficulty, WildSpawnType role)
-		{
-			foreach (Difficulty difficulty in Settings.Difficulties)
-			{
-				if (difficulty.Role == role && difficulty.BotDifficulty == botDifficulty)
-				{
-					__result = difficulty.Json;
-				}
-			}
+        private static bool PatchPrefix(ref string __result, BotDifficulty botDifficulty, WildSpawnType role)
+        {
+            foreach (Difficulty difficulty in Settings.Difficulties)
+            {
+                if (difficulty.Role == role && difficulty.BotDifficulty == botDifficulty)
+                {
+                    __result = difficulty.Json;
+                }
+            }
 
-			if (string.IsNullOrEmpty(__result))
-			{
-				return true;
-			}
-
-			return false;
-		}
-	}
+            return string.IsNullOrEmpty(__result);
+        }
+    }
 }

@@ -22,7 +22,7 @@ namespace SPTarkov.Core.Patches
             return __type.GetMethod(methodName, flags);
         }
 
-		static bool PatchPrefix(ref Task __result, object __instance)
+        private static bool PatchPrefix(ref Task __result, object __instance)
 		{
             __property.SetValue(__instance, true);
 			__result = Task.CompletedTask;

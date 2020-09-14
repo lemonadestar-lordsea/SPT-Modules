@@ -5,29 +5,22 @@ using BotDifficultyHandler = GClass280;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
 {
-	public class CoreDifficultyPatch : AbstractPatch
+	public class CoreDifficultyPatch : GenericPatch<CoreDifficultyPatch>
 	{
-		public CoreDifficultyPatch()
+		public CoreDifficultyPatch() : base(prefix: nameof(PatchPrefix))
 		{
-			methodName = "LoadCoreByString";
-			flags = BindingFlags.Public | BindingFlags.Static;
+        }
+
+        protected override MethodBase GetTargetMethod()
+        {
+			return typeof(BotDifficultyHandler).GetMethod("LoadCoreByString", BindingFlags.Public | BindingFlags.Static);
 		}
 
-		public override MethodInfo TargetMethod()
-		{
-			return typeof(BotDifficultyHandler).GetMethod(methodName, flags);
-		}
-
-		public static bool Prefix(ref string __result)
+		public static bool PatchPrefix(ref string __result)
 		{
 			__result = Settings.CoreDifficulty;
 
-			if (string.IsNullOrEmpty(__result))
-			{
-				return true;
-			}
-
-			return false;
-		}
-	}
+			return string.IsNullOrEmpty(__result);
+        }
+    }
 }

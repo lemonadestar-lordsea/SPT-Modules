@@ -8,15 +8,15 @@ using AmmoInfo = GClass1619;
 
 namespace SPTarkov.SinglePlayer.Patches.Progression
 {
-    public class WeaponDurabilityPatch : AbstractPatch
+    public class WeaponDurabilityPatch : GenericPatch<WeaponDurabilityPatch>
     {
-        static WeaponDurabilityPatch()
+        public WeaponDurabilityPatch() : base(postfix: nameof(PatchPostfix))
         {
             // compile-time check
             _ = nameof(AmmoInfo.AmmoLifeTimeSec);
         }
 
-        public override MethodInfo TargetMethod()
+        protected override MethodBase GetTargetMethod()
         {
             //private void method_46(GClass1564 ammo)
             return typeof(Player.FirearmController).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Single(IsTargetMethod);
@@ -47,7 +47,7 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
             return false;
         }
 
-        public static void Postfix(Player.FirearmController __instance, AmmoInfo ammo)
+        public static void PatchPostfix(Player.FirearmController __instance, AmmoInfo ammo)
         {
             if (!Settings.WeaponDurabilityEnabled)
             {
