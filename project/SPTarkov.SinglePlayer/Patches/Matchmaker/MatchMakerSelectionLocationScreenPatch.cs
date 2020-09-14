@@ -5,14 +5,18 @@ using SPTarkov.Common.Utils.Patching;
 
 namespace SPTarkov.SinglePlayer.Patches.Matchmaker
 {
-    class MatchMakerSelectionLocationScreenPatch : AbstractPatch
+    class MatchMakerSelectionLocationScreenPatch : GenericPatch<MatchMakerSelectionLocationScreenPatch>
     {
-        public static void Postfix(UIButtonSpawner ____readyButton)
+        public MatchMakerSelectionLocationScreenPatch() : base(postfix: nameof(PatchPostfix))
+        {
+        }
+
+        public static void PatchPostfix(UIButtonSpawner ____readyButton)
         {
             ____readyButton.SpawnedObject.gameObject.SetActive(false);
         }
 
-        public override MethodInfo TargetMethod()
+        protected override MethodBase GetTargetMethod()
         {
             return typeof(MatchMakerSelectionLocationScreen).GetMethod("Awake", BindingFlags.NonPublic | BindingFlags.Instance);
         }

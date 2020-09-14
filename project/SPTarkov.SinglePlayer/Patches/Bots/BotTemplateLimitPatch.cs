@@ -7,21 +7,21 @@ using BotsPresets = GClass334;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
 {
-    public class BotTemplateLimitPatch : AbstractPatch
+    public class BotTemplateLimitPatch : GenericPatch<BotTemplateLimitPatch>
     {
-        static BotTemplateLimitPatch()
+        public BotTemplateLimitPatch() : base(postfix: nameof(PatchPostfix))
         {
             // compile-time checks
             _ = nameof(BotsPresets.CreateProfile);
             _ = nameof(WaveInfo.Difficulty);
         }
 
-        public override MethodInfo TargetMethod()
+        protected override MethodBase GetTargetMethod()
         {
             return typeof(BotsPresets).GetMethod("method_1", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
-        public static void Postfix(List<WaveInfo> __result, List<WaveInfo> wavesProfiles, List<WaveInfo> delayed)
+        public static void PatchPostfix(List<WaveInfo> __result, List<WaveInfo> wavesProfiles, List<WaveInfo> delayed)
         {
             /*
                 In short this method sums Limits by grouping wavesPropfiles collection by Role and Difficulty

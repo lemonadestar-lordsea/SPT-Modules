@@ -8,9 +8,13 @@ using SPTarkov.SinglePlayer.Utils.DefaultSettings;
 
 namespace SPTarkov.SinglePlayer.Patches.Matchmaker
 {
-    class MatchmakerOfflineRaidPatch : AbstractPatch
+    class MatchmakerOfflineRaidPatch : GenericPatch<MatchmakerOfflineRaidPatch>
     {
-        public static void Postfix(UpdatableToggle ____offlineModeToggle, UpdatableToggle ____botsEnabledToggle,
+        public MatchmakerOfflineRaidPatch() : base(postfix: nameof(PatchPostfix))
+        {
+        }
+
+        public static void PatchPostfix(UpdatableToggle ____offlineModeToggle, UpdatableToggle ____botsEnabledToggle,
             TMPDropDownBox ____aiAmountDropdown, TMPDropDownBox ____aiDifficultyDropdown, UpdatableToggle ____enableBosses,
             UpdatableToggle ____scavWars, UpdatableToggle ____taggedAndCursed)
         {
@@ -33,7 +37,7 @@ namespace SPTarkov.SinglePlayer.Patches.Matchmaker
             UnityEngine.Object.Destroy(warningPanel);
         }
 
-        public override MethodInfo TargetMethod()
+        protected override MethodBase GetTargetMethod()
         {
             return typeof(MatchmakerOfflineRaid).GetMethod("Show", BindingFlags.NonPublic | BindingFlags.Instance);
         }

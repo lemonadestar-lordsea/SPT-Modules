@@ -9,11 +9,11 @@ using DamageInfo = GStruct227;
 
 namespace SPTarkov.SinglePlayer.Patches.Quests
 {
-    class DogtagPatch : AbstractPatch
+    class DogtagPatch : GenericPatch<DogtagPatch>
     {
-        private static readonly Func<Player, Equipment> getEquipmentProperty;
+        private static Func<Player, Equipment> getEquipmentProperty;
 
-        static DogtagPatch()
+        public DogtagPatch() : base(postfix: nameof(PatchPostfix))
         {
             // compile-time checks
             _ = nameof(Equipment.GetSlot);
@@ -25,12 +25,12 @@ namespace SPTarkov.SinglePlayer.Patches.Quests
                 .CreateDelegate(typeof(Func<Player, Equipment>)) as Func<Player, Equipment>;
         }
 
-        public override MethodInfo TargetMethod()
+        protected override MethodBase GetTargetMethod()
         {
             return typeof(Player).GetMethod("OnBeenKilledByAggressor", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
-        public static void Postfix(Player __instance, Player aggressor, DamageInfo damageInfo)
+        public static void PatchPostfix(Player __instance, Player aggressor, DamageInfo damageInfo)
         {
             if (__instance.Profile.Info.Side == EPlayerSide.Savage)
             {

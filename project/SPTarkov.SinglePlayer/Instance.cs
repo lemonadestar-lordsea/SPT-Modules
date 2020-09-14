@@ -19,33 +19,33 @@ namespace SPTarkov.SinglePlayer
 			// todo: find a way to get php session id
 			new Settings(null, Utils.Config.BackendUrl);
 
-			PatcherUtil.PatchPrefix<OfflineLootPatch>();
-			PatcherUtil.PatchPrefix<OfflineSaveProfilePatch>();
-            PatcherUtil.PatchPrefix<OfflineSpawnPointPatch>();
-            PatcherUtil.PatchPostfix<WeaponDurabilityPatch>();
-            PatcherUtil.PatchPostfix<SingleModeJamPatch>();
+			PatcherUtil.Patch<OfflineLootPatch>();
+			PatcherUtil.Patch<OfflineSaveProfilePatch>();
+            PatcherUtil.Patch<OfflineSpawnPointPatch>();
+            PatcherUtil.Patch<WeaponDurabilityPatch>();
+            PatcherUtil.Patch<SingleModeJamPatch>();
             
             PatcherUtil.Patch<Patches.Healing.MainMenuControllerPatch>();
 			PatcherUtil.Patch<Patches.Healing.PlayerPatch>();
 
-			PatcherUtil.PatchPostfix<MatchmakerOfflineRaidPatch>();
-			PatcherUtil.PatchPostfix<MatchMakerSelectionLocationScreenPatch>();
+			PatcherUtil.Patch<MatchmakerOfflineRaidPatch>();
+			PatcherUtil.Patch<MatchMakerSelectionLocationScreenPatch>();
 			PatcherUtil.Patch<InsuranceScreenPatch>();
 
             PatcherUtil.Patch<BossSpawnChancePatch>();
-			PatcherUtil.PatchPostfix<BotTemplateLimitPatch>();
-            PatcherUtil.PatchPrefix<GetNewBotTemplatesPatch>();
-            PatcherUtil.PatchPrefix<RemoveUsedBotProfilePatch>();
-            PatcherUtil.PatchPrefix<SpawnPmcPatch>();
-			PatcherUtil.PatchPrefix<CoreDifficultyPatch>();
-			PatcherUtil.PatchPrefix<BotDifficultyPatch>();
+			PatcherUtil.Patch<BotTemplateLimitPatch>();
+            PatcherUtil.Patch<GetNewBotTemplatesPatch>();
+            PatcherUtil.Patch<RemoveUsedBotProfilePatch>();
+            PatcherUtil.Patch<SpawnPmcPatch>();
+			PatcherUtil.Patch<CoreDifficultyPatch>();
+			PatcherUtil.Patch<BotDifficultyPatch>();
             
             PatcherUtil.Patch<OnDeadPatch>();
             PatcherUtil.Patch<OnShellEjectEventPatch>();
             PatcherUtil.Patch<BotStationaryWeaponPatch>();
 
-            PatcherUtil.PatchPrefix<BeaconPatch>();
-			PatcherUtil.PatchPostfix<DogtagPatch>();
+            PatcherUtil.Patch<BeaconPatch>();
+			PatcherUtil.Patch<DogtagPatch>();
 
             PatcherUtil.Patch<LoadOfflineRaidScreenPatch>();
             PatcherUtil.Patch<ScavPrefabLoadPatch>();
