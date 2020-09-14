@@ -14,6 +14,7 @@ namespace SPTarkov.Launcher.ViewModel
         public GenericICommand SaveNewServerCommand { get; set; }
         public GenericICommand ShowServerListCommand { get; set; }
         public ServerSetting NewServer { get; set; }
+        public LocaleCollection Locales { get; set; } = new LocaleCollection();
         private NavigationViewModel fullSpanNavigationViewModel { get; set; }
         private NavigationViewModel mainNavigationViewModel { get; set; }
         public SettingsViewModel(NavigationViewModel fullSpanViewModel, NavigationViewModel mainViewModel)
@@ -32,6 +33,7 @@ namespace SPTarkov.Launcher.ViewModel
 
             NewServer = tmpSettings;
         }
+
 
         public void OnBackCommand(object parameter)
         {
@@ -58,7 +60,7 @@ namespace SPTarkov.Launcher.ViewModel
             {
                 if (setting.Url == "https://127.0.0.1")
                 {
-                    MessageBoxResult result = MessageBox.Show("You are about to remove the local server\nAre you sure?", "Local Server Remove", MessageBoxButton.YesNo);
+                    MessageBoxResult result = MessageBox.Show($"{LocalizationProvider.Instance.local_server_remove_warning}\n{LocalizationProvider.Instance.remove_server_question}", "", MessageBoxButton.YesNo);
                     if (result == MessageBoxResult.No)
                     {
                         return;

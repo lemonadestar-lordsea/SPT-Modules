@@ -2,7 +2,6 @@
 using SPTarkov.Launcher.Helpers;
 using SPTarkov.Launcher.Models.Launcher;
 using System;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SPTarkov.Launcher.ViewModel
@@ -34,12 +33,12 @@ namespace SPTarkov.Launcher.ViewModel
 
             if(LauncherSettingsProvider.Instance.ServerCollection.Count == 0)
             {
-                connectInfo.InfoText = "No Servers found. Check server list in settings.";
+                connectInfo.InfoText = LocalizationProvider.Instance.no_servers_available;
                 return;
             }
 
             LauncherSettingsProvider.Instance.IsConnecting = true;
-            connectInfo.InfoText = "Connecting ...";
+            connectInfo.InfoText = $"{LocalizationProvider.Instance.server_connecting} ...";
 
             ServerSetting DefaultServer = LauncherSettingsProvider.GetDefaultServer();
 
@@ -91,7 +90,7 @@ namespace SPTarkov.Launcher.ViewModel
             }
             else
             {
-                connectInfo.InfoText = $"Default server '{DefaultServer.Name}' is not available.";
+                connectInfo.InfoText = String.Format(LocalizationProvider.Instance.server_unavailable_format_1, DefaultServer.Name);
             }
 
             LauncherSettingsProvider.Instance.IsConnecting = false;

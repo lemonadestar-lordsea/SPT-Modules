@@ -1,4 +1,5 @@
 ﻿using SPTarkov.Launcher.Generics;
+using SPTarkov.Launcher.Helpers;
 using SPTarkov.Launcher.Models.Launcher;
 using System.Windows;
 
@@ -38,7 +39,7 @@ namespace SPTarkov.Launcher.ViewModel
                     break;
 
                 case -1:
-                    MessageBox.Show("Login failed");
+                    MessageBox.Show(LocalizationProvider.Instance.login_failed);
                     return;
 
                 case -2:

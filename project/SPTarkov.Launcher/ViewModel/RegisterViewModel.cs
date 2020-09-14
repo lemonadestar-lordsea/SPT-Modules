@@ -48,7 +48,7 @@ namespace SPTarkov.Launcher.ViewModel
                     break;
 
                 case -1:
-                    MessageBox.Show("Account already exists");
+                    MessageBox.Show(LocalizationProvider.Instance.account_exist);
                     return;
 
                 case -2:
@@ -56,7 +56,7 @@ namespace SPTarkov.Launcher.ViewModel
                     return;
 
                 case -3:
-                    MessageBox.Show("Wrong email and/or password");
+                    MessageBox.Show(LocalizationProvider.Instance.incorrect_login);
                     return;
             }
         }

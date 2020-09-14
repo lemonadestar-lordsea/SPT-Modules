@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:model="clr-namespace:SPTarkov.Launcher.Models.Launcher"
              xmlns:cc="clr-namespace:SPTarkov.Launcher.Custom_Controls"
+             xmlns:helpers="clr-namespace:SPTarkov.Launcher.Helpers"
              xmlns:local="clr-namespace:SPTarkov.Launcher.Custom_Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -21,7 +22,8 @@
         <Rectangle Fill="{StaticResource SPTBackgroundLight}" Grid.ColumnSpan="3"
                    />
         
-        <Label Content="Server List" Margin="0"
+        <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                         Path=server_list}" Margin="0"
                />
         
         <Button x:Name="addButton" Grid.Column="2" Margin="5" Style="{StaticResource SPTButtonFlat_NonGeneric}"
@@ -34,7 +36,8 @@
                 <Path Data="{StaticResource Add}" Fill="{Binding ElementName=addButton, Path=Foreground}"
                       VerticalAlignment="Center" HorizontalAlignment="Center"
                       />
-                <Label Content="Add" HorizontalAlignment="Center" VerticalAlignment="Center"
+                <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                                 Path=add}" HorizontalAlignment="Center" VerticalAlignment="Center"
                        Foreground="{Binding ElementName=addButton, Path=Foreground}"
                        Margin="0 5"
                        />
