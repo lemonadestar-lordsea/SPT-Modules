@@ -9,11 +9,15 @@ using static EFT.Player;
 
 namespace SPTarkov.SinglePlayer.Patches.Progression
 {
-    public class SingleModeJamPatch : AbstractPatch
+    public class SingleModeJamPatch : GenericPatch<SingleModeJamPatch>
     {
         private static MethodInfo _onFireEventMethod;
 
-        public override MethodInfo TargetMethod()
+        public SingleModeJamPatch() : base(postfix: nameof(PatchPostfix))
+        {
+        }
+
+        protected override MethodBase GetTargetMethod()
         {
             var targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
             _onFireEventMethod = targetType.GetMethod("OnFireEvent", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
@@ -47,7 +51,7 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
             return true;
         }
 
-        public static void Postfix(object __instance, Weapon ___weapon_0, FirearmsAnimator ___firearmsAnimator_0, FirearmController ___firearmController_0)
+        public static void PatchPostfix(object __instance, Weapon ___weapon_0, FirearmsAnimator ___firearmsAnimator_0, FirearmController ___firearmController_0)
         {
             if (!Settings.WeaponDurabilityEnabled || ___weapon_0.MalfunctionState != Weapon.EMalfunctionState.Jam)
             {

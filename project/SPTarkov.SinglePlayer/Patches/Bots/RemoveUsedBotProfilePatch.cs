@@ -9,13 +9,13 @@ using BotData = GInterface13;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
 {
-    public class RemoveUsedBotProfilePatch : AbstractPatch
+    public class RemoveUsedBotProfilePatch : GenericPatch<RemoveUsedBotProfilePatch>
     {
-        private static readonly Type targetInterface;
-        private static readonly Type targetType;
-        private static readonly AccessTools.FieldRef<object, List<Profile>> profilesField;
+        private static Type targetInterface;
+        private static Type targetType;
+        private static AccessTools.FieldRef<object, List<Profile>> profilesField;
 
-        static RemoveUsedBotProfilePatch()
+        public RemoveUsedBotProfilePatch() : base(prefix: nameof(PatchPrefix))
         {
             // compile-time check
             _ = nameof(BotData.ChooseProfile);
@@ -35,7 +35,7 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
             return true;
         }
 
-        private static bool IsTargetType(Type type)
+        private bool IsTargetType(Type type)
         {
             if (!targetInterface.IsAssignableFrom(type) || !targetInterface.IsAssignableFrom(type.BaseType))
             {
@@ -45,12 +45,12 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
             return true;
         }
 
-        public override MethodInfo TargetMethod()
+        protected override MethodBase GetTargetMethod()
         {
             return targetType.GetMethod("GetNewProfile", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
-        public static bool Prefix(ref Profile __result, object __instance, BotData data)
+        public static bool PatchPrefix(ref Profile __result, object __instance, BotData data)
         {
             List<Profile> profiles = profilesField(__instance);
 

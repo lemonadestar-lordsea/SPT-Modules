@@ -18,20 +18,8 @@ namespace SPTarkov.Common.Utils.Patching
 		{
 			return AccessTools.Method(typeof(T), methodName);
 		}
-		
-		public static void PatchPrefix<T>() where T : AbstractPatch, new()
-        {
-			harmony.Patch(new T().TargetMethod(), prefix: new HarmonyMethod(typeof(T).GetMethod("Prefix")));
-			Debug.LogError("SPTarkov.Common: Applied prefix patch " + typeof(T).Name);
-		}
 
-		public static void PatchPostfix<T>() where T : AbstractPatch, new()
-        {
-			harmony.Patch(new T().TargetMethod(), postfix: new HarmonyMethod(typeof(T).GetMethod("Postfix")));
-			Debug.LogError("SPTarkov.Common: Applied postfix patch " + typeof(T).Name);
-		}
-
-		public static void Patch<T>() where T : GenericPatch<T>, new()
+        public static void Patch<T>() where T : GenericPatch<T>, new()
 		{
 			try
 			{

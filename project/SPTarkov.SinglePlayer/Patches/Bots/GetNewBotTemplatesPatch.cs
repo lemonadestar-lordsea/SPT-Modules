@@ -16,12 +16,12 @@ using JobPriority = GClass2026;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
 {
-    public class GetNewBotTemplatesPatch : AbstractPatch
+    public class GetNewBotTemplatesPatch : GenericPatch<GetNewBotTemplatesPatch>
     {
         public static FieldInfo __field;
-        private static readonly Func<BotsPresets, BotData, Profile> _getNewProfileFunc;
+        private static Func<BotsPresets, BotData, Profile> _getNewProfileFunc;
 
-        static GetNewBotTemplatesPatch()
+        public GetNewBotTemplatesPatch() : base(prefix: nameof(PatchPrefix))
         {
             // compile-time checks
             _ = nameof(WaveInfo.Difficulty);
@@ -36,12 +36,12 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
                 .CreateDelegate(typeof(Func<BotsPresets, BotData, Profile>)) as Func<BotsPresets, BotData, Profile>;
         }
 
-        public override MethodInfo TargetMethod()
+        protected override MethodBase GetTargetMethod()
         {
             return typeof(BotsPresets).GetMethod(nameof(BotsPresets.CreateProfile), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
-        public static bool Prefix(ref Task<Profile> __result, BotsPresets __instance, BotData data)
+        public static bool PatchPrefix(ref Task<Profile> __result, BotsPresets __instance, BotData data)
         {
             /*
                 in short when client wants new bot and GetNewProfile() return null (if not more available templates or they don't satisfied by Role and Difficulty condition)
@@ -83,12 +83,12 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
             return false;
         }
 
-        static Profile GetFirstResult(Task<Profile[]> task)
+        private static Profile GetFirstResult(Task<Profile[]> task)
         {
             return task.Result[0];
         }
 
-        struct Continuation
+        private struct Continuation
         {
             Profile Profile;
             TaskScheduler TaskScheduler { get; }

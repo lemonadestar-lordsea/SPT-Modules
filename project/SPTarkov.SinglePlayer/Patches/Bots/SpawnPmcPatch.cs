@@ -8,15 +8,15 @@ using SPTarkov.Common.Utils.Patching;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
 {
-    public class SpawnPmcPatch : AbstractPatch
+    public class SpawnPmcPatch : GenericPatch<SpawnPmcPatch>
     {
-        private static readonly Type targetInterface;
-        private static readonly Type targetType;
+        private static Type targetInterface;
+        private static Type targetType;
 
-        private static readonly AccessTools.FieldRef<object, WildSpawnType> wildSpawnTypeField;
-        private static readonly AccessTools.FieldRef<object, BotDifficulty> botDifficultyField;
+        private static AccessTools.FieldRef<object, WildSpawnType> wildSpawnTypeField;
+        private static AccessTools.FieldRef<object, BotDifficulty> botDifficultyField;
 
-        static SpawnPmcPatch()
+        public SpawnPmcPatch() : base(prefix: nameof(PatchPrefix))
         {
             targetInterface = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetInterface);
             targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
@@ -34,7 +34,7 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
             return true;
         }
 
-        private static bool IsTargetType(Type type)
+        private bool IsTargetType(Type type)
         {
             if (!targetInterface.IsAssignableFrom(type))
             {
@@ -53,12 +53,12 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
             return true;
         }
 
-        public override MethodInfo TargetMethod()
+        protected override MethodBase GetTargetMethod()
         {
             return targetType.GetMethod("method_0", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
-        public static bool Prefix(object __instance, ref bool __result, Profile x)
+        public static bool PatchPrefix(object __instance, ref bool __result, Profile x)
         {
             var botType = wildSpawnTypeField(__instance);
             var botDifficulty = botDifficultyField(__instance);

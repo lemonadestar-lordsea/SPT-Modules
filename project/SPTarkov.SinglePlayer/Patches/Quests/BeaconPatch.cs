@@ -6,9 +6,13 @@ using SPTarkov.Common.Utils.Patching;
 
 namespace SPTarkov.SinglePlayer.Patches.Quests
 {
-    public class BeaconPatch : AbstractPatch
+    public class BeaconPatch : GenericPatch<BeaconPatch>
     {
-        public override MethodInfo TargetMethod()
+        public BeaconPatch() : base(prefix: nameof(PatchPrefix))
+        {
+        }
+
+        protected override MethodBase GetTargetMethod()
         {
             return typeof(Player).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly).Single(IsTargetMethod);
         }
@@ -34,7 +38,7 @@ namespace SPTarkov.SinglePlayer.Patches.Quests
             return true;
         }
 
-        public static bool Prefix(Player __instance, Item item, string zone)
+        public static bool PatchPrefix(Player __instance, Item item, string zone)
         {
             __instance.Profile.ItemDroppedAtPlace(item.TemplateId, zone);
 

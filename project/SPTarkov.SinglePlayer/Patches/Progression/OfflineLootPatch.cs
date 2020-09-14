@@ -8,35 +8,29 @@ using LocationInfo = GClass757.GClass759;
 
 namespace SPTarkov.SinglePlayer.Patches.Progression
 {
-	public class OfflineLootPatch : AbstractPatch
+	public class OfflineLootPatch : GenericPatch<OfflineLootPatch>
 	{
 		public static PropertyInfo _property;
 
-		static OfflineLootPatch()
+		public OfflineLootPatch() : base(prefix: nameof(PatchPrefix))
 		{
-			// compile-time check
-			_ = nameof(LocationInfo.BotLocationModifier);
-		}
+            // compile-time check
+            _ = nameof(LocationInfo.BotLocationModifier);
+        }
 
-		public OfflineLootPatch()
-		{
-			methodName = "method_5";
-			flags = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
-		}
-
-		public override MethodInfo TargetMethod()
-		{
+        protected override MethodBase GetTargetMethod()
+        {
 			var localGameBaseType = PatcherConstants.LocalGameType.BaseType;
 
 			_property = localGameBaseType.GetProperty($"{nameof(GClass757.GClass759)}_0", BindingFlags.NonPublic | BindingFlags.Instance);
-			return localGameBaseType.GetMethod(methodName, flags);
+			return localGameBaseType.GetMethod("method_5", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 		}
 
 		/// <summary>
 		/// Loads loot from SPTarkov's server.
 		/// Falls back to the client's local location loot if it fails.
 		/// </summary>
-		public static bool Prefix(ref Task<LocationInfo> __result, object __instance, string backendUrl)
+		public static bool PatchPrefix(ref Task<LocationInfo> __result, object __instance, string backendUrl)
 		{
 			if (__instance.GetType() != PatcherConstants.LocalGameType)
 			{

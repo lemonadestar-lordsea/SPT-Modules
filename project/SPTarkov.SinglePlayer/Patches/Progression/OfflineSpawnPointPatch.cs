@@ -9,9 +9,13 @@ using System;
 
 namespace SPTarkov.SinglePlayer.Patches.Progression
 {
-    class OfflineSpawnPointPatch : AbstractPatch
+    class OfflineSpawnPointPatch : GenericPatch<OfflineSpawnPointPatch>
     {
-        public override MethodInfo TargetMethod()
+        public OfflineSpawnPointPatch() : base(prefix: nameof(PatchPrefix))
+        {
+        }
+
+        protected override MethodBase GetTargetMethod()
         {
             var targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
             return targetType.GetMethod("SelectSpawnPoint", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
@@ -29,7 +33,7 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
             return true;
         }
 
-        public static bool Prefix(SpawnArea.SpawnAreaSettings[] ___spawnAreaSettings_0, EPlayerSide side, out Vector3 position, out Quaternion rotation, string spawnPointFilter = null, string infiltrationZone = null)
+        public static bool PatchPrefix(SpawnArea.SpawnAreaSettings[] ___spawnAreaSettings_0, EPlayerSide side, out Vector3 position, out Quaternion rotation, string spawnPointFilter = null, string infiltrationZone = null)
         {
             SpawnAreaSettingHelper spawnAreaSettingHelper = new SpawnAreaSettingHelper(side, spawnPointFilter, infiltrationZone);
 
