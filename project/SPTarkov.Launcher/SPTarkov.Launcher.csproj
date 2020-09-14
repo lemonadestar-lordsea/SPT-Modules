@@ -238,6 +238,10 @@
   <PropertyGroup>
     <PostBuildEvent>
       xcopy /Y /I "$(TargetDir)*.exe" "$(SolutionDir)\Build\"
-      xcopy /Y /I /S "$(ProjectDir)\Launcher_Data\" "$(SolutionDir)\Build\Launcher_Data"</PostBuildEvent>
+      xcopy /Y /I /S "$(ProjectDir)\Launcher_Data\*.*" "$(SolutionDir)\Build\Launcher_Data"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>
