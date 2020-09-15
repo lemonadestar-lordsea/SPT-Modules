@@ -35,6 +35,8 @@ namespace SPTarkov.Launcher.Helpers
 
     public class Settings : INotifyPropertyChanged
     {
+        public bool FirstRun { get; set; } = true;
+
         public void SaveSettings()
         {
             Json.SaveWithFormatting(LauncherSettingsProvider.DefaultSettingsFileLocation, this, Formatting.Indented);

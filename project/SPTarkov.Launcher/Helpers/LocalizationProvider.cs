@@ -2,8 +2,10 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace SPTarkov.Launcher.Helpers
 {
@@ -27,6 +29,31 @@ namespace SPTarkov.Launcher.Helpers
             }
 
             //could possibly raise an event here to say why the local wasn't changed.
+        }
+
+        private static string GetSystemLocale()
+        {
+            string UIlocaleName = CultureInfo.CurrentUICulture.DisplayName;
+
+            var regexMatch = Regex.Match(UIlocaleName, @"^(\w+)");
+
+            if(regexMatch.Groups.Count == 2)
+            {
+                string localName = regexMatch.Groups[1].Value;
+                bool localExists = GetAvailableLocales().Where(x => x == localName).Count() > 0;
+
+                if(localExists)
+                {
+                    return localName;
+                }
+            }
+
+            return "English";
+        }
+
+        public static void TryAutoSetLocale()
+        {
+            LoadLocaleFromFile(GetSystemLocale());
         }
 
         public static LocaleData GenerateEnglishLocale()
@@ -67,7 +94,7 @@ namespace SPTarkov.Launcher.Helpers
             englishLocale.exit_settings_tooltip = "Exit Settings";
             englishLocale.name = "Name";
             englishLocale.save = "Save";
-            englishLocale.url = "Url";
+            englishLocale.url = "URL";
             englishLocale.new_server = "New Server";
             englishLocale.server_list_back_arrow_tooltip = "Back to server list";
             englishLocale.make_default = "Make Default";
@@ -172,7 +199,7 @@ namespace SPTarkov.Launcher.Helpers
                 if(_settings_cog_tooltip != value)
                 {
                     _settings_cog_tooltip = value;
-                    RaisePropertyChanged(nameof(_settings_cog_tooltip));
+                    RaisePropertyChanged(nameof(settings_cog_tooltip));
                 }
             }
         }
@@ -620,7 +647,7 @@ namespace SPTarkov.Launcher.Helpers
                 if(_url != value)
                 {
                     _url = value;
-                    RaisePropertyChanged(nameof(_url));
+                    RaisePropertyChanged(nameof(url));
                 }
             }
         }
