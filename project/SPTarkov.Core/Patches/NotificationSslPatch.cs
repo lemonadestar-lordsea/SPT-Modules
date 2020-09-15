@@ -71,7 +71,7 @@ namespace SPTarkov.Core.Patches
         {
             var codes = new List<CodeInstruction>(instructions);
 
-            var index = 129;
+            var index = 134;
             var dupCode = new CodeInstruction(OpCodes.Dup);
 
             var certificateHandlerType = PatcherConstants.TargetAssembly.GetTypes().Single(x => x.BaseType == typeof(CertificateHandler));

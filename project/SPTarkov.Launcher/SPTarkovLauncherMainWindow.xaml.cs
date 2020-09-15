@@ -18,6 +18,13 @@ namespace SPTarkov.Launcher
         {
             InitializeComponent();
 
+            if(LauncherSettingsProvider.Instance.FirstRun)
+            {
+                LauncherSettingsProvider.Instance.FirstRun = false;
+                LauncherSettingsProvider.Instance.SaveSettings();
+                LocalizationProvider.TryAutoSetLocale();
+            }
+
             var viewmodel = new NavigationViewModel();
             viewmodel.SelectedViewModel = new ConnectServerViewModel(viewmodel);
             navigationViewModel = viewmodel;
