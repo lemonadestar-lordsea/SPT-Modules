@@ -1,6 +1,6 @@
 {
   "retry": "Повторить",
-  "server_connecting": "Подключение к серверу...",
+  "server_connecting": "Подключение к серверу",
   "server_unavailable_format_1": "Сервер по умолчанию '{0}' недоступен.",
   "no_servers_available": "Сервера не найдены. Проверьте список серверов в настройках.",
   "settings_cog_tooltip": "Меню настроек",
