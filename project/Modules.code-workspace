@@ -8,62 +8,12 @@
 		"version": "2.0.0",
 		"tasks": [
 			{
-				"label": "Build",
+				"label": "build",
+				"type": "shell",
+				"command": "Scripts/Build.ps1",
 				"group": {
 					"kind": "build",
 					"isDefault": true
-				},
-				"dependsOn": ["cleanup"]
-			},
-			{
-				"label": "cleanup",
-				"type": "shell",
-				"command": "Scripts/Cleanup.ps1",
-				"presentation": {
-					"reveal": "silent"
-				},
-				"dependsOn": ["rebuild"]
-			},
-			{
-				"label": "rebuild",
-				"type": "shell",
-				"command": "msbuild",
-				"args": [
-					"/property:GenerateFullPaths=true",
-					"/consoleloggerparameters:NoSummary",
-					"/t:rebuild",
-					"/p:Configuration=Release",
-					"Modules.sln"
-				],
-				"dependsOn":["nuget"],
-				"presentation": {
-					"reveal": "silent"
-				},
-				"problemMatcher": "$msCompile",
-			},
-			{
-				"label": "nuget",
-				"type": "shell",
-				"command": "msbuild",
-				"args": [
-					"/property:GenerateFullPaths=true",
-					"/consoleloggerparameters:NoSummary",
-					"/t:restore",
-					"/p:Configuration=Release",
-					"Modules.sln"
-				],
-				"dependsOn": ["setup"],
-				"presentation": {
-					"reveal": "silent"
-				},
-				"problemMatcher": "$msCompile"
-			},
-			{
-				"label": "setup",
-				"type": "shell",
-				"command": "Scripts/Setup.ps1",
-				"presentation": {
-					"reveal": "silent"
 				}
 			}
 		]
