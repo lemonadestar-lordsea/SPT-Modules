@@ -8,6 +8,8 @@
 $rootPath = Resolve-Path -path "."
 $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
 
+Write-Host "Scanning for build tools..."
+
 # make sure vsWhere.exe exists, otherwise warn and exit script
 if (-not(Test-Path $vsWhere))
 {
@@ -29,12 +31,16 @@ $msbuild = "$($msbuild)\MSBuild.exe"
 # make sure msbuild ins't empty and that the path exists, otherwise warn and exit.
 if (($msbuild -ne "") -and(Test-Path $msbuild))
 {
-    Write-Host "Found MSBuild.exe, building project..."
+    Write-Host "Found MSBuild.exe"
+    Write-Host "Building project..."
+
     Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "-nologo /verbosity:minimal -consoleloggerparameters:Summary -t:restore -p:Configuration=Release Modules.sln"
     Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "-nologo /verbosity:minimal -consoleloggerparameters:Summary -t:rebuild -p:Configuration=Release Modules.sln"
 }
 
 # get directories
+Write-Host "Cleaning garbage produced by build..."
+
 $binPaths = Get-ChildItem -Recurse -Path $rootPath | where {$_.FullName -like "*\bin"} | select -ExpandProperty FullName
 $objectPaths = Get-ChildItem -Recurse -Path $rootPath | where {$_.FullName -like "*\obj"} | select -ExpandProperty FullName
 
@@ -50,3 +56,5 @@ foreach ($path in $objectPaths)
     Write-Host "Delete: $($path)"
     Remove-Item $path -Force -Recurse
 }
+
+Write-Host "Done building"
