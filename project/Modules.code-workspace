@@ -10,7 +10,7 @@
 			{
 				"label": "build",
 				"type": "shell",
-				"command": "Scripts/Build.ps1",
+				"command": "Shared/Scripts/Build.ps1",
 				"group": {
 					"kind": "build",
 					"isDefault": true
