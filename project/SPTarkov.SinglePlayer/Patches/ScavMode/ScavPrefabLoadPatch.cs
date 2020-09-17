@@ -28,7 +28,8 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
 
             // Search for code where backend.Session.getProfile() is called.
             var searchCode = new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(PatcherConstants.SessionInterfaceType, "get_Profile"));
-            int searchIndex = -1;
+            var searchIndex = -1;
+
             for (var i = 0; i < codes.Count; i++)
             {
                 if (codes[i].opcode == searchCode.opcode && codes[i].operand == searchCode.operand)
@@ -48,10 +49,10 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
             // Move back by 3. This is the start of IL chain that we're interested in.
             searchIndex -= 3;
 
-            Label brFalseLabel = generator.DefineLabel();
-            Label brLabel= generator.DefineLabel();
+            var brFalseLabel = generator.DefineLabel();
+            var brLabel = generator.DefineLabel();
 
-            List<CodeInstruction> newCodes = CodeGenerator.GenerateInstructions(new List<Code>()
+            var newCodes = CodeGenerator.GenerateInstructions(new List<Code>()
             {
                 new Code(OpCodes.Ldloc_1),
                 new Code(OpCodes.Ldfld, typeof(ClientApplication), "_backEnd"),

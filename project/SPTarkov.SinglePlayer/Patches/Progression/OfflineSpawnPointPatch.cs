@@ -35,18 +35,12 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
 
         public static bool PatchPrefix(SpawnArea.SpawnAreaSettings[] ___spawnAreaSettings_0, EPlayerSide side, out Vector3 position, out Quaternion rotation, string spawnPointFilter = null, string infiltrationZone = null)
         {
-            SpawnAreaSettingHelper spawnAreaSettingHelper = new SpawnAreaSettingHelper(side, spawnPointFilter, infiltrationZone);
+            var spawnAreaSettingHelper = new SpawnAreaSettingHelper(side, spawnPointFilter, infiltrationZone);
+            var spawnAreaSettings = ___spawnAreaSettings_0.Where(spawnAreaSettingHelper.isSpawnAreaSetting).RandomElement();
 
-            SpawnArea.SpawnAreaSettings spawnAreaSettings = ___spawnAreaSettings_0.Where(spawnAreaSettingHelper.isSpawnAreaSetting).RandomElement<SpawnArea.SpawnAreaSettings>();
             if (spawnAreaSettings == null)
             {
-                Debug.LogError(string.Concat(new object[]
-                {
-                "No spawn points for ",
-                side,
-                " found! Spawn points count: ",
-                ___spawnAreaSettings_0.Length
-                }));
+                Debug.LogError("No spawn points for " + side + " found! Spawn points count: " +  ___spawnAreaSettings_0.Length);
                 position = Vector3.zero;
                 rotation = Quaternion.identity;
                 return false;

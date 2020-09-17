@@ -23,7 +23,7 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
 
         static bool PatchPrefix(ref bool __result, object __instance)
         {
-            EPlayerSide playerSide = (EPlayerSide)PrivateValueAccessor.GetPrivateFieldValue(__instance.GetType(), "side", __instance);
+            var playerSide = (EPlayerSide)PrivateValueAccessor.GetPrivateFieldValue(__instance.GetType(), "side", __instance);
 
             if (playerSide == EPlayerSide.Savage)
             {

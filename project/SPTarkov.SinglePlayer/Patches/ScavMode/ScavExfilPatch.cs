@@ -23,9 +23,9 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
         static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
-
             var searchCode = new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(PatcherConstants.ExfilPointManagerType, "EligiblePoints", new System.Type[] { typeof(Profile) }));
-            int searchIndex = -1;
+            var searchIndex = -1;
+
             for (var i = 0; i < codes.Count; i++)
             {
                 if (codes[i].opcode == searchCode.opcode && codes[i].operand == searchCode.operand)
@@ -44,9 +44,9 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
 
             searchIndex -= 3;
 
-            Label brFalseLabel = generator.DefineLabel();
-            Label brLabel = generator.DefineLabel();
-            List<CodeInstruction> newCodes = CodeGenerator.GenerateInstructions(new List<Code>()
+            var brFalseLabel = generator.DefineLabel();
+            var brLabel = generator.DefineLabel();
+            var newCodes = CodeGenerator.GenerateInstructions(new List<Code>()
             {
                 new Code(OpCodes.Ldarg_0),
                 new Code(OpCodes.Call, PatcherConstants.LocalGameType.BaseType, "get_Profile_0"),

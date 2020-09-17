@@ -25,7 +25,7 @@ namespace SPTarkov.SinglePlayer.Patches.Matchmaker
             ____offlineModeToggle.gameObject.SetActive(false);
             ____botsEnabledToggle.isOn = true;
 
-            DefaultRaidSettings defaultRaidSettings = Request();
+            var defaultRaidSettings = Request();
 
             if (defaultRaidSettings != null)
             {

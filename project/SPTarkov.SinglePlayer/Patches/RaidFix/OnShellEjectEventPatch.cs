@@ -15,7 +15,7 @@ namespace SPTarkov.SinglePlayer.Patches.RaidFix
 
         static bool PatchPrefix(object __instance)
         {
-            object weaponController = PrivateValueAccessor.GetPrivateFieldValue(PatcherConstants.FirearmControllerType, PatcherConstants.WeaponControllerFieldName, __instance);
+            var weaponController = PrivateValueAccessor.GetPrivateFieldValue(PatcherConstants.FirearmControllerType, PatcherConstants.WeaponControllerFieldName, __instance);
             return (weaponController.GetType().GetField("RemoveFromChamberResult").GetValue(weaponController) == null) ? false : true;
         }
     }
