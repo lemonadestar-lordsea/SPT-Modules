@@ -5,14 +5,12 @@
 # - Merijn Hendriks
 # - waffle.lord
 
-$rootPath = Resolve-Path -path "."
-
 # locate msbuild
 Write-Host "Scanning for build tools..."
 
 $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
 
-if (-not(Test-Path $vsWhere))
+if (($vsWhere -eq("")) -or(-not(Test-Path $vsWhere)))
 {
     Write-Warning "  Could not find VSWhere.exe, please install BuildTools 2017 or newer"
     return
@@ -52,16 +50,11 @@ Write-Host ""
 # delete build waste
 Write-Host "Cleaning garbage produced by build..."
 
-$binPaths = Get-ChildItem -Recurse -Path $rootPath | where {$_.FullName -like "*\bin"} | select -ExpandProperty FullName
-$objectPaths = Get-ChildItem -Recurse -Path $rootPath | where {$_.FullName -like "*\obj"} | select -ExpandProperty FullName
+$rootPath = Resolve-Path -path "."
+$delPaths = Get-ChildItem -Recurse -Path $rootPath | where {$_.FullName -like "*\bin"} | select -ExpandProperty FullName
+$delPaths += Get-ChildItem -Recurse -Path $rootPath | where {$_.FullName -like "*\obj"} | select -ExpandProperty FullName
 
-foreach ($path in $binPaths)
-{
-    Write-Host "  Delete: $($path)"
-    Remove-Item $path -Force -Recurse
-}
-
-foreach ($path in $objectPaths)
+foreach ($path in $delPaths)
 {
     Write-Host "  Delete: $($path)"
     Remove-Item $path -Force -Recurse
