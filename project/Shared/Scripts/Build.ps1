@@ -6,55 +6,66 @@
 # - waffle.lord
 
 $rootPath = Resolve-Path -path "."
-$vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
 
+# locate msbuild
 Write-Host "Scanning for build tools..."
 
-# make sure vsWhere.exe exists, otherwise warn and exit script
+$vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+
 if (-not(Test-Path $vsWhere))
 {
-    Write-Warning "Could not find Microsoft Buildtools"
+    Write-Warning "  Could not find VSWhere.exe, please install BuildTools 2017 or newer"
     return
 }
 
 $msbuild = & $vsWhere -nologo -latest -find "MSBuild\Current\bin" | Out-String
 
-# if no releases are found, check prerelease versions
 if ($msbuild -eq "")
 {
+    # if no releases are found, check prerelease versions
     $msbuild = & $vsWhere -nologo -prerelease -find "MSBuild\Current\bin" | Out-String
 }
 
 $msbuild = $msbuild -replace "`n","" -replace "`r",""
 $msbuild = "$($msbuild)\MSBuild.exe"
 
-# make sure msbuild ins't empty and that the path exists, otherwise warn and exit.
-if (($msbuild -ne "") -and(Test-Path $msbuild))
+if (($msbuild -eq("")) -or(-Not(Test-Path $msbuild)))
 {
-    Write-Host "Found MSBuild.exe"
-    Write-Host "Building project..."
-
-    Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "-nologo /verbosity:minimal -consoleloggerparameters:Summary -t:restore -p:Configuration=Release Modules.sln"
-    Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "-nologo /verbosity:minimal -consoleloggerparameters:Summary -t:rebuild -p:Configuration=Release Modules.sln"
+    # make sure msbuild ins't empty and that the path exists, otherwise warn and exit.
+    Write-Warning "  Could not find Microsoft Buildtools"
+    return
 }
 
-# get directories
+Write-Host "  Found MSBuild.exe"
+Write-Host ""
+
+# restore nuget packages
+Write-Host "Restore nuget packages..."
+Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "-nologo /verbosity:minimal -consoleloggerparameters:Summary -t:restore -p:Configuration=Release Modules.sln"
+Write-Host ""
+
+# build the project
+Write-Host "Building project..."
+Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "-nologo /verbosity:minimal -consoleloggerparameters:Summary -t:rebuild -p:Configuration=Release Modules.sln"
+Write-Host ""
+
+# delete build waste
 Write-Host "Cleaning garbage produced by build..."
 
 $binPaths = Get-ChildItem -Recurse -Path $rootPath | where {$_.FullName -like "*\bin"} | select -ExpandProperty FullName
 $objectPaths = Get-ChildItem -Recurse -Path $rootPath | where {$_.FullName -like "*\obj"} | select -ExpandProperty FullName
 
-# delete build waste
 foreach ($path in $binPaths)
 {
-    Write-Host "Delete: $($path)"
+    Write-Host "  Delete: $($path)"
     Remove-Item $path -Force -Recurse
 }
 
 foreach ($path in $objectPaths)
 {
-    Write-Host "Delete: $($path)"
+    Write-Host "  Delete: $($path)"
     Remove-Item $path -Force -Recurse
 }
 
+Write-Host ""
 Write-Host "Done building"
