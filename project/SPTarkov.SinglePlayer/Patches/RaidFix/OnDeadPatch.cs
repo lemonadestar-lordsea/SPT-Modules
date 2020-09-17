@@ -27,6 +27,7 @@ namespace SPTarkov.SinglePlayer.Patches.RaidFix
             // Search for code where this.Speaker is called for the first time.
             var searchCode = new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(Player), "Speaker"));
             int searchIndex = -1;
+
             for (var i = 0; i < codes.Count; i++)
             {
                 if (codes[i].opcode == searchCode.opcode && codes[i].operand == searchCode.operand)
@@ -48,10 +49,13 @@ namespace SPTarkov.SinglePlayer.Patches.RaidFix
             // TaggedClip Match
             // Speaker Shut
             // We are interested in each.
-            int callVirtCount = 0;
-            int playIndex = -1, matchIndex = -1, lastCallIndex = -1;
+            var callVirtCount = 0;
+            var playIndex = -1;
+            var matchIndex = -1;
+            var lastCallIndex = -1;
 
-            for (var i = searchIndex; i < codes.Count; i++) {
+            for (var i = searchIndex; i < codes.Count; i++)
+            {
                 if (codes[i].opcode == OpCodes.Callvirt)
                 {
                     switch (callVirtCount)
@@ -69,8 +73,10 @@ namespace SPTarkov.SinglePlayer.Patches.RaidFix
                             Debug.LogError("Mismatched callvirt instruction count.");
                             break;
                     }
+
                     searchIndex = i;
                     callVirtCount++;
+
                     if (callVirtCount > 2) break;
                 }
             }
@@ -81,12 +87,11 @@ namespace SPTarkov.SinglePlayer.Patches.RaidFix
                 return instructions;
             }
 
-            Label skipLabel = generator.DefineLabel();
-            Label playPostLabel = generator.DefineLabel();
-            Label matchPostLabel = generator.DefineLabel();
-
-            List<CodeInstruction> playCodes = GetCodes(ref playPostLabel, ref skipLabel);
-            List<CodeInstruction> matchCodes = GetCodes(ref matchPostLabel, ref skipLabel);
+            var skipLabel = generator.DefineLabel();
+            var playPostLabel = generator.DefineLabel();
+            var matchPostLabel = generator.DefineLabel();
+            var playCodes = GetCodes(ref playPostLabel, ref skipLabel);
+            var matchCodes = GetCodes(ref matchPostLabel, ref skipLabel);
 
             // If either of the first two calls returns null, we want to skip to the instruction after Speak Shut instruction.
             codes[playIndex + 1].labels.Add(playPostLabel);

@@ -90,7 +90,6 @@
     <Compile Include="Patches\ScavMode\ScavPrefabLoadPatch.cs" />
     <Compile Include="Patches\ScavMode\ScavProfileLoadPatch.cs" />
     <Compile Include="Patches\ScavMode\ScavSpawnPointPatch.cs" />
-    <Compile Include="Utils\Bots\Difficulty.cs" />
     <Compile Include="Utils\PatchLogger.cs" />
     <Compile Include="Utils\Player\HealthListener.cs" />
     <Compile Include="Patches\Healing\MainMenuControllerPatch.cs" />
@@ -104,7 +103,6 @@
     <Compile Include="Utils\Reflection\CodeWrapper\CodeGenerator.cs" />
     <Compile Include="Utils\Reflection\CodeWrapper\Code.cs" />
     <Compile Include="Utils\Reflection\CodeWrapper\CodeWithLabel.cs" />
-    <Compile Include="Utils\Settings.cs" />
     <Compile Include="Utils\Config.cs" />
     <Compile Include="Utils\Player\PlayerHealth.cs" />
     <Compile Include="Utils\Player\SaveLootUtil.cs" />

@@ -34,15 +34,18 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
         {
             var parameters = mi.GetParameters();
             if (parameters.Length != 4
-             || parameters[0].ParameterType != typeof(string)
-             || parameters[0].Name != "profileId"
-             || parameters[1].ParameterType != typeof(ExitStatus)
-             || parameters[1].Name != "exitStatus"
-             || parameters[2].ParameterType != typeof(string)
-             || parameters[2].Name != "exitName"
-             || parameters[3].ParameterType != typeof(float)
-             || parameters[3].Name != "delay")
+            || parameters[0].ParameterType != typeof(string)
+            || parameters[0].Name != "profileId"
+            || parameters[1].ParameterType != typeof(ExitStatus)
+            || parameters[1].Name != "exitStatus"
+            || parameters[2].ParameterType != typeof(string)
+            || parameters[2].Name != "exitName"
+            || parameters[3].ParameterType != typeof(float)
+            || parameters[3].Name != "delay")
+            {
                 return false;
+            }
+
             return true;
         }
 

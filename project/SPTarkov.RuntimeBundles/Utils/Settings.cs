@@ -31,17 +31,20 @@ namespace SPTarkov.RuntimeBundles.Utils
                 Debug.LogError("SPTarkov.RuntimeBundles: The cache cleanup failed and will try again at the next game startup.");
             }
             
-            string json = new Request(Session, BackendUrl).GetJson("/singleplayer/bundles/");
-            if (string.IsNullOrEmpty(json))
+            var json = new Request(Session, BackendUrl).GetJson("/singleplayer/bundles/");
+
+            if (string.IsNullOrWhiteSpace(json))
 			{
 				Debug.LogError("SPTarkov.RuntimeBundles: Bundles data is Null, using fallback");
 				return;
 			}
 
             var jArray = JArray.Parse(json);
+
             foreach (var jObj in jArray)
             {
-                BundleInfo bundle;
+                var bundle = (BundleInfo)null;
+
                 if (!bundles.TryGetValue(jObj["key"].ToString(), out bundle))
                 {
                     bundle = new BundleInfo(jObj["key"].ToString(), jObj["path"].ToString(), jObj["dependencyKeys"].ToObject<List<string>>().ToArray());

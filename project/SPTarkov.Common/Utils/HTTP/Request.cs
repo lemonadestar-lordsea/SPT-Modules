@@ -26,22 +26,21 @@ namespace SPTarkov.Common.Utils.HTTP
 			ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
 			// set session headers
-			WebRequest request = WebRequest.Create(new Uri(RemoteEndPoint + url));
+			var request = WebRequest.Create(new Uri(RemoteEndPoint + url));
 
-			if (!string.IsNullOrEmpty(Session))
+			if (!string.IsNullOrWhiteSpace(Session))
 			{
 				request.Headers.Add("Cookie", $"PHPSESSID={Session}");
 				request.Headers.Add("SessionId", Session);
 			}
 
 			request.Headers.Add("Accept-Encoding", "deflate");
-
 			request.Method = method;
 
-			if (method != "GET" && !string.IsNullOrEmpty(data))
+			if (method != "GET" && !string.IsNullOrWhiteSpace(data))
 			{
 				// set request body
-				byte[] bytes = (compress) ? SimpleZlib.CompressToBytes(data, zlibConst.Z_BEST_COMPRESSION) : Encoding.UTF8.GetBytes(data);
+				var bytes = (compress) ? SimpleZlib.CompressToBytes(data, zlibConst.Z_BEST_COMPRESSION) : Encoding.UTF8.GetBytes(data);
 
 				request.ContentType = "application/json";
 				request.ContentLength = bytes.Length;
@@ -51,7 +50,7 @@ namespace SPTarkov.Common.Utils.HTTP
 					request.Headers.Add("Content-Encoding", "deflate");
                 }
 
-				using (Stream stream = request.GetRequestStream())
+				using (var stream = request.GetRequestStream())
 				{
 					stream.Write(bytes, 0, bytes.Length);
 				}
@@ -60,7 +59,7 @@ namespace SPTarkov.Common.Utils.HTTP
 			// get response stream
 			try
 			{
-				WebResponse response = request.GetResponse();
+				var response = request.GetResponse();
 				return response.GetResponseStream();
 			}
 			catch (Exception e)
@@ -73,14 +72,14 @@ namespace SPTarkov.Common.Utils.HTTP
 
 		public void PutJson(string url, string data, bool compress = true)
 		{
-			using (Stream stream = Send(url, "PUT", data, compress)) {}
+			using (var stream = Send(url, "PUT", data, compress)) {}
 		}
 
 		public string GetJson(string url, bool compress = true)
 		{
-			using (Stream stream = Send(url, "GET", null, compress))
+			using (var stream = Send(url, "GET", null, compress))
 			{
-				using (MemoryStream ms = new MemoryStream())
+				using (var ms = new MemoryStream())
 				{
 					stream.CopyTo(ms);
 					return SimpleZlib.Decompress(ms.ToArray(), null);
@@ -90,9 +89,9 @@ namespace SPTarkov.Common.Utils.HTTP
 
 		public string PostJson(string url, string data, bool compress = true)
 		{
-			using (Stream stream = Send(url, "POST", data, compress))
+			using (var stream = Send(url, "POST", data, compress))
 			{
-				using (MemoryStream ms = new MemoryStream())
+				using (var ms = new MemoryStream())
 				{
 					stream.CopyTo(ms);
 					return SimpleZlib.Decompress(ms.ToArray(), null);
@@ -102,11 +101,11 @@ namespace SPTarkov.Common.Utils.HTTP
 
 		public Texture2D GetImage(string url, bool compress = true)
 		{
-			using (Stream stream = Send(url, "GET", null, compress))
+			using (var stream = Send(url, "GET", null, compress))
 			{
-				using (MemoryStream ms = new MemoryStream())
+				using (var ms = new MemoryStream())
 				{
-					Texture2D texture = new Texture2D(8, 8);
+					var texture = new Texture2D(8, 8);
 
 					stream.CopyTo(ms);
 					texture.LoadImage(ms.ToArray());

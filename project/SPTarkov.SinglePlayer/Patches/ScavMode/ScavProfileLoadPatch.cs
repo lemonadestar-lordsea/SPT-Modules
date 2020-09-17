@@ -26,7 +26,8 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
 
             // Search for code where backend.Session.getProfile() is called.
             var searchCode = new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(PatcherConstants.SessionInterfaceType, "get_Profile"));
-            int searchIndex = -1;
+            var searchIndex = -1;
+
             for (var i = 0; i < codes.Count; i++)
             {
                 if (codes[i].opcode == searchCode.opcode && codes[i].operand == searchCode.operand)
@@ -48,10 +49,9 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
             // instruction prior to this instruction that leads to it and we can reuse a Ldloc0 instruction here.
             searchIndex -= 4;
 
-            Label brFalseLabel = generator.DefineLabel();
-            Label brLabel = generator.DefineLabel();
-
-            List<CodeInstruction> newCodes = CodeGenerator.GenerateInstructions(new List<Code>()
+            var brFalseLabel = generator.DefineLabel();
+            var brLabel = generator.DefineLabel();
+            var newCodes = CodeGenerator.GenerateInstructions(new List<Code>()
             {
                 new Code(OpCodes.Ldarg_0),
                 new Code(OpCodes.Ldfld, typeof(ClientApplication), "_backEnd"),
@@ -76,13 +76,17 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
         private static bool IsTargetMethod(MethodInfo methodInfo)
         {
             var parameters = methodInfo.GetParameters();
+
             if (parameters.Length != 3
-                || parameters[0].Name != "location"
-                || parameters[1].Name != "timeAndWeather"
-                || parameters[2].Name != "entryPoint"
-                || parameters[2].ParameterType != typeof(string)
-                || methodInfo.ReturnType != typeof(void))
+            || parameters[0].Name != "location"
+            || parameters[1].Name != "timeAndWeather"
+            || parameters[2].Name != "entryPoint"
+            || parameters[2].ParameterType != typeof(string)
+            || methodInfo.ReturnType != typeof(void))
+            {
                 return false;
+            }
+
             return true;
         }
 

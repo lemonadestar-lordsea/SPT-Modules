@@ -5,6 +5,9 @@ using EFT.UI.Matchmaker;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils;
 using SPTarkov.SinglePlayer.Utils.DefaultSettings;
+using SPTarkov.Common.Utils.HTTP;
+using Newtonsoft.Json;
+using System;
 
 namespace SPTarkov.SinglePlayer.Patches.Matchmaker
 {
@@ -22,7 +25,7 @@ namespace SPTarkov.SinglePlayer.Patches.Matchmaker
             ____offlineModeToggle.gameObject.SetActive(false);
             ____botsEnabledToggle.isOn = true;
 
-            DefaultRaidSettings defaultRaidSettings = Settings.DefaultRaidSettings;
+            var defaultRaidSettings = Request();
 
             if (defaultRaidSettings != null)
             {
@@ -40,6 +43,29 @@ namespace SPTarkov.SinglePlayer.Patches.Matchmaker
         protected override MethodBase GetTargetMethod()
         {
             return typeof(MatchmakerOfflineRaid).GetMethod("Show", BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+
+        private static DefaultRaidSettings Request()
+        {
+            var json = new Request(null, Config.BackendUrl).GetJson("/singleplayer/settings/defaultRaidSettings/");
+
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                Debug.LogError("SPTarkov.SinglePlayer: Received NULL response for DefaultRaidSettings. Defaulting to fallback.");
+                return null;
+            }
+
+            Debug.LogError("SPTarkov.SinglePlayer: Successfully received DefaultRaidSettings");
+
+            try
+            {
+                return JsonConvert.DeserializeObject<DefaultRaidSettings>(json);
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError("SPTarkov.SinglePlayer: Failed to deserialize DefaultRaidSettings from server. Check your gameplay.json config in your server. Defaulting to fallback. Exception: " + exception);
+                return null;
+            }
         }
     }
 }

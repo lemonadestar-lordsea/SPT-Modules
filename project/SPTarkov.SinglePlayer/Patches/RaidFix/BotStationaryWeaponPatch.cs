@@ -26,9 +26,9 @@ namespace SPTarkov.SinglePlayer.Patches.RaidFix
         static IEnumerable<CodeInstruction> PatchTranspile(IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
-
             var searchCode = new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(typeof(StationaryWeapon), "get_OperatorPosition"));
             int searchIndex = -1;
+
             for (var i = 0; i < codes.Count; i++)
             {
                 if (codes[i].opcode == searchCode.opcode && codes[i].operand == searchCode.operand)
@@ -47,8 +47,9 @@ namespace SPTarkov.SinglePlayer.Patches.RaidFix
 
             // Look ahead and search for a bgt instruction (should be within the next 10 lines) and get its operand. We want the same label to jump to
             // for our code below.
-            Label jumpToLabel = default(Label);
-            bool labelFound = false;
+            var jumpToLabel = default(Label);
+            var labelFound = false;
+
             for (var i = searchIndex; i < codes.Count; i++)
             {
                 if (codes[i].opcode == OpCodes.Bgt_S)
@@ -56,6 +57,7 @@ namespace SPTarkov.SinglePlayer.Patches.RaidFix
                     jumpToLabel = (Label)codes[i].operand;
                     break;
                 }
+
                 labelFound = true;
             }
 
@@ -68,7 +70,7 @@ namespace SPTarkov.SinglePlayer.Patches.RaidFix
             // This is start of the instruction that we are interested in.
             searchIndex -= 2;
 
-            List<CodeInstruction> newCodes = CodeGenerator.GenerateInstructions(new List<Code>() {
+            var newCodes = CodeGenerator.GenerateInstructions(new List<Code>() {
                 new Code(OpCodes.Ldloc_3),
                 new Code(OpCodes.Ldfld, typeof(StationaryWeaponLink), "Weapon"),
                 new Code(OpCodes.Ldnull),

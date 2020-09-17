@@ -28,35 +28,37 @@ namespace SPTarkov.RuntimeBundles.Patches
 
         static bool PatchPrefix(IEasyBundle __instance, string key, string rootPath, UnityEngine.AssetBundleManifest manifest, IBundleLock bundleLock)
 		{
-            EasyBundleHelper esayBundle = new EasyBundleHelper(__instance);
-            esayBundle.Key = key;
+            var easyBundle = new EasyBundleHelper(__instance);
+            easyBundle.Key = key;
 
             var path = rootPath + key;
-            BundleInfo bundle;
-            if(Settings.bundles.TryGetValue(key, out bundle))
+            var bundle = (BundleInfo)null;
+
+            if (Settings.bundles.TryGetValue(key, out bundle))
             {
                 path = bundle.Path;
             }
 
-            esayBundle.Path = path;
-            esayBundle.KeyWithoutExtension = Path.GetFileNameWithoutExtension(key);
+            easyBundle.Path = path;
+            easyBundle.KeyWithoutExtension = Path.GetFileNameWithoutExtension(key);
 
-            string[] dependencyKeys = manifest.GetDirectDependencies(key);
-
+            var dependencyKeys = manifest.GetDirectDependencies(key);
 
             foreach (KeyValuePair<string, BundleInfo> kvp in Settings.bundles)
             {
                 if (!key.Equals(kvp.Key))
+                {
                     continue;
+                }
 
-                List<string> result = dependencyKeys == null ? new List<string>() : dependencyKeys.ToList<string>();
-                dependencyKeys = result.Union(kvp.Value.DependencyKeys).ToList<string>().ToArray<string>();
+                var result = dependencyKeys == null ? new List<string>() : dependencyKeys.ToList();
+                dependencyKeys = result.Union(kvp.Value.DependencyKeys).ToList().ToArray<string>();
                 break;
             }
 
-            esayBundle.DependencyKeys = dependencyKeys;
-            esayBundle.LoadState = new BindableState(ELoadState.Unloaded, null);
-            esayBundle.BundleLock = bundleLock;
+            easyBundle.DependencyKeys = dependencyKeys;
+            easyBundle.LoadState = new BindableState(ELoadState.Unloaded, null);
+            easyBundle.BundleLock = bundleLock;
 
             return false;
 		}
