@@ -1,8 +1,9 @@
 ﻿using System.Reflection;
+using UnityEngine;
 using EFT;
+using SPTarkov.Common.Utils.HTTP;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils;
-using SPTarkov.SinglePlayer.Utils.Bots;
 using BotDifficultyHandler = GClass280;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
@@ -20,15 +21,23 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
 
         private static bool PatchPrefix(ref string __result, BotDifficulty botDifficulty, WildSpawnType role)
         {
-            foreach (Difficulty difficulty in Settings.Difficulties)
+            __result = Request(role, botDifficulty);
+
+            return string.IsNullOrWhiteSpace(__result);
+        }
+
+        private static string Request(WildSpawnType role, BotDifficulty botDifficulty)
+        {
+            var json = new Request(null, Config.BackendUrl).GetJson("/singleplayer/settings/bot/difficulty/" + role.ToString() + "/" + botDifficulty.ToString());
+
+            if (string.IsNullOrWhiteSpace(json))
             {
-                if (difficulty.Role == role && difficulty.BotDifficulty == botDifficulty)
-                {
-                    __result = difficulty.Json;
-                }
+                Debug.LogError("SPTarkov.SinglePlayer: Received bot " + role.ToString() + " " + botDifficulty.ToString() + " difficulty data is NULL, using fallback");
+                return null;
             }
 
-            return string.IsNullOrEmpty(__result);
+            Debug.LogError("SPTarkov.SinglePlayer: Successfully received bot " + role.ToString() + " " + botDifficulty.ToString() + " difficulty data");
+            return json;
         }
     }
 }

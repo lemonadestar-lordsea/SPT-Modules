@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using System;
+using UnityEngine;
+using EFT;
+using SPTarkov.Common.Utils.HTTP;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils;
 using WaveInfo = GClass897;
@@ -34,8 +38,22 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
             
             foreach (WaveInfo wave in __result)
             {
-				wave.Limit = Settings.Limits[wave.Role];
+                wave.Limit = Request(wave.Role);
             }
+        }
+
+        private static int Request(WildSpawnType role)
+        {
+            var json = new Request(null, Config.BackendUrl).GetJson("/singleplayer/settings/bot/limit/" + role.ToString());
+
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                Debug.LogError("SPTarkov.SinglePlayer: Received bot " + role.ToString() + " limit data is NULL, using fallback");
+                return 30;
+            }
+
+            Debug.LogError("SPTarkov.SinglePlayer: Successfully received bot " + role.ToString() + " limit data");
+            return Convert.ToInt32(json);
         }
     }
 }
