@@ -29,7 +29,7 @@ $msbuild = "$($msbuild)\MSBuild.exe"
 # make sure msbuild ins't empty and that the path exists, otherwise warn and exit.
 if (($msbuild -ne "") -and(Test-Path $msbuild))
 {
-    Write-Host "Found MSBuild.exe, building project"
+    Write-Host "Found MSBuild.exe, building project..."
     Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "-nologo /verbosity:minimal -consoleloggerparameters:Summary -t:restore -p:Configuration=Release Modules.sln"
     Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "-nologo /verbosity:minimal -consoleloggerparameters:Summary -t:rebuild -p:Configuration=Release Modules.sln"
 }
