@@ -68,9 +68,9 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
 
         public bool isSpawnAreaSetting(SpawnArea.SpawnAreaSettings x)
         {
-            return x.Sides.Contains(this.side)
-                && (string.IsNullOrEmpty(this.infiltrationZone) || x.InfiltrationZone == this.infiltrationZone)
-                && (string.IsNullOrEmpty(this.spawnPointFilter) || this.spawnPointFilter.Contains(x.Id));
+            return x.Sides.Contains(side)
+                && (string.IsNullOrWhiteSpace(infiltrationZone) || x.InfiltrationZone == infiltrationZone)
+                && (string.IsNullOrWhiteSpace(spawnPointFilter) || spawnPointFilter.Contains(x.Id));
         }
     }
 }

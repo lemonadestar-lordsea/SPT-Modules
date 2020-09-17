@@ -45,7 +45,7 @@ namespace SPTarkov.RuntimeBundles.Patches
 
         private static async Task LoadBundleFromServer(object __instance)
         {
-            EasyBundleHelper easyBundle = new EasyBundleHelper(__instance);
+            var easyBundle = new EasyBundleHelper(__instance);
             var path = easyBundle.Path;
             var bundleKey = Regex.Split(path, "bundle/", RegexOptions.IgnoreCase)[1];
             var cachePath = Settings.cachePach;

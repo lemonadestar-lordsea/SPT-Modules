@@ -188,7 +188,7 @@ namespace SPTarkov.RuntimeBundles.Utils
 
         public EasyBundleHelper(object easyBundle)
         {
-            this._instance = easyBundle;
+            _instance = easyBundle;
             _trav = Traverse.Create(easyBundle);
 
             if (_loadingCoroutineMethod == null)
