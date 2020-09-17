@@ -10,7 +10,7 @@ Write-Host "Scanning for build tools..."
 
 $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
 
-if (-not(Test-Path $vsWhere))
+if (($vsWhere -eq("")) -or(-not(Test-Path $vsWhere)))
 {
     Write-Warning "  Could not find VSWhere.exe, please install BuildTools 2017 or newer"
     return
