@@ -24,9 +24,8 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
         public static void PatchPrefix(ESideType ___esideType_0, Result<ExitStatus, TimeSpan, ClientMetrics> result)
         {
             var session = Utils.Config.BackEndSession;
-            string backendUrl = Utils.Config.BackendUrl;
-            bool isPlayerScav = false;
-            Profile profile = session.Profile;
+            var isPlayerScav = false;
+            var profile = session.Profile;
 
             if (___esideType_0 == ESideType.Savage)
             {
@@ -36,7 +35,7 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
 
             var currentHealth = Utils.Player.HealthListener.Instance.CurrentHealth;
 
-            SaveLootUtil.SaveProfileProgress(backendUrl, session.GetPhpSessionId(), result.Value0, profile, currentHealth, isPlayerScav);
+            SaveLootUtil.SaveProfileProgress(Utils.Config.BackendUrl, session.GetPhpSessionId(), result.Value0, profile, currentHealth, isPlayerScav);
         }
     }
 }

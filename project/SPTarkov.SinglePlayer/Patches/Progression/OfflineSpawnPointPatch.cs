@@ -35,18 +35,12 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
 
         public static bool PatchPrefix(SpawnArea.SpawnAreaSettings[] ___spawnAreaSettings_0, EPlayerSide side, out Vector3 position, out Quaternion rotation, string spawnPointFilter = null, string infiltrationZone = null)
         {
-            SpawnAreaSettingHelper spawnAreaSettingHelper = new SpawnAreaSettingHelper(side, spawnPointFilter, infiltrationZone);
+            var spawnAreaSettingHelper = new SpawnAreaSettingHelper(side, spawnPointFilter, infiltrationZone);
+            var spawnAreaSettings = ___spawnAreaSettings_0.Where(spawnAreaSettingHelper.isSpawnAreaSetting).RandomElement();
 
-            SpawnArea.SpawnAreaSettings spawnAreaSettings = ___spawnAreaSettings_0.Where(spawnAreaSettingHelper.isSpawnAreaSetting).RandomElement<SpawnArea.SpawnAreaSettings>();
             if (spawnAreaSettings == null)
             {
-                Debug.LogError(string.Concat(new object[]
-                {
-                "No spawn points for ",
-                side,
-                " found! Spawn points count: ",
-                ___spawnAreaSettings_0.Length
-                }));
+                Debug.LogError("No spawn points for " + side + " found! Spawn points count: " +  ___spawnAreaSettings_0.Length);
                 position = Vector3.zero;
                 rotation = Quaternion.identity;
                 return false;
@@ -74,9 +68,9 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
 
         public bool isSpawnAreaSetting(SpawnArea.SpawnAreaSettings x)
         {
-            return x.Sides.Contains(this.side)
-                && (string.IsNullOrEmpty(this.infiltrationZone) || x.InfiltrationZone == this.infiltrationZone)
-                && (string.IsNullOrEmpty(this.spawnPointFilter) || this.spawnPointFilter.Contains(x.Id));
+            return x.Sides.Contains(side)
+                && (string.IsNullOrWhiteSpace(infiltrationZone) || x.InfiltrationZone == infiltrationZone)
+                && (string.IsNullOrWhiteSpace(spawnPointFilter) || spawnPointFilter.Contains(x.Id));
         }
     }
 }

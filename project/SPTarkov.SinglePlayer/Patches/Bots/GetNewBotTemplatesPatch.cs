@@ -55,8 +55,8 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
             */
 
             var session = Utils.Config.BackEndSession;
-            Task<Profile> taskAwaiter = null;
-            TaskScheduler taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            var taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            var taskAwaiter = (Task<Profile>)null;
 
             // try get profile from cache
             var profile = _getNewProfileFunc(__instance, data);
@@ -65,7 +65,7 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
             {
                 // load from server
                 Debug.LogError("SPTarkov.SinglePlayer: Loading bot profile from server");
-                List<WaveInfo> source = data.PrepareToLoadBackend(1).ToList();
+                var source = data.PrepareToLoadBackend(1).ToList();
                 taskAwaiter = session.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
             }
             else
@@ -103,7 +103,7 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
             {
                 Profile = task.Result;
 
-                Task loadTask = Singleton<PoolManager>.Instance
+                var loadTask = Singleton<PoolManager>.Instance
                     .LoadBundlesAndCreatePools(PoolManager.PoolsCategory.Raid, 
                                                PoolManager.AssemblyType.Local, 
                                                Profile.GetAllPrefabPaths(false).ToArray(), 

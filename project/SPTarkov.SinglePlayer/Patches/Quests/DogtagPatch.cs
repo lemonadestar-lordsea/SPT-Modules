@@ -47,7 +47,7 @@ namespace SPTarkov.SinglePlayer.Patches.Quests
                 return;
             }
 
-            DogtagComponent itemComponent = dogtagItem.GetItemComponent<DogtagComponent>();
+            var itemComponent = dogtagItem.GetItemComponent<DogtagComponent>();
 
             if (itemComponent == null)
             {

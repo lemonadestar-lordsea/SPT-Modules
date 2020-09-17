@@ -6,7 +6,6 @@ using SPTarkov.SinglePlayer.Patches.Progression;
 using SPTarkov.SinglePlayer.Patches.Quests;
 using SPTarkov.SinglePlayer.Patches.RaidFix;
 using SPTarkov.SinglePlayer.Patches.ScavMode;
-using SPTarkov.SinglePlayer.Utils;
 
 namespace SPTarkov.SinglePlayer
 {
@@ -15,9 +14,6 @@ namespace SPTarkov.SinglePlayer
         private void Start()
 		{
             Debug.LogError("SPTarkov.SinglePlayer: Loaded");
-
-			// todo: find a way to get php session id
-			new Settings(null, Utils.Config.BackendUrl);
 
 			PatcherUtil.Patch<OfflineLootPatch>();
 			PatcherUtil.Patch<OfflineSaveProfilePatch>();

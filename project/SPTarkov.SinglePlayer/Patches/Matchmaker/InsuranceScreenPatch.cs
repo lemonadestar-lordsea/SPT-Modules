@@ -37,13 +37,17 @@ namespace SPTarkov.SinglePlayer.Patches.Matchmaker
         private static bool IsTargetMethod(MethodInfo mi)
         {
             var parameters = mi.GetParameters();
+
             if (parameters.Length != 4
-             || parameters[0].ParameterType != typeof(bool)
-             || parameters[0].Name != "local"
-             || parameters[1].Name != "weatherSettings"
-             || parameters[2].Name != "botsSettings"
-             || parameters[3].Name != "wavesSettings")
+            || parameters[0].ParameterType != typeof(bool)
+            || parameters[0].Name != "local"
+            || parameters[1].Name != "weatherSettings"
+            || parameters[2].Name != "botsSettings"
+            || parameters[3].Name != "wavesSettings")
+            {
                 return false;
+            }
+
             return true;
         }
     }

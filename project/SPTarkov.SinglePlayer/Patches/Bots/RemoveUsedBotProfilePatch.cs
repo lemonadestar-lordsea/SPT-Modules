@@ -52,7 +52,7 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
 
         public static bool PatchPrefix(ref Profile __result, object __instance, BotData data)
         {
-            List<Profile> profiles = profilesField(__instance);
+            var profiles = profilesField(__instance);
 
             if (profiles.Count > 0)
             {

@@ -21,7 +21,7 @@ namespace SPTarkov.SinglePlayer.Patches.Healing
             if (_playerAccountId == null)
             {
                 var backendSession = Utils.Config.BackEndSession;
-                Profile profile = backendSession.Profile;
+                var profile = backendSession.Profile;
                 _playerAccountId = profile.AccountId;
             }
 
