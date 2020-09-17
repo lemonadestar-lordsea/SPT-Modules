@@ -103,7 +103,6 @@
     <Compile Include="Utils\Reflection\CodeWrapper\CodeGenerator.cs" />
     <Compile Include="Utils\Reflection\CodeWrapper\Code.cs" />
     <Compile Include="Utils\Reflection\CodeWrapper\CodeWithLabel.cs" />
-    <Compile Include="Utils\Settings.cs" />
     <Compile Include="Utils\Config.cs" />
     <Compile Include="Utils\Player\PlayerHealth.cs" />
     <Compile Include="Utils\Player\SaveLootUtil.cs" />
