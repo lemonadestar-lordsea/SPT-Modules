@@ -30,8 +30,8 @@ if (($msbuildPath -ne "") -and(Test-Path $msbuildPath))
 {
     $msbuild = "$($msbuildPath)\MSBuild.exe"
 
-    Start-Process -FilePath $msbuild -ArgumentList "/property:GenerateFullPaths=true /consoleloggerparameters:NoSummary /t:restore /p:Configuration=Release Modules.sln" -NoNewWindow -Wait
-    Start-Process -FilePath $msbuild -ArgumentList "/property:GenerateFullPaths=true /consoleloggerparameters:NoSummary /t:rebuild /p:Configuration=Release Modules.sln" -NoNewWindow -Wait
+    Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "/nologo /consoleloggerparameters:NoSummary /t:restore /p:Configuration=Release Modules.sln"
+    Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "/nologo /consoleloggerparameters:NoSummary /t:rebuild /p:Configuration=Release Modules.sln"
 }
 
 # get directories
