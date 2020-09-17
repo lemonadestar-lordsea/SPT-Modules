@@ -15,23 +15,23 @@ if (-not(Test-Path $vsWhere))
     return
 }
 
-$msbuildPath = & $vsWhere -nologo -latest -find "MSBuild\Current\bin" | Out-String
+$msbuild = & $vsWhere -nologo -latest -find "MSBuild\Current\bin" | Out-String
 
 # if no releases are found, check prerelease versions
-if ($msbuildPath -eq "")
+if ($msbuild -eq "")
 {
-    $msbuildpath = & $vsWhere -nologo -prerelease -find "MSBuild\Current\bin" | Out-String
+    $msbuild = & $vsWhere -nologo -prerelease -find "MSBuild\Current\bin" | Out-String
 }
 
-$msbuildPath = $msbuildPath -replace "`n","" -replace "`r",""
+$msbuild = $msbuild -replace "`n","" -replace "`r",""
+$msbuild = "$($msbuild)\MSBuild.exe"
 
 # make sure msbuild ins't empty and that the path exists, otherwise warn and exit.
-if (($msbuildPath -ne "") -and(Test-Path $msbuildPath))
+if (($msbuild -ne "") -and(Test-Path $msbuild))
 {
-    $msbuild = "$($msbuildPath)\MSBuild.exe"
-
-    Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "/nologo /consoleloggerparameters:NoSummary /t:restore /p:Configuration=Release Modules.sln"
-    Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "/nologo /consoleloggerparameters:NoSummary /t:rebuild /p:Configuration=Release Modules.sln"
+    Write-Host "Found MSBuild.exe, building project"
+    Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "-nologo /verbosity:minimal -consoleloggerparameters:Summary -t:restore -p:Configuration=Release Modules.sln"
+    Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "-nologo /verbosity:minimal -consoleloggerparameters:Summary -t:rebuild -p:Configuration=Release Modules.sln"
 }
 
 # get directories
