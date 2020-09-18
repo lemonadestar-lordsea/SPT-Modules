@@ -70,8 +70,17 @@ namespace SPTarkov.Core.Patches
         static IEnumerable<CodeInstruction> PatchTranspiler(IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
+            var index = 0;
 
-            var index = 134;
+            for (var i = 0; i < codes.Count(); i++)
+            {
+                if (codes[i].ToString().Contains("GET"))
+                {
+                    index = i + 2;
+                    break;
+                }
+            }
+
             var dupCode = new CodeInstruction(OpCodes.Dup);
 
             var certificateHandlerType = PatcherConstants.TargetAssembly.GetTypes().Single(x => x.BaseType == typeof(CertificateHandler));
