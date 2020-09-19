@@ -189,6 +189,34 @@ namespace SPTarkov.Launcher.Helpers
             }
         }
 
+        private bool _UseAutoLogin;
+        public bool UseAutoLogin
+        {
+            get => _UseAutoLogin;
+            set
+            {
+                if (_UseAutoLogin != value)
+                {
+                    _UseAutoLogin = value;
+                    RaisePropertyChanged(nameof(UseAutoLogin));
+                }
+            }
+        }
+
+        private string _GamePath;
+        public string GamePath
+        {
+            get => _GamePath;
+            set
+            {
+                if(_GamePath != value)
+                {
+                    _GamePath = value;
+                    RaisePropertyChanged(nameof(GamePath));
+                }
+            }
+        }
+
         public ObservableCollection<ServerSetting> ServerCollection { get; set; } = new ObservableCollection<ServerSetting>();
 
         public Settings()
@@ -196,6 +224,8 @@ namespace SPTarkov.Launcher.Helpers
             if(!File.Exists(LauncherSettingsProvider.DefaultSettingsFileLocation))
             {
                 HideToTrayOnGameStart = true;
+                UseAutoLogin = true;
+                GamePath = Environment.CurrentDirectory;
 
                 ServerCollection.Add(new ServerSetting { Name = "Local SPT-AKI Server", Url = "https://127.0.0.1", IsDefault = true });
                 SaveSettings();

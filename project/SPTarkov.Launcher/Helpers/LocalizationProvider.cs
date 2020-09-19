@@ -103,6 +103,17 @@ namespace SPTarkov.Launcher.Helpers
             englishLocale.add = "Add";
             englishLocale.remove_server_tooltip = "Remove Server";
             englishLocale.default_language = "Default Language";
+            englishLocale.game_path = "Game Path";
+            englishLocale.clear_game_settings = "Clear Game Settings";
+            englishLocale.clear_game_settings_succeeded = "Game settings cleared";
+            englishLocale.clear_game_settings_failed = "Some issues occured while clearing game settings";
+            englishLocale.remove_registry_keys = "Remove Registry Keys";
+            englishLocale.remove_registry_keys_succeeded = "Registry keys removed";
+            englishLocale.remove_registry_keys_failed = "Some issues occured while removing registry keys";
+            englishLocale.clean_temp_files = "Clean Temp Files";
+            englishLocale.clean_temp_files_succeeded = "Temp files cleaned";
+            englishLocale.clean_temp_files_failed = "Some issues occured while cleaning temp files";
+            englishLocale.select_folder = "Select Folder";
             #endregion
 
             Directory.CreateDirectory(LocalizationProvider.DefaultLocaleFolderPath);
@@ -124,6 +135,8 @@ namespace SPTarkov.Launcher.Helpers
     public class LocaleData : INotifyPropertyChanged
     {
         //this is going to be some pretty long boiler plate code. So I'm putting everything into regions.
+
+        #region All Properties
 
         #region retry
         private string _retry;
@@ -780,6 +793,184 @@ namespace SPTarkov.Launcher.Helpers
                 }
             }
         }
+        #endregion
+
+        #region game_path
+        private string _game_path;
+        public string game_path
+        {
+            get => _game_path;
+            set
+            {
+                if(_game_path != value)
+                {
+                    _game_path = value;
+                    RaisePropertyChanged(nameof(game_path));
+                }
+            }
+        }
+        #endregion
+
+        #region clear_game_settings
+        private string _clear_game_settings;
+        public string clear_game_settings
+        {
+            get => _clear_game_settings;
+            set
+            {
+                if(_clear_game_settings != value)
+                {
+                    _clear_game_settings = value;
+                    RaisePropertyChanged(nameof(clear_game_settings));
+                }
+            }
+        }
+        #endregion
+
+        #region clear_game_settings_succeeded
+        private string _clear_game_settings_succeeded;
+        public string clear_game_settings_succeeded
+        {
+            get => _clear_game_settings_succeeded;
+            set
+            {
+                if(_clear_game_settings_succeeded != value)
+                {
+                    _clear_game_settings_succeeded = value;
+                    RaisePropertyChanged(nameof(clear_game_settings_succeeded));
+                }
+            }
+        }
+        #endregion
+
+        #region clear_game_settings_failed
+        private string _clear_game_settings_failed;
+        public string clear_game_settings_failed
+        {
+            get => _clear_game_settings_failed;
+            set
+            {
+                if(_clear_game_settings_failed != value)
+                {
+                    _clear_game_settings_failed = value;
+                    RaisePropertyChanged(nameof(clear_game_settings_failed));
+                }
+            }
+        }
+        #endregion
+
+        #region remove_registry_keys
+        private string _remove_registry_keys;
+        public string remove_registry_keys
+        {
+            get => _remove_registry_keys;
+            set
+            {
+                if(_remove_registry_keys != value)
+                {
+                    _remove_registry_keys = value;
+                    RaisePropertyChanged(nameof(remove_registry_keys));
+                }
+            }
+        }
+        #endregion
+
+        #region remove_registry_keys_succeeded
+        private string _remove_registry_keys_succeeded;
+        public string remove_registry_keys_succeeded
+        {
+            get => _remove_registry_keys_succeeded;
+            set
+            {
+                if(_remove_registry_keys_succeeded != value)
+                {
+                    _remove_registry_keys_succeeded = value;
+                    RaisePropertyChanged(nameof(remove_registry_keys_succeeded));
+                }
+            }
+        }
+        #endregion
+
+        #region remove_registry_keys_failed
+        private string _remove_registry_keys_failed;
+        public string remove_registry_keys_failed
+        {
+            get => _remove_registry_keys_failed;
+            set
+            {
+                if(_remove_registry_keys_failed != value)
+                {
+                    _remove_registry_keys_failed = value;
+                    RaisePropertyChanged(nameof(remove_registry_keys_failed));
+                }
+            }
+        }
+        #endregion
+
+        #region clean_temp_files
+        private string _clean_temp_files;
+        public string clean_temp_files
+        {
+            get => _clean_temp_files;
+            set
+            {
+                if(_clean_temp_files != value)
+                {
+                    _clean_temp_files = value;
+                    RaisePropertyChanged(nameof(clean_temp_files));
+                }
+            }
+        }
+        #endregion
+
+        #region clean_temp_files_succeeded
+        private string _clean_temp_files_succeeded;
+        public string clean_temp_files_succeeded
+        {
+            get => _clean_temp_files_succeeded;
+            set
+            {
+                if(_clean_temp_files_succeeded != value)
+                {
+                    _clean_temp_files_succeeded = value;
+                    RaisePropertyChanged(nameof(clean_temp_files_succeeded));
+                }
+            }
+        }
+        #endregion
+
+        #region clean_temp_files_failed
+        private string _clean_temp_files_failed;
+        public string clean_temp_files_failed
+        {
+            get => _clean_temp_files_failed;
+            set
+            {
+                if(_clean_temp_files_failed != value)
+                {
+                    _clean_temp_files_failed = value;
+                    RaisePropertyChanged(nameof(clean_temp_files_failed));
+                }
+            }
+        }
+        #endregion
+
+        #region select_folder
+        private string _select_folder;
+        public string select_folder
+        {
+            get => _select_folder;
+            set
+            {
+                if(_select_folder != value)
+                {
+                    _select_folder = value;
+                    RaisePropertyChanged(nameof(select_folder));
+                }
+            }
+        }
+        #endregion
+
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
