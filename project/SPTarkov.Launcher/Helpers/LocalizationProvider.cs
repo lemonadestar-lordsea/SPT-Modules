@@ -115,6 +115,9 @@ namespace SPTarkov.Launcher.Helpers
             englishLocale.clean_temp_files_succeeded = "Temp files cleaned";
             englishLocale.clean_temp_files_failed = "Some issues occured while cleaning temp files";
             englishLocale.select_folder = "Select Folder";
+            englishLocale.server_url_and_name_empty = "Name and Url cannot be empty";
+            englishLocale.server_url_exists = "Url already exists";
+            englishLocale.server_name_exists = "Name already exists";
             #endregion
 
             Directory.CreateDirectory(LocalizationProvider.DefaultLocaleFolderPath);
@@ -967,6 +970,54 @@ namespace SPTarkov.Launcher.Helpers
                 {
                     _select_folder = value;
                     RaisePropertyChanged(nameof(select_folder));
+                }
+            }
+        }
+        #endregion
+
+        #region server_url_and_name_empty
+        private string _server_url_and_name_empty;
+        public string server_url_and_name_empty
+        {
+            get => _server_url_and_name_empty;
+            set
+            {
+                if(_server_url_and_name_empty != value)
+                {
+                    _server_url_and_name_empty = value;
+                    RaisePropertyChanged(nameof(server_url_and_name_empty));
+                }
+            }
+        }
+        #endregion
+
+        #region server_url_exists
+        private string _server_url_exists;
+        public string server_url_exists
+        {
+            get => _server_url_exists;
+            set
+            {
+                if(_server_url_exists != value)
+                {
+                    _server_url_exists = value;
+                    RaisePropertyChanged(nameof(server_url_exists));
+                }
+            }
+        }
+        #endregion
+
+        #region server_name_exists
+        private string _server_name_exists;
+        public string server_name_exists
+        {
+            get => _server_name_exists;
+            set
+            {
+                if(_server_name_exists != value)
+                {
+                    _server_name_exists = value;
+                    RaisePropertyChanged(nameof(server_name_exists));
                 }
             }
         }

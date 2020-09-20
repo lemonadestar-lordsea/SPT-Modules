@@ -83,7 +83,7 @@ namespace SPTarkov.Launcher.Helpers
         {
             if (NewServer.Name == "" || NewServer.Url == "")
             {
-                return new ServerAddStatus(false, "Name and Url cannot be empty");
+                return new ServerAddStatus(false, LocalizationProvider.Instance.server_url_and_name_empty);
             }
 
 
@@ -91,12 +91,12 @@ namespace SPTarkov.Launcher.Helpers
             {
                 if (server.Name == NewServer.Name)
                 {
-                    return new ServerAddStatus(false, "Name already exists");
+                    return new ServerAddStatus(false, LocalizationProvider.Instance.server_name_exists);
                 }
 
                 if(server.Url == NewServer.Url)
                 {
-                    return new ServerAddStatus(false, "Url already exists");
+                    return new ServerAddStatus(false, LocalizationProvider.Instance.server_url_exists);
                 }
             }
 
