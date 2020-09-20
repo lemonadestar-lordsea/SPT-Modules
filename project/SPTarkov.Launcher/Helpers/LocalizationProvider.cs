@@ -61,6 +61,7 @@ namespace SPTarkov.Launcher.Helpers
             //Create default english locale data and save if the default locale data file dosen't exist.
             //This is to (hopefully) prevent the launcher from becoming 100% broken if no locale files exist or the locale files are outdated (missing data).
             LocaleData englishLocale = new LocaleData();
+
             #region Set All English Defaults
             englishLocale.retry = "Retry";
             englishLocale.server_connecting = "Connecting";
@@ -86,7 +87,7 @@ namespace SPTarkov.Launcher.Helpers
             englishLocale.start_game = "Start Game";
             englishLocale.installed_in_live_game_warning = "SPTarkov shouldn't be installed into live game. Please make a copy of the gamefiles and install SPTarkov there.";
             englishLocale.no_official_game_warning = "Escape From Tarkov isn't installed on your computer. Please buy a copy of the game and support the developers!";
-            englishLocale.launcher_not_running_in_gamedir_warning = "The launcher is not running from the game directory";
+            englishLocale.eft_exe_not_found_warning = "EscapeFromTarkov.exe not found at game path.";
             englishLocale.account_exist = "Account already exists";
             englishLocale.local_server_remove_warning = "You are about to remove the local server.";
             englishLocale.remove_server_question = "Remove Server?";
@@ -522,17 +523,17 @@ namespace SPTarkov.Launcher.Helpers
         }
         #endregion
 
-        #region launcher_not_running_in_gamedir_warning
-        private string _launcher_not_running_in_gamedir_warning;
-        public string launcher_not_running_in_gamedir_warning
+        #region eft_exe_not_found_warning
+        private string _eft_exe_not_found_warning;
+        public string eft_exe_not_found_warning
         {
-            get => _launcher_not_running_in_gamedir_warning;
+            get => _eft_exe_not_found_warning;
             set
             {
-                if(_launcher_not_running_in_gamedir_warning != value)
+                if(_eft_exe_not_found_warning != value)
                 {
-                    _launcher_not_running_in_gamedir_warning = value;
-                    RaisePropertyChanged(nameof(launcher_not_running_in_gamedir_warning));
+                    _eft_exe_not_found_warning = value;
+                    RaisePropertyChanged(nameof(eft_exe_not_found_warning));
                 }
             }
         }

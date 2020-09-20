@@ -3,11 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Threading;
-using Newtonsoft.Json;
-using SPTarkov.Common.Utils.App;
 using SPTarkov.Launcher.Controllers;
-using SPTarkov.Launcher.Helpers;
 
 namespace SPTarkov.Launcher
 {
@@ -15,9 +11,6 @@ namespace SPTarkov.Launcher
     {
         private void Application_Startup(object s, StartupEventArgs e)
         {
-            MessageBox.Show("Stop");
-
-
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
 
             //I'm not sure if you want application specific exception handling. AppDomain should handle them all AFAIK. You had something similar before, so I'm just adding this in. (might cause duplicate messageboxes though)

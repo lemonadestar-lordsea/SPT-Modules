@@ -11,13 +11,13 @@ namespace SPTarkov.Launcher
 {
 	public class GameStarter
 	{
-        private const string clientExecutable = "EscapeFromTarkov.exe";
+        private string clientExecutable = $"{LauncherSettingsProvider.Instance.GamePath}\\EscapeFromTarkov.exe";
         private const string registeryInstall = @"Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\EscapeFromTarkov";
         private const string registerySettings = @"Software\Battlestate Games\EscapeFromTarkov";
         private const string tempDir = @"Battlestate Games\EscapeFromTarkov";
 
         public int LaunchGame(ServerInfo server, AccountInfo account)
-		{
+        {
             if (IsInstalledInLive())
             {
                 return -1;
