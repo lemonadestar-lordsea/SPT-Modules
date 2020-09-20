@@ -63,7 +63,7 @@ namespace SPTarkov.Launcher.ViewModel
                 }
                 else
                 {
-                    if (DefaultServer.UseAutoLogin && DefaultServer.AutoLoginCreds != null)
+                    if (LauncherSettingsProvider.Instance.UseAutoLogin && DefaultServer.AutoLoginCreds != null)
                     {
                         int status = AccountManager.Login(DefaultServer.AutoLoginCreds);
 

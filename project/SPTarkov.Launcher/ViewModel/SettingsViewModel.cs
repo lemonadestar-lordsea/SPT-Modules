@@ -1,7 +1,10 @@
 ﻿using SPTarkov.Launcher.Generics;
 using SPTarkov.Launcher.Helpers;
 using SPTarkov.Launcher.Models.Launcher;
+using System;
+using System.IO;
 using System.Windows;
+using WinForms = System.Windows.Forms;
 
 namespace SPTarkov.Launcher.ViewModel
 {
@@ -13,28 +16,64 @@ namespace SPTarkov.Launcher.ViewModel
         public GenericICommand AddServerCommand { get; set; }
         public GenericICommand SaveNewServerCommand { get; set; }
         public GenericICommand ShowServerListCommand { get; set; }
+        public GenericICommand CleanTempFilesCommand { get; set; }
+        public GenericICommand SelectGameFolderCommand { get; set; }
+        public GenericICommand RemoveRegistryKeysCommand { get; set; }
+        public GenericICommand ClearGameSettingsCommand { get; set; }
         public ServerSetting NewServer { get; set; }
         public LocaleCollection Locales { get; set; } = new LocaleCollection();
         private NavigationViewModel fullSpanNavigationViewModel { get; set; }
         private NavigationViewModel mainNavigationViewModel { get; set; }
+
+        private GameStarter gameStarter = new GameStarter();
         public SettingsViewModel(NavigationViewModel fullSpanViewModel, NavigationViewModel mainViewModel)
         {
             fullSpanNavigationViewModel = fullSpanViewModel;
             mainNavigationViewModel = mainViewModel;
 
+            #region Settings Commands
             BackCommand = new GenericICommand(OnBackCommand);
+            CleanTempFilesCommand = new GenericICommand(OnCleanTempFilesCommand);
+            SelectGameFolderCommand = new GenericICommand(OnSelectGameFolderCommand);
+            RemoveRegistryKeysCommand = new GenericICommand(OnRemoveRegistryKeysCommand);
+            ClearGameSettingsCommand = new GenericICommand(OnClearGameSettingsCommand);
+            #endregion
+
+            #region Server List Commands
             RemoveServerCommand = new GenericICommand(OnRemoveServerCommand);
             AddServerCommand = new GenericICommand(OnAddServerCommand);
             SetServerAsDefaultCommand = new GenericICommand(OnSetServerAsDefaultCommand);
             SaveNewServerCommand = new GenericICommand(OnSaveNewServerCommand);
             ShowServerListCommand = new GenericICommand(OnShowServerListCommand);
+            #endregion
 
             ServerSetting tmpSettings = new ServerSetting();
 
             NewServer = tmpSettings;
         }
 
+        #region General Use Methods
+        /// <summary>
+        /// Get a folder using a folder browse dialog
+        /// </summary>
+        /// <returns>returns the path to the selected folder or null</returns>
+        private string GetFolderPath()
+        {
+            using (WinForms.FolderBrowserDialog dialog = new WinForms.FolderBrowserDialog())
+            {
+                WinForms.DialogResult result = dialog.ShowDialog();
 
+                if(result == WinForms.DialogResult.OK && !String.IsNullOrEmpty(dialog.SelectedPath))
+                {
+                    return dialog.SelectedPath;
+                }
+            }
+
+            return null;
+        }
+        #endregion
+
+        #region Settings Commands
         public void OnBackCommand(object parameter)
         {
             LauncherSettingsProvider.Instance.SaveSettings();
@@ -45,6 +84,64 @@ namespace SPTarkov.Launcher.ViewModel
             fullSpanNavigationViewModel.SelectedViewModel = null;
         }
 
+        public void OnCleanTempFilesCommand(object parameter)
+        {
+            bool filesCleared = gameStarter.CleanTempFiles();
+
+            if(filesCleared)
+            {
+                MessageBox.Show(LocalizationProvider.Instance.clean_temp_files_succeeded);
+            }
+            else
+            {
+                MessageBox.Show(LocalizationProvider.Instance.clean_temp_files_failed);
+            }
+        }
+
+        public void OnRemoveRegistryKeysCommand(object parameter)
+        {
+            bool regKeysRemoved = gameStarter.RemoveRegisteryKeys();
+
+            if(regKeysRemoved)
+            {
+                MessageBox.Show(LocalizationProvider.Instance.remove_registry_keys_succeeded);
+            }
+            else
+            {
+                MessageBox.Show(LocalizationProvider.Instance.remove_registry_keys_failed);
+            }
+        }
+
+        public void OnClearGameSettingsCommand(object parameter)
+        {
+            string EFTSettingsFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Escape from Tarkov";
+
+            if(Directory.Exists(EFTSettingsFolder))
+            {
+                Directory.Delete(EFTSettingsFolder, true);
+
+                if(Directory.Exists(EFTSettingsFolder))
+                {
+                    MessageBox.Show(LocalizationProvider.Instance.clear_game_settings_failed);
+                    return;
+                }
+            }
+
+            MessageBox.Show(LocalizationProvider.Instance.clear_game_settings_succeeded);
+        }
+
+        public void OnSelectGameFolderCommand(object parameter)
+        {
+            string path = GetFolderPath();
+
+            if(!String.IsNullOrEmpty(path))
+            {
+                LauncherSettingsProvider.Instance.GamePath = path;
+            }
+        }
+        #endregion
+
+        #region Server List Commands
         public void OnAddServerCommand(object parameter)
         {
             NewServer.Name = "";
@@ -97,5 +194,6 @@ namespace SPTarkov.Launcher.ViewModel
         {
             LauncherSettingsProvider.Instance.IsAddingServer = false;
         }
+        #endregion
     }
 }

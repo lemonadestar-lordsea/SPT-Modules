@@ -83,7 +83,7 @@ namespace SPTarkov.Launcher.ViewModel
                     break;
 
                 case -3:
-                    MessageBox.Show(LocalizationProvider.Instance.launcher_not_running_in_gamedir_warning);
+                    MessageBox.Show(LocalizationProvider.Instance.eft_exe_not_found_warning);
                     return;
             }
         }

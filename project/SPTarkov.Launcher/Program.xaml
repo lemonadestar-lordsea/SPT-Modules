@@ -26,6 +26,7 @@
         <PathGeometry x:Key="BackArrow" Figures="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" FillRule="NonZero"/>
         <PathGeometry x:Key="Delete" Figures="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" FillRule="NonZero"/>
         <PathGeometry x:Key="Bookmark" Figures="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z" FillRule="NonZero"/>
+        <PathGeometry x:Key="FolderWithPlus" Figures="M20 6h-8l-2-2H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-1 8h-3v3h-2v-3h-3v-2h3V9h2v3h3v2z" FillRule="NonZero"/>
 
         <!-- Data Templates to load views with view models -->
 
