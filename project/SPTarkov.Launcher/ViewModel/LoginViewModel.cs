@@ -45,7 +45,7 @@ namespace SPTarkov.Launcher.ViewModel
             switch (status)
             {
                 case 1:
-                    if (DefaultServer.UseAutoLogin && DefaultServer.AutoLoginCreds != login)
+                    if (LauncherSettingsProvider.Instance.UseAutoLogin && DefaultServer.AutoLoginCreds != login)
                     {
                         DefaultServer.AutoLoginCreds = login;
                     }

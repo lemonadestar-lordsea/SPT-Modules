@@ -4,18 +4,20 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using SPTarkov.Common.Utils.App;
+using System.Linq;
+using SPTarkov.Launcher.Helpers;
 
 namespace SPTarkov.Launcher
 {
 	public class GameStarter
 	{
-        private const string clientExecutable = "EscapeFromTarkov.exe";
+        private string clientExecutable = $"{LauncherSettingsProvider.Instance.GamePath}\\EscapeFromTarkov.exe";
         private const string registeryInstall = @"Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\EscapeFromTarkov";
         private const string registerySettings = @"Software\Battlestate Games\EscapeFromTarkov";
         private const string tempDir = @"Battlestate Games\EscapeFromTarkov";
 
         public int LaunchGame(ServerInfo server, AccountInfo account)
-		{
+        {
             if (IsInstalledInLive())
             {
                 return -1;
@@ -43,7 +45,7 @@ namespace SPTarkov.Launcher
 			{
 				Arguments = $"-bC5vLmcuaS5u={GenerateToken(account)} -token={account.id} -config={Json.Serialize(new ClientConfig(server.backendUrl))}",
 				UseShellExecute = false,
-				WorkingDirectory = Environment.CurrentDirectory
+				WorkingDirectory = LauncherSettingsProvider.Instance.GamePath ?? Environment.CurrentDirectory
 			};
 
 			Process.Start(clientProcess);
@@ -94,7 +96,7 @@ namespace SPTarkov.Launcher
 
         private void SetupGameFiles()
         {
-            string filepath = Environment.CurrentDirectory;
+            string filepath = LauncherSettingsProvider.Instance.GamePath ?? Environment.CurrentDirectory;
             string[] files = new string[]
             {
                 Path.Combine(filepath, "BattlEye"),
@@ -153,7 +155,11 @@ namespace SPTarkov.Launcher
             return value0;
         }
 
-		private void RemoveRegisteryKeys()
+        /// <summary>
+        /// Remove the registry keys
+        /// </summary>
+        /// <returns>returns true if the keys were removed. returns false if an exception occured</returns>
+		public bool RemoveRegisteryKeys()
 		{
 			try
 			{
@@ -163,30 +169,53 @@ namespace SPTarkov.Launcher
 				{
 					key.DeleteValue(value);
 				}
+
+                return true;
 			}
 			catch
 			{
+                return false;
 			}
 		}
 
-		private void CleanTempFiles()
+        /// <summary>
+        /// Clean the temp folder
+        /// </summary>
+        /// <returns>returns true if the temp folder was cleaned succefully or doesn't exist. returns false if something went wrong.</returns>
+		public bool CleanTempFiles()
 		{
 			DirectoryInfo directoryInfo = new DirectoryInfo(Path.Combine(Path.GetTempPath(), tempDir));
 
 			if (!Directory.Exists(tempDir))
 			{
-				return;
+				return true;
 			}
 
-			foreach (FileInfo file in directoryInfo.GetFiles())
-			{
-				file.Delete();
-			}
+            try
+            {
+                foreach (FileInfo file in directoryInfo.GetFiles())
+                {
+                    file.Delete();
+                }
 
-			foreach (DirectoryInfo directory in directoryInfo.GetDirectories())
-			{
-				directory.Delete(true);
-			}
+                foreach (DirectoryInfo directory in directoryInfo.GetDirectories())
+                {
+                    directory.Delete(true);
+                }
+
+                directoryInfo.Refresh();
+
+                if(directoryInfo.GetFiles().Count() > 0 || directoryInfo.GetDirectories().Count() > 0)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
 		}
 
 		private string GenerateToken(AccountInfo data)

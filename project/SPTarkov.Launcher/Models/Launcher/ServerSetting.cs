@@ -6,20 +6,6 @@ namespace SPTarkov.Launcher.Models.Launcher
     {
         public LoginModel AutoLoginCreds { get; set; } = null;
 
-        private bool _UseAutoLogin;
-        public bool UseAutoLogin
-        {
-            get => _UseAutoLogin;
-            set
-            {
-                if(_UseAutoLogin != value)
-                {
-                    _UseAutoLogin = value;
-                    RaisePropertyChanged(nameof(UseAutoLogin));
-                }
-            }
-        }
-
         private string _Name;
         public string Name
         {

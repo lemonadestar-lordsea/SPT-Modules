@@ -54,11 +54,6 @@
                 Command="{Binding ShowRegisterCommand}"
                 />
 
-        <CheckBox Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
-                            Path=login_automatically}" Grid.Column="3" Grid.Row="4"
-                  IsChecked="{Binding DefaultServer.UseAutoLogin}"
-                  />
-
         <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
                           Path=login}" Grid.Row="6" Grid.ColumnSpan="7" 
                 Style="{StaticResource SPTBigButtonStyle}"

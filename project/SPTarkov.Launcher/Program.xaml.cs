@@ -1,13 +1,40 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows;
 using SPTarkov.Launcher.Controllers;
 
 namespace SPTarkov.Launcher
 {
     public partial class Program : Application
-	{
+    {
+        private string GetGamePath()
+        {
+            string gamePath = Environment.CurrentDirectory;
+
+            try
+            {
+                using (StreamReader sr = new StreamReader($"{Environment.CurrentDirectory}\\launcher.config.json"))
+                {
+                    string data = sr.ReadToEnd();
+
+                    data = data.Replace("\r", "").Replace("\n", "").Replace('\"', ' ');
+
+                    var regex = Regex.Match(data, @"GamePath\s+:\s+([\w\d\\][^,]+)\s+,");
+
+                    if (regex.Success)
+                    {
+                        gamePath = regex.Groups[1].Value;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+            return gamePath;
+        }
         private void Application_Startup(object s, StartupEventArgs e)
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
@@ -16,7 +43,7 @@ namespace SPTarkov.Launcher
             Current.DispatcherUnhandledException += (sender, args) => HandleException(args.Exception);
 
             // load assemblies from EFT's managed directory
-            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(AssemblyResolveEvent);
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => AssemblyResolveEvent(sender, args, GetGamePath());
 
             // run launcher
             SPTarkovLauncherMainWindow LauncherWindow = new SPTarkovLauncherMainWindow();
@@ -43,10 +70,10 @@ namespace SPTarkov.Launcher
             MessageBox.Show(text, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        private static Assembly AssemblyResolveEvent(object sender, ResolveEventArgs args)
+        private static Assembly AssemblyResolveEvent(object sender, ResolveEventArgs args, string gamePath)
         {
             string assembly = new AssemblyName(args.Name).Name;
-            string filename = Path.Combine(Environment.CurrentDirectory, $"EscapeFromTarkov_Data/Managed/{assembly}.dll");
+            string filename = Path.Combine(gamePath, $"EscapeFromTarkov_Data/Managed/{assembly}.dll");
 
             // resources are embedded inside assembly
             if (filename.Contains("resources"))
