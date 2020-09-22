@@ -6,8 +6,10 @@
 # - waffle.lord
 
 #copy and verify file function. Destination path should be a directory.
-function CopyAndVerifyFile {
-    param(
+function CopyAndVerifyFile 
+{
+    param
+    (
         [System.IO.FileInfo]$File,
         [string]$DestinationPath
     )
@@ -17,11 +19,13 @@ function CopyAndVerifyFile {
     Write-Host "Copying $($friendlyName) ... " -NoNewLine
     
     #check paths
-    if(-not(Test-Path $File.FullName)) { 
+    if(-not(Test-Path $File.FullName)) 
+    { 
         Write-Host "Can't find file path: `n$($File.FullName)" -ForegroundColor Red
         return
     }
-    if(-not(Test-Path $DestinationPath)) {
+    if(-not(Test-Path $DestinationPath)) 
+    {
         Write-Host "Can't find destination path: `n$($DestinationPath)" -ForegroundColor -Red
         return
     }
@@ -29,7 +33,8 @@ function CopyAndVerifyFile {
     Copy-Item -Path $File.FullName -Destination $DestinationPath -Force -ErrorAction SilentlyContinue
 
     #make sure the file was copied
-    if(Test-Path "$($DestinationPath)\$($File.Name)") {
+    if(Test-Path "$($DestinationPath)\$($File.Name)") 
+    {
         Write-Host "OK" -ForegroundColor Green
         return
     }
@@ -83,7 +88,8 @@ $buildDir = "$($rootPath)\Build"
 $managedFolder = "$($buildDir)\EscapeFromTarkov_Data\Managed"
 
 #remove build directory if it exists.
-if(Test-Path $buildDir) {
+if(Test-Path $buildDir) 
+{
     Remove-Item $buildDir -Recurse -Force
 }
 
@@ -100,10 +106,14 @@ $launcherData = [System.IO.DirectoryInfo]::new((Resolve-Path -Path "*\Launcher_D
 
 #copy and verify build files
 Write-Host ""
-foreach($file in $dllAndExeFiles) {
-    if($File.Name -eq "Launcher.exe") {
+foreach($file in $dllAndExeFiles) 
+{
+    if($File.Name -eq "Launcher.exe") 
+    {
         CopyAndVerifyFile $file $buildDir
-    } else {
+    }
+    else 
+    {
         CopyAndVerifyFile $file $managedFolder
     }
 }
@@ -114,10 +124,12 @@ Write-Host "Copying Launcher_Data folder ... " -NoNewLine
 
 Copy-Item -Path $launcherData -Destination $buildDir -Recurse -Force -ErrorAction SilentlyContinue
 
-if(Test-Path "$($buildDir)\Launcher_Data") {
+if(Test-Path "$($buildDir)\Launcher_Data") 
+{
     Write-host "OK" -ForegroundColor Green
 }
-else {
+else 
+{
     Write-host "Folder doesn't appear to have been copied.`nError: $($Error[0])" -ForegroundColor Red
 }
 
