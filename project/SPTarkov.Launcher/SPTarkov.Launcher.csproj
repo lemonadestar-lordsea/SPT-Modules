@@ -12,8 +12,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,8 +30,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\release\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants />
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -40,10 +38,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>..\Shared\Resources\icon.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
@@ -183,10 +177,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <!-- <Page Include="Program.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page> -->
     <Page Include="SPTarkovLauncherMainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -228,17 +218,4 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent Condition="'$(OS)' != 'Unix'">
-      xcopy /Y /I $(TargetDir)*.exe $(SolutionDir)\Build\
-    </PostBuildEvent>
-    <PostBuildEvent Condition="'$(OS)' == 'Unix'">
-      cp $(TargetDir)*.exe $(SolutionDir)/Build/
-    </PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-      xcopy /Y /I "$(TargetDir)*.exe" "$(SolutionDir)\Build\"
-      xcopy /Y /I /S "$(ProjectDir)\Launcher_Data\*.*" "$(SolutionDir)\Build\Launcher_Data"</PostBuildEvent>
-  </PropertyGroup>
 </Project>
