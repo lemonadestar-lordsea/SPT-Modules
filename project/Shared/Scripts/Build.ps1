@@ -112,7 +112,7 @@ foreach($file in $dllAndExeFiles) {
 Write-Host ""
 Write-Host "Copying Launcher_Data folder ... " -NoNewLine
 
-Copy-Item -Path $launcherData -Destination $buildDir -Recurse -Force
+Copy-Item -Path $launcherData -Destination $buildDir -Recurse -Force -ErrorAction SilentlyContinue
 
 if(Test-Path "$($buildDir)\Launcher_Data") {
     Write-host "OK" -ForegroundColor Green
