@@ -1,8 +1,11 @@
-﻿using EFT;
-using SPTarkov.Common.Utils.Patching;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
+using EFT;
+using SPTarkov.Common.Utils.HTTP;
+using SPTarkov.Common.Utils.Patching;
+using SPTarkov.SinglePlayer.Utils;
 
 namespace SPTarkov.SinglePlayer.Patches.Progression
 {
@@ -62,10 +65,28 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
         private static bool PrefixPatch(object __instance)
         {
             var profileId = _profileIdProperty.GetValue(__instance) as string;
+            var enabled = Request();
 
-            _stopRaidMethod.Invoke(__instance, new object[] { profileId, ExitStatus.MissingInAction, null, 0f });
+            if (enabled)
+            {
+                _stopRaidMethod.Invoke(__instance, new object[] { profileId, ExitStatus.MissingInAction, null, 0f });
+            }
 
             return false;
+        }
+
+        private static bool Request()
+        {
+            var json = new Request(null, Config.BackendUrl).GetJson("/singleplayer/settings/raid/endstate");
+
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                Debug.LogError("SPTarkov.SinglePlayer: Received NULL response for DefaultRaidSettings. Defaulting to fallback.");
+                return false;
+            }
+
+            Debug.LogError("SPTarkov.SinglePlayer: Successfully received DefaultRaidSettings");
+            return Convert.ToBoolean(json);
         }
     }
 }
