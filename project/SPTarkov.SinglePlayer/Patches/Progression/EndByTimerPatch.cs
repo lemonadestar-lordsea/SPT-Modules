@@ -67,11 +67,12 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
             var profileId = _profileIdProperty.GetValue(__instance) as string;
             var enabled = Request();
 
-            if (enabled)
+            if (!enabled)
             {
-                _stopRaidMethod.Invoke(__instance, new object[] { profileId, ExitStatus.MissingInAction, null, 0f });
+                return true;
             }
 
+            _stopRaidMethod.Invoke(__instance, new object[] { profileId, ExitStatus.MissingInAction, null, 0f });
             return false;
         }
 
