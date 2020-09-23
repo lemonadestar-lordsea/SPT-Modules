@@ -70,7 +70,7 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
 
         private static bool Request()
         {
-            var json = new Request(null, Config.BackendUrl).GetJson("/singleplayer/settings/weapon/durability/");
+            var json = new Request(null, Config.BackendUrl).GetJson("/singleplayer/settings/weapon/durability");
 
             if (string.IsNullOrWhiteSpace(json))
             {

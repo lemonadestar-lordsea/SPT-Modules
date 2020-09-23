@@ -1,13 +1,13 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using UnityEngine;
+using Newtonsoft.Json;
 using EFT.UI;
 using EFT.UI.Matchmaker;
+using SPTarkov.Common.Utils.HTTP;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils;
 using SPTarkov.SinglePlayer.Utils.DefaultSettings;
-using SPTarkov.Common.Utils.HTTP;
-using Newtonsoft.Json;
-using System;
 
 namespace SPTarkov.SinglePlayer.Patches.Matchmaker
 {
@@ -47,7 +47,7 @@ namespace SPTarkov.SinglePlayer.Patches.Matchmaker
 
         private static DefaultRaidSettings Request()
         {
-            var json = new Request(null, Config.BackendUrl).GetJson("/singleplayer/settings/defaultRaidSettings/");
+            var json = new Request(null, Config.BackendUrl).GetJson("/singleplayer/settings/raid/menu");
 
             if (string.IsNullOrWhiteSpace(json))
             {
