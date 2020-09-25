@@ -14,7 +14,7 @@ using SPTarkov.RuntimeBundles.Utils;
 using IEasyBundle = GInterface223; //Property: SameNameAsset 
 using IBundleLock = GInterface224; //Property: IsLocked
 using BundleLock = GClass2061; //Property: MaxConcurrentOperations
-using DependencyGraph = GClass2099<GInterface223>; // Method: GetDefaultNode()
+using DependencyGraph = GClass2062<GInterface223>; // Method: GetDefaultNode()
 
 namespace SPTarkov.RuntimeBundles.Patches
 {
