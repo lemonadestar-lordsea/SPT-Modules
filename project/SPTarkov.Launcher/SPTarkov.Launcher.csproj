@@ -61,6 +61,9 @@
     <Compile Include="Custom Controls\AddServerControl.xaml.cs">
       <DependentUpon>AddServerControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Custom Controls\NotificationBanner.xaml.cs">
+      <DependentUpon>NotificationBanner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Custom Controls\ServerListControl.xaml.cs">
       <DependentUpon>ServerListControl.xaml</DependentUpon>
     </Compile>
@@ -79,6 +82,8 @@
     <Compile Include="Models\Launcher\EditionCollection.cs" />
     <Compile Include="Models\Launcher\LocaleCollection.cs" />
     <Compile Include="Models\Launcher\LoginModel.cs" />
+    <Compile Include="Models\Launcher\Notifications\NotificationItem.cs" />
+    <Compile Include="Models\Launcher\Notifications\NotificationQueue.cs" />
     <Compile Include="Models\Launcher\RegisterModel.cs" />
     <Compile Include="Models\Launcher\ServerSetting.cs" />
     <Compile Include="Models\Launcher\WipeProfileModel.cs" />
@@ -166,6 +171,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Custom Controls\AddServerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Custom Controls\NotificationBanner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

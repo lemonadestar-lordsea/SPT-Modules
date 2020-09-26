@@ -50,6 +50,16 @@ namespace SPTarkov.Launcher.ViewModel
             ServerSetting tmpSettings = new ServerSetting();
 
             NewServer = tmpSettings;
+
+            Application.Current.MainWindow.Closing += MainWindow_Closing;
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(LauncherSettingsProvider.Instance.IsEditingSettings)
+            {
+                LauncherSettingsProvider.Instance.SaveSettings();
+            }
         }
 
         #region General Use Methods
@@ -76,6 +86,8 @@ namespace SPTarkov.Launcher.ViewModel
         #region Settings Commands
         public void OnBackCommand(object parameter)
         {
+            fullSpanNavigationViewModel.NotificationQueue.CloseQueue();
+
             LauncherSettingsProvider.Instance.SaveSettings();
 
             LauncherSettingsProvider.Instance.IsEditingSettings = false;
@@ -90,11 +102,11 @@ namespace SPTarkov.Launcher.ViewModel
 
             if(filesCleared)
             {
-                MessageBox.Show(LocalizationProvider.Instance.clean_temp_files_succeeded);
+                fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.clean_temp_files_succeeded);
             }
             else
             {
-                MessageBox.Show(LocalizationProvider.Instance.clean_temp_files_failed);
+                fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.clean_temp_files_failed);
             }
         }
 
@@ -104,11 +116,11 @@ namespace SPTarkov.Launcher.ViewModel
 
             if(regKeysRemoved)
             {
-                MessageBox.Show(LocalizationProvider.Instance.remove_registry_keys_succeeded);
+                fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.remove_registry_keys_succeeded);
             }
             else
             {
-                MessageBox.Show(LocalizationProvider.Instance.remove_registry_keys_failed);
+                fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.remove_registry_keys_failed);
             }
         }
 
@@ -122,12 +134,12 @@ namespace SPTarkov.Launcher.ViewModel
 
                 if(Directory.Exists(EFTSettingsFolder))
                 {
-                    MessageBox.Show(LocalizationProvider.Instance.clear_game_settings_failed);
+                    fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.clear_game_settings_failed);
                     return;
                 }
             }
 
-            MessageBox.Show(LocalizationProvider.Instance.clear_game_settings_succeeded);
+            fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.clear_game_settings_succeeded);
         }
 
         public void OnSelectGameFolderCommand(object parameter)

@@ -1,7 +1,6 @@
 ﻿using SPTarkov.Launcher.Generics;
 using SPTarkov.Launcher.Helpers;
 using SPTarkov.Launcher.Models.Launcher;
-using System.Windows;
 
 namespace SPTarkov.Launcher.ViewModel
 {
@@ -56,7 +55,7 @@ namespace SPTarkov.Launcher.ViewModel
                     break;
 
                 case -1:
-                    MessageBox.Show(LocalizationProvider.Instance.incorrect_login);
+                    navigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.incorrect_login);
                     return;
 
                 case -2:

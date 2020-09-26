@@ -1,7 +1,6 @@
 ﻿using SPTarkov.Launcher.Generics;
 using SPTarkov.Launcher.Helpers;
 using SPTarkov.Launcher.Models.Launcher;
-using System.Windows;
 
 namespace SPTarkov.Launcher.ViewModel
 {
@@ -48,7 +47,7 @@ namespace SPTarkov.Launcher.ViewModel
                     break;
 
                 case -1:
-                    MessageBox.Show(LocalizationProvider.Instance.account_exist);
+                    navigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.account_exist);
                     return;
 
                 case -2:
@@ -56,7 +55,7 @@ namespace SPTarkov.Launcher.ViewModel
                     return;
 
                 case -3:
-                    MessageBox.Show(LocalizationProvider.Instance.incorrect_login);
+                    navigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.incorrect_login);
                     return;
             }
         }
