@@ -124,7 +124,7 @@ namespace SPTarkov.Launcher
 
         private int IsPiratedCopy()
         {
-            var value0 = 0;
+            var value0 = 5;
 
             try
             {
