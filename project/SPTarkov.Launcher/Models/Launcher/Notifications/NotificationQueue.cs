@@ -35,6 +35,7 @@ namespace SPTarkov.Launcher.Models.Launcher.Notifications
 
         public void CloseQueue()
         {
+            queue.Clear();
             queueTimer.Stop();
             ShowBanner = false;
         }
