@@ -1,7 +1,6 @@
 ﻿using SPTarkov.Launcher.Generics;
 using SPTarkov.Launcher.Helpers;
 using SPTarkov.Launcher.Models.Launcher;
-using System.Windows;
 
 namespace SPTarkov.Launcher.ViewModel
 {
@@ -66,8 +65,7 @@ namespace SPTarkov.Launcher.ViewModel
             }
             else
             {
-                MessageBox.Show(LocalizationProvider.Instance.edit_profile_update_error); 
-                //$"Some Issues occurred while updating your profile.\n\nEmail Update: {emailStatus}\nPassword Update: {passStatus}", "Update Errors Occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                navigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.edit_profile_update_error);
             }
         }
 

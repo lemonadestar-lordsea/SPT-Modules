@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using SPTarkov.Launcher.Models.Launcher.Notifications;
+using System.ComponentModel;
 
 namespace SPTarkov.Launcher.ViewModel
 {
@@ -15,6 +16,8 @@ namespace SPTarkov.Launcher.ViewModel
                 RaisePropertyChanged(nameof(SelectedViewModel));
             }
         }
+
+        public NotificationQueue NotificationQueue { get; set; } = new NotificationQueue(5000);
 
         public event PropertyChangedEventHandler PropertyChanged;
 

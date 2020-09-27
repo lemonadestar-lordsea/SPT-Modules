@@ -3,6 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewmodel="clr-namespace:SPTarkov.Launcher.ViewModel"
                     xmlns:views="clr-namespace:SPTarkov.Launcher.Views"
+                    xmlns:cc="clr-namespace:SPTarkov.Launcher.Custom_Controls"
                     xmlns:local="clr-namespace:SPTarkov.Launcher"
                     Startup="Application_Startup">
 
@@ -306,6 +307,40 @@
             <Setter Property="Foreground" Value="{StaticResource SPTForeground}"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Margin" Value="5"/>
+        </Style>
+
+
+        <Style TargetType="{x:Type cc:NotificationBanner}">
+            <Setter Property="Background" Value="{StaticResource SPTBackgroundLight}"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleY="0"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding NotificationQueue.ShowBanner, RelativeSource={RelativeSource Self}}"
+                             Value="true">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY"
+                                                 To="1"
+                                                 Duration="0:0:0.200"
+                                                 />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY"
+                                                 To="0" Duration="0:0:0.200"
+                                                 />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
     </Application.Resources>
