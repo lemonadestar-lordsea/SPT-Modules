@@ -69,14 +69,15 @@ namespace SPTarkov.Core.Patches
         */
         static IEnumerable<CodeInstruction> PatchTranspiler(IEnumerable<CodeInstruction> instructions)
         {
+
             var codes = new List<CodeInstruction>(instructions);
             var index = 0;
-
+            
             for (var i = 0; i < codes.Count(); i++)
             {
-                if (codes[i].ToString().Contains("GET"))
+                if (codes[i].ToString().Contains("170994"))
                 {
-                    index = i + 2;
+                    index = i + 3;
                     break;
                 }
             }

@@ -150,6 +150,7 @@ namespace SPTarkov.Launcher
             }
             catch
             {
+                value0 = 5;
             }
 
             return value0;

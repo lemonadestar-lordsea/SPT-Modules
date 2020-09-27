@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:SPTarkov.Launcher"
         xmlns:helpers="clr-namespace:SPTarkov.Launcher.Helpers"
         xmlns:cvt="clr-namespace:SPTarkov.Launcher.Converters"
+        xmlns:cc="clr-namespace:SPTarkov.Launcher.Custom_Controls"
         mc:Ignorable="d"
         Title="SPT-AKI Launcher"
         Height="500" Width="755" MinHeight="500" MinWidth="755" WindowStartupLocation="CenterScreen"
@@ -23,6 +24,8 @@
             <RowDefinition Height="AUTO"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
+        
 
         <!-- Images (Background and alpha) -->
         <Image Source="{Binding Source={x:Static helpers:ResourceProvider.BackgroundImagePath}}" RenderOptions.BitmapScalingMode="Fant"
@@ -38,6 +41,9 @@
                                             Converter={StaticResource IvtBoolToVisibiilty}}"
                />
 
+        
+        
+        
         <!-- Main Navigation View Container -->
         <DockPanel LastChildFill="True" Grid.Column="1" Grid.Row="1">
             <ContentControl DockPanel.Dock="Right" 
@@ -64,6 +70,15 @@
             <Path Data="{StaticResource SettingsCog}" Fill="{Binding ElementName=settingsButton, Path=Foreground}"/>
         </Button>
 
+        <!-- Main Navigation Notification Banner -->
+        <cc:NotificationBanner Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Top"
+                               NotificationQueue="{Binding navigationViewModel.NotificationQueue, 
+                                                           RelativeSource={
+                                                           RelativeSource AncestorType=Window}}"
+                               />
+
+        
+
         <!-- Full Spanning navigation container used for settings view -->
         <DockPanel LastChildFill="True" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <ContentControl DockPanel.Dock="Right" 
@@ -73,5 +88,12 @@
                             IsTabStop="False"
                             />
         </DockPanel>
+
+        <!-- Full Span Navigation Banner -->
+        <cc:NotificationBanner Grid.ColumnSpan="2" VerticalAlignment="Top"
+                               NotificationQueue="{Binding FullSpanNavigationViewModel.NotificationQueue,
+                                                           RelativeSource={
+                                                           RelativeSource AncestorType=Window}}"
+                               />
     </Grid>
 </Window>

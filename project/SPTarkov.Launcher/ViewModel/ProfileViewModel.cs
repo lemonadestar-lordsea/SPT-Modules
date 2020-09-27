@@ -75,15 +75,15 @@ namespace SPTarkov.Launcher.ViewModel
                     break;
 
                 case -1:
-                    MessageBox.Show(LocalizationProvider.Instance.installed_in_live_game_warning);
+                    navigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.installed_in_live_game_warning);
                     break;
 
                 case -2:
-                    MessageBox.Show(LocalizationProvider.Instance.no_official_game_warning);
+                    navigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.no_official_game_warning);
                     break;
 
                 case -3:
-                    MessageBox.Show(LocalizationProvider.Instance.eft_exe_not_found_warning);
+                    navigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.eft_exe_not_found_warning);
                     return;
             }
         }

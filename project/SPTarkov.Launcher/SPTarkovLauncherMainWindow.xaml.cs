@@ -29,6 +29,7 @@ namespace SPTarkov.Launcher
             viewmodel.SelectedViewModel = new ConnectServerViewModel(viewmodel);
             navigationViewModel = viewmodel;
 
+
             var fullSpanViewModel = new NavigationViewModel();
             FullSpanNavigationViewModel = fullSpanViewModel;
 
