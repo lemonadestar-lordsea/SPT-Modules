@@ -102,11 +102,11 @@ namespace SPTarkov.Launcher.ViewModel
 
             if(filesCleared)
             {
-                fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.clean_temp_files_succeeded);
+                fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.clean_temp_files_succeeded, true);
             }
             else
             {
-                fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.clean_temp_files_failed);
+                fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.clean_temp_files_failed, true);
             }
         }
 
@@ -116,11 +116,11 @@ namespace SPTarkov.Launcher.ViewModel
 
             if(regKeysRemoved)
             {
-                fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.remove_registry_keys_succeeded);
+                fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.remove_registry_keys_succeeded, true);
             }
             else
             {
-                fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.remove_registry_keys_failed);
+                fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.remove_registry_keys_failed, true);
             }
         }
 
@@ -134,12 +134,12 @@ namespace SPTarkov.Launcher.ViewModel
 
                 if(Directory.Exists(EFTSettingsFolder))
                 {
-                    fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.clear_game_settings_failed);
+                    fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.clear_game_settings_failed, true);
                     return;
                 }
             }
 
-            fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.clear_game_settings_succeeded);
+            fullSpanNavigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.clear_game_settings_succeeded, true);
         }
 
         public void OnSelectGameFolderCommand(object parameter)

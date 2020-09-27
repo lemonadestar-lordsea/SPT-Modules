@@ -49,31 +49,49 @@ namespace SPTarkov.Launcher.Models.Launcher.Notifications
             }
         }
 
-        public void Enqueue(string Message)
+        public void Enqueue(string Message, bool AllowNext = false)
         {
             if (queue.Where(x => x.Message == Message).Count() == 0)
             {
                 queue.Add(new NotificationItem(Message));
+
                 CheckAndShowNotifications();
+
+                if(AllowNext && queue.Count == 2)
+                {
+                    Next(true);
+                }
             }
         }
 
-        public void Enqueue(string Message, string ButtonText, Action ButtonAction)
+        public void Enqueue(string Message, string ButtonText, Action ButtonAction, bool AllowNext = false)
         {
             if (queue.Where(x => x.Message == Message && x.ButtonText == ButtonText && x.ItemAction == ButtonAction).Count() == 0)
             {
                 queue.Add(new NotificationItem(Message, ButtonText, ButtonAction));
                 CheckAndShowNotifications();
+
+                if (AllowNext && queue.Count == 2)
+                {
+                    Next(true);
+                }
             }
         }
 
-        public void Next()
+        public void Next(bool ResetTimer = false)
         {
             queue.RemoveAt(0);
 
             if (queue.Count <= 0)
             {
                 CloseQueue();
+                return;
+            }
+
+            if(ResetTimer)
+            {
+                queueTimer.Stop();
+                queueTimer.Start();
             }
         }
 
