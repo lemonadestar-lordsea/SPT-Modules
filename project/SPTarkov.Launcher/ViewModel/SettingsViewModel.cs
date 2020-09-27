@@ -169,11 +169,13 @@ namespace SPTarkov.Launcher.ViewModel
             {
                 if (setting.Url == "https://127.0.0.1")
                 {
-                    MessageBoxResult result = MessageBox.Show($"{LocalizationProvider.Instance.local_server_remove_warning}\n{LocalizationProvider.Instance.remove_server_question}", "", MessageBoxButton.YesNo);
-                    if (result == MessageBoxResult.No)
+                    fullSpanNavigationViewModel.NotificationQueue.Enqueue($"{LocalizationProvider.Instance.local_server_remove_warning}\n\n{LocalizationProvider.Instance.remove_server_question}",
+                                                                          $"{LocalizationProvider.Instance.remove_server_tooltip}", () => 
                     {
-                        return;
-                    }
+                        LauncherSettingsProvider.Instance.RemoveServerAndSave(setting);
+                    });
+
+                    return;
                 }
 
                 LauncherSettingsProvider.Instance.RemoveServerAndSave(setting);
