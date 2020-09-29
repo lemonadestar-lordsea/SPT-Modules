@@ -4,7 +4,9 @@ using UnityEngine;
 using SPTarkov.Common.Utils.App;
 using SPTarkov.Common.Utils.HTTP;
 using SPTarkov.Common.Utils.Patching;
+using SPTarkov.SinglePlayer.Utils;
 using LocationInfo = GClass757.GClass759;
+using System;
 
 namespace SPTarkov.SinglePlayer.Patches.Progression
 {
@@ -35,7 +37,6 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
 			if (__instance.GetType() != PatcherConstants.LocalGameType)
 			{
 				// online match
-				Debug.LogError("OfflineLootPatch > Online match?!");
 				return true;
 			}
 
@@ -58,7 +59,24 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
 			Debug.LogError("OfflineLootPatch > Successfully received loot from server");
 			__result = Task.FromResult(locationLoot);
 
+			// get weapon durability
+			Config.WeaponDurabilityEnabled = GetDurabilityState();
+
 			return false;
+		}
+
+		private static bool GetDurabilityState()
+		{
+			var json = new Request(null, Config.BackendUrl).GetJson("/singleplayer/settings/weapon/durability");
+
+			if (string.IsNullOrWhiteSpace(json))
+			{
+				Debug.LogError("SPTarkov.SinglePlayer: Received weapon durability state data is NULL, using fallback");
+				return false;
+			}
+
+			Debug.LogError("SPTarkov.SinglePlayer: Successfully received weapon durability state");
+			return Convert.ToBoolean(json);
 		}
 
 		struct LocationName
