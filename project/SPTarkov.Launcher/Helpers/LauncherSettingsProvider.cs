@@ -145,17 +145,17 @@ namespace SPTarkov.Launcher.Helpers
             }
         }
 
-        private bool _IsConnecting;
+        private bool _AllowSettings;
         [JsonIgnore]
-        public bool IsConnecting
+        public bool AllowSettings
         {
-            get => _IsConnecting;
+            get => _AllowSettings;
             set
             {
-                if (_IsConnecting != value)
+                if (_AllowSettings != value)
                 {
-                    _IsConnecting = value;
-                    RaisePropertyChanged(nameof(IsConnecting));
+                    _AllowSettings = value;
+                    RaisePropertyChanged(nameof(AllowSettings));
                 }
             }
         }

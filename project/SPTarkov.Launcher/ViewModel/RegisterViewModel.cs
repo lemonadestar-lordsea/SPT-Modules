@@ -1,6 +1,8 @@
 ﻿using SPTarkov.Launcher.Generics;
+using SPTarkov.Launcher.Generics.AsyncCommand;
 using SPTarkov.Launcher.Helpers;
 using SPTarkov.Launcher.Models.Launcher;
+using System.Threading.Tasks;
 
 namespace SPTarkov.Launcher.ViewModel
 {
@@ -8,7 +10,7 @@ namespace SPTarkov.Launcher.ViewModel
     {
         public RegisterModel newProfile { get; set; }
         public GenericICommand ShowLoginCommand { get; set; }
-        public GenericICommand RegisterCommand { get; set; }
+        public AwaitableDelegateCommand RegisterCommand { get; set; }
         private NavigationViewModel navigationViewModel { get; set; }
 
         public RegisterViewModel(NavigationViewModel viewModel)
@@ -16,7 +18,7 @@ namespace SPTarkov.Launcher.ViewModel
             navigationViewModel = viewModel;
 
             ShowLoginCommand = new GenericICommand(OnShowLoginCommand);
-            RegisterCommand = new GenericICommand(OnRegisterCommand);
+            RegisterCommand = new AwaitableDelegateCommand(OnRegisterCommand);
 
             RegisterModel tmpProfile = new RegisterModel();
 
@@ -28,9 +30,14 @@ namespace SPTarkov.Launcher.ViewModel
             navigationViewModel.SelectedViewModel = new LoginViewModel(navigationViewModel);
         }
 
-        public void OnRegisterCommand(object parameter)
+        public async Task OnRegisterCommand()
         {
-            int status = AccountManager.Register(newProfile.Email ?? "", newProfile.Password ?? "", newProfile.EditionsCollection.SelectedEdition);
+            LauncherSettingsProvider.Instance.AllowSettings = false;
+
+            int status = await AccountManager.RegisterAsync(newProfile.Email ?? "", newProfile.Password ?? "", newProfile.EditionsCollection.SelectedEdition);
+
+            LauncherSettingsProvider.Instance.AllowSettings = true;
+
 
             switch (status)
             {
@@ -51,6 +58,7 @@ namespace SPTarkov.Launcher.ViewModel
                     return;
 
                 case -2:
+                    navigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.registration_failed);
                     navigationViewModel.SelectedViewModel = new ConnectServerViewModel(navigationViewModel);
                     return;
 

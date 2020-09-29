@@ -13,7 +13,6 @@
         x:Name="main">
     <Window.Resources>
         <cvt:InvertedBooleanToVisibilityConverter x:Key="IvtBoolToVisibiilty" />
-        <cvt:InvertedBooleanConverter x:Key="IvtBool"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -65,7 +64,7 @@
                                             Path=IsEditingSettings,
                                             Converter={StaticResource IvtBoolToVisibiilty}}"
                 IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
-                            Path=IsConnecting, Converter={StaticResource IvtBool}}"
+                            Path=AllowSettings}"
                 >
             <Path Data="{StaticResource SettingsCog}" Fill="{Binding ElementName=settingsButton, Path=Foreground}"/>
         </Button>
@@ -90,7 +89,7 @@
         </DockPanel>
 
         <!-- Full Span Navigation Banner -->
-        <cc:NotificationBanner Grid.ColumnSpan="2" VerticalAlignment="Top"
+        <cc:NotificationBanner Grid.ColumnSpan="2" Grid.RowSpan="2" VerticalAlignment="Top"
                                NotificationQueue="{Binding FullSpanNavigationViewModel.NotificationQueue,
                                                            RelativeSource={
                                                            RelativeSource AncestorType=Window}}"

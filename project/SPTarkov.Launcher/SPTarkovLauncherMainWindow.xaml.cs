@@ -45,6 +45,8 @@ namespace SPTarkov.Launcher
 
             navigationViewModel.SelectedViewModel = null;
 
+            navigationViewModel.NotificationQueue.CloseQueue();
+
             LauncherSettingsProvider.Instance.IsEditingSettings = true;
             FullSpanNavigationViewModel.SelectedViewModel = new SettingsViewModel(FullSpanNavigationViewModel, navigationViewModel);
         }

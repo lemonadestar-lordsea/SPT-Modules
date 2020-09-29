@@ -1,12 +1,14 @@
 ﻿using SPTarkov.Launcher.Generics;
+using SPTarkov.Launcher.Generics.AsyncCommand;
 using SPTarkov.Launcher.Helpers;
 using SPTarkov.Launcher.Models.Launcher;
+using System.Threading.Tasks;
 
 namespace SPTarkov.Launcher.ViewModel
 {
     public class WipeProfileViewModel
     {
-        public GenericICommand WipeCommand { get; set; }
+        public AwaitableDelegateCommand WipeCommand { get; set; }
         public GenericICommand BackCommand { get; set; }
         public WipeProfileModel ProfileWipe { get; set; }
         private NavigationViewModel navigationViewModel { get; set; }
@@ -14,12 +16,14 @@ namespace SPTarkov.Launcher.ViewModel
         public WipeProfileViewModel(NavigationViewModel viewModel)
         {
             navigationViewModel = viewModel;
-            WipeCommand = new GenericICommand(OnWipeCommand);
+            WipeCommand = new AwaitableDelegateCommand(OnWipeCommand);
             BackCommand = new GenericICommand(OnBackCommand);
 
             WipeProfileModel tmpWipeProfile = new WipeProfileModel();
 
             ProfileWipe = tmpWipeProfile;
+
+            //LauncherSettingsProvider.Instance.AllowSettings = true;
         }
 
         public void OnBackCommand(object parameter)
@@ -27,9 +31,14 @@ namespace SPTarkov.Launcher.ViewModel
             navigationViewModel.SelectedViewModel = new EditProfileViewModel(navigationViewModel);
         }
 
-        public void OnWipeCommand(object parameter)
+        public async Task OnWipeCommand()
         {
-            int status = AccountManager.Wipe(ProfileWipe.EditionsCollection.SelectedEdition);
+            LauncherSettingsProvider.Instance.AllowSettings = false;
+
+            int status = await AccountManager.WipeAsync(ProfileWipe.EditionsCollection.SelectedEdition);
+
+            LauncherSettingsProvider.Instance.AllowSettings = true;
+
 
             switch (status)
             {
@@ -39,9 +48,11 @@ namespace SPTarkov.Launcher.ViewModel
 
                 case -1:
                     navigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.login_failed);
+                    navigationViewModel.SelectedViewModel = new ConnectServerViewModel(navigationViewModel);
                     return;
 
                 case -2:
+                    navigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.edit_profile_update_error);
                     navigationViewModel.SelectedViewModel = new ConnectServerViewModel(navigationViewModel);
                     return;
             }
