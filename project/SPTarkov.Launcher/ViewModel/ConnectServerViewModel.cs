@@ -9,24 +9,26 @@ namespace SPTarkov.Launcher.ViewModel
     public class ConnectServerViewModel
     {
         public ConnectServerModel connectInfo { get; set; }
-        public AwaitableDelegateCommand<object> RetryAsyncCommand { get; set; }
+        public AwaitableDelegateCommand RetryAsyncCommand { get; set; }
         private NavigationViewModel navigationViewModel { get; set; }
 
         public ConnectServerViewModel(NavigationViewModel viewModel)
         {
             navigationViewModel = viewModel;
 
-            RetryAsyncCommand = new AwaitableDelegateCommand<object>(OnRetryAsyncCommand);
+            RetryAsyncCommand = new AwaitableDelegateCommand(OnRetryAsyncCommand);
 
             ConnectServerModel tmpConnectInfo = new ConnectServerModel();
             connectInfo = tmpConnectInfo;
 
-            _ = OnRetryAsyncCommand(null);
+            LauncherSettingsProvider.Instance.AllowSettings = true;
+
+            _ = OnRetryAsyncCommand();
         }
 
-        public async Task OnRetryAsyncCommand(object parameter)
+        public async Task OnRetryAsyncCommand()
         {
-            if(LauncherSettingsProvider.Instance.IsConnecting)
+            if(!LauncherSettingsProvider.Instance.AllowSettings)
             {
                 return;
             }
@@ -37,7 +39,7 @@ namespace SPTarkov.Launcher.ViewModel
                 return;
             }
 
-            LauncherSettingsProvider.Instance.IsConnecting = true;
+            LauncherSettingsProvider.Instance.AllowSettings = false;
             connectInfo.InfoText = $"{LocalizationProvider.Instance.server_connecting} ...";
 
             ServerSetting DefaultServer = LauncherSettingsProvider.GetDefaultServer();
@@ -57,7 +59,7 @@ namespace SPTarkov.Launcher.ViewModel
 
                 if (DefaultServer.AutoLoginCreds == null || DefaultServer.AutoLoginCreds.Email == "" || DefaultServer.AutoLoginCreds.Password == "")
                 {
-                    LauncherSettingsProvider.Instance.IsConnecting = false;
+                    LauncherSettingsProvider.Instance.AllowSettings = true;
 
                     navigationViewModel.SelectedViewModel = new RegisterViewModel(navigationViewModel);
                 }
@@ -65,24 +67,24 @@ namespace SPTarkov.Launcher.ViewModel
                 {
                     if (LauncherSettingsProvider.Instance.UseAutoLogin && DefaultServer.AutoLoginCreds != null)
                     {
-                        int status = AccountManager.Login(DefaultServer.AutoLoginCreds);
+                        int status = await AccountManager.LoginAsync(DefaultServer.AutoLoginCreds);
 
                         if (status == 1)
                         {
-                            LauncherSettingsProvider.Instance.IsConnecting = false;
+                            LauncherSettingsProvider.Instance.AllowSettings = true;
 
                             navigationViewModel.SelectedViewModel = new ProfileViewModel(navigationViewModel);
                         }
                         else
                         {
-                            LauncherSettingsProvider.Instance.IsConnecting = false;
+                            LauncherSettingsProvider.Instance.AllowSettings = true;
 
                             navigationViewModel.SelectedViewModel = new LoginViewModel(navigationViewModel);
                         }
                     }
                     else
                     {
-                        LauncherSettingsProvider.Instance.IsConnecting = false;
+                        LauncherSettingsProvider.Instance.AllowSettings = true;
 
                         navigationViewModel.SelectedViewModel = new LoginViewModel(navigationViewModel);
                     }
@@ -93,7 +95,7 @@ namespace SPTarkov.Launcher.ViewModel
                 connectInfo.InfoText = String.Format(LocalizationProvider.Instance.server_unavailable_format_1, DefaultServer.Name);
             }
 
-            LauncherSettingsProvider.Instance.IsConnecting = false;
+            LauncherSettingsProvider.Instance.AllowSettings = true;
         }
     }
 }

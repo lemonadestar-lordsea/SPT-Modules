@@ -37,6 +37,8 @@
                    />
         <TextBox Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1"
                  Text="{Binding login.Email}"
+                 IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
+                            Path=AllowSettings}"
                  />
 
         <!-- Password Controls -->
@@ -46,15 +48,22 @@
         
         <TextBox Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2"
                  Text="{Binding login.Password}"
+                 IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
+                            Path=AllowSettings}"
                  />
 
         <!-- Addtional Controls -->
         <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
                          Path=back}" Grid.Column="2" Grid.Row="4"
                 Command="{Binding BackCommand}"
+                IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
+                            Path=AllowSettings}"
                 />
-        <Button Content="Wipe Profile" Grid.Row="4" Grid.Column="3" Margin="5"
+        <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                          Path=wipe_profile}" Grid.Row="4" Grid.Column="3" Margin="5"
                 Command="{Binding WipeProfileCommand}"
+                IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
+                            Path=AllowSettings}"
                 />
 
         <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},

@@ -38,12 +38,16 @@
                   ItemsSource="{Binding ProfileWipe.EditionsCollection.AvailableEditions}"
                   SelectedValue="{Binding ProfileWipe.EditionsCollection.SelectedEdition}"
                   SelectedIndex="{Binding ProfileWipe.EditionsCollection.SelectedEditionIndex}"
+                  IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
+                            Path=AllowSettings}"
                   />
 
         <!-- Addtional Controls -->
         <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
                           Path=back}" Grid.Column="2" Grid.Row="3"
                 Command="{Binding BackCommand}"
+                IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
+                            Path=AllowSettings}"
                 />
         <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
                           Path=wipe}" Grid.Row="6" Grid.ColumnSpan="6" Style="{StaticResource SPTBigButtonStyle}"

@@ -53,5 +53,6 @@
   "select_folder": "Выберите папку",
   "server_url_and_name_empty": "Имя и URL не могут быть пустыми",
   "server_url_exists": "URL уже существует",
-  "server_name_exists": "Имя уже существует"
+  "server_name_exists": "Имя уже существует",
+  "registration_failed": "Регистрация не удалась"
 }

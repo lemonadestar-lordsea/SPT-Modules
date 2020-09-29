@@ -1,6 +1,8 @@
 ﻿using SPTarkov.Launcher.Generics;
+using SPTarkov.Launcher.Generics.AsyncCommand;
 using SPTarkov.Launcher.Helpers;
 using SPTarkov.Launcher.Models.Launcher;
+using System.Threading.Tasks;
 
 namespace SPTarkov.Launcher.ViewModel
 {
@@ -8,7 +10,7 @@ namespace SPTarkov.Launcher.ViewModel
     {
         public LoginModel login { get; set; }
 
-        public GenericICommand UpdateCommand { get; set; }
+        public AwaitableDelegateCommand UpdateCommand { get; set; }
         public GenericICommand BackCommand { get; set; }
         public GenericICommand WipeProfileCommand { get; set; }
 
@@ -17,7 +19,7 @@ namespace SPTarkov.Launcher.ViewModel
         {
             navigationViewModel = viewModel;
 
-            UpdateCommand = new GenericICommand(OnUpdateCommand);
+            UpdateCommand = new AwaitableDelegateCommand(OnUpdateCommand);
             BackCommand = new GenericICommand(OnBackCommand);
             WipeProfileCommand = new GenericICommand(OnWipeProfileCommand);
 
@@ -48,24 +50,23 @@ namespace SPTarkov.Launcher.ViewModel
             return "Undefined Response";   
         }
 
-        public void OnUpdateCommand(object parameter)
+        public async Task OnUpdateCommand()
         {
-            string emailStatus = GetStatus(AccountManager.ChangeEmail(login.Email));
-            string passStatus = GetStatus(AccountManager.ChangePassword(login.Password));
+            LauncherSettingsProvider.Instance.AllowSettings = false;
 
-            if(emailStatus == "CONNECTION_ERROR" || passStatus == "CONNECTION_ERROR")
-            {
-                navigationViewModel.SelectedViewModel = new ConnectServerViewModel(navigationViewModel);
-                return;
-            }
+            string emailStatus = GetStatus(await AccountManager.ChangeEmailAsync(login.Email));
+            string passStatus = GetStatus(await AccountManager.ChangePasswordAsync(login.Password));
 
-            if(emailStatus == "OK" && passStatus == "OK")
+            LauncherSettingsProvider.Instance.AllowSettings = true;
+
+            if (emailStatus == "OK" && passStatus == "OK")
             {
                 navigationViewModel.SelectedViewModel = new ProfileViewModel(navigationViewModel);
             }
             else
             {
                 navigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.edit_profile_update_error);
+                navigationViewModel.SelectedViewModel = new ConnectServerViewModel(navigationViewModel);
             }
         }
 

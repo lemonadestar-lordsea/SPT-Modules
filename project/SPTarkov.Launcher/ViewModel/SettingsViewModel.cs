@@ -173,7 +173,7 @@ namespace SPTarkov.Launcher.ViewModel
                                                                           $"{LocalizationProvider.Instance.remove_server_tooltip}", () => 
                     {
                         LauncherSettingsProvider.Instance.RemoveServerAndSave(setting);
-                    });
+                    }, true);
 
                     return;
                 }

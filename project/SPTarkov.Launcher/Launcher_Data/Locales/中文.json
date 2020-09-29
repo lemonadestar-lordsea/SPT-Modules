@@ -53,5 +53,6 @@
   "select_folder": "選擇文件夾",
   "server_url_and_name_empty": "名稱和網址不能為空",
   "server_url_exists": "這個鏈接已存在",
-  "server_name_exists": "名稱已存在"
+  "server_name_exists": "名稱已存在",
+  "registration_failed": "註冊失敗"
 }
