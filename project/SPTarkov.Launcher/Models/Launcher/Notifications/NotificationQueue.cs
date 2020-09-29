@@ -136,6 +136,7 @@ namespace SPTarkov.Launcher.Models.Launcher.Notifications
         {
             queueTimer.Dispose();
             animateChangeTimer.Dispose();
+            animateCloseTimer.Dispose();
         }
     }
 }
