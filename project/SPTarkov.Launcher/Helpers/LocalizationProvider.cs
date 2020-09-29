@@ -108,13 +108,13 @@ namespace SPTarkov.Launcher.Helpers
             englishLocale.game_path = "Game Path";
             englishLocale.clear_game_settings = "Clear Game Settings";
             englishLocale.clear_game_settings_succeeded = "Game settings cleared";
-            englishLocale.clear_game_settings_failed = "Some issues occured while clearing game settings";
+            englishLocale.clear_game_settings_failed = "Some issues occurred while clearing game settings";
             englishLocale.remove_registry_keys = "Remove Registry Keys";
             englishLocale.remove_registry_keys_succeeded = "Registry keys removed";
-            englishLocale.remove_registry_keys_failed = "Some issues occured while removing registry keys";
+            englishLocale.remove_registry_keys_failed = "Some issues occurred while removing registry keys";
             englishLocale.clean_temp_files = "Clean Temp Files";
             englishLocale.clean_temp_files_succeeded = "Temp files cleaned";
-            englishLocale.clean_temp_files_failed = "Some issues occured while cleaning temp files";
+            englishLocale.clean_temp_files_failed = "Some issues occurred while cleaning temp files";
             englishLocale.select_folder = "Select Folder";
             englishLocale.server_url_and_name_empty = "Name and Url cannot be empty";
             englishLocale.server_url_exists = "Url already exists";
