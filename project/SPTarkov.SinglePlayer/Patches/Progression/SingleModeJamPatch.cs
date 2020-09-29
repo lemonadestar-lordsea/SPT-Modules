@@ -1,10 +1,8 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using UnityEngine;
 using EFT;
 using EFT.InventoryLogic;
-using SPTarkov.Common.Utils.HTTP;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils;
 using static EFT.Player;
@@ -55,31 +53,14 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
 
         public static void PatchPostfix(object __instance, Weapon ___weapon_0, FirearmsAnimator ___firearmsAnimator_0, FirearmController ___firearmController_0)
         {
-            var enabled = Request();
-
-            if (!enabled || ___weapon_0.MalfunctionState != Weapon.EMalfunctionState.Jam)
+            if (!Config.WeaponDurabilityEnabled || ___weapon_0.MalfunctionState != Weapon.EMalfunctionState.Jam)
             {
                 return;
             }
 
             _onFireEventMethod.Invoke(__instance, new object[] { });
-
             ___firearmsAnimator_0.Animator.Play("JAM", 1, 0f);
             ___firearmController_0.EmitEvents();
-        }
-
-        private static bool Request()
-        {
-            var json = new Request(null, Config.BackendUrl).GetJson("/singleplayer/settings/weapon/durability");
-
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                Debug.LogError("SPTarkov.SinglePlayer: Received weapon durability state data is NULL, using fallback");
-                return false;
-            }
-
-            Debug.LogError("SPTarkov.SinglePlayer: Successfully received weapon durability state");
-            return Convert.ToBoolean(json);
         }
     }
 }
