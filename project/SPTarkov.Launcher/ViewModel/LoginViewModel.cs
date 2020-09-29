@@ -1,6 +1,8 @@
 ﻿using SPTarkov.Launcher.Generics;
+using SPTarkov.Launcher.Generics.AsyncCommand;
 using SPTarkov.Launcher.Helpers;
 using SPTarkov.Launcher.Models.Launcher;
+using System.Threading.Tasks;
 
 namespace SPTarkov.Launcher.ViewModel
 {
@@ -9,7 +11,7 @@ namespace SPTarkov.Launcher.ViewModel
         public LoginModel login { get; set; }
         public ServerSetting DefaultServer { get; set; }
         public GenericICommand ShowRegisterCommand { get; set; }
-        public GenericICommand LoginCommand { get; set; }
+        public AwaitableDelegateCommand LoginCommand { get; set; }
         private NavigationViewModel navigationViewModel { get; set; }
 
         public LoginViewModel(NavigationViewModel viewModel)
@@ -17,7 +19,7 @@ namespace SPTarkov.Launcher.ViewModel
             navigationViewModel = viewModel;
 
             ShowRegisterCommand = new GenericICommand(OnShowRegisterCommand);
-            LoginCommand = new GenericICommand(OnLoginCommand);
+            LoginCommand = new AwaitableDelegateCommand(OnLoginCommand);
 
             DefaultServer = LauncherSettingsProvider.GetDefaultServer();
 
@@ -37,9 +39,14 @@ namespace SPTarkov.Launcher.ViewModel
             navigationViewModel.SelectedViewModel = new RegisterViewModel(navigationViewModel);
         }
 
-        public void OnLoginCommand(object parameter)
+        public async Task OnLoginCommand()
         {
-            int status = AccountManager.Login(login);
+            LauncherSettingsProvider.Instance.AllowSettings = false;
+
+            int status = await AccountManager.LoginAsync(login);
+
+            LauncherSettingsProvider.Instance.AllowSettings = true;
+
 
             switch (status)
             {
@@ -59,6 +66,7 @@ namespace SPTarkov.Launcher.ViewModel
                     return;
 
                 case -2:
+                    navigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.login_failed);
                     navigationViewModel.SelectedViewModel = new ConnectServerViewModel(navigationViewModel);
                     return;
             }

@@ -27,7 +27,9 @@ namespace SPTarkov.Launcher.Custom_Controls
         {
             if(NotificationQueue.queue.Count > 0 && NotificationQueue.queue[0] != null)
             {
+                NotificationQueue.queueTimer.Stop();
                 NotificationQueue.queue[0].ItemAction?.Invoke();
+                NotificationQueue.Next(true);
             }
         }
     }

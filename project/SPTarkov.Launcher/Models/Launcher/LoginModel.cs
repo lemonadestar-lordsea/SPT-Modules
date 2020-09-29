@@ -4,6 +4,20 @@ namespace SPTarkov.Launcher.Models.Launcher
 {
     public class LoginModel : INotifyPropertyChanged
     {
+        private bool _AllowOtherCommands;
+        public bool AllowOtherCommands
+        {
+            get => _AllowOtherCommands;
+            set
+            {
+                if (_AllowOtherCommands != value)
+                {
+                    _AllowOtherCommands = value;
+                    RaisePropertyChanged(nameof(AllowOtherCommands));
+                }
+            }
+        }
+
         private string _Email;
         public string Email
         {

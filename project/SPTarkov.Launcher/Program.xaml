@@ -307,9 +307,10 @@
             <Setter Property="Foreground" Value="{StaticResource SPTForeground}"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Margin" Value="5"/>
+            <Setter Property="Opacity" Value="1"/>
         </Style>
 
-
+        <!-- Notification Banner Style -->
         <Style TargetType="{x:Type cc:NotificationBanner}">
             <Setter Property="Background" Value="{StaticResource SPTBackgroundLight}"/>
             <Setter Property="RenderTransform">
@@ -327,6 +328,10 @@
                                                  To="1"
                                                  Duration="0:0:0.200"
                                                  />
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                 From="0"
+                                                 To="1"
+                                                 Duration="0:0:0.160"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </DataTrigger.EnterActions>
@@ -336,6 +341,10 @@
                                 <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY"
                                                  To="0" Duration="0:0:0.200"
                                                  />
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                 From="1"
+                                                 To="0"
+                                                 Duration="0:0:0.160"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </DataTrigger.ExitActions>

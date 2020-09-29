@@ -2,14 +2,16 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Timers;
 
 namespace SPTarkov.Launcher.Models.Launcher.Notifications
 {
-    public class NotificationQueue : INotifyPropertyChanged
+    public class NotificationQueue : INotifyPropertyChanged, IDisposable
     {
-        private Timer queueTimer = new Timer();
+        public Timer queueTimer = new Timer();
+        private Timer animateChangeTimer = new Timer(230);
+        private Timer animateCloseTimer = new Timer(230);
+
         public ObservableCollection<NotificationItem> queue { get; set; } = new ObservableCollection<NotificationItem>();
 
         private bool _ShowBanner;
@@ -31,13 +33,23 @@ namespace SPTarkov.Launcher.Models.Launcher.Notifications
             ShowBanner = false;
             queueTimer.Interval = ShowTimeInMiliseconds;
             queueTimer.Elapsed += QueueTimer_Elapsed;
+
+            animateChangeTimer.Elapsed += AnimateChange_Elapsed;
+            animateCloseTimer.Elapsed += AnimateCloseTimer_Elapsed;
+        }
+
+        private void AnimateCloseTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            animateCloseTimer.Stop();
+
+            queue.Clear();
+            queueTimer.Stop();
         }
 
         public void CloseQueue()
         {
-            queue.Clear();
-            queueTimer.Stop();
             ShowBanner = false;
+            animateCloseTimer.Start();
         }
 
         private void CheckAndShowNotifications()
@@ -66,7 +78,7 @@ namespace SPTarkov.Launcher.Models.Launcher.Notifications
 
         public void Enqueue(string Message, string ButtonText, Action ButtonAction, bool AllowNext = false)
         {
-            if (queue.Where(x => x.Message == Message && x.ButtonText == ButtonText && x.ItemAction == ButtonAction).Count() == 0)
+            if (queue.Where(x => x.Message == Message && x.ButtonText == ButtonText).Count() == 0)
             {
                 queue.Add(new NotificationItem(Message, ButtonText, ButtonAction));
                 CheckAndShowNotifications();
@@ -80,9 +92,7 @@ namespace SPTarkov.Launcher.Models.Launcher.Notifications
 
         public void Next(bool ResetTimer = false)
         {
-            queue.RemoveAt(0);
-
-            if (queue.Count <= 0)
+            if (queue.Count - 1 <= 0)
             {
                 CloseQueue();
                 return;
@@ -93,6 +103,9 @@ namespace SPTarkov.Launcher.Models.Launcher.Notifications
                 queueTimer.Stop();
                 queueTimer.Start();
             }
+
+            ShowBanner = false;
+            animateChangeTimer.Start();
         }
 
         private void QueueTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -100,11 +113,29 @@ namespace SPTarkov.Launcher.Models.Launcher.Notifications
             Next();
         }
 
+        private void AnimateChange_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            animateChangeTimer.Stop();
+
+            if(queue.Count > 0)
+            {
+                queue.RemoveAt(0);
+            }
+
+            ShowBanner = true;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void RaisePropertyChanged(string property)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
+
+        public void Dispose()
+        {
+            queueTimer.Dispose();
+            animateChangeTimer.Dispose();
         }
     }
 }

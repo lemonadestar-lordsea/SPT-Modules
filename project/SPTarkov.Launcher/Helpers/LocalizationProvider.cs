@@ -76,6 +76,7 @@ namespace SPTarkov.Launcher.Helpers
             englishLocale.update = "Update";
             englishLocale.edit_profile_update_error = "Some Issues occurred while updating your profile.";
             englishLocale.register = "Register";
+            englishLocale.registration_failed = "Registration Failed";
             englishLocale.login = "Login";
             englishLocale.login_automatically = "Login Automatically";
             englishLocale.incorrect_login = "Email or password are incorrect";
@@ -1018,6 +1019,22 @@ namespace SPTarkov.Launcher.Helpers
                 {
                     _server_name_exists = value;
                     RaisePropertyChanged(nameof(server_name_exists));
+                }
+            }
+        }
+        #endregion
+
+        #region registration_failed
+        private string _registration_failed;
+        public string registration_failed
+        {
+            get => _registration_failed;
+            set
+            {
+                if(_registration_failed != value)
+                {
+                    _registration_failed = value;
+                    RaisePropertyChanged(nameof(registration_failed));
                 }
             }
         }

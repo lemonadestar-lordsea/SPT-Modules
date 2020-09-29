@@ -1,6 +1,7 @@
 ﻿using SPTarkov.Common.Utils.App;
 using SPTarkov.Launcher.Helpers;
 using SPTarkov.Launcher.Models.Launcher;
+using System.Threading.Tasks;
 
 namespace SPTarkov.Launcher
 {
@@ -11,11 +12,21 @@ namespace SPTarkov.Launcher
 
 		public static AccountInfo SelectedAccount { get; private set; } = null;
 
-		public static int Login(LoginModel Creds)
+		public static async Task<int> LoginAsync(LoginModel Creds)
         {
-			return Login(Creds.Email, Creds.Password);
+			return await Task.Run(() =>
+			{
+				return Login(Creds.Email, Creds.Password);
+			});
         }
 
+		public static async Task<int> LoginAsync(string email, string password)
+        {
+			return await Task.Run(() =>
+			{
+				return Login(email, password);
+			});
+        }
 		public static int Login(string email, string password)
 		{
 			LoginRequestData data = new LoginRequestData(email, password);
@@ -44,6 +55,13 @@ namespace SPTarkov.Launcher
             return 1;
 		}
 
+		public static async Task<int> RegisterAsync(string email, string password, string edition)
+        {
+			return await Task.Run(() =>
+			{
+				return Register(email, password, edition);
+			});
+        }
 		public static int Register(string email, string password, string edition)
 		{
 			RegisterRequestData data = new RegisterRequestData(email, password, edition);
@@ -80,6 +98,14 @@ namespace SPTarkov.Launcher
 			return 1;
 		}
 
+		//only added incase wanted for future use.
+		public static async Task<int> RemoveAsync()
+        {
+			return await Task.Run(() =>
+			{
+				return Remove();
+			});
+        }
 		public static int Remove()
 		{
 			LoginRequestData data = new LoginRequestData(SelectedAccount.email, SelectedAccount.password);
@@ -109,6 +135,13 @@ namespace SPTarkov.Launcher
 			return 1;
 		}
 
+		public static async Task<int> ChangeEmailAsync(string email)
+        {
+			return await Task.Run(() =>
+			{
+				return ChangeEmail(email);
+			});
+        }
 		public static int ChangeEmail(string email)
 		{
 			ChangeRequestData data = new ChangeRequestData(SelectedAccount.email, SelectedAccount.password, email);
@@ -137,6 +170,13 @@ namespace SPTarkov.Launcher
             return 1;
 		}
 
+		public static async Task<int> ChangePasswordAsync(string password)
+        {
+			return await Task.Run(() =>
+			{
+				return ChangePassword(password);
+			});
+        }
 		public static int ChangePassword(string password)
 		{
 			ChangeRequestData data = new ChangeRequestData(SelectedAccount.email, SelectedAccount.password, password);
@@ -165,6 +205,13 @@ namespace SPTarkov.Launcher
 			return 1;
 		}
 
+		public static async Task<int> WipeAsync(string edition)
+        {
+			return await Task.Run(() =>
+			{
+				return Wipe(edition);
+			});
+        }
 		public static int Wipe(string edition)
 		{
 			RegisterRequestData data = new RegisterRequestData(SelectedAccount.email, SelectedAccount.password, edition);
