@@ -1,6 +1,8 @@
 ﻿using SPTarkov.Common.Utils.App;
 using SPTarkov.Launcher.Generics;
+using SPTarkov.Launcher.Generics.AsyncCommand;
 using SPTarkov.Launcher.Helpers;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace SPTarkov.Launcher.ViewModel
@@ -12,7 +14,7 @@ namespace SPTarkov.Launcher.ViewModel
         public string CurrentID { get; set; }
         public GenericICommand LogoutCommand { get; set; }
         public GenericICommand EditProfileCommand { get; set; }
-        public GenericICommand StartGameCommand { get; set; }
+        public AwaitableDelegateCommand StartGameCommand { get; set; }
         private NavigationViewModel navigationViewModel { get; set; }
         private GameStarter gameStarter = new GameStarter();
         private System.Windows.Forms.NotifyIcon trayIcon = new System.Windows.Forms.NotifyIcon();
@@ -23,7 +25,7 @@ namespace SPTarkov.Launcher.ViewModel
             navigationViewModel = viewModel;
             LogoutCommand = new GenericICommand(OnLogoutCommand);
             EditProfileCommand = new GenericICommand(OnEditProfileCommand);
-            StartGameCommand = new GenericICommand(OnStartGameCommand);
+            StartGameCommand = new AwaitableDelegateCommand(OnStartGameCommand);
 
             monitor = new ProcessMonitor("EscapeFromTarkov", 1000, aliveCallback: null, exitCallback: GameExitCallback);
 
@@ -55,13 +57,37 @@ namespace SPTarkov.Launcher.ViewModel
         {
             navigationViewModel.SelectedViewModel = new EditProfileViewModel(navigationViewModel);
         }
-        public void OnStartGameCommand(object parameter)
+        public async Task OnStartGameCommand()
         {
-            LauncherSettingsProvider.Instance.GameRunning = true;
 
-            int status = gameStarter.LaunchGame(ServerManager.SelectedServer, AccountManager.SelectedAccount);
+            LauncherSettingsProvider.Instance.AllowSettings = false;
+
+            int status = await AccountManager.LoginAsync(AccountManager.SelectedAccount.email, AccountManager.SelectedAccount.password);
+
+            LauncherSettingsProvider.Instance.AllowSettings = true;
 
             switch (status)
+            {
+                case -1:
+                    Current_Exit(null, null);
+
+                    navigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.incorrect_login);
+                    return;
+
+                case -2:
+                    Current_Exit(null, null);
+
+                    navigationViewModel.NotificationQueue.Enqueue(LocalizationProvider.Instance.login_failed);
+                    navigationViewModel.SelectedViewModel = new ConnectServerViewModel(navigationViewModel);
+                    return;
+            }
+
+
+            LauncherSettingsProvider.Instance.GameRunning = true;
+
+            int gameStatus = gameStarter.LaunchGame(ServerManager.SelectedServer, AccountManager.SelectedAccount);
+
+            switch (gameStatus)
             {
                 case 1:
                     monitor.Start();

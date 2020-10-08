@@ -40,7 +40,12 @@
                  Text="{Binding login.Email}"
                  IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
                             Path=AllowSettings}"
-                 />
+                 >
+            <TextBox.InputBindings>
+                <KeyBinding Key="Return"
+                            Command="{Binding LoginCommand}"/>
+            </TextBox.InputBindings>
+        </TextBox>
 
         <!-- Password Controls -->
         <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
@@ -50,7 +55,12 @@
                  Text="{Binding login.Password}"
                  IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
                             Path=AllowSettings}"
-                 />
+                 >
+            <TextBox.InputBindings>
+                <KeyBinding Key="Return"
+                            Command="{Binding LoginCommand}"/>
+            </TextBox.InputBindings>
+        </TextBox>
 
         <!-- Addtional Controls -->
         <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
