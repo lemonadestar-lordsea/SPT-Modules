@@ -31,7 +31,7 @@ namespace SPTarkov.RuntimeBundles.Utils
                 Debug.LogError("SPTarkov.RuntimeBundles: The cache cleanup failed and will try again at the next game startup.");
             }
             
-            var json = new Request(Session, BackendUrl).GetJson("/singleplayer/bundles/");
+            var json = new Request(Session, BackendUrl).GetJson("/singleplayer/bundles");
 
             if (string.IsNullOrWhiteSpace(json))
 			{
