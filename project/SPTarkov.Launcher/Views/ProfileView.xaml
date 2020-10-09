@@ -73,14 +73,18 @@
 
             <!-- Addtional Controls -->
             <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
-                Path=edit_profile}" Grid.Row="1" Grid.Column="1"
-                Command="{Binding EditProfileCommand}"
+                              Path=edit_profile}" Grid.Row="1" Grid.Column="1"
+                    Command="{Binding EditProfileCommand}"
+                    IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
+                                Path=AllowSettings}"
                     />
             
             <Button  Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
                                Path=logout}" Grid.Row="1" Grid.Column="3"
-                Command="{Binding LogoutCommand}"
-                    />
+                     Command="{Binding LogoutCommand}"
+                     IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
+                            Path=AllowSettings}"
+                     />
             
             <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
                 Path=start_game}" Grid.Row="5" Grid.ColumnSpan="5"

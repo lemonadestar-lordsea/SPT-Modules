@@ -39,7 +39,12 @@
                  Text="{Binding newProfile.Email}"
                  IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
                             Path=AllowSettings}"
-                 />
+                 >
+            <TextBox.InputBindings>
+                <KeyBinding Key="Return"
+                            Command="{Binding RegisterCommand}"/>
+            </TextBox.InputBindings>
+        </TextBox>
         
         <!-- Password Controls -->
         <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
@@ -49,7 +54,12 @@
                  Text="{Binding newProfile.Password}"
                  IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
                             Path=AllowSettings}"
-                 />
+                 >
+            <TextBox.InputBindings>
+                <KeyBinding Key="Return"
+                            Command="{Binding RegisterCommand}"/>
+            </TextBox.InputBindings>
+        </TextBox>
 
         <!-- Edition Controls -->
         <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
