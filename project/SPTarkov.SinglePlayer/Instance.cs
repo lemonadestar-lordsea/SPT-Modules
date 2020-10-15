@@ -20,7 +20,8 @@ namespace SPTarkov.SinglePlayer
             PatcherUtil.Patch<OfflineSpawnPointPatch>();
             PatcherUtil.Patch<WeaponDurabilityPatch>();
             PatcherUtil.Patch<SingleModeJamPatch>();
-            
+            PatcherUtil.Patch<ExperienceGainPatch>();
+
             PatcherUtil.Patch<Patches.Healing.MainMenuControllerPatch>();
 			PatcherUtil.Patch<Patches.Healing.PlayerPatch>();
 
