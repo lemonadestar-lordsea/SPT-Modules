@@ -79,6 +79,7 @@
     <Compile Include="Patches\Healing\PlayerPatch.cs" />
     <Compile Include="Patches\Matchmaker\InsuranceScreenPatch.cs" />
     <Compile Include="Patches\Matchmaker\MatchMakerSelectionLocationScreenPatch.cs" />
+    <Compile Include="Patches\Progression\ExperienceGainPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSpawnPointPatch.cs" />
     <Compile Include="Patches\RaidFix\OnDeadPatch.cs" />
     <Compile Include="Patches\RaidFix\OnShellEjectEventPatch.cs" />
