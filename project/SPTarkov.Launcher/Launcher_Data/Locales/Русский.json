@@ -27,7 +27,6 @@
   "account_exist": "Аккаунт уже существует",
   "local_server_remove_warning": "Вы собираетесь удалить локальный сервер.",
   "remove_server_question": "Удалить сервер?",
-  "hide_to_tray": "Скрыть в системном трее при запуске игры",
   "exit_settings_tooltip": "Выйти из настроек",
   "name": "Имя",
   "save": "Сохранить",
@@ -54,5 +53,10 @@
   "server_url_and_name_empty": "Имя и URL не могут быть пустыми",
   "server_url_exists": "URL уже существует",
   "server_name_exists": "Имя уже существует",
-  "registration_failed": "Регистрация не удалась"
+  "registration_failed": "Регистрация не удалась",
+  "minimize_action": "Минимизировать",
+  "minimize_to_system_tray_action": "Минимизировать в системный трей",
+  "do_nothing_action": "Ничего не делать",
+  "exit_action": "Закрыть Launcher",
+  "launcher_start_game_action": "Пусковая установка Запуск игры Действие"
 }

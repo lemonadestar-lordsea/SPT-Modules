@@ -5,6 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:cc="clr-namespace:SPTarkov.Launcher.Custom_Controls"
              xmlns:helpers="clr-namespace:SPTarkov.Launcher.Helpers"
+             xmlns:ext="clr-namespace:SPTarkov.Launcher.Extensions"
+             xmlns:cvt="clr-namespace:SPTarkov.Launcher.Converters"
+             xmlns:model="clr-namespace:SPTarkov.Launcher.Models.Launcher"
              xmlns:local="clr-namespace:SPTarkov.Launcher.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -35,41 +38,45 @@
                 <RowDefinition Height="AUTO"/>
                 <RowDefinition Height="AUTO"/>
                 <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
             </Grid.RowDefinitions>
-
-            <CheckBox Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
-                                Path=hide_to_tray}"
-                      VerticalAlignment="Center" FontSize="18"
-                      HorizontalAlignment="Left" Margin="10"
-                      IsChecked="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
-                                  Path=HideToTrayOnGameStart}"
-                  />
 
             <CheckBox Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
                                 Path=login_automatically}"
                       VerticalAlignment="Center" FontSize="18"
                       HorizontalAlignment="Left" Margin="10"
-                      Grid.Row="1"
+                      Grid.Row="0"
                       IsChecked="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
                                   Path=UseAutoLogin}"
                       />
-
+            
             <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
-                             Path=default_language}" Grid.Row="2"
+                Path=launcher_start_game_action}"
+                   Grid.Row="1"
                    />
 
-            <ComboBox Grid.Row="3" HorizontalAlignment="Left" Margin="10 0" MinWidth="200"
+            <ComboBox Grid.Row="2" HorizontalAlignment="Left" Margin="10 0" MinWidth="300"
+                      ItemsSource="{Binding Source={ext:EnumBindingSource {x:Type model:LauncherAction}}}"
+                      SelectedItem="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
+                                     Path=LauncherStartGameAction}"
+                      />
+
+            <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
+                             Path=default_language}" Grid.Row="3"
+                   />
+
+            <ComboBox Grid.Row="4" HorizontalAlignment="Left" Margin="10 0" MinWidth="300"
                       ItemsSource="{Binding Locales.AvailableLocales}"
                       SelectedItem="{Binding Locales.SelectedLocale}"
                       />
 
             <Label Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
                              Path=game_path}"
-                   Grid.Row="4"
+                   Grid.Row="5"
                    />
 
             <!-- Text box with button grid -->
-            <Grid Grid.Row="5" Margin="10 2">
+            <Grid Grid.Row="6" Margin="10 2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="AUTO"/>
@@ -89,7 +96,7 @@
             </Grid>
 
             <!-- Multi-button grid -->
-            <Grid Grid.Row="6" Margin="0 5">
+            <Grid Grid.Row="7" Margin="0 5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="3*"/>

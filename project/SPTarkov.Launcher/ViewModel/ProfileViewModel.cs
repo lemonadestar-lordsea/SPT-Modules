@@ -4,6 +4,7 @@ using SPTarkov.Launcher.Generics.AsyncCommand;
 using SPTarkov.Launcher.Helpers;
 using System.Threading.Tasks;
 using System.Windows;
+using SPTarkov.Launcher.Models.Launcher;
 
 namespace SPTarkov.Launcher.ViewModel
 {
@@ -92,10 +93,24 @@ namespace SPTarkov.Launcher.ViewModel
                 case 1:
                     monitor.Start();
 
-                    if(LauncherSettingsProvider.Instance.HideToTrayOnGameStart)
+                    switch(LauncherSettingsProvider.Instance.LauncherStartGameAction)
                     {
-                        trayIcon.Visible = true;
-                        Application.Current.MainWindow.Hide();
+                        case LauncherAction.MinimizeAction:
+                            {
+                                Application.Current.MainWindow.WindowState = WindowState.Minimized;
+                                break;
+                            }
+                        case LauncherAction.MinimizeToSystemTrayAction:
+                            {
+                                trayIcon.Visible = true;
+                                Application.Current.MainWindow.Hide();
+                                break;
+                            }
+                        case LauncherAction.ExitAction:
+                            {
+                                Application.Current.Shutdown(0);
+                                break;
+                            }
                     }
 
                     break;
@@ -121,11 +136,27 @@ namespace SPTarkov.Launcher.ViewModel
             LauncherSettingsProvider.Instance.GameRunning = false;
 
             //Make sure the call to MainWindow happens on the UI thread.
-            Application.Current.Dispatcher.Invoke(() =>
+            switch(LauncherSettingsProvider.Instance.LauncherStartGameAction)
             {
-                Application.Current.MainWindow.Show();
-            });
-            
+                case LauncherAction.MinimizeToSystemTrayAction:
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            Application.Current.MainWindow.Show();
+                        });
+
+                        break;
+                    }
+                case LauncherAction.MinimizeAction:
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            Application.Current.MainWindow.WindowState = WindowState.Normal;
+                        });
+
+                        break;
+                    }
+            }
         }
 
         private void TrayIcon_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)

@@ -27,7 +27,6 @@
   "account_exist": "Account already exists",
   "local_server_remove_warning": "You are about to remove the local server.",
   "remove_server_question": "Remove Server?",
-  "hide_to_tray": "Hide to system tray on game start",
   "exit_settings_tooltip": "Exit Settings",
   "name": "Name",
   "save": "Save",
@@ -54,5 +53,10 @@
   "server_url_and_name_empty": "Name and Url cannot be empty",
   "server_url_exists": "Url already exists",
   "server_name_exists": "Name already exists",
-  "registration_failed": "Registration Failed"
+  "registration_failed": "Registration Failed",
+  "minimize_action": "Minimize",
+  "minimize_to_system_tray_action": "Minimize to system tray",
+  "do_nothing_action": "Do nothing",
+  "exit_action": "Close Launcher",
+  "launcher_start_game_action": "Launcher Start Game Action"
 }
