@@ -95,36 +95,6 @@ namespace SPTarkov.Launcher
             return value0;
         }
 
-        public static void ForceDeleteDirectory(string target_dir, bool RemoveReadOnly = false)
-        {
-            try
-            {
-                string[] files = Directory.GetFiles(target_dir);
-                string[] dirs = Directory.GetDirectories(target_dir);
-
-                foreach (string file in files)
-                {
-                    if (RemoveReadOnly)
-                    {
-                        File.SetAttributes(file, FileAttributes.Normal);
-                    }
-
-                    File.Delete(file);
-                }
-
-                foreach (string dir in dirs)
-                {
-                    ForceDeleteDirectory(dir, RemoveReadOnly);
-                }
-
-                Directory.Delete(target_dir, false);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show($"Something didn't go as planned. You may want to report this.\n\n{ex.Message}\n\n{ex.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
         private void SetupGameFiles()
         {
             string filepath = LauncherSettingsProvider.Instance.GamePath ?? Environment.CurrentDirectory;
@@ -149,8 +119,15 @@ namespace SPTarkov.Launcher
                     }
                     catch(Exception)
                     {
-                        //something prevented the recursive deletion of the directory, attempt to force the delete operation
-                        ForceDeleteDirectory(file, true);
+                        //something prevented the recursive deletion of the directory, try again.
+                        try
+                        {
+                            Directory.Delete(file, true);
+                        }
+                        catch(Exception)
+                        {
+                            // *Shrug
+                        }
                     }
                 }
 
