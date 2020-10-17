@@ -27,7 +27,6 @@
     "account_exist": "Dieser Account existiert bereits.",
     "local_server_remove_warning": "Sie sind dabei, den lokalen Server zu entfernen.",
     "remove_server_question": "Server entfernen",
-    "hide_to_tray": "System Tray beim Spielstart verstecken",
     "exit_settings_tooltip": "Einstellungen verlassen",
     "name": "Name",
     "save": "Speichern",
@@ -54,5 +53,10 @@
     "server_url_and_name_empty": "Der Name und die URL dürfen nicht leer sein",
     "server_url_exists": "Die Url existiert bereits",
     "server_name_exists": "Der Name existiert bereits",
-    "registration_failed": "Registrierung fehlgeschlagen"
+    "registration_failed": "Registrierung fehlgeschlagen",
+    "minimize_action": "Minimieren",
+    "minimize_to_system_tray_action": "In die Taskleiste minimieren",
+    "do_nothing_action": "Nichts tun",
+    "exit_action": "Launcher schließen",
+    "launcher_start_game_action": "Launcher Spielaktion starten"
   }

@@ -144,6 +144,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Launcher_Data\Locales\Deutsch.json" />
     <None Include="Launcher_Data\Locales\English.json" />
     <None Include="Launcher_Data\Locales\Русский.json" />
     <None Include="Launcher_Data\Locales\中文.json" />
