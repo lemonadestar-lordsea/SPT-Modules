@@ -200,7 +200,7 @@ namespace SPTarkov.Launcher.ViewModel
             }
             else
             {
-                MessageBox.Show(addStatus.Message);
+                fullSpanNavigationViewModel.NotificationQueue.Enqueue(addStatus.Message);
             }
         }
 

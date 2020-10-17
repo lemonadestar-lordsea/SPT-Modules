@@ -92,7 +92,6 @@ namespace SPTarkov.Launcher.Helpers
             englishLocale.account_exist = "Account already exists";
             englishLocale.local_server_remove_warning = "You are about to remove the local server.";
             englishLocale.remove_server_question = "Remove Server?";
-            englishLocale.hide_to_tray = "Hide to system tray on game start";
             englishLocale.exit_settings_tooltip = "Exit Settings";
             englishLocale.name = "Name";
             englishLocale.save = "Save";
@@ -119,6 +118,11 @@ namespace SPTarkov.Launcher.Helpers
             englishLocale.server_url_and_name_empty = "Name and Url cannot be empty";
             englishLocale.server_url_exists = "Url already exists";
             englishLocale.server_name_exists = "Name already exists";
+            englishLocale.minimize_action = "Minimize";
+            englishLocale.minimize_to_system_tray_action = "Minimize to system tray";
+            englishLocale.do_nothing_action = "Do nothing";
+            englishLocale.exit_action = "Close Launcher";
+            englishLocale.launcher_start_game_action = "Launcher Start Game Action";
             #endregion
 
             Directory.CreateDirectory(LocalizationProvider.DefaultLocaleFolderPath);
@@ -591,22 +595,6 @@ namespace SPTarkov.Launcher.Helpers
         }
         #endregion
 
-        #region hide_to_tray
-        private string _hide_to_tray;
-        public string hide_to_tray
-        {
-            get => _hide_to_tray;
-            set
-            {
-                if(_hide_to_tray != value)
-                {
-                    _hide_to_tray = value;
-                    RaisePropertyChanged(nameof(hide_to_tray));
-                }
-            }
-        }
-        #endregion
-
         #region exit_settings_tooltip
         private string _exit_setttings_tooltip;
         public string exit_settings_tooltip
@@ -1035,6 +1023,86 @@ namespace SPTarkov.Launcher.Helpers
                 {
                     _registration_failed = value;
                     RaisePropertyChanged(nameof(registration_failed));
+                }
+            }
+        }
+        #endregion
+
+        #region minimize_action
+        private string _minimize_action;
+        public string minimize_action
+        {
+            get => _minimize_action;
+            set
+            {
+                if(_minimize_action != value)
+                {
+                    _minimize_action = value;
+                    RaisePropertyChanged(nameof(minimize_action));
+                }
+            }
+        }
+        #endregion
+
+        #region minimize_to_system_tray_action
+        private string _minimize_to_system_tray_action;
+        public string minimize_to_system_tray_action
+        {
+            get => _minimize_to_system_tray_action;
+            set
+            {
+                if(_minimize_to_system_tray_action != value)
+                {
+                    _minimize_to_system_tray_action = value;
+                    RaisePropertyChanged(nameof(minimize_to_system_tray_action));
+                }
+            }
+        }
+        #endregion
+
+        #region do_nothing_action
+        private string _do_nothing_action;
+        public string do_nothing_action
+        {
+            get => _do_nothing_action;
+            set
+            {
+                if(_do_nothing_action != value)
+                {
+                    _do_nothing_action = value;
+                    RaisePropertyChanged(nameof(do_nothing_action));
+                }
+            }
+        }
+        #endregion
+
+        #region exit_action
+        private string _exit_action;
+        public string exit_action
+        {
+            get => _exit_action;
+            set
+            {
+                if(_exit_action != value)
+                {
+                    _exit_action = value;
+                    RaisePropertyChanged(nameof(exit_action));
+                }
+            }
+        }
+        #endregion
+
+        #region launcher_start_game_action
+        private string _launcher_start_game_action;
+        public string launcher_start_game_action
+        {
+            get => _launcher_start_game_action;
+            set
+            {
+                if(_launcher_start_game_action != value)
+                {
+                    _launcher_start_game_action = value;
+                    RaisePropertyChanged(nameof(launcher_start_game_action));
                 }
             }
         }

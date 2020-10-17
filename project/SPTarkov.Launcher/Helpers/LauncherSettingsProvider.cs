@@ -175,16 +175,16 @@ namespace SPTarkov.Launcher.Helpers
             }
         }
 
-        private bool _HideToTrayOnGameStart;
-        public bool HideToTrayOnGameStart
+        private LauncherAction _LauncherStartGameAction;
+        public LauncherAction LauncherStartGameAction
         {
-            get => _HideToTrayOnGameStart;
+            get => _LauncherStartGameAction;
             set
             {
-                if(_HideToTrayOnGameStart != value)
+                if(_LauncherStartGameAction != value)
                 {
-                    _HideToTrayOnGameStart = value;
-                    RaisePropertyChanged(nameof(HideToTrayOnGameStart));
+                    _LauncherStartGameAction = value;
+                    RaisePropertyChanged(nameof(LauncherStartGameAction));
                 }
             }
         }
@@ -223,7 +223,7 @@ namespace SPTarkov.Launcher.Helpers
         {
             if(!File.Exists(LauncherSettingsProvider.DefaultSettingsFileLocation))
             {
-                HideToTrayOnGameStart = true;
+                LauncherStartGameAction = LauncherAction.MinimizeToSystemTrayAction;
                 UseAutoLogin = true;
                 GamePath = Environment.CurrentDirectory;
 

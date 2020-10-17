@@ -27,7 +27,6 @@
   "account_exist": "用户名已被注册",
   "local_server_remove_warning": "您正在删除本地服务器",
   "remove_server_question": "是否卸载服务器？",
-  "hide_to_tray": "游戏开始时隐藏到系统托盘",
   "exit_settings_tooltip": "退出设定",
   "name": "名称",
   "save": "保存",
@@ -54,5 +53,10 @@
   "server_url_and_name_empty": "名稱和網址不能為空",
   "server_url_exists": "這個鏈接已存在",
   "server_name_exists": "名稱已存在",
-  "registration_failed": "註冊失敗"
+  "registration_failed": "註冊失敗",
+  "minimize_action": "最小化",
+  "minimize_to_system_tray_action": "最小化到系統托盤",
+  "do_nothing_action": "沒做什麼",
+  "exit_action": "關閉啟動器",
+  "launcher_start_game_action": "啟動器啟動遊戲動作"
 }

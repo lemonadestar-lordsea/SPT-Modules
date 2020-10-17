@@ -6,6 +6,7 @@ using System.Text;
 using SPTarkov.Common.Utils.App;
 using System.Linq;
 using SPTarkov.Launcher.Helpers;
+using System.Windows;
 
 namespace SPTarkov.Launcher
 {
@@ -112,7 +113,22 @@ namespace SPTarkov.Launcher
             {
                 if (Directory.Exists(file))
                 {
-                    Directory.Delete(file, true);
+                    try
+                    {
+                        Directory.Delete(file, true);
+                    }
+                    catch(Exception)
+                    {
+                        //something prevented the recursive deletion of the directory, try again.
+                        try
+                        {
+                            Directory.Delete(file, true);
+                        }
+                        catch(Exception)
+                        {
+                            // *Shrug
+                        }
+                    }
                 }
 
                 if (File.Exists(file))
