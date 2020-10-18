@@ -64,7 +64,7 @@
 
         <!-- Addtional Controls -->
         <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
-                          Path=register}" Grid.Column="2" Grid.Row="4"
+                          Path=go_to_register}" Grid.Column="2" Grid.Row="4"
                 Command="{Binding ShowRegisterCommand}"
                 IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
                             Path=AllowSettings}"
