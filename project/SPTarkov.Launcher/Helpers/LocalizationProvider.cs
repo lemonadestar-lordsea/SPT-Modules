@@ -76,8 +76,10 @@ namespace SPTarkov.Launcher.Helpers
             englishLocale.update = "Update";
             englishLocale.edit_profile_update_error = "Some Issues occurred while updating your profile.";
             englishLocale.register = "Register";
+            englishLocale.go_to_register = "Go to Register";
             englishLocale.registration_failed = "Registration Failed";
             englishLocale.login = "Login";
+            englishLocale.go_to_login = "Go to Login";
             englishLocale.login_automatically = "Login Automatically";
             englishLocale.incorrect_login = "Email or password are incorrect";
             englishLocale.login_failed = "Login Failed";
@@ -355,6 +357,22 @@ namespace SPTarkov.Launcher.Helpers
         }
         #endregion
 
+        #region go_to_register
+        private string _go_to_register;
+        public string go_to_register
+        {
+            get => _go_to_register;
+            set
+            {
+                if(_go_to_register != value)
+                {
+                    _go_to_register = value;
+                    RaisePropertyChanged(nameof(_go_to_register));
+                }
+            }
+        }
+        #endregion
+
         #region login
         private string _login;
         public string login
@@ -366,6 +384,22 @@ namespace SPTarkov.Launcher.Helpers
                 {
                     _login = value;
                     RaisePropertyChanged(nameof(login));
+                }
+            }
+        }
+        #endregion
+
+        #region go_to_login
+        private string _go_to_login;
+        public string go_to_login
+        {
+            get => _go_to_login;
+            set
+            {
+                if(_go_to_login != value)
+                {
+                    _go_to_login = value;
+                    RaisePropertyChanged(nameof(go_to_login));
                 }
             }
         }

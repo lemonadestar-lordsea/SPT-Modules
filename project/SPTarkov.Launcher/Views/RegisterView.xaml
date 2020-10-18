@@ -75,7 +75,7 @@
         
         <!-- Addtional Controls -->
         <Button Content="{Binding Source={x:Static helpers:LocalizationProvider.Instance},
-                          Path=login}" Grid.Column="2" Grid.Row="4"
+                          Path=go_to_login}" Grid.Column="2" Grid.Row="4"
                 Command="{Binding ShowLoginCommand}"
                 IsEnabled="{Binding Source={x:Static helpers:LauncherSettingsProvider.Instance},
                             Path=AllowSettings}"
