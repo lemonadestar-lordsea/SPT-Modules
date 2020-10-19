@@ -41,16 +41,16 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
                 return false;
             }
 
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            var fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
 
-            if (!fields.Any(x => x.FieldType == typeof(BotDifficulty) && x.Name == "BotDifficulty")
-            || !fields.Any(x => x.FieldType == typeof(EPlayerSide) && x.Name == "Side")
-            || !fields.Any(x => x.FieldType == typeof(WildSpawnType) && x.Name == "Type"))
+            if (fields.Any(f => f.FieldType == typeof(BotDifficulty) && f.Name.Contains("botDifficulty"))
+            && fields.Any(f => f.FieldType == typeof(WildSpawnType) && f.Name.Contains("wildSpawnType"))
+            && fields.Any(f => f.FieldType == typeof(EPlayerSide)))
             {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         protected override MethodBase GetTargetMethod()

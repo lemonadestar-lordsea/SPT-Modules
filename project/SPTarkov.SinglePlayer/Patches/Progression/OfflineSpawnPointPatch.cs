@@ -23,8 +23,12 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
 
         private static bool IsTargetType(Type type)
         {
-            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            if (type.IsInterface)
+            {
+                return false;
+            }
 
+            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
             if (!methods.Any(x => x.Name == "CheckFarthestFromOtherPlayers"))
             {
                 return false;
