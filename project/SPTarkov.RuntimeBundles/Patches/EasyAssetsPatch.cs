@@ -11,10 +11,10 @@ using Diz.Resources;
 using JetBrains.Annotations;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.RuntimeBundles.Utils;
-using IEasyBundle = GInterface223; //Property: SameNameAsset 
-using IBundleLock = GInterface224; //Property: IsLocked
-using BundleLock = GClass2061; //Property: MaxConcurrentOperations
-using DependencyGraph = GClass2062<GInterface223>; // Method: GetDefaultNode()
+using IEasyBundle = GInterface238; //Property: SameNameAsset 
+using IBundleLock = GInterface239; //Property: IsLocked
+using BundleLock = GClass2111; //Property: MaxConcurrentOperations
+using DependencyGraph = GClass2112<GInterface238>; // Method: GetDefaultNode()
 
 namespace SPTarkov.RuntimeBundles.Patches
 {

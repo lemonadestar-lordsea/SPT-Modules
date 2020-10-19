@@ -5,7 +5,7 @@ using SPTarkov.Common.Utils.App;
 using SPTarkov.Common.Utils.HTTP;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils;
-using LocationInfo = GClass757.GClass759;
+using LocationInfo = GClass759.GClass761;
 using System;
 
 namespace SPTarkov.SinglePlayer.Patches.Progression
@@ -24,7 +24,7 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
         {
 			var localGameBaseType = PatcherConstants.LocalGameType.BaseType;
 
-			_property = localGameBaseType.GetProperty($"{nameof(GClass757.GClass759)}_0", BindingFlags.NonPublic | BindingFlags.Instance);
+			_property = localGameBaseType.GetProperty($"{nameof(GClass759.GClass761)}_0", BindingFlags.NonPublic | BindingFlags.Instance);
 			return localGameBaseType.GetMethod("method_5", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 		}
 

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using HarmonyLib;
-using IBundleLock = GInterface224; //Property: IsLocked
-using BindableState = GClass2046<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
+using IBundleLock = GInterface239; //Property: IsLocked
+using BindableState = GClass2097<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
 
 namespace SPTarkov.RuntimeBundles.Utils
 {
@@ -16,7 +16,7 @@ namespace SPTarkov.RuntimeBundles.Utils
 
         private static readonly string _pathFieldName = "string_1";
         private static readonly string _keyWithoutExtensionFieldName = "string_0";
-        private static readonly string _bundleLockPropertyName = "ginterface224_0";
+        private static readonly string _bundleLockPropertyName = "ginterface239_0";
         private static readonly string _loadingJobPropertyName = "task_0";
         private static readonly string _dependencyKeysPropertyName = "DependencyKeys";
         private static readonly string _keyPropertyName = "Key";

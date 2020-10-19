@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using IHealthController = GInterface157;
-using StDamage = GStruct227;
-using IEffect = GInterface122;
+using IHealthController = GInterface163;
+using StDamage = GStruct232;
+using IEffect = GInterface126;
 using SPTarkov.Common.Utils.HTTP;
 using UnityEngine;
 

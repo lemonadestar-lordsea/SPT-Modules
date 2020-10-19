@@ -6,8 +6,8 @@ using EFT;
 using SPTarkov.Common.Utils.HTTP;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils;
-using WaveInfo = GClass897;
-using BotsPresets = GClass334;
+using WaveInfo = GClass904;
+using BotsPresets = GClass337;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
 {
