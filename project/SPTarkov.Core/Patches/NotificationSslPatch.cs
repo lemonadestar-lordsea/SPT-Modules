@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 using UnityEngine.Networking;
 using HarmonyLib;
 using SPTarkov.Common.Utils.Patching;
+using System.Text;
 
 namespace SPTarkov.Core.Patches
 {
@@ -69,18 +70,21 @@ namespace SPTarkov.Core.Patches
         */
         static IEnumerable<CodeInstruction> PatchTranspiler(IEnumerable<CodeInstruction> instructions)
         {
-
+            //FileLog.Log("NotificationSslPatch");
+            //var builder = new StringBuilder();
             var codes = new List<CodeInstruction>(instructions);
             var index = 0;
             
             for (var i = 0; i < codes.Count(); i++)
             {
-                if (codes[i].ToString().Contains("170994"))
+                // builder.AppendLine(codes[i].ToString());
+                if (codes[i].ToString().Contains("\"GET\""))
                 {
-                    index = i + 3;
+                    index = i + 2;
                     break;
                 }
             }
+            //FileLog.Log(builder.ToString());
 
             var dupCode = new CodeInstruction(OpCodes.Dup);
 
