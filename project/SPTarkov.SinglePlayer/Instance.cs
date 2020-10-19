@@ -47,7 +47,6 @@ namespace SPTarkov.SinglePlayer
             PatcherUtil.Patch<LoadOfflineRaidScreenPatch>();
             PatcherUtil.Patch<ScavPrefabLoadPatch>();
             PatcherUtil.Patch<ScavProfileLoadPatch>();
-            PatcherUtil.Patch<ScavSpawnPointPatch>();
             PatcherUtil.Patch<ScavExfilPatch>();
 
             PatcherUtil.Patch<EndByTimerPatch>();
