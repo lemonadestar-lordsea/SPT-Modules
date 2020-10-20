@@ -1,4 +1,14 @@
-﻿using System.Reflection;
+/* OfflineLootPatch.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ * Martynas Gestautas
+ */
+
+
+using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
 using SPTarkov.Common.Utils.App;

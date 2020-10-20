@@ -1,4 +1,13 @@
-﻿using System.Windows;
+/* ServerSettingListItem.xaml.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 

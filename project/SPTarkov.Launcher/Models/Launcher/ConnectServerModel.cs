@@ -1,4 +1,13 @@
-﻿using System.ComponentModel;
+/* ConnectServerModel.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System.ComponentModel;
 
 namespace SPTarkov.Launcher.Models.Launcher
 {

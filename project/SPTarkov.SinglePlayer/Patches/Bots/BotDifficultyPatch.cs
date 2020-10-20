@@ -1,4 +1,14 @@
-﻿using System.Reflection;
+/* BotDifficultyPatch.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ * Martynas Gestautas
+ */
+
+
+using System.Reflection;
 using UnityEngine;
 using EFT;
 using SPTarkov.Common.Utils.HTTP;

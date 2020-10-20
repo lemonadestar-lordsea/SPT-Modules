@@ -1,4 +1,13 @@
-﻿using System;
+/* Logger.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System;
 
 namespace SPTarkov.Common.Utils.App
 {

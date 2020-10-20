@@ -1,4 +1,13 @@
-﻿using System;
+/* LogManager.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System;
 using System.IO;
 
 namespace SPTarkov.Launcher.Controllers

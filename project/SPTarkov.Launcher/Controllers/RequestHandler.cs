@@ -1,4 +1,13 @@
-﻿using SPTarkov.Common.Utils.App;
+/* RequestHandler.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using SPTarkov.Common.Utils.App;
 using SPTarkov.Common.Utils.HTTP;
 
 namespace SPTarkov.Launcher

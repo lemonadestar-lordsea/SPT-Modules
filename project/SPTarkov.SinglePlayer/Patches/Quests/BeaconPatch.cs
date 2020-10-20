@@ -1,4 +1,14 @@
-﻿using System.Linq;
+/* BeaconPatch.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Martynas Gestautas
+ * Merijn Hendriks
+ */
+
+
+using System.Linq;
 using System.Reflection;
 using EFT;
 using EFT.InventoryLogic;

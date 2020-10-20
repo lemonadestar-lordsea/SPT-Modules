@@ -1,4 +1,13 @@
-﻿using SPTarkov.Launcher.Models.Launcher;
+/* ServerListControl.xaml.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using SPTarkov.Launcher.Models.Launcher;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;

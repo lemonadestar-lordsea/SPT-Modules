@@ -1,4 +1,13 @@
-﻿using System.Windows.Input;
+/* IRaiseCanExecuteChange.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System.Windows.Input;
 
 namespace SPTarkov.Launcher.Interfaces
 {

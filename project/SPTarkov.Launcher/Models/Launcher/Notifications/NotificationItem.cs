@@ -1,4 +1,13 @@
-﻿using System;
+/* NotificationItem.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ */
+
+
+using System;
 using System.ComponentModel;
 
 namespace SPTarkov.Launcher.Models.Launcher.Notifications

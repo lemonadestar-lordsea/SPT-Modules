@@ -1,4 +1,13 @@
-﻿using System.Collections.Generic;
+/* PlayerHealth.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System.Collections.Generic;
 
 namespace SPTarkov.SinglePlayer.Utils.Player
 {

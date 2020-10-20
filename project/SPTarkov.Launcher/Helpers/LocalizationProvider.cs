@@ -1,4 +1,13 @@
-﻿using SPTarkov.Common.Utils.App;
+/* LocalizationProvider.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ */
+
+
+using SPTarkov.Common.Utils.App;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;

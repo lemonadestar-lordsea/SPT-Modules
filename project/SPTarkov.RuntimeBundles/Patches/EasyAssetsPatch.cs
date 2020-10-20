@@ -1,4 +1,15 @@
-﻿using System;
+/* EasyAssetsPatch.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * reider123
+ * Ginja
+ * Merijn Hendriks
+ */
+
+
+using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;

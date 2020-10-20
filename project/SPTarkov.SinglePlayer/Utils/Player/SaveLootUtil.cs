@@ -1,4 +1,13 @@
-﻿using EFT;
+/* SaveLootUtil.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using EFT;
 using SPTarkov.Common.Utils.App;
 using SPTarkov.Common.Utils.HTTP;
 

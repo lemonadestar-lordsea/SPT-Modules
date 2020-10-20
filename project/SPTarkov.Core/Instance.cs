@@ -1,4 +1,13 @@
-﻿using UnityEngine;
+/* Instance.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using UnityEngine;
 using SPTarkov.Core.Patches;
 using SPTarkov.Common.Utils.Patching;
 

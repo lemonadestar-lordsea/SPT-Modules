@@ -1,4 +1,13 @@
-﻿using System.Reflection;
+/* MainMenuControllerPatch.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System.Reflection;
 using SPTarkov.Common.Utils.Patching;
 using MainMenuController = GClass1157;
 using IHealthController = GInterface163;

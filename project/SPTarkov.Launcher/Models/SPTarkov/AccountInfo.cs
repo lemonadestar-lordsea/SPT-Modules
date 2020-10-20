@@ -1,4 +1,13 @@
-﻿namespace SPTarkov.Launcher
+/* AccountInfo.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+namespace SPTarkov.Launcher
 {
 	public class AccountInfo
 	{

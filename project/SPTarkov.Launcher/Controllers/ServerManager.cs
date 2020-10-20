@@ -1,4 +1,13 @@
-﻿using System.Windows;
+/* ServerManager.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System.Windows;
 using SPTarkov.Common.Utils.App;
 using System.Collections.Generic;
 using System.Threading.Tasks;

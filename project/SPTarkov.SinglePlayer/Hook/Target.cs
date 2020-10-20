@@ -1,4 +1,13 @@
-﻿using NLog.Targets;
+/* Target.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using NLog.Targets;
 using SPTarkov.Common.Utils.Hook;
 
 namespace SPTarkov.SinglePlayer.Hook

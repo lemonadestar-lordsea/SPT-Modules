@@ -1,4 +1,14 @@
-﻿using SPTarkov.Launcher.Generics;
+/* SPTarkovLauncherMainWindow.xaml.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ * Merijn Hendriks
+ */
+
+
+using SPTarkov.Launcher.Generics;
 using SPTarkov.Launcher.Helpers;
 using SPTarkov.Launcher.ViewModel;
 using System.Windows;

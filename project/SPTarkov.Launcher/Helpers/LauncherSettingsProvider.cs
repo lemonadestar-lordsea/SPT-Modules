@@ -1,4 +1,14 @@
-﻿using Newtonsoft.Json;
+/* LauncherSettingsProvider.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ * Merijn Hendriks
+ */
+
+
+using Newtonsoft.Json;
 using SPTarkov.Common.Utils.App;
 using SPTarkov.Launcher.Models.Launcher;
 using System;

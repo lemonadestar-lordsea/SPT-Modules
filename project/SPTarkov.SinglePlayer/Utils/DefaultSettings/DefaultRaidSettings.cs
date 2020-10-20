@@ -1,4 +1,13 @@
-﻿using EFT.Bots;
+/* DefaultRaidSettings.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using EFT.Bots;
 
 namespace SPTarkov.SinglePlayer.Utils.DefaultSettings
 {

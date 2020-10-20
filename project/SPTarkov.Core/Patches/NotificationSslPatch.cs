@@ -1,4 +1,16 @@
-﻿using System.Collections.Generic;
+/* NotificationSslPatch.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * reider123
+ * Senko-san
+ * Ginja
+ * Merijn Hendriks
+ */
+
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;

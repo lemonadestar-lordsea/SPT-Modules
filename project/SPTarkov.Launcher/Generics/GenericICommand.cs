@@ -1,4 +1,13 @@
-﻿using System;
+/* GenericICommand.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System;
 using System.Windows.Input;
 
 namespace SPTarkov.Launcher.Generics
