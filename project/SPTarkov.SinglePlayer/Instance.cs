@@ -17,7 +17,7 @@ namespace SPTarkov.SinglePlayer
 
 			PatcherUtil.Patch<OfflineLootPatch>();
 			PatcherUtil.Patch<OfflineSaveProfilePatch>();
-            PatcherUtil.Patch<OfflineSpawnPointPatch>();
+            //PatcherUtil.Patch<OfflineSpawnPointPatch>();
             PatcherUtil.Patch<WeaponDurabilityPatch>();
             PatcherUtil.Patch<SingleModeJamPatch>();
             PatcherUtil.Patch<ExperienceGainPatch>();
@@ -33,7 +33,7 @@ namespace SPTarkov.SinglePlayer
 			PatcherUtil.Patch<BotTemplateLimitPatch>();
             PatcherUtil.Patch<GetNewBotTemplatesPatch>();
             PatcherUtil.Patch<RemoveUsedBotProfilePatch>();
-            PatcherUtil.Patch<SpawnPmcPatch>();
+            //PatcherUtil.Patch<SpawnPmcPatch>();
 			PatcherUtil.Patch<CoreDifficultyPatch>();
 			PatcherUtil.Patch<BotDifficultyPatch>();
             
