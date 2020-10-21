@@ -77,14 +77,19 @@ namespace SPTarkov.Core.Patches
             
             for (var i = 0; i < codes.Count(); i++)
             {
-                // builder.AppendLine(codes[i].ToString());
-                if (codes[i].ToString().Contains("\"GET\""))
+                //builder.AppendLine(codes[i].ToString());
+                if (codes[i].ToString().Contains("UnityEngine.Networking.UnityWebRequest::.ctor"))
                 {
-                    index = i + 2;
+                    index = i + 1;
                     break;
                 }
             }
             //FileLog.Log(builder.ToString());
+
+            if (index == 0)
+            {
+                index = 139;
+            }
 
             var dupCode = new CodeInstruction(OpCodes.Dup);
 
