@@ -5,7 +5,6 @@ using System.Reflection;
 using HarmonyLib;
 using EFT;
 using SPTarkov.Common.Utils.Patching;
-using UnityEngine;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
 {

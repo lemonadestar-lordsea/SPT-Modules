@@ -17,6 +17,7 @@ namespace SPTarkov.SinglePlayer
 
 			PatcherUtil.Patch<OfflineLootPatch>();
 			PatcherUtil.Patch<OfflineSaveProfilePatch>();
+            PatcherUtil.Patch<OfflineSpawnPointPatch>();
             PatcherUtil.Patch<WeaponDurabilityPatch>();
             PatcherUtil.Patch<SingleModeJamPatch>();
             PatcherUtil.Patch<ExperienceGainPatch>();
