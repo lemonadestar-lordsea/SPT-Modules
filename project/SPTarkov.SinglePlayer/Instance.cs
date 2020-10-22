@@ -17,7 +17,6 @@ namespace SPTarkov.SinglePlayer
 
 			PatcherUtil.Patch<OfflineLootPatch>();
 			PatcherUtil.Patch<OfflineSaveProfilePatch>();
-            PatcherUtil.Patch<OfflineSpawnPointPatch>();
             PatcherUtil.Patch<WeaponDurabilityPatch>();
             PatcherUtil.Patch<SingleModeJamPatch>();
             PatcherUtil.Patch<ExperienceGainPatch>();
@@ -47,7 +46,6 @@ namespace SPTarkov.SinglePlayer
             PatcherUtil.Patch<LoadOfflineRaidScreenPatch>();
             PatcherUtil.Patch<ScavPrefabLoadPatch>();
             PatcherUtil.Patch<ScavProfileLoadPatch>();
-            PatcherUtil.Patch<ScavSpawnPointPatch>();
             PatcherUtil.Patch<ScavExfilPatch>();
 
             PatcherUtil.Patch<EndByTimerPatch>();

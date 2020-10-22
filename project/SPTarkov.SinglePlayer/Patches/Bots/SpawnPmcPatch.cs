@@ -5,6 +5,7 @@ using System.Reflection;
 using HarmonyLib;
 using EFT;
 using SPTarkov.Common.Utils.Patching;
+using UnityEngine;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
 {
@@ -20,18 +21,13 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
         {
             targetInterface = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetInterface);
             targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
-            wildSpawnTypeField = AccessTools.FieldRefAccess<WildSpawnType>(targetType, "Type");
-            botDifficultyField = AccessTools.FieldRefAccess<BotDifficulty>(targetType, "BotDifficulty");
+            wildSpawnTypeField = AccessTools.FieldRefAccess<WildSpawnType>(targetType, "wildSpawnType_0");
+            botDifficultyField = AccessTools.FieldRefAccess<BotDifficulty>(targetType, "botDifficulty_0");
         }
 
         private static bool IsTargetInterface(Type type)
         {
-            if (!type.IsInterface || type.GetMethod("ChooseProfile", new[] { typeof(List<Profile>), typeof(bool) }) == null)
-            {
-                return false;
-            }
-
-            return true;
+            return type.IsInterface && type.GetMethod("ChooseProfile", new[] { typeof(List<Profile>), typeof(bool) }) != null;
         }
 
         private bool IsTargetType(Type type)
@@ -41,11 +37,8 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
                 return false;
             }
 
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-
-            if (!fields.Any(x => x.FieldType == typeof(BotDifficulty) && x.Name == "BotDifficulty")
-            || !fields.Any(x => x.FieldType == typeof(EPlayerSide) && x.Name == "Side")
-            || !fields.Any(x => x.FieldType == typeof(WildSpawnType) && x.Name == "Type"))
+            var fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+            if (!fields.Any(f => f.FieldType == typeof(WildSpawnType)) || !fields.Any(f => f.FieldType == typeof(BotDifficulty)))
             {
                 return false;
             }
@@ -55,7 +48,7 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
 
         protected override MethodBase GetTargetMethod()
         {
-            return targetType.GetMethod("method_0", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            return targetType.GetMethod("method_0", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
         public static bool PatchPrefix(object __instance, ref bool __result, Profile x)

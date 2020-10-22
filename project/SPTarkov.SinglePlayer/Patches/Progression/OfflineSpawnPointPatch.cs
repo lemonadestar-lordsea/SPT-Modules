@@ -6,6 +6,7 @@ using SPTarkov.Common.Utils.Patching;
 using UnityEngine;
 using System.Linq;
 using System;
+using EFT.Game.Spawning;
 
 namespace SPTarkov.SinglePlayer.Patches.Progression
 {
@@ -18,36 +19,34 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
         protected override MethodBase GetTargetMethod()
         {
             var targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
-            return targetType.GetMethod("SelectSpawnPoint", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            return targetType.GetMethods(BindingFlags.NonPublic| BindingFlags.Instance)
+                .First(m => m.Name.Contains("SelectSpawnPoint"));
         }
 
         private static bool IsTargetType(Type type)
         {
-            var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-
-            if (!methods.Any(x => x.Name == "CheckFarthestFromOtherPlayers"))
-            {
+            if (!type.IsSealed && type.IsInterface)
                 return false;
-            }
 
-            return true;
+            return type.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
+                .Any(x => x.Name.Contains("CheckFarthestFromOtherPlayers"));
         }
 
-        public static bool PatchPrefix(SpawnArea.SpawnAreaSettings[] ___spawnAreaSettings_0, EPlayerSide side, out Vector3 position, out Quaternion rotation, string spawnPointFilter = null, string infiltrationZone = null)
+        public static bool PatchPrefix(GInterface208 ___ginterface208_0, ESpawnCategory category, EPlayerSide side, string groupId, GInterface54 person, string infiltration = null)
         {
-            var spawnAreaSettingHelper = new SpawnAreaSettingHelper(side, spawnPointFilter, infiltrationZone);
-            var spawnAreaSettings = ___spawnAreaSettings_0.Where(spawnAreaSettingHelper.isSpawnAreaSetting).RandomElement();
+            var spawnAreaSettingHelper = new SpawnAreaSettingHelper(side, null, infiltration);
+            var spawnAreaSettings = ___ginterface208_0.Where(spawnAreaSettingHelper.isSpawnAreaSetting).RandomElement();
 
             if (spawnAreaSettings == null)
             {
-                Debug.LogError("No spawn points for " + side + " found! Spawn points count: " +  ___spawnAreaSettings_0.Length);
-                position = Vector3.zero;
-                rotation = Quaternion.identity;
+                Debug.LogError("No spawn points for " + side + " found! Spawn points count: " +  ___ginterface208_0.Count());
+                //position = Vector3.zero;
+                //rotation = Quaternion.identity;
                 return false;
             }
 
-            position = spawnAreaSettings.Position;
-            rotation = Quaternion.Euler(0f, spawnAreaSettings.Orientation, 0f);
+            //position = spawnAreaSettings.Position;
+            //rotation = Quaternion.Euler(0f, spawnAreaSettings.Orientation, 0f);
 
             return false;
         }
@@ -66,10 +65,10 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
             this.infiltrationZone = infiltrationZone;
         }
 
-        public bool isSpawnAreaSetting(SpawnArea.SpawnAreaSettings x)
+        public bool isSpawnAreaSetting(ISpawnPoint x)
         {
-            return x.Sides.Contains(side)
-                && (string.IsNullOrWhiteSpace(infiltrationZone) || x.InfiltrationZone == infiltrationZone)
+            return x.Sides.Contain(side)
+                && (string.IsNullOrWhiteSpace(infiltrationZone) || x.Infiltration == infiltrationZone)
                 && (string.IsNullOrWhiteSpace(spawnPointFilter) || spawnPointFilter.Contains(x.Id));
         }
     }

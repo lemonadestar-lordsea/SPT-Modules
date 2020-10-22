@@ -39,6 +39,10 @@
       <HintPath>..\Shared\References\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="ItemComponent.Types">
+      <HintPath>..\Shared\References\ItemComponent.Types.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Comfort">
       <HintPath>..\Shared\References\Comfort.dll</HintPath>
       <Private>False</Private>
@@ -90,7 +94,6 @@
     <Compile Include="Patches\ScavMode\ScavExfilPatch.cs" />
     <Compile Include="Patches\ScavMode\ScavPrefabLoadPatch.cs" />
     <Compile Include="Patches\ScavMode\ScavProfileLoadPatch.cs" />
-    <Compile Include="Patches\ScavMode\ScavSpawnPointPatch.cs" />
     <Compile Include="Utils\PatchLogger.cs" />
     <Compile Include="Utils\Player\HealthListener.cs" />
     <Compile Include="Patches\Healing\MainMenuControllerPatch.cs" />

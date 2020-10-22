@@ -8,11 +8,11 @@ using UnityEngine;
 using Comfort.Common;
 using EFT;
 using SPTarkov.Common.Utils.Patching;
-using WaveInfo = GClass897;
-using BotsPresets = GClass334;
-using BotData = GInterface13;
-using PoolManager = GClass1120;
-using JobPriority = GClass2026;
+using WaveInfo = GClass904;
+using BotsPresets = GClass337;
+using BotData = GInterface14;
+using PoolManager = GClass1133;
+using JobPriority = GClass2077;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
 {

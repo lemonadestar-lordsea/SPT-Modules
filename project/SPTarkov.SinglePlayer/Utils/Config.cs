@@ -1,7 +1,7 @@
 ﻿using Comfort.Common;
 using EFT;
-using ISession = GInterface25;
-using ClientConfig = GClass310;
+using ISession = GInterface26;
+using ClientConfig = GClass313;
 
 namespace SPTarkov.SinglePlayer.Utils
 {
