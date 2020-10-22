@@ -1,7 +1,6 @@
 
 using System.Reflection;
 using EFT;
-using EFT.Interactive;
 using SPTarkov.Common.Utils.Patching;
 using UnityEngine;
 using System.Linq;
@@ -12,64 +11,36 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
 {
     class OfflineSpawnPointPatch : GenericPatch<OfflineSpawnPointPatch>
     {
-        public OfflineSpawnPointPatch() : base(prefix: nameof(PatchPrefix))
-        {
-        }
+        public OfflineSpawnPointPatch() : base(prefix: nameof(PatchPrefix)) { }
 
         protected override MethodBase GetTargetMethod()
         {
-            var targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
-            return targetType.GetMethods(BindingFlags.NonPublic| BindingFlags.Instance)
-                .First(m => m.Name.Contains("SelectSpawnPoint"));
+            var targetType = PatcherConstants.TargetAssembly.GetTypes().First(IsTargetType);
+            return targetType.GetMethods(PatcherConstants.DefaultBindingFlags).First(m => m.Name.Contains("SelectSpawnPoint"));
         }
 
         private static bool IsTargetType(Type type)
         {
-            if (!type.IsSealed && type.IsInterface)
+            var methods = type.GetMethods(PatcherConstants.DefaultBindingFlags);
+
+            if (!methods.Any(x => x.Name.IndexOf("CheckFarthestFromOtherPlayers", StringComparison.OrdinalIgnoreCase) != -1))
                 return false;
 
-            return type.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
-                .Any(x => x.Name.Contains("CheckFarthestFromOtherPlayers"));
+            return !type.IsInterface;
         }
 
-        public static bool PatchPrefix(GInterface208 ___ginterface208_0, ESpawnCategory category, EPlayerSide side, string groupId, GInterface54 person, string infiltration = null)
+        public static bool PatchPrefix(ref ISpawnPoint __result, GInterface208 ___ginterface208_0, ESpawnCategory category, EPlayerSide side, string infiltration)
         {
-            var spawnAreaSettingHelper = new SpawnAreaSettingHelper(side, null, infiltration);
-            var spawnAreaSettings = ___ginterface208_0.Where(spawnAreaSettingHelper.isSpawnAreaSetting).RandomElement();
+            var spawnPoints = Enumerable.ToList(___ginterface208_0);
+            
+            spawnPoints = spawnPoints.Where(sp => sp.Sides.Contain(side) && sp.Categories.Contain(category)).ToList();
+            var infils = spawnPoints.Select(sp => sp.Infiltration).Distinct();
 
-            if (spawnAreaSettings == null)
-            {
-                Debug.LogError("No spawn points for " + side + " found! Spawn points count: " +  ___ginterface208_0.Count());
-                //position = Vector3.zero;
-                //rotation = Quaternion.identity;
-                return false;
-            }
+            Debug.LogError($"PatchPrefix SelectSpawnPoint: {spawnPoints.Count} | {String.Join(", ", infils)}");
 
-            //position = spawnAreaSettings.Position;
-            //rotation = Quaternion.Euler(0f, spawnAreaSettings.Orientation, 0f);
-
+            __result = spawnPoints.Where(sp => sp.Infiltration.Equals(infiltration)).RandomElement();
+            Debug.LogError($"Selected Spawn Point: {__result.Id}");
             return false;
-        }
-    }
-
-    public class SpawnAreaSettingHelper
-    {
-        private readonly EPlayerSide side;
-        private readonly string spawnPointFilter;
-        private readonly string infiltrationZone;
-
-        public SpawnAreaSettingHelper(EPlayerSide side, string spawnPointFilter, string infiltrationZone)
-        {
-            this.side = side;
-            this.spawnPointFilter = spawnPointFilter;
-            this.infiltrationZone = infiltrationZone;
-        }
-
-        public bool isSpawnAreaSetting(ISpawnPoint x)
-        {
-            return x.Sides.Contain(side)
-                && (string.IsNullOrWhiteSpace(infiltrationZone) || x.Infiltration == infiltrationZone)
-                && (string.IsNullOrWhiteSpace(spawnPointFilter) || spawnPointFilter.Contains(x.Id));
         }
     }
 }
