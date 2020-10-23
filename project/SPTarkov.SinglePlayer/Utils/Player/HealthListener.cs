@@ -109,11 +109,11 @@ namespace SPTarkov.SinglePlayer.Utils.Player
             // set effects
             if (healthController.IsBodyPartBroken(bodyPart))
             {
-                dictionary[bodyPart].AddEffect(BodyPartEffect.BreakPart);
+                dictionary[bodyPart].AddEffect(BodyPartEffect.Fracture);
             }
             else
             {
-                dictionary[bodyPart].RemoveEffect(BodyPartEffect.BreakPart);
+                dictionary[bodyPart].RemoveEffect(BodyPartEffect.Fracture);
             }
         }
 
@@ -136,10 +136,10 @@ namespace SPTarkov.SinglePlayer.Utils.Player
 
             string effectType = effect.GetType().Name;
 
-            if (effectType != "BreakPart")
+            if (effectType != "Fracture")
                 return;
 
-            CurrentHealth.Health[effect.BodyPart].AddEffect(BodyPartEffect.BreakPart);
+            CurrentHealth.Health[effect.BodyPart].AddEffect(BodyPartEffect.Fracture);
 
             _simpleTimer.isHealthSynchronized = false;
         }
@@ -151,10 +151,10 @@ namespace SPTarkov.SinglePlayer.Utils.Player
 
             string effectType = effect.GetType().Name;
 
-            if (effectType != "BreakPart")
+            if (effectType != "Fracture")
                 return;
 
-            CurrentHealth.Health[effect.BodyPart].RemoveEffect(BodyPartEffect.BreakPart);
+            CurrentHealth.Health[effect.BodyPart].RemoveEffect(BodyPartEffect.Fracture);
 
             _simpleTimer.isHealthSynchronized = false;
         }
