@@ -16,7 +16,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using HarmonyLib;
 using IBundleLock = GInterface239; //Property: IsLocked
-using BindableState = GClass2097<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
+using BindableState = GClass2137<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
 
 namespace SPTarkov.RuntimeBundles.Utils
 {

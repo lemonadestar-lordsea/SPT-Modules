@@ -1,4 +1,4 @@
-/* LoadOfflineRaidScreenPatch.cs
+﻿/* LoadOfflineRaidScreenPatch.cs
  * License: NCSA Open Source License
  * 
  * Copyright: Merijn Hendriks
@@ -38,8 +38,8 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
         private const string kMainControllerFieldName = "gclass1157_0";
         private const string kMenuControllerInnerType = "Class803";
         private const string kTargetMethodName = "method_2";
-        private const string kLoadReadyScreenMethodName = "method_36";
-        private const string kReadyMethodName = "method_54";
+        private const string kLoadReadyScreenMethodName = "method_37";
+        private const string kReadyMethodName = "method_53";
 
         public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler)) { }
 
@@ -91,7 +91,7 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
         public static void LoadOfflineRaidScreenForScav()
         {
             var menuController = (object)GetMenuController();
-            var gclass = new MatchmakerOfflineRaid.GClass1960();
+            var gclass = new MatchmakerOfflineRaid.GClass1961();
 
             gclass.OnShowNextScreen += LoadOfflineRaidNextScreen;
             gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, kReadyMethodName);
