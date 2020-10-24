@@ -13,7 +13,9 @@ namespace SPTarkov.SinglePlayer.Utils.Player
 {
     enum BodyPartEffect
     {
-        BreakPart
+        Fracture,
+        LightBleeding,
+        HeavyBleeding
     }
 
     class BodyPartHealth
