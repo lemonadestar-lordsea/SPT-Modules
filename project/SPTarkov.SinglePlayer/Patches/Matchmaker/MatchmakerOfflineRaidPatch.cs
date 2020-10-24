@@ -1,4 +1,14 @@
-﻿using System;
+/* MatchmakerOfflineRaidPatch.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ * Martynas Gestautas
+ */
+
+
+using System;
 using System.Reflection;
 using UnityEngine;
 using Newtonsoft.Json;

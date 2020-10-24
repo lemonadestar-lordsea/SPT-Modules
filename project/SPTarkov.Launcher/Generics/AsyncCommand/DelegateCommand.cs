@@ -1,4 +1,13 @@
-﻿using SPTarkov.Launcher.Interfaces;
+/* DelegateCommand.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using SPTarkov.Launcher.Interfaces;
 using System;
 using System.Windows.Input;
 

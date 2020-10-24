@@ -1,4 +1,13 @@
-﻿using SPTarkov.Launcher.Helpers;
+/* LocaleCollection.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ */
+
+
+using SPTarkov.Launcher.Helpers;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 

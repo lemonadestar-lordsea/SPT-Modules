@@ -1,4 +1,13 @@
-﻿using System.Reflection;
+/* OnShellEjectEventPatch.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System.Reflection;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils.Reflection;
 

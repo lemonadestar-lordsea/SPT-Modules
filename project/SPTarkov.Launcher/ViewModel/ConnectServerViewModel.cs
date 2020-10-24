@@ -1,4 +1,14 @@
-﻿using SPTarkov.Launcher.Generics.AsyncCommand;
+/* ConnectServerViewModel.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ * Merijn Hendriks
+ */
+
+
+using SPTarkov.Launcher.Generics.AsyncCommand;
 using SPTarkov.Launcher.Helpers;
 using SPTarkov.Launcher.Models.Launcher;
 using System;

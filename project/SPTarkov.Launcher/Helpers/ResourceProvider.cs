@@ -1,4 +1,13 @@
-﻿using System;
+/* ResourceProvider.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ */
+
+
+using System;
 
 namespace SPTarkov.Launcher.Helpers
 {

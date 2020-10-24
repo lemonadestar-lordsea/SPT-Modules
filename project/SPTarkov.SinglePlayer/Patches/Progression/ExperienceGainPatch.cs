@@ -1,4 +1,13 @@
-﻿using EFT.UI.SessionEnd;
+/* ExperienceGainPatch.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Ginja
+ */
+
+
+using EFT.UI.SessionEnd;
 using SPTarkov.Common.Utils.Patching;
 using System.Linq;
 using System.Reflection;

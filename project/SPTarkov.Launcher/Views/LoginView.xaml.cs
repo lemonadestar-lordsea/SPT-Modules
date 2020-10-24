@@ -1,4 +1,13 @@
-﻿using System.Windows.Controls;
+/* LoginView.xaml.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System.Windows.Controls;
 
 namespace SPTarkov.Launcher.Views
 {

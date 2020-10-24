@@ -1,4 +1,13 @@
-﻿using System;
+/* Request.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System;
 using System.IO;
 using System.Net;
 using System.Text;

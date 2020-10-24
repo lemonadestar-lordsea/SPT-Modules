@@ -1,4 +1,13 @@
-﻿using System;
+/* InvertedBoolToVisibilityConverter.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;

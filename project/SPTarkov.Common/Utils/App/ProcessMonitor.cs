@@ -1,4 +1,13 @@
-﻿using System;
+/* ProcessMonitor.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System;
 using System.Diagnostics;
 using System.Timers;
 

@@ -1,4 +1,13 @@
-﻿using SPTarkov.Launcher.Models.Launcher.Notifications;
+/* NotificationBanner.xaml.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ */
+
+
+using SPTarkov.Launcher.Models.Launcher.Notifications;
 using System.Windows;
 using System.Windows.Controls;
 

@@ -1,4 +1,14 @@
-﻿using System.Windows;
+/* AddServerControl.xaml.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ * Merijn Hendriks
+ */
+
+
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 

@@ -1,4 +1,14 @@
-﻿using System;
+/* HealthListener.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Ginja
+ * Merijn Hendriks
+ */
+
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using IHealthController = GInterface163;

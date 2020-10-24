@@ -1,4 +1,15 @@
-﻿using System;
+/* DogtagPatch.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ * Martynas Gestautas
+ * Ginja
+ */
+
+
+using System;
 using System.Reflection;
 using UnityEngine;
 using EFT;

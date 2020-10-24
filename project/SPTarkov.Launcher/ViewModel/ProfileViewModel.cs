@@ -1,4 +1,14 @@
-﻿using SPTarkov.Common.Utils.App;
+/* ProfileViewModel.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ * Merijn Hendriks
+ */
+
+
+using SPTarkov.Common.Utils.App;
 using SPTarkov.Launcher.Generics;
 using SPTarkov.Launcher.Generics.AsyncCommand;
 using SPTarkov.Launcher.Helpers;

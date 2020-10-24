@@ -1,4 +1,13 @@
-﻿using UnityEngine;
+/* Loader.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using UnityEngine;
 
 namespace SPTarkov.Common.Utils.Hook
 {

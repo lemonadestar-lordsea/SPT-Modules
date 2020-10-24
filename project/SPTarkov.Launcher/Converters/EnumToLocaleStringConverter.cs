@@ -1,4 +1,13 @@
-﻿using SPTarkov.Launcher.Helpers;
+/* EnumToLocaleStringConverter.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ */
+
+
+using SPTarkov.Launcher.Helpers;
 using System;
 using System.ComponentModel;
 using System.Text.RegularExpressions;

@@ -1,4 +1,13 @@
-﻿using System;
+/* EnumBindingSourceExtension.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ */
+
+
+using System;
 using System.Windows.Markup;
 
 namespace SPTarkov.Launcher.Extensions

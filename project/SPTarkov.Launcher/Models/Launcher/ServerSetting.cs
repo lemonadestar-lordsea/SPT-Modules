@@ -1,4 +1,14 @@
-﻿using System.ComponentModel;
+/* ServerSetting.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ * Merijn Hendriks
+ */
+
+
+using System.ComponentModel;
 
 namespace SPTarkov.Launcher.Models.Launcher
 {

@@ -1,4 +1,13 @@
-﻿namespace SPTarkov.Launcher
+/* ClientConfig.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+namespace SPTarkov.Launcher
 {
 	public class ClientConfig
 	{

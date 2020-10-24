@@ -1,4 +1,14 @@
-﻿using System;
+/* Program.xaml.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ * Merijn Hendriks
+ */
+
+
+using System;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;

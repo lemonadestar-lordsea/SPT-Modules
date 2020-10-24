@@ -1,4 +1,15 @@
-﻿using System;
+/* LoadOfflineRaidScreenPatch.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ * reider123
+ * Ginja
+ */
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;

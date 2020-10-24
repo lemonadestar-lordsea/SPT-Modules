@@ -1,4 +1,13 @@
-﻿using System.Reflection;
+/* AssemblyInfo.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
@@ -9,7 +18,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SPTarkov")]
 [assembly: AssemblyProduct("Launcher")]
-[assembly: AssemblyCopyright("Copyright © SPTarkov 2020")]
+[assembly: AssemblyCopyright("Copyright � SPTarkov 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

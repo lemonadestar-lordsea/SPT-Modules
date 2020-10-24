@@ -1,4 +1,14 @@
-﻿using System;
+/* RemoveUsedBotProfilePatch.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ * Martynas Gestautas
+ */
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;

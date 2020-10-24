@@ -1,3 +1,13 @@
+/* SpawnPmcPatch.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Martynas Gestautas
+ * Merijn Hendriks
+ */
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

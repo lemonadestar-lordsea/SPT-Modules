@@ -1,4 +1,13 @@
-﻿using System;
+/* BundleLoadPatch.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;

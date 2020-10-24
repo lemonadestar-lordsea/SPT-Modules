@@ -1,4 +1,15 @@
-﻿using Microsoft.Win32;
+/* GameStarter.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * waffle.lord
+ * reider123
+ * Merijn Hendriks
+ */
+
+
+using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;

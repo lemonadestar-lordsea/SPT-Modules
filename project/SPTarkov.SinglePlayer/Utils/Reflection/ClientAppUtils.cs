@@ -1,4 +1,13 @@
-﻿using UnityEngine;
+/* ClientAppUtils.cs
+ * License: NCSA Open Source License
+ * 
+ * Copyright: Merijn Hendriks
+ * AUTHORS:
+ * Merijn Hendriks
+ */
+
+
+using UnityEngine;
 using Comfort.Common;
 using EFT;
 
