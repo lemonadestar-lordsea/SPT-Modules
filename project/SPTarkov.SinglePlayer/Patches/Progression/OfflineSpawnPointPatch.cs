@@ -63,7 +63,7 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
                 return false;
             }
 
-            Debug.LogError($"Filter by Side: {infiltration}");
+            Debug.LogError($"Filter by Side: {side}");
             spawnPoints = spawnPoints.Where(sp => sp.Sides.Contain(side)).ToList();
             if (spawnPoints.Count == 0)
             {
