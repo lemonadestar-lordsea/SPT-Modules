@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPTarkov.Launcher", "SPTark
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPTarkov.RuntimeBundles", "SPTarkov.RuntimeBundles\SPTarkov.RuntimeBundles.csproj", "{DD923A53-4605-49CE-AF1D-B61137D0E4A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPTarkov.Tools", "SPTarkov.Tools\SPTarkov.Tools.csproj", "{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DD923A53-4605-49CE-AF1D-B61137D0E4A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD923A53-4605-49CE-AF1D-B61137D0E4A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD923A53-4605-49CE-AF1D-B61137D0E4A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

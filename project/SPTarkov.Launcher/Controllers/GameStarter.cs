@@ -83,6 +83,7 @@ namespace SPTarkov.Launcher
                     new FileInfo(value2.Replace(value3.Name, @"EscapeFromTarkov_Data\Managed\Nlog.SPTarkov.Common.dll")),
                     new FileInfo(value2.Replace(value3.Name, @"EscapeFromTarkov_Data\Managed\Nlog.SPTarkov.Core.dll")),
                     new FileInfo(value2.Replace(value3.Name, @"EscapeFromTarkov_Data\Managed\Nlog.SPTarkov.SinglePlayer.dll")),
+                    new FileInfo(value2.Replace(value3.Name, @"EscapeFromTarkov_Data\Managed\Nlog.SPTarkov.Tools.dll")),
                 };
 
                 foreach (var value in value4)
