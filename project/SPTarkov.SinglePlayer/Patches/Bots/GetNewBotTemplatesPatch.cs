@@ -22,7 +22,7 @@ using WaveInfo = GClass904;
 using BotsPresets = GClass337;
 using BotData = GInterface14;
 using PoolManager = GClass1133;
-using JobPriority = GClass2078;
+using JobPriority = GClass2079;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
 {

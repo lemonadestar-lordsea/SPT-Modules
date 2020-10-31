@@ -14,7 +14,7 @@ Client-side runtime patches to alter the client's behaviour.
 
 - Visual Studio 2017 (.NET desktop workload) or newer
 - .NET Framework 4.6.1
-- Escape From Tarkov 0.12.8.9569
+- Escape From Tarkov 0.12.8.9658
 
 ## Setup
 

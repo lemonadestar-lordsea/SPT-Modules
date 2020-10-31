@@ -36,7 +36,7 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
         private static readonly string kWavesSettingsFieldName = "gstruct89_0";
 
         private const string kMainControllerFieldName = "gclass1157_0";
-        private const string kMenuControllerInnerType = "Class803";
+        private const string kMenuControllerInnerType = "Class804";
         private const string kTargetMethodName = "method_2";
         private const string kLoadReadyScreenMethodName = "method_37";
         private const string kReadyMethodName = "method_53";
@@ -91,7 +91,7 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
         public static void LoadOfflineRaidScreenForScav()
         {
             var menuController = (object)GetMenuController();
-            var gclass = new MatchmakerOfflineRaid.GClass1961();
+            var gclass = new MatchmakerOfflineRaid.GClass1962();
 
             gclass.OnShowNextScreen += LoadOfflineRaidNextScreen;
             gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, kReadyMethodName);
