@@ -7,7 +7,6 @@ Client-side runtime patches to alter the client's behaviour.
 - SPTarkov.Common: utilities used across modules.
 - SPTarkov.Core: required patches for the game to run.
 - SPTarkov.SinglePlayer: simulating online game offline.
-- SPTarkov.Launcher: a custom game launcher allows the game to be launched offline.
 - SPTarkov.RuntimeBundles: reponsible for loading custom asset bundles.
 
 ## Requirements
@@ -22,8 +21,9 @@ All dependencies are provided, no additional setup required.
 
 ## Build
 
-1. Visual Studio -> menubar -> rebuild solution.
-2. Copy-paste all files inside `Build` into `game root directory`, overwrite when prompted.
+1. Open Launcher.code-workspace with VSCodium.
+2. Run the build task: (top toolbar) Terminal -> Run Build Task...
+3. Copy-paste all files inside `Build` into `game root directory`, overwrite when prompted.
 
 ## Authors
 
