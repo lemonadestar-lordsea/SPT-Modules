@@ -65,17 +65,14 @@ if (($msbuild -eq("")) -or(-Not(Test-Path $msbuild)))
     return
 }
 
-Write-Host "  Found MSBuild.exe"
+Write-Host "  Found MSBuild.exe" -ForegroundColor Green
 Write-Host ""
 
-# restore nuget packages
-Write-Host "Restore nuget packages..."
-Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "-nologo /verbosity:minimal -consoleloggerparameters:Summary -t:restore -p:Configuration=Release Modules.sln"
-Write-Host ""
-
-# build the project
-Write-Host "Building project..."
-Start-Process -FilePath $msbuild -NoNewWindow -Wait -ArgumentList "-nologo /verbosity:minimal -consoleloggerparameters:Summary -t:rebuild -p:Configuration=Release Modules.sln"
+# restore nuget packages and build project
+Write-Host "Building Modules..." -ForegroundColor Cyan
+$buildProcess = Start-Process -FilePath $msbuild -NoNewWindow -ArgumentList "-nologo /verbosity:minimal -consoleloggerparameters:Summary -t:Restore;Rebuild -p:Configuration=Release Modules.sln" -PassThru
+Wait-Process -InputObject $buildProcess
+Write-Host "Done" -ForegroundColor Cyan
 Write-Host ""
 
 #get root of project folder
@@ -98,9 +95,6 @@ $dllAndExeFiles = Resolve-Path -Path "*\bin\release\" | % {Get-ChildItem -Path $
 $dllAndExeFiles += [System.IO.FileInfo]::new((Resolve-Path -Path ".\Shared\References\Assembly-CSharp.dll"))
 $dllAndExeFiles += [System.IO.FileInfo]::new((Resolve-Path -Path ".\Shared\Resources\NLog.dll.nlog"))
 
-#get launcher_data folder path
-$launcherData = [System.IO.DirectoryInfo]::new((Resolve-Path -Path "*\Launcher_Data")).FullName
-
 #create the build directory structure
 [System.IO.Directory]::CreateDirectory($managedFolder) | Out-Null
 
@@ -118,25 +112,10 @@ foreach($file in $dllAndExeFiles)
     }
 }
 
-#copy launcher_data folder
-Write-Host ""
-Write-Host "Copying Launcher_Data folder ... " -NoNewLine
-
-Copy-Item -Path $launcherData -Destination $buildDir -Recurse -Force -ErrorAction SilentlyContinue
-
-if(Test-Path "$($buildDir)\Launcher_Data") 
-{
-    Write-host "OK" -ForegroundColor Green
-}
-else 
-{
-    Write-host "Folder doesn't appear to have been copied.`nError: $($Error[0])" -ForegroundColor Red
-}
-
 Write-Host ""
 
 # delete build waste
-Write-Host "Cleaning garbage produced by build..."
+Write-Host "Cleaning garbage produced by build..." -ForegroundColor Cyan
 
 $delPaths = Get-ChildItem -Recurse -Path $rootPath | where {$_.FullName -like "*\bin"} | select -ExpandProperty FullName
 $delPaths += Get-ChildItem -Recurse -Path $rootPath | where {$_.FullName -like "*\obj"} | select -ExpandProperty FullName
@@ -148,4 +127,4 @@ foreach ($path in $delPaths)
 }
 
 Write-Host ""
-Write-Host "Done building"
+Write-Host "Done building" -ForegroundColor Cyan
