@@ -30,7 +30,7 @@ namespace SPTarkov.SinglePlayer.Utils.Player
         private readonly Request _request;
         private readonly SimpleTimer _simpleTimer;
 
-        public PlayerHealth CurrentHealth { get; } = new PlayerHealth();
+        public PlayerHealth CurrentHealth { get; }
 
         public static HealthListener Instance
         {
@@ -53,6 +53,11 @@ namespace SPTarkov.SinglePlayer.Utils.Player
         // ctor
         private HealthListener()
         {
+            if (CurrentHealth == null)
+            {
+                CurrentHealth = new PlayerHealth();
+            }
+
             _request = new Request(Utils.Config.BackEndSession.GetPhpSessionId(), Utils.Config.BackendUrl);
             _simpleTimer = Common.Utils.Hook.Loader<SimpleTimer>.Load();
             _simpleTimer.syncHealthAction = () => Task.Run(() => _request.PostJson("/player/health/sync", CurrentHealth.ToJson()));
