@@ -20,7 +20,7 @@ using EFT.UI.Matchmaker;
 using EFT.UI.Screens;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils.Reflection;
-using MenuController = GClass1157;
+using MenuController = GClass1158;
 using WeatherSettings = GStruct88;
 using BotsSettings = GStruct225;
 using WavesSettings = GStruct89;
@@ -35,8 +35,8 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
         private static readonly string kWeatherSettingsFieldName = "gstruct88_0";
         private static readonly string kWavesSettingsFieldName = "gstruct89_0";
 
-        private const string kMainControllerFieldName = "gclass1157_0";
-        private const string kMenuControllerInnerType = "Class804";
+        private const string kMainControllerFieldName = "gclass1158_0";
+        private const string kMenuControllerInnerType = "Class806";
         private const string kTargetMethodName = "method_2";
         private const string kLoadReadyScreenMethodName = "method_37";
         private const string kReadyMethodName = "method_53";
