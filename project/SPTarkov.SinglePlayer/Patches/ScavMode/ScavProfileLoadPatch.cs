@@ -86,10 +86,11 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
         {
             var parameters = methodInfo.GetParameters();
 
-            if (parameters.Length != 3
+            if (parameters.Length != 4
             || parameters[0].Name != "location"
             || parameters[1].Name != "timeAndWeather"
             || parameters[2].Name != "entryPoint"
+            || parameters[3].Name != "timeHasComeScreenController"
             || parameters[2].ParameterType != typeof(string)
             || methodInfo.ReturnType != typeof(void))
             {

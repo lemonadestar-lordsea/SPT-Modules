@@ -17,7 +17,7 @@ using SPTarkov.Common.Utils.HTTP;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils;
 using WaveInfo = GClass903;
-using BotsPresets = GClass335;
+using BotsPresets = GClass336;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
 {

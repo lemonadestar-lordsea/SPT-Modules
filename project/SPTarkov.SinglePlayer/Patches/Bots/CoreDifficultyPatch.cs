@@ -13,7 +13,7 @@ using UnityEngine;
 using SPTarkov.Common.Utils.HTTP;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils;
-using BotDifficultyHandler = GClass283;
+using BotDifficultyHandler = GClass282;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
 {
