@@ -35,7 +35,7 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
         private static readonly string kWeatherSettingsFieldName = "gstruct88_0";
         private static readonly string kWavesSettingsFieldName = "gstruct89_0";
 
-        private const string kMainControllerFieldName = "gclass1157_0";
+        private const string kMainControllerFieldName = "gclass1158_0";
         private const string kMenuControllerInnerType = "Class806";
         private const string kTargetMethodName = "method_2";
         private const string kLoadReadyScreenMethodName = "method_37";
