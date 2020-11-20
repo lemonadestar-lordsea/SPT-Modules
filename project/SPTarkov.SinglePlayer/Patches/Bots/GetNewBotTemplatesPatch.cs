@@ -9,7 +9,6 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -19,9 +18,9 @@ using Comfort.Common;
 using EFT;
 using SPTarkov.Common.Utils.Patching;
 using WaveInfo = GClass904;
-using BotsPresets = GClass337;
+using BotsPresets = GClass336;
 using BotData = GInterface14;
-using PoolManager = GClass1133;
+using PoolManager = GClass1134;
 using JobPriority = GClass2080;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots

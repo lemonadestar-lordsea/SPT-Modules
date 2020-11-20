@@ -10,7 +10,7 @@
 using System.Linq;
 using System.Reflection;
 using SPTarkov.Common.Utils.Patching;
-using MainMenuController = GClass1157;
+using MainMenuController = GClass1158;
 
 namespace SPTarkov.SinglePlayer.Patches.Matchmaker
 {

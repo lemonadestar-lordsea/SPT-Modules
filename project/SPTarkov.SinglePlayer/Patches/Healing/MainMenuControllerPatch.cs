@@ -9,7 +9,7 @@
 
 using System.Reflection;
 using SPTarkov.Common.Utils.Patching;
-using MainMenuController = GClass1157;
+using MainMenuController = GClass1158;
 using IHealthController = GInterface163;
 
 namespace SPTarkov.SinglePlayer.Patches.Healing

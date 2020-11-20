@@ -20,7 +20,7 @@ using EFT.UI.Matchmaker;
 using EFT.UI.Screens;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils.Reflection;
-using MenuController = GClass1157;
+using MenuController = GClass1158;
 using WeatherSettings = GStruct88;
 using BotsSettings = GStruct225;
 using WavesSettings = GStruct89;
