@@ -13,11 +13,7 @@ Client-side runtime patches to alter the client's behaviour.
 
 - Visual Studio Build Tools (.NET desktop workload)
 - .NET Framework 4.6.1
-- Escape From Tarkov 0.12.8.9831
-
-## Setup
-
-All dependencies are provided, no additional setup required.
+- Escape From Tarkov 0.12.8.9888
 
 ## Build
 
