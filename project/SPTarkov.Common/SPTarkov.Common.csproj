@@ -42,10 +42,11 @@
     </Reference>
     <Reference Include="bsg.componentace.compression.libs.zlib">
       <HintPath>..\Shared\References\bsg.componentace.compression.libs.zlib.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\Shared\References\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\Shared\References\NLog.dll</HintPath>
