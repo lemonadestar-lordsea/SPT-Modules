@@ -40,6 +40,9 @@
       <HintPath>..\Shared\References\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="bsg.componentace.compression.libs.zlib">
+      <HintPath>..\Shared\References\bsg.componentace.compression.libs.zlib.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\Shared\References\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -59,10 +62,6 @@
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule">
       <HintPath>..\Shared\References\UnityEngine.ImageConversionModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="zlib.net">
-      <HintPath>..\Shared\References\zlib.net.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
