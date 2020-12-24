@@ -20,10 +20,10 @@ using EFT.UI.Matchmaker;
 using EFT.UI.Screens;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils.Reflection;
-using MenuController = GClass1158;
-using WeatherSettings = GStruct88;
-using BotsSettings = GStruct225;
-using WavesSettings = GStruct89;
+using MenuController = GClass1190;
+using WeatherSettings = GStruct92;
+using BotsSettings = GStruct232;
+using WavesSettings = GStruct93;
 
 namespace SPTarkov.SinglePlayer.Patches.ScavMode
 {
@@ -31,15 +31,15 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
 
     public class LoadOfflineRaidScreenPatch : GenericPatch<LoadOfflineRaidScreenPatch>
     {
-        private static readonly string kBotsSettingsFieldName = "gstruct225_0";
-        private static readonly string kWeatherSettingsFieldName = "gstruct88_0";
-        private static readonly string kWavesSettingsFieldName = "gstruct89_0";
+        private static readonly string kBotsSettingsFieldName = "gstruct232_0";
+        private static readonly string kWeatherSettingsFieldName = "gstruct92_0";
+        private static readonly string kWavesSettingsFieldName = "gstruct93_0";
 
-        private const string kMainControllerFieldName = "gclass1158_0";
-        private const string kMenuControllerInnerType = "Class806";
+        private const string kMainControllerFieldName = "gclass1190_0";
+        private const string kMenuControllerInnerType = "Class818";
         private const string kTargetMethodName = "method_2";
-        private const string kLoadReadyScreenMethodName = "method_37";
-        private const string kReadyMethodName = "method_53";
+        private const string kLoadReadyScreenMethodName = "method_35";
+        private const string kReadyMethodName = "method_50";
 
         public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler)) { }
 
@@ -91,7 +91,7 @@ namespace SPTarkov.SinglePlayer.Patches.ScavMode
         public static void LoadOfflineRaidScreenForScav()
         {
             var menuController = (object)GetMenuController();
-            var gclass = new MatchmakerOfflineRaid.GClass1963();
+            var gclass = new MatchmakerOfflineRaid.GClass2022();
 
             gclass.OnShowNextScreen += LoadOfflineRaidNextScreen;
             gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, kReadyMethodName);
