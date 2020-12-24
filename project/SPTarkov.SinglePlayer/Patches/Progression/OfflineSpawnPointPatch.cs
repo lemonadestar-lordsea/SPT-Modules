@@ -40,9 +40,9 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
             return !type.IsInterface;
         }
 
-        public static bool PatchPrefix(ref ISpawnPoint __result, GInterface208 ___ginterface208_0, ESpawnCategory category, EPlayerSide side, string infiltration)
+        public static bool PatchPrefix(ref ISpawnPoint __result, GInterface217 ___ginterface217_0, ESpawnCategory category, EPlayerSide side, string infiltration)
         {
-            var spawnPoints = ___ginterface208_0.ToList();
+            var spawnPoints = ___ginterface217_0.ToList();
             var unfilteredSpawnPoints = spawnPoints.ToList();
             var infils = spawnPoints.Select(sp => sp.Infiltration).Distinct();
             Debug.LogError($"PatchPrefix SelectSpawnPoint Infiltrations: {spawnPoints.Count} | {String.Join(", ", infils)}");

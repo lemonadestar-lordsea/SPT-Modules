@@ -15,7 +15,7 @@ using Comfort.Common;
 using EFT;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.SinglePlayer.Utils.Player;
-using ClientMetrics = GClass1326;
+using ClientMetrics = GClass1367;
 
 namespace SPTarkov.SinglePlayer.Patches.Progression
 {
