@@ -17,7 +17,6 @@ using System.Reflection.Emit;
 using UnityEngine.Networking;
 using HarmonyLib;
 using SPTarkov.Common.Utils.Patching;
-using System.Text;
 
 namespace SPTarkov.Core.Patches
 {
@@ -30,7 +29,7 @@ namespace SPTarkov.Core.Patches
         protected override MethodBase GetTargetMethod()
         {
             return PatcherConstants.TargetAssembly
-                .GetTypes().Single(x => x.GetMethod("SetUrlParam", BindingFlags.Public | BindingFlags.Instance) != null)
+                .GetTypes().Single(x => x.GetMethod("SetUriParam", BindingFlags.Public | BindingFlags.Instance) != null)
                 .GetNestedTypes(BindingFlags.NonPublic).Single(y => y.GetConstructor(new[] { typeof(int)}) != null)
                 .GetMethod("MoveNext", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }

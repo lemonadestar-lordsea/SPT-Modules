@@ -15,7 +15,7 @@ using System.Reflection;
 using HarmonyLib;
 using EFT;
 using SPTarkov.Common.Utils.Patching;
-using BotData = GInterface14;
+using BotData = GInterface15;
 
 namespace SPTarkov.SinglePlayer.Patches.Bots
 {
