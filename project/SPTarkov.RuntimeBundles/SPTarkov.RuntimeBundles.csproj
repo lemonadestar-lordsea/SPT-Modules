@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="bsg.componentace.compression.libs.zlib">
       <HintPath>..\Shared\References\bsg.componentace.compression.libs.zlib.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Comfort">
       <HintPath>..\Shared\References\Comfort.dll</HintPath>
