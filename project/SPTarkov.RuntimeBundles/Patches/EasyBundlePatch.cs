@@ -17,9 +17,9 @@ using System.Reflection;
 using Diz.DependencyManager;
 using SPTarkov.Common.Utils.Patching;
 using SPTarkov.RuntimeBundles.Utils;
-using IEasyBundle = GInterface238; //Property: SameNameAsset 
-using IBundleLock = GInterface239; //Property: IsLocked
-using BindableState = GClass2100<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
+using IEasyBundle = GInterface249; //Property: SameNameAsset 
+using IBundleLock = GInterface250; //Property: IsLocked
+using BindableState = GClass2160<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
 
 namespace SPTarkov.RuntimeBundles.Patches
 {
