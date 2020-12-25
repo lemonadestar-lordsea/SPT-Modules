@@ -95,6 +95,7 @@ namespace SPTarkov.SinglePlayer.Utils.Player
 
             CurrentHealth.Energy = _healthController.Energy.Current;
             CurrentHealth.Hydration = _healthController.Hydration.Current;
+            CurrentHealth.Temperature = _healthController.Temperature.Current;
 
             // subscribe to events
             _healthController.DiedEvent += OnDiedEvent;
@@ -103,6 +104,7 @@ namespace SPTarkov.SinglePlayer.Utils.Player
             _healthController.EffectRemovedEvent += OnEffectRemovedEvent;
             _healthController.HydrationChangedEvent += OnHydrationChangedEvent;
             _healthController.EnergyChangedEvent += OnEnergyChangedEvent;
+            _healthController.TemperatureChangedEvent += OnTemperatureChangedEvent;
 
             // don't forget to unsubscribe
             _disposable = new Disposable(() =>
@@ -170,26 +172,25 @@ namespace SPTarkov.SinglePlayer.Utils.Player
                 return;
 
             CurrentHealth.Health[effect.BodyPart].RemoveEffect(BodyPartEffect.Fracture);
-
             _simpleTimer.isHealthSynchronized = false;
         }
 
 
         public void OnHydrationChangedEvent(float diff)
         {
-            float current = _healthController.Hydration.Current;
-
             CurrentHealth.Hydration += diff;
-
             _simpleTimer.isHealthSynchronized = false;
         }
 
         public void OnEnergyChangedEvent(float diff)
         {
-            float current = _healthController.Energy.Current;
-
             CurrentHealth.Energy += diff;
+            _simpleTimer.isHealthSynchronized = false;
+        }
 
+        public void OnTemperatureChangedEvent(float diff)
+        {
+            CurrentHealth.Temperature += diff;
             _simpleTimer.isHealthSynchronized = false;
         }
 

@@ -69,5 +69,7 @@ namespace SPTarkov.SinglePlayer.Utils.Player
         public float Hydration { get; set; }
 
         public float Energy { get; set; }
+
+        public float Temperature { get; set; }
     }
 }
