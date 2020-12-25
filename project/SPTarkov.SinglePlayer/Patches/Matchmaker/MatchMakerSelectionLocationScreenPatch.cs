@@ -12,6 +12,7 @@ using System.Reflection;
 using EFT.UI;
 using EFT.UI.Matchmaker;
 using SPTarkov.Common.Utils.Patching;
+using SPTarkov.SinglePlayer.Utils.Reflection;
 
 namespace SPTarkov.SinglePlayer.Patches.Matchmaker
 {
@@ -21,9 +22,9 @@ namespace SPTarkov.SinglePlayer.Patches.Matchmaker
         {
         }
 
-        public static void PatchPostfix(UIButtonSpawner ____readyButton)
+        public static void PatchPostfix(DefaultUIButton ____readyButton)
         {
-            ____readyButton.SpawnedObject.gameObject.SetActive(false);
+            ____readyButton.Interactable = false;
         }
 
         protected override MethodBase GetTargetMethod()
