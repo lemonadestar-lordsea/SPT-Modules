@@ -47,7 +47,7 @@ namespace SPTarkov.SinglePlayer
             PatcherUtil.Patch<SpawnPmcPatch>();
 			PatcherUtil.Patch<CoreDifficultyPatch>();
 			PatcherUtil.Patch<BotDifficultyPatch>();
-            
+
             PatcherUtil.Patch<OnDeadPatch>();
             PatcherUtil.Patch<OnShellEjectEventPatch>();
             PatcherUtil.Patch<BotStationaryWeaponPatch>();

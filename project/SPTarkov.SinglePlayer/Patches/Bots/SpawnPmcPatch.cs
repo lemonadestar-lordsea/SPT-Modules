@@ -47,6 +47,7 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
             }
 
             var fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+            
             if (!fields.Any(f => f.FieldType == typeof(WildSpawnType)) || !fields.Any(f => f.FieldType == typeof(BotDifficulty)))
             {
                 return false;
@@ -57,7 +58,7 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
 
         protected override MethodBase GetTargetMethod()
         {
-            return targetType.GetMethod("method_0", BindingFlags.NonPublic | BindingFlags.Instance);
+            return targetType.GetMethod("method_1", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
         public static bool PatchPrefix(object __instance, ref bool __result, Profile x)
