@@ -5,6 +5,6 @@
 		<target name="SPTarkov.Core" xsi:type="SPTarkov.Core" />
 		<target name="SPTarkov.Tools" xsi:type="SPTarkov.Tools" />
 		<target name="SPTarkov.SinglePlayer" xsi:type="SPTarkov.SinglePlayer" />
-		<target name="SPTarkov.RuntimeBundles" xsi:type="SPTarkov.RuntimeBundles" />
+		<!-- <target name="SPTarkov.RuntimeBundles" xsi:type="SPTarkov.RuntimeBundles" /> -->
 	</targets>
 </nlog>
