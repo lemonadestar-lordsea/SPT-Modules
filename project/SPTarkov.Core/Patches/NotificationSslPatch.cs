@@ -25,7 +25,7 @@ namespace SPTarkov.Core.Patches
         public NotificationSslPatch() : base(transpiler: nameof(PatchTranspiler))
         {
         }
-
+        
         protected override MethodBase GetTargetMethod()
         {
             return PatcherConstants.TargetAssembly.GetType("Class1109")
@@ -39,7 +39,7 @@ namespace SPTarkov.Core.Patches
            
            So, what's going on here?
 
-           GClass1182 has a nested class that is an IEnumerator. In its MoveNext method, there is a particular bit of code that creates
+           GClass1109 has a nested class that is an IEnumerator. In its MoveNext method, there is a particular bit of code that creates
            a UnityWebRequest for a notification poll request. We want this to use a specific certificateHandler that we've already patched
            to always validate, but it uses the default cerficateHandler (set to null) whose validation will fail for SPTarkov.
            So we patch this in.
@@ -67,17 +67,17 @@ namespace SPTarkov.Core.Patches
             ID  OFF     OpCode  Operand
             124	016F	ldarg.0
             125	0170	ldarg.0
-            126	0171	ldfld	string GClass1182/Class1034::string_0
+            126	0171	ldfld	string GClass1109/Class1107::string_0
             127	0176	ldstr	"GET"
             128	017B	newobj	instance void [UnityEngine.UnityWebRequestModule]UnityEngine.Networking.UnityWebRequest::.ctor(string, string)
            *129	0180	dup
            *130	0181	newobj	instance void [UnityEngine.UnityWebRequestModule]UnityEngine.Networking.CertificateHandler::.ctor()
            *131	0186	callvirt	instance void [UnityEngine.UnityWebRequestModule]UnityEngine.Networking.UnityWebRequest::set_certificateHandler(class [UnityEngine.UnityWebRequestModule]UnityEngine.Networking.CertificateHandler)
-            132	018B	stfld	class [UnityEngine.UnityWebRequestModule]UnityEngine.Networking.UnityWebRequest GClass1182/Class1034::unityWebRequest_0
+            132	018B	stfld	class [UnityEngine.UnityWebRequestModule]UnityEngine.Networking.UnityWebRequest GClass1109/Class1107::unityWebRequest_0
 
             The codes prefixed by the asterisks (*) are the ones patched-in.
-
         */
+        
         static IEnumerable<CodeInstruction> PatchTranspiler(IEnumerable<CodeInstruction> instructions)
         {
             //FileLog.Log("NotificationSslPatch");
