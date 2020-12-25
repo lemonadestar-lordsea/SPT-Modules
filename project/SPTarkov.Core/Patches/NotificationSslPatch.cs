@@ -28,8 +28,7 @@ namespace SPTarkov.Core.Patches
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.TargetAssembly
-                .GetTypes().Single(x => x.GetMethod("SetUriParam", BindingFlags.Public | BindingFlags.Instance) != null)
+            return PatcherConstants.TargetAssembly.GetType("Class1109")
                 .GetNestedTypes(BindingFlags.NonPublic).Single(y => y.GetConstructor(new[] { typeof(int)}) != null)
                 .GetMethod("MoveNext", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
