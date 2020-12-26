@@ -123,7 +123,7 @@ $dllAndExeFiles += [System.IO.FileInfo]::new((Resolve-Path -Path ".\Shared\Resou
 Write-Host ""
 foreach($file in $dllAndExeFiles) 
 {
-    if($file.Name.StartsWith("Aki.")) 
+    if($file.Name.StartsWith("aki-")) 
     {
         $akiNoExtension = $file.Name.Replace(".dll","")
         $akiModuleFilePath = "$($akiModulesFolder)\$($akiNoExtension)"
