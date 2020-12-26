@@ -39,7 +39,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 		}
 
 		/// <summary>
-		/// Loads loot from SPTarkov's server.
+		/// Loads loot from Aki's server.
 		/// Falls back to the client's local location loot if it fails.
 		/// </summary>
 		public static bool PatchPrefix(ref Task<LocationInfo> __result, object __instance, string backendUrl)

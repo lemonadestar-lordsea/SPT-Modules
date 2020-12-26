@@ -3,17 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Common", "SPTarkov.Common\Aki.Common.csproj", "{7584F43A-5937-417E-ABF4-C5F680F300FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Common", "Aki.Common\Aki.Common.csproj", "{7584F43A-5937-417E-ABF4-C5F680F300FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Core", "SPTarkov.Core\Aki.Core.csproj", "{AC9ADC41-6007-4392-9D52-2BD850506052}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Core", "Aki.Core\Aki.Core.csproj", "{AC9ADC41-6007-4392-9D52-2BD850506052}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.SinglePlayer", "SPTarkov.SinglePlayer\Aki.SinglePlayer.csproj", "{CA2CDB32-6C34-4B23-AB90-E7A776AD40F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.SinglePlayer", "Aki.SinglePlayer\Aki.SinglePlayer.csproj", "{CA2CDB32-6C34-4B23-AB90-E7A776AD40F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Tools", "SPTarkov.Tools\Aki.Tools.csproj", "{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Tools", "Aki.Tools\Aki.Tools.csproj", "{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Loader", "Aki.Loader\Aki.Loader.csproj", "{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Test", "Aki.Test\Aki.Test.csproj", "{37245882-2826-4F71-986F-3A66B864CC69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +39,6 @@ Global
 		{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{37245882-2826-4F71-986F-3A66B864CC69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37245882-2826-4F71-986F-3A66B864CC69}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37245882-2826-4F71-986F-3A66B864CC69}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37245882-2826-4F71-986F-3A66B864CC69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

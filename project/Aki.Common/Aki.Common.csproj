@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AC9ADC41-6007-4392-9D52-2BD850506052}</ProjectGuid>
+    <ProjectGuid>{7584F43A-5937-417E-ABF4-C5F680F300FB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Aki.Core</RootNamespace>
-    <AssemblyName>Aki.Core</AssemblyName>
+    <RootNamespace>Aki.Common</RootNamespace>
+    <AssemblyName>NLog.Aki.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,16 +31,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony">
+    <Reference Include="0Harmony, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Shared\References\0Harmony.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\Shared\References\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Comfort">
-      <HintPath>..\Shared\References\Comfort.dll</HintPath>
+    <Reference Include="bsg.componentace.compression.libs.zlib">
+      <HintPath>..\Shared\References\bsg.componentace.compression.libs.zlib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Shared\References\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -52,37 +57,34 @@
       <HintPath>..\Shared\References\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>..\Shared\References\UnityEngine.UnityWebRequestModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
-      <HintPath>..\Shared\References\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>..\Shared\References\UnityEngine.ImageConversionModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="Patches\BattleEyePatch.cs" />
-    <Compile Include="Patches\NotificationSslPatch.cs" />
-    <Compile Include="Patches\SslCertificatePatch.cs" />
-    <Compile Include="Patches\UnityWebRequestPatch.cs" />
+    <Compile Include="Instance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SPTarkov.Common\Aki.Common.csproj">
-      <Project>{7584f43a-5937-417e-abf4-c5f680f300fb}</Project>
-      <Name>Aki.Common</Name>
-      <Private>False</Private>
-    </ProjectReference>
+    <Compile Include="Utils\App\Json.cs" />
+    <Compile Include="Utils\App\Logger.cs" />
+    <Compile Include="Utils\App\ProcessMonitor.cs" />
+    <Compile Include="Utils\HTTP\Request.cs" />
+    <Compile Include="Utils\Patching\GenericPatch.cs" />
+    <Compile Include="Utils\Patching\PatcherConstants.cs" />
+    <Compile Include="Utils\Patching\PatcherUtil.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent Condition="'$(OS)' != 'Unix'">
       xcopy /Y /I $(TargetDir)*.dll $(SolutionDir)\Build\EscapeFromTarkov_Data\Managed\
+      xcopy /Y /I $(SolutionDir)\Shared\References\Assembly-CSharp.dll $(SolutionDir)\Build\EscapeFromTarkov_Data\Managed\
+      xcopy /Y /I $(SolutionDir)\Shared\Resources\NLog.dll.nlog $(SolutionDir)\Build\EscapeFromTarkov_Data\Managed\
     </PostBuildEvent>
     <PostBuildEvent Condition="'$(OS)' == 'Unix'">
+      mkdir -p $(SolutionDir)/Build/EscapeFromTarkov_Data/Managed/
       cp $(TargetDir)*.dll $(SolutionDir)/Build/EscapeFromTarkov_Data/Managed/
+      cp $(SolutionDir)/Shared/References/Assembly-CSharp.dll $(SolutionDir)/Build/EscapeFromTarkov_Data/Managed/
+      cp $(SolutionDir)/Shared/Resources/NLog.dll.nlog $(SolutionDir)/Build/EscapeFromTarkov_Data/Managed/
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
