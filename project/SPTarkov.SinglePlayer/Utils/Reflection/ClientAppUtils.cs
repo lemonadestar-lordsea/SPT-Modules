@@ -11,7 +11,7 @@ using UnityEngine;
 using Comfort.Common;
 using EFT;
 
-namespace SPTarkov.SinglePlayer.Utils.Reflection
+namespace Aki.SinglePlayer.Utils.Reflection
 {
     internal static class ClientAppUtils
     {

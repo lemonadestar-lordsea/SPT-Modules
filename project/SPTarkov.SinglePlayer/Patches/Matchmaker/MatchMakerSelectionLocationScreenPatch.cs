@@ -11,10 +11,10 @@
 using System.Reflection;
 using EFT.UI;
 using EFT.UI.Matchmaker;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.SinglePlayer.Utils.Reflection;
+using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Utils.Reflection;
 
-namespace SPTarkov.SinglePlayer.Patches.Matchmaker
+namespace Aki.SinglePlayer.Patches.Matchmaker
 {
     class MatchMakerSelectionLocationScreenPatch : GenericPatch<MatchMakerSelectionLocationScreenPatch>
     {

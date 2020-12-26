@@ -8,16 +8,16 @@
 
 
 using UnityEngine;
-using SPTarkov.Core.Patches;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Core.Patches;
+using Aki.Common.Utils.Patching;
 
-namespace SPTarkov.Core
+namespace Aki.Core
 {
-	public class Instance : MonoBehaviour
+	class Program
 	{
-		private void Start()
+		static void Main(string[] args)
 		{
-            Debug.LogError("SPTarkov.Core: Loaded");
+            Debug.LogError("Aki.Core: Loaded");
 
             PatcherUtil.Patch<BattleEyePatch>();
             PatcherUtil.Patch<SslCertificatePatch>();

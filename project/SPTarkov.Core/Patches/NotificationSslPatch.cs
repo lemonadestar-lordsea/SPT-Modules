@@ -16,9 +16,9 @@ using System.Reflection;
 using System.Reflection.Emit;
 using UnityEngine.Networking;
 using HarmonyLib;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Common.Utils.Patching;
 
-namespace SPTarkov.Core.Patches
+namespace Aki.Core.Patches
 {
     public class NotificationSslPatch : GenericPatch<NotificationSslPatch>
     {
@@ -41,7 +41,7 @@ namespace SPTarkov.Core.Patches
 
            GClass1109 has a nested class that is an IEnumerator. In its MoveNext method, there is a particular bit of code that creates
            a UnityWebRequest for a notification poll request. We want this to use a specific certificateHandler that we've already patched
-           to always validate, but it uses the default cerficateHandler (set to null) whose validation will fail for SPTarkov.
+           to always validate, but it uses the default cerficateHandler (set to null) whose validation will fail for Aki.
            So we patch this in.
 
            There is this little bit of code in the else statement:

@@ -9,7 +9,7 @@
 
 using EFT.Bots;
 
-namespace SPTarkov.SinglePlayer.Utils.DefaultSettings
+namespace Aki.SinglePlayer.Utils.DefaultSettings
 {
     public class DefaultRaidSettings
     {

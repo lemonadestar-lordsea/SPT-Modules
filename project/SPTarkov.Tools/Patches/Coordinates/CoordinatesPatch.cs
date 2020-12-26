@@ -9,11 +9,11 @@
 
 using System.Reflection;
 using EFT;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Common.Utils.Patching;
 using TMPro;
 using UnityEngine;
 
-namespace SPTarkov.Tools.Patches
+namespace Aki.Tools.Patches
 {
     public class CoordinatesPatch : GenericPatch<CoordinatesPatch>
     {

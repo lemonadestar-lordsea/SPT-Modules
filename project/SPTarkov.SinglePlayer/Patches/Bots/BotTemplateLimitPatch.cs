@@ -13,13 +13,13 @@ using System.Reflection;
 using System;
 using UnityEngine;
 using EFT;
-using SPTarkov.Common.Utils.HTTP;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.SinglePlayer.Utils;
+using Aki.Common.Utils.HTTP;
+using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Utils;
 using WaveInfo = GClass925;
 using BotsPresets = GClass360;
 
-namespace SPTarkov.SinglePlayer.Patches.Bots
+namespace Aki.SinglePlayer.Patches.Bots
 {
     public class BotTemplateLimitPatch : GenericPatch<BotTemplateLimitPatch>
     {
@@ -58,11 +58,11 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
 
             if (string.IsNullOrWhiteSpace(json))
             {
-                Debug.LogError("SPTarkov.SinglePlayer: Received bot " + role.ToString() + " limit data is NULL, using fallback");
+                Debug.LogError("Aki.SinglePlayer: Received bot " + role.ToString() + " limit data is NULL, using fallback");
                 return 30;
             }
 
-            Debug.LogError("SPTarkov.SinglePlayer: Successfully received bot " + role.ToString() + " limit data");
+            Debug.LogError("Aki.SinglePlayer: Successfully received bot " + role.ToString() + " limit data");
             return Convert.ToInt32(json);
         }
     }

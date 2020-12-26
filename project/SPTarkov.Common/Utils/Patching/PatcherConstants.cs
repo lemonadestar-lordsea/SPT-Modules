@@ -12,7 +12,7 @@ using System.Linq;
 using System.Reflection;
 using EFT;
 
-namespace SPTarkov.Common.Utils.Patching
+namespace Aki.Common.Utils.Patching
 {
     public static class PatcherConstants
     {

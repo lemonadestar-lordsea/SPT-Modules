@@ -14,7 +14,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SPTarkov.Common.Utils.Patching
+namespace Aki.Common.Utils.Patching
 {
     public abstract class GenericPatch<T> where T : GenericPatch<T>
     {

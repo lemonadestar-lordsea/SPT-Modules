@@ -14,7 +14,7 @@ using System.Text;
 using UnityEngine;
 using ComponentAce.Compression.Libs.zlib;
 
-namespace SPTarkov.Common.Utils.HTTP
+namespace Aki.Common.Utils.HTTP
 {
 	public class Request
 	{

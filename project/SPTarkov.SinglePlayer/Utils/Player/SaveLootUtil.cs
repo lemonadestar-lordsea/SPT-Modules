@@ -8,10 +8,10 @@
 
 
 using EFT;
-using SPTarkov.Common.Utils.App;
-using SPTarkov.Common.Utils.HTTP;
+using Aki.Common.Utils.App;
+using Aki.Common.Utils.HTTP;
 
-namespace SPTarkov.SinglePlayer.Utils.Player
+namespace Aki.SinglePlayer.Utils.Player
 {
 	class SaveLootUtil
 	{

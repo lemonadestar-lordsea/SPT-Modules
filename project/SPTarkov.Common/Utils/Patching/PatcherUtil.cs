@@ -13,7 +13,7 @@ using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
 
-namespace SPTarkov.Common.Utils.Patching
+namespace Aki.Common.Utils.Patching
 {
 	public static class PatcherUtil
 	{
@@ -21,7 +21,7 @@ namespace SPTarkov.Common.Utils.Patching
 
 		static PatcherUtil()
 		{
-			harmony = new Harmony("com.SPTarkov.common");
+			harmony = new Harmony("com.Aki.common");
 		}
 
 		public static MethodInfo GetOriginalMethod<T>(string methodName)
@@ -42,11 +42,11 @@ namespace SPTarkov.Common.Utils.Patching
 							  postfix: patch.Postfix.ToHarmonyMethod(),
 							  transpiler: patch.Transpiler.ToHarmonyMethod(),
 							  finalizer: patch.Finalizer.ToHarmonyMethod());
-				Debug.LogError("SPTarkov.Common: Applied patch " + typeof(T).Name);
+				Debug.LogError("Aki.Common: Applied patch " + typeof(T).Name);
 			}
 			catch (Exception ex)
 			{
-				Debug.LogError($"SPTarkov.Common: Error in patch {typeof(T).Name}{Environment.NewLine}{ex}");
+				Debug.LogError($"Aki.Common: Error in patch {typeof(T).Name}{Environment.NewLine}{ex}");
 			}
 		}
 	}

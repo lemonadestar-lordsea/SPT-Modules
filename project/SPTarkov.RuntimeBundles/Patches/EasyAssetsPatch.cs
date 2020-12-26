@@ -20,14 +20,14 @@ using HarmonyLib;
 using Diz.Jobs;
 using Diz.Resources;
 using JetBrains.Annotations;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.RuntimeBundles.Utils;
+using Aki.Common.Utils.Patching;
+using Aki.RuntimeBundles.Utils;
 using IEasyBundle = GInterface249; //Property: SameNameAsset 
 using IBundleLock = GInterface250; //Property: IsLocked
 using BundleLock = GClass2174; //Property: MaxConcurrentOperations
 using DependencyGraph = GClass2175<GInterface249>; // Method: GetDefaultNode()
 
-namespace SPTarkov.RuntimeBundles.Patches
+namespace Aki.RuntimeBundles.Patches
 {
     public class EasyAssetsPatch : GenericPatch<EasyAssetsPatch>
     {

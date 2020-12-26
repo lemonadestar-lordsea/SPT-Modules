@@ -9,10 +9,10 @@
 
 using System.Linq;
 using System.Reflection;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Common.Utils.Patching;
 using MainMenuController = GClass1190;
 
-namespace SPTarkov.SinglePlayer.Patches.Matchmaker
+namespace Aki.SinglePlayer.Patches.Matchmaker
 {
     class InsuranceScreenPatch : GenericPatch<InsuranceScreenPatch>
     {

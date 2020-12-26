@@ -11,12 +11,12 @@
 using System.Reflection;
 using UnityEngine;
 using EFT;
-using SPTarkov.Common.Utils.HTTP;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.SinglePlayer.Utils;
+using Aki.Common.Utils.HTTP;
+using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Utils;
 using BotDifficultyHandler = GClass301;
 
-namespace SPTarkov.SinglePlayer.Patches.Bots
+namespace Aki.SinglePlayer.Patches.Bots
 {
     public class BotDifficultyPatch : GenericPatch<BotDifficultyPatch>
     {
@@ -42,11 +42,11 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
 
             if (string.IsNullOrWhiteSpace(json))
             {
-                Debug.LogError("SPTarkov.SinglePlayer: Received bot " + role.ToString() + " " + botDifficulty.ToString() + " difficulty data is NULL, using fallback");
+                Debug.LogError("Aki.SinglePlayer: Received bot " + role.ToString() + " " + botDifficulty.ToString() + " difficulty data is NULL, using fallback");
                 return null;
             }
 
-            Debug.LogError("SPTarkov.SinglePlayer: Successfully received bot " + role.ToString() + " " + botDifficulty.ToString() + " difficulty data");
+            Debug.LogError("Aki.SinglePlayer: Successfully received bot " + role.ToString() + " " + botDifficulty.ToString() + " difficulty data");
             return json;
         }
     }

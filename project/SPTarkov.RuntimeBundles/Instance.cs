@@ -7,19 +7,19 @@
  */
 
 
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.RuntimeBundles.Patches;
-using SPTarkov.RuntimeBundles.Utils;
+using Aki.Common.Utils.Patching;
+using Aki.RuntimeBundles.Patches;
+using Aki.RuntimeBundles.Utils;
 using UnityEngine;
 
 
-namespace SPTarkov.RuntimeBundles
+namespace Aki.RuntimeBundles
 {
     public class Instance : MonoBehaviour
     {
         private void Start()
 		{
-            Debug.LogError("SPTarkov.RuntimeBundles: Loaded");
+            Debug.LogError("Aki.RuntimeBundles: Loaded");
 
             new Settings(null, Config.BackendUrl);
 

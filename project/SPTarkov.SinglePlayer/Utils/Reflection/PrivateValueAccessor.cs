@@ -11,7 +11,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace SPTarkov.SinglePlayer.Utils.Reflection
+namespace Aki.SinglePlayer.Utils.Reflection
 {
     public static class PrivateValueAccessor
     {

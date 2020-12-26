@@ -10,21 +10,21 @@
 
 
 using UnityEngine;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.SinglePlayer.Patches.Bots;
-using SPTarkov.SinglePlayer.Patches.Matchmaker;
-using SPTarkov.SinglePlayer.Patches.Progression;
-using SPTarkov.SinglePlayer.Patches.Quests;
-using SPTarkov.SinglePlayer.Patches.RaidFix;
-using SPTarkov.SinglePlayer.Patches.ScavMode;
+using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Patches.Bots;
+using Aki.SinglePlayer.Patches.Matchmaker;
+using Aki.SinglePlayer.Patches.Progression;
+using Aki.SinglePlayer.Patches.Quests;
+using Aki.SinglePlayer.Patches.RaidFix;
+using Aki.SinglePlayer.Patches.ScavMode;
 
-namespace SPTarkov.SinglePlayer
+namespace Aki.SinglePlayer
 {
-    public class Instance : MonoBehaviour
+    class Program
     {
-        private void Start()
-		{
-            Debug.LogError("SPTarkov.SinglePlayer: Loaded");
+        static void Main(string[] args)
+        {
+            Debug.LogError("Aki.SinglePlayer: Loaded");
 
 			PatcherUtil.Patch<OfflineLootPatch>();
 			PatcherUtil.Patch<OfflineSaveProfilePatch>();

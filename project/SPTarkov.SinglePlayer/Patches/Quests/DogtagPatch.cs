@@ -14,11 +14,11 @@ using System.Reflection;
 using UnityEngine;
 using EFT;
 using EFT.InventoryLogic;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Common.Utils.Patching;
 using Equipment = GClass1688;
 using DamageInfo = GStruct239;
 
-namespace SPTarkov.SinglePlayer.Patches.Quests
+namespace Aki.SinglePlayer.Patches.Quests
 {
     class DogtagPatch : GenericPatch<DogtagPatch>
     {

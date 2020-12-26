@@ -9,7 +9,7 @@
 
 using System.Collections.Generic;
 
-namespace SPTarkov.SinglePlayer.Utils.Player
+namespace Aki.SinglePlayer.Utils.Player
 {
     enum BodyPartEffect
     {

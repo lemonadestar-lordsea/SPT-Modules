@@ -52,10 +52,6 @@
       <HintPath>..\Shared\References\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\Shared\References\NLog.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="UnityEngine">
       <HintPath>..\Shared\References\UnityEngine.dll</HintPath>
@@ -71,8 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Hook\Target.cs" />
-    <Compile Include="Instance.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Patches\Bots\BossSpawnChancePatch.cs" />
     <Compile Include="Patches\Bots\BotTemplateLimitPatch.cs" />
     <Compile Include="Patches\Bots\GetNewBotTemplatesPatch.cs" />
@@ -117,9 +112,13 @@
     <Compile Include="Utils\DefaultSettings\DefaultRaidSettings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SPTarkov.Common\SPTarkov.Common.csproj">
+    <ProjectReference Include="..\Aki.Loader\Aki.Loader.csproj">
+      <Project>{966ef83a-7b4e-4de1-bc73-e06b18eb411c}</Project>
+      <Name>Aki.Loader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SPTarkov.Common\Aki.Common.csproj">
       <Project>{7584f43a-5937-417e-abf4-c5f680f300fb}</Project>
-      <Name>SPTarkov.Common</Name>
+      <Name>Aki.Common</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

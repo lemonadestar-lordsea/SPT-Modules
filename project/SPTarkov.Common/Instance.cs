@@ -9,13 +9,13 @@
 
 using UnityEngine;
 
-namespace SPTarkov.Common
+namespace Aki.Common
 {
 	public class Instance : MonoBehaviour
 	{
 		private void Start()
 		{
-			Debug.LogError("SPTarkov.Common: Loaded");
+			Debug.LogError("Aki.Common: Loaded");
 		}
 	}
 }

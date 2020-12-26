@@ -8,10 +8,10 @@
 
 
 using System.Reflection;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.SinglePlayer.Utils.Reflection;
+using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Utils.Reflection;
 
-namespace SPTarkov.SinglePlayer.Patches.RaidFix
+namespace Aki.SinglePlayer.Patches.RaidFix
 {
     public class OnShellEjectEventPatch : GenericPatch<OnShellEjectEventPatch>
     {

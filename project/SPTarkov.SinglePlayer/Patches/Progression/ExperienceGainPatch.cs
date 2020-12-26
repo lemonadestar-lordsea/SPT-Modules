@@ -8,11 +8,11 @@
 
 
 using EFT.UI.SessionEnd;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Common.Utils.Patching;
 using System.Linq;
 using System.Reflection;
 
-namespace SPTarkov.SinglePlayer.Patches.Progression
+namespace Aki.SinglePlayer.Patches.Progression
 {
     public class ExperienceGainPatch : GenericPatch<ExperienceGainPatch>
     {

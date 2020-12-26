@@ -12,11 +12,11 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using EFT;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.SinglePlayer.Utils;
+using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Utils;
 using AmmoInfo = GClass1705;
 
-namespace SPTarkov.SinglePlayer.Patches.Progression
+namespace Aki.SinglePlayer.Patches.Progression
 {
     public class WeaponDurabilityPatch : GenericPatch<WeaponDurabilityPatch>
     {

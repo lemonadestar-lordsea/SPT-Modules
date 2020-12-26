@@ -18,7 +18,7 @@ using HarmonyLib;
 using IBundleLock = GInterface250; //Property: IsLocked
 using BindableState = GClass2159<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
 
-namespace SPTarkov.RuntimeBundles.Utils
+namespace Aki.RuntimeBundles.Utils
 {
     class EasyBundleHelper
     {

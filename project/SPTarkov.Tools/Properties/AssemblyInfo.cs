@@ -16,9 +16,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Tools Module")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("SPTarkov")]
+[assembly: AssemblyCompany("Project Aki")]
 [assembly: AssemblyProduct("Tools Module")]
-[assembly: AssemblyCopyright("Copyright � SPTarkov 2020")]
+[assembly: AssemblyCopyright("Copyright (c) Project Aki 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

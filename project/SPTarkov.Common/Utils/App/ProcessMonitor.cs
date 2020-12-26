@@ -11,7 +11,7 @@ using System;
 using System.Diagnostics;
 using System.Timers;
 
-namespace SPTarkov.Common.Utils.App
+namespace Aki.Common.Utils.App
 {
 	public class ProcessMonitor
 	{

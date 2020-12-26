@@ -9,9 +9,9 @@
 
 using System.Reflection;
 using UnityEngine.Networking;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Common.Utils.Patching;
 
-namespace SPTarkov.Core.Patches
+namespace Aki.Core.Patches
 {
     class UnityWebRequestPatch : GenericPatch<UnityWebRequestPatch>
     {

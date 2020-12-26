@@ -12,7 +12,7 @@ using EFT;
 using ISession = GInterface27;
 using ClientConfig = GClass331;
 
-namespace SPTarkov.SinglePlayer.Utils
+namespace Aki.SinglePlayer.Utils
 {
     public static class Config
     {

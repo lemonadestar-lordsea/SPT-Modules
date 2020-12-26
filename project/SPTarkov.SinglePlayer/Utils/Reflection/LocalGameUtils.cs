@@ -11,7 +11,7 @@ using System.Reflection;
 using UnityEngine;
 using EFT;
 
-namespace SPTarkov.SinglePlayer.Utils.Reflection
+namespace Aki.SinglePlayer.Utils.Reflection
 {
     internal static class LocalGameUtils
     {

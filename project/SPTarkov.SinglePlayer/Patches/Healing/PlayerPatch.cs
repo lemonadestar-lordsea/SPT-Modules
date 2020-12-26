@@ -10,9 +10,9 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using EFT;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Common.Utils.Patching;
 
-namespace SPTarkov.SinglePlayer.Patches.Healing
+namespace Aki.SinglePlayer.Patches.Healing
 {
     class PlayerPatch : GenericPatch<PlayerPatch>
     {

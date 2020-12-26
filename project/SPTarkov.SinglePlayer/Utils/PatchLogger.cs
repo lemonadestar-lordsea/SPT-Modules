@@ -10,7 +10,7 @@
 using System.Reflection;
 using UnityEngine;
 
-namespace SPTarkov.SinglePlayer.Utils
+namespace Aki.SinglePlayer.Utils
 {
     public class PatchLogger
     {

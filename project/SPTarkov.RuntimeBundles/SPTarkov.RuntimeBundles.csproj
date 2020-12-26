@@ -105,9 +105,9 @@
     <Compile Include="Utils\Settings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SPTarkov.Common\SPTarkov.Common.csproj">
+    <ProjectReference Include="..\SPTarkov.Common\Aki.Common.csproj">
       <Project>{7584f43a-5937-417e-abf4-c5f680f300fb}</Project>
-      <Name>SPTarkov.Common</Name>
+      <Name>Aki.Common</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

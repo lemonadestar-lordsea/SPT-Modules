@@ -11,9 +11,9 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
-using SPTarkov.Common.Utils.HTTP;
+using Aki.Common.Utils.HTTP;
 
-namespace SPTarkov.RuntimeBundles.Utils
+namespace Aki.RuntimeBundles.Utils
 {
     public class Settings
     {
@@ -37,14 +37,14 @@ namespace SPTarkov.RuntimeBundles.Utils
                 CleanCache();
             } catch
             {
-                Debug.LogError("SPTarkov.RuntimeBundles: The cache cleanup failed and will try again at the next game startup.");
+                Debug.LogError("Aki.RuntimeBundles: The cache cleanup failed and will try again at the next game startup.");
             }
             
             var json = new Request(Session, BackendUrl).GetJson("/singleplayer/bundles");
 
             if (string.IsNullOrWhiteSpace(json))
 			{
-				Debug.LogError("SPTarkov.RuntimeBundles: Bundles data is Null, using fallback");
+				Debug.LogError("Aki.RuntimeBundles: Bundles data is Null, using fallback");
 				return;
 			}
 
@@ -61,7 +61,7 @@ namespace SPTarkov.RuntimeBundles.Utils
                 }
             }
             
-            Debug.LogError("SPTarkov.RuntimeBundles: Successfully received Bundles");
+            Debug.LogError("Aki.RuntimeBundles: Successfully received Bundles");
 		}
 
         private void CleanCache()

@@ -14,11 +14,11 @@ using System.Reflection.Emit;
 using UnityEngine;
 using HarmonyLib;
 using EFT;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.SinglePlayer.Utils;
-using SPTarkov.SinglePlayer.Utils.Reflection.CodeWrapper;
+using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Utils;
+using Aki.SinglePlayer.Utils.Reflection.CodeWrapper;
 
-namespace SPTarkov.SinglePlayer.Patches.RaidFix
+namespace Aki.SinglePlayer.Patches.RaidFix
 {
     public class OnDeadPatch : GenericPatch<OnDeadPatch>
     {

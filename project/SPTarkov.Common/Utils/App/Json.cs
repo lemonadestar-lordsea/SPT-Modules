@@ -9,12 +9,10 @@
 
 
 using Newtonsoft.Json;
-using NLog;
-using System;
 using System.IO;
 using System.Linq;
 
-namespace SPTarkov.Common.Utils.App
+namespace Aki.Common.Utils.App
 {
     public static class Json
 	{

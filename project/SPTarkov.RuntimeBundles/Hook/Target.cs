@@ -8,12 +8,12 @@
 
 
 using NLog.Targets;
-using SPTarkov.Common.Utils.Hook;
-using SPTarkov.RuntimeBundles;
+using Aki.Common.Utils.Hook;
+using Aki.RuntimeBundles;
 
-namespace SPTarkov.RuntimeBundles.Hook
+namespace Aki.RuntimeBundles.Hook
 {
-	[Target("SPTarkov.RuntimeBundles")]
+	[Target("Aki.RuntimeBundles")]
 	public sealed class Target : TargetWithLayout
 	{
 		public Target()

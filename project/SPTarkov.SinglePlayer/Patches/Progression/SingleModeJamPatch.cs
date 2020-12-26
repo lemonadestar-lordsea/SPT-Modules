@@ -13,11 +13,11 @@ using System.Linq;
 using System.Reflection;
 using EFT;
 using EFT.InventoryLogic;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.SinglePlayer.Utils;
+using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Utils;
 using static EFT.Player;
 
-namespace SPTarkov.SinglePlayer.Patches.Progression
+namespace Aki.SinglePlayer.Patches.Progression
 {
     public class SingleModeJamPatch : GenericPatch<SingleModeJamPatch>
     {

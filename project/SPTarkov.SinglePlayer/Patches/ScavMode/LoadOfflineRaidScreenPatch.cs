@@ -18,14 +18,14 @@ using HarmonyLib;
 using EFT;
 using EFT.UI.Matchmaker;
 using EFT.UI.Screens;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.SinglePlayer.Utils.Reflection;
+using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Utils.Reflection;
 using MenuController = GClass1190;
 using WeatherSettings = GStruct92;
 using BotsSettings = GStruct232;
 using WavesSettings = GStruct93;
 
-namespace SPTarkov.SinglePlayer.Patches.ScavMode
+namespace Aki.SinglePlayer.Patches.ScavMode
 {
     using OfflineRaidAction = Action<bool, WeatherSettings, BotsSettings, WavesSettings>;
 

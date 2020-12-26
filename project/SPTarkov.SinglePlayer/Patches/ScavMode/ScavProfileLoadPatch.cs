@@ -13,11 +13,11 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using EFT;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.SinglePlayer.Utils.Reflection.CodeWrapper;
-using SPTarkov.SinglePlayer.Utils;
+using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Utils.Reflection.CodeWrapper;
+using Aki.SinglePlayer.Utils;
 
-namespace SPTarkov.SinglePlayer.Patches.ScavMode
+namespace Aki.SinglePlayer.Patches.ScavMode
 {
     public class ScavProfileLoadPatch : GenericPatch<ScavProfileLoadPatch>
     {

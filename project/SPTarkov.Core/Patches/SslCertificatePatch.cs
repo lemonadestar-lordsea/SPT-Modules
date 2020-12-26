@@ -9,10 +9,10 @@
 
 using System.Linq;
 using System.Reflection;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Common.Utils.Patching;
 using UnityEngine.Networking;
 
-namespace SPTarkov.Core.Patches
+namespace Aki.Core.Patches
 {
 	public class SslCertificatePatch : GenericPatch<SslCertificatePatch>
 	{

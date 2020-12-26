@@ -14,10 +14,10 @@ using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using EFT;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Common.Utils.Patching;
 using BotData = GInterface15;
 
-namespace SPTarkov.SinglePlayer.Patches.Bots
+namespace Aki.SinglePlayer.Patches.Bots
 {
     public class RemoveUsedBotProfilePatch : GenericPatch<RemoveUsedBotProfilePatch>
     {

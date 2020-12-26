@@ -15,10 +15,10 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.RuntimeBundles.Utils;
+using Aki.Common.Utils.Patching;
+using Aki.RuntimeBundles.Utils;
 
-namespace SPTarkov.RuntimeBundles.Patches
+namespace Aki.RuntimeBundles.Patches
 {
     public class BundleLoadPatch : GenericPatch<BundleLoadPatch>
     {

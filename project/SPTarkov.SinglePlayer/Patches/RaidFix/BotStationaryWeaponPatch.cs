@@ -14,11 +14,11 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using UnityEngine;
 using EFT.Interactive;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.SinglePlayer.Utils;
-using SPTarkov.SinglePlayer.Utils.Reflection.CodeWrapper;
+using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Utils;
+using Aki.SinglePlayer.Utils.Reflection.CodeWrapper;
 
-namespace SPTarkov.SinglePlayer.Patches.RaidFix
+namespace Aki.SinglePlayer.Patches.RaidFix
 {
     // Fix null reference exception errors when bots are trying to think about using stationary weapons (i.e. on Reserve).
     public class BotStationaryWeaponPatch : GenericPatch<BotStationaryWeaponPatch>

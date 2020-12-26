@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using HarmonyLib;
 
-namespace SPTarkov.SinglePlayer.Utils.Reflection.CodeWrapper
+namespace Aki.SinglePlayer.Utils.Reflection.CodeWrapper
 {
     // Helper class to generate IL code for transpilers.
     public class CodeGenerator

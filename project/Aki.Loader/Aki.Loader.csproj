@@ -7,7 +7,7 @@
     <ProjectGuid>{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Aki.Loader</RootNamespace>
-    <AssemblyName>Aki.Loader</AssemblyName>
+    <AssemblyName>NLog.Aki.Loader</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -41,6 +41,9 @@
     <Compile Include="Instance.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\Shared\References\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\Shared\References\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>

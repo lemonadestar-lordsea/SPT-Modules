@@ -8,11 +8,11 @@
 
 
 using System.Reflection;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Common.Utils.Patching;
 using MainMenuController = GClass1190;
 using IHealthController = GInterface169;
 
-namespace SPTarkov.SinglePlayer.Patches.Healing
+namespace Aki.SinglePlayer.Patches.Healing
 {
     class MainMenuControllerPatch : GenericPatch<MainMenuControllerPatch>
     {

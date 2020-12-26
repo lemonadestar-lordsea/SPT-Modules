@@ -15,13 +15,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Diz.DependencyManager;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.RuntimeBundles.Utils;
+using Aki.Common.Utils.Patching;
+using Aki.RuntimeBundles.Utils;
 using IEasyBundle = GInterface249; //Property: SameNameAsset 
 using IBundleLock = GInterface250; //Property: IsLocked
 using BindableState = GClass2160<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
 
-namespace SPTarkov.RuntimeBundles.Patches
+namespace Aki.RuntimeBundles.Patches
 {
 	public class EasyBundlePatch : GenericPatch<EasyBundlePatch>
 	{

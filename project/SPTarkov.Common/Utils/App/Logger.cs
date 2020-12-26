@@ -9,7 +9,7 @@
 
 using System;
 
-namespace SPTarkov.Common.Utils.App
+namespace Aki.Common.Utils.App
 {
     public class Logger
     {

@@ -13,11 +13,11 @@ using System;
 using System.Reflection;
 using Comfort.Common;
 using EFT;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.SinglePlayer.Utils.Player;
+using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Utils.Player;
 using ClientMetrics = GClass1367;
 
-namespace SPTarkov.SinglePlayer.Patches.Progression
+namespace Aki.SinglePlayer.Patches.Progression
 {
     class OfflineSaveProfilePatch : GenericPatch<OfflineSaveProfilePatch>
     {

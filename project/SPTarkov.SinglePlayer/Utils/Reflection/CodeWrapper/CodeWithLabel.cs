@@ -10,7 +10,7 @@
 using System;
 using System.Reflection.Emit;
 
-namespace SPTarkov.SinglePlayer.Utils.Reflection.CodeWrapper
+namespace Aki.SinglePlayer.Utils.Reflection.CodeWrapper
 {
     public class CodeWithLabel : Code
     {

@@ -16,14 +16,14 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Comfort.Common;
 using EFT;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Common.Utils.Patching;
 using WaveInfo = GClass926;
 using BotsPresets = GClass360;
 using BotData = GInterface15;
 using PoolManager = GClass1164;
 using JobPriority = GClass2140;
 
-namespace SPTarkov.SinglePlayer.Patches.Bots
+namespace Aki.SinglePlayer.Patches.Bots
 {
     public class GetNewBotTemplatesPatch : GenericPatch<GetNewBotTemplatesPatch>
     {
@@ -73,14 +73,14 @@ namespace SPTarkov.SinglePlayer.Patches.Bots
             if (profile == null)
             {
                 // load from server
-                Debug.LogError("SPTarkov.SinglePlayer: Loading bot profile from server");
+                Debug.LogError("Aki.SinglePlayer: Loading bot profile from server");
                 var source = data.PrepareToLoadBackend(1).ToList();
                 taskAwaiter = session.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
             }
             else
             {
                 // return cached profile
-                Debug.LogError("SPTarkov.SinglePlayer: Loading bot profile from cache");
+                Debug.LogError("Aki.SinglePlayer: Loading bot profile from cache");
                 taskAwaiter = Task.FromResult(profile);
             }
 

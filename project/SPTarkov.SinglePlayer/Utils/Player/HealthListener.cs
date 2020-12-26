@@ -14,10 +14,11 @@ using System.Threading.Tasks;
 using IHealthController = GInterface169;
 using StDamage = GStruct239;
 using IEffect = GInterface128;
-using SPTarkov.Common.Utils.HTTP;
+using Aki.Loader;
+using Aki.Common.Utils.HTTP;
 using UnityEngine;
 
-namespace SPTarkov.SinglePlayer.Utils.Player
+namespace Aki.SinglePlayer.Utils.Player
 {
     class HealthListener
     {
@@ -58,8 +59,8 @@ namespace SPTarkov.SinglePlayer.Utils.Player
                 CurrentHealth = new PlayerHealth();
             }
 
-            _request = new Request(Utils.Config.BackEndSession.GetPhpSessionId(), Utils.Config.BackendUrl);
-            _simpleTimer = Common.Utils.Hook.Loader<SimpleTimer>.Load();
+            _request = new Request(Config.BackEndSession.GetPhpSessionId(), Config.BackendUrl);
+            _simpleTimer = Target.HookObject.GetOrAddComponent<SimpleTimer>();
             _simpleTimer.syncHealthAction = () => Task.Run(() => _request.PostJson("/player/health/sync", CurrentHealth.ToJson()));
         }
 

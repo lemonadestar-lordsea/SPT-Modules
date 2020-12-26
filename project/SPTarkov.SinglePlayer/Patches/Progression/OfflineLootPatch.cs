@@ -11,14 +11,14 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
-using SPTarkov.Common.Utils.App;
-using SPTarkov.Common.Utils.HTTP;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.SinglePlayer.Utils;
+using Aki.Common.Utils.App;
+using Aki.Common.Utils.HTTP;
+using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Utils;
 using LocationInfo = GClass779.GClass781;
 using System;
 
-namespace SPTarkov.SinglePlayer.Patches.Progression
+namespace Aki.SinglePlayer.Patches.Progression
 {
 	public class OfflineLootPatch : GenericPatch<OfflineLootPatch>
 	{
@@ -81,11 +81,11 @@ namespace SPTarkov.SinglePlayer.Patches.Progression
 
 			if (string.IsNullOrWhiteSpace(json))
 			{
-				Debug.LogError("SPTarkov.SinglePlayer: Received weapon durability state data is NULL, using fallback");
+				Debug.LogError("Aki.SinglePlayer: Received weapon durability state data is NULL, using fallback");
 				return false;
 			}
 
-			Debug.LogError("SPTarkov.SinglePlayer: Successfully received weapon durability state");
+			Debug.LogError("Aki.SinglePlayer: Successfully received weapon durability state");
 			return Convert.ToBoolean(json);
 		}
 

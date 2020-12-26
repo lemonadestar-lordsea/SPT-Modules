@@ -11,14 +11,14 @@
 
 using System.Reflection;
 using EFT;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Common.Utils.Patching;
 using UnityEngine;
 using System.Linq;
 using System;
 using EFT.Game.Spawning;
 using System.Collections.Generic;
 
-namespace SPTarkov.SinglePlayer.Patches.Progression
+namespace Aki.SinglePlayer.Patches.Progression
 {
     class OfflineSpawnPointPatch : GenericPatch<OfflineSpawnPointPatch>
     {

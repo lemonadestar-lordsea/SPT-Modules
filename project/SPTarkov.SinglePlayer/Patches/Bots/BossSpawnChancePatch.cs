@@ -9,9 +9,9 @@
 
 using System.Linq;
 using System.Reflection;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Common.Utils.Patching;
 
-namespace SPTarkov.SinglePlayer.Patches.Bots
+namespace Aki.SinglePlayer.Patches.Bots
 {
     public class BossSpawnChancePatch : GenericPatch<BossSpawnChancePatch>
     {

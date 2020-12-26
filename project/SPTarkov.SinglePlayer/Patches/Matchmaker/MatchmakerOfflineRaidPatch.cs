@@ -14,12 +14,12 @@ using UnityEngine;
 using Newtonsoft.Json;
 using EFT.UI;
 using EFT.UI.Matchmaker;
-using SPTarkov.Common.Utils.HTTP;
-using SPTarkov.Common.Utils.Patching;
-using SPTarkov.SinglePlayer.Utils;
-using SPTarkov.SinglePlayer.Utils.DefaultSettings;
+using Aki.Common.Utils.HTTP;
+using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Utils;
+using Aki.SinglePlayer.Utils.DefaultSettings;
 
-namespace SPTarkov.SinglePlayer.Patches.Matchmaker
+namespace Aki.SinglePlayer.Patches.Matchmaker
 {
     class MatchmakerOfflineRaidPatch : GenericPatch<MatchmakerOfflineRaidPatch>
     {
@@ -61,11 +61,11 @@ namespace SPTarkov.SinglePlayer.Patches.Matchmaker
 
             if (string.IsNullOrWhiteSpace(json))
             {
-                Debug.LogError("SPTarkov.SinglePlayer: Received NULL response for DefaultRaidSettings. Defaulting to fallback.");
+                Debug.LogError("Aki.SinglePlayer: Received NULL response for DefaultRaidSettings. Defaulting to fallback.");
                 return null;
             }
 
-            Debug.LogError("SPTarkov.SinglePlayer: Successfully received DefaultRaidSettings");
+            Debug.LogError("Aki.SinglePlayer: Successfully received DefaultRaidSettings");
 
             try
             {
@@ -73,7 +73,7 @@ namespace SPTarkov.SinglePlayer.Patches.Matchmaker
             }
             catch (Exception exception)
             {
-                Debug.LogError("SPTarkov.SinglePlayer: Failed to deserialize DefaultRaidSettings from server. Check your gameplay.json config in your server. Defaulting to fallback. Exception: " + exception);
+                Debug.LogError("Aki.SinglePlayer: Failed to deserialize DefaultRaidSettings from server. Check your gameplay.json config in your server. Defaulting to fallback. Exception: " + exception);
                 return null;
             }
         }

@@ -12,9 +12,9 @@ using System.Linq;
 using System.Reflection;
 using EFT;
 using EFT.InventoryLogic;
-using SPTarkov.Common.Utils.Patching;
+using Aki.Common.Utils.Patching;
 
-namespace SPTarkov.SinglePlayer.Patches.Quests
+namespace Aki.SinglePlayer.Patches.Quests
 {
     public class BeaconPatch : GenericPatch<BeaconPatch>
     {

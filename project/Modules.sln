@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPTarkov.Common", "SPTarkov.Common\SPTarkov.Common.csproj", "{7584F43A-5937-417E-ABF4-C5F680F300FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Common", "SPTarkov.Common\Aki.Common.csproj", "{7584F43A-5937-417E-ABF4-C5F680F300FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPTarkov.Core", "SPTarkov.Core\SPTarkov.Core.csproj", "{AC9ADC41-6007-4392-9D52-2BD850506052}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Core", "SPTarkov.Core\Aki.Core.csproj", "{AC9ADC41-6007-4392-9D52-2BD850506052}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPTarkov.SinglePlayer", "SPTarkov.SinglePlayer\SPTarkov.SinglePlayer.csproj", "{CA2CDB32-6C34-4B23-AB90-E7A776AD40F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.SinglePlayer", "SPTarkov.SinglePlayer\Aki.SinglePlayer.csproj", "{CA2CDB32-6C34-4B23-AB90-E7A776AD40F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPTarkov.RuntimeBundles", "SPTarkov.RuntimeBundles\SPTarkov.RuntimeBundles.csproj", "{DD923A53-4605-49CE-AF1D-B61137D0E4A3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPTarkov.Tools", "SPTarkov.Tools\SPTarkov.Tools.csproj", "{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Tools", "SPTarkov.Tools\Aki.Tools.csproj", "{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Loader", "Aki.Loader\Aki.Loader.csproj", "{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}"
 EndProject
@@ -35,10 +33,6 @@ Global
 		{CA2CDB32-6C34-4B23-AB90-E7A776AD40F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA2CDB32-6C34-4B23-AB90-E7A776AD40F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA2CDB32-6C34-4B23-AB90-E7A776AD40F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DD923A53-4605-49CE-AF1D-B61137D0E4A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD923A53-4605-49CE-AF1D-B61137D0E4A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD923A53-4605-49CE-AF1D-B61137D0E4A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD923A53-4605-49CE-AF1D-B61137D0E4A3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}.Release|Any CPU.ActiveCfg = Release|Any CPU
