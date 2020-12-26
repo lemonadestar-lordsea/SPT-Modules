@@ -130,7 +130,10 @@ foreach($file in $dllAndExeFiles)
         [System.IO.Directory]::CreateDirectory($akiModuleFilePath) | Out-Null
         CopyAndVerifyFile $file $akiModuleFilePath "module.dll"
     }
+    else 
+    {
         CopyAndVerifyFile $file $managedFolder
+    }
 }
 
 Write-Host ""
