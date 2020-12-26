@@ -11,12 +11,13 @@ function CopyAndVerifyFile
     param
     (
         [System.IO.FileInfo]$File,
-        [string]$DestinationPath
+        [string]$DestinationPath,
+        $OverrideFileName = $null
     )
 
     $friendlyName = "$($file.Directory.Parent.Parent.Name) - $($File.Name)"
 
-    Write-Host "Copying $($friendlyName) ... " -NoNewLine
+    Write-Host "Copying $($friendlyName) " -NoNewLine
     
     #check paths
     if(-not(Test-Path $File.FullName)) 
@@ -26,17 +27,36 @@ function CopyAndVerifyFile
     }
     if(-not(Test-Path $DestinationPath)) 
     {
-        Write-Host "Can't find destination path: `n$($DestinationPath)" -ForegroundColor -Red
+        Write-Host "Can't find destination path: `n$($DestinationPath)" -ForegroundColor Red
         return
     }
 
+    if($OverrideFileName -ne $null) 
+    {
+        $DestinationPath = "$($DestinationPath)\$($OverrideFileName)"
+        Write-Host ": New Name -> $($OverrideFileName)" -NoNewLine -ForegroundColor Magenta
+    }
+
+    Write-Host " ... " -NoNewLine
+    
     Copy-Item -Path $File.FullName -Destination $DestinationPath -Force -ErrorAction SilentlyContinue
 
-    #make sure the file was copied
-    if(Test-Path "$($DestinationPath)\$($File.Name)") 
+    #make sure the file was copied - I'm going to work on cleaning this script up, so this is just to get things going. It needs some TLC.
+    if($OverrideFileName -ne $null) 
     {
+      if(Test-Path $DestinationPath)
+      {
         Write-Host "OK" -ForegroundColor Green
         return
+      }
+    }
+    else 
+    {
+      if(Test-Path "$($DestinationPath)\$($File.Name)") 
+      {
+          Write-Host "OK" -ForegroundColor Green
+          return
+      }
     }
 
     Write-Host "Something went wrong :( `nError: $($Error[0])" -ForegroundColor Red
@@ -83,6 +103,7 @@ $buildDir = "$($rootPath)\Build"
 
 #path to managed data directory
 $managedFolder = "$($buildDir)\EscapeFromTarkov_Data\Managed"
+$akiModulesFolder = "$($buildDir)\Aki_Data\Modules"
 
 #remove build directory if it exists.
 if(Test-Path $buildDir) 
@@ -102,14 +123,14 @@ $dllAndExeFiles += [System.IO.FileInfo]::new((Resolve-Path -Path ".\Shared\Resou
 Write-Host ""
 foreach($file in $dllAndExeFiles) 
 {
-    if($File.Name -eq "Launcher.exe") 
+    if($file.Name.StartsWith("Aki.")) 
     {
-        CopyAndVerifyFile $file $buildDir
+        $akiNoExtension = $file.Name.Replace(".dll","")
+        $akiModuleFilePath = "$($akiModulesFolder)\$($akiNoExtension)"
+        [System.IO.Directory]::CreateDirectory($akiModuleFilePath) | Out-Null
+        CopyAndVerifyFile $file $akiModuleFilePath "module.dll"
     }
-    else 
-    {
         CopyAndVerifyFile $file $managedFolder
-    }
 }
 
 Write-Host ""
