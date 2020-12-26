@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Aki.Common</RootNamespace>
-    <AssemblyName>NLog.Aki.Common</AssemblyName>
+    <AssemblyName>Aki.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -74,21 +74,4 @@
     <Compile Include="Utils\Patching\PatcherUtil.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent Condition="'$(OS)' != 'Unix'">
-      xcopy /Y /I $(TargetDir)*.dll $(SolutionDir)\Build\EscapeFromTarkov_Data\Managed\
-      xcopy /Y /I $(SolutionDir)\Shared\References\Assembly-CSharp.dll $(SolutionDir)\Build\EscapeFromTarkov_Data\Managed\
-      xcopy /Y /I $(SolutionDir)\Shared\Resources\NLog.dll.nlog $(SolutionDir)\Build\EscapeFromTarkov_Data\Managed\
-    </PostBuildEvent>
-    <PostBuildEvent Condition="'$(OS)' == 'Unix'">
-      mkdir -p $(SolutionDir)/Build/EscapeFromTarkov_Data/Managed/
-      cp $(TargetDir)*.dll $(SolutionDir)/Build/EscapeFromTarkov_Data/Managed/
-      cp $(SolutionDir)/Shared/References/Assembly-CSharp.dll $(SolutionDir)/Build/EscapeFromTarkov_Data/Managed/
-      cp $(SolutionDir)/Shared/Resources/NLog.dll.nlog $(SolutionDir)/Build/EscapeFromTarkov_Data/Managed/
-    </PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
 </Project>
