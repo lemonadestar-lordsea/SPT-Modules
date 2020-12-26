@@ -34,7 +34,7 @@ namespace Aki.Core.Patches
         }
 
         /* Note(PoloYolo): I'm making a big assumption here that no one else is really going to be touching this method (I don't think this
-           class warrants any other edits as far as SPTarkov is concerned), so I'm going to implement this transpiler to go off of code
+           class warrants any other edits as far as Aki is concerned), so I'm going to implement this transpiler to go off of code
            index instead of looking for pattern. If, for some reason, someone wants to make further patches to this, let me know?
            
            So, what's going on here?

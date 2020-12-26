@@ -7,8 +7,8 @@
     <ProjectGuid>{CA2CDB32-6C34-4B23-AB90-E7A776AD40F4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SPTarkov.SinglePlayer</RootNamespace>
-    <AssemblyName>NLog.SPTarkov.SinglePlayer</AssemblyName>
+    <RootNamespace>Aki.SinglePlayer</RootNamespace>
+    <AssemblyName>Aki.SinglePlayer</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -116,7 +116,7 @@
       <Project>{966ef83a-7b4e-4de1-bc73-e06b18eb411c}</Project>
       <Name>Aki.Loader</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SPTarkov.Common\Aki.Common.csproj">
+    <ProjectReference Include="..\Aki.Common\Aki.Common.csproj">
       <Project>{7584f43a-5937-417e-abf4-c5f680f300fb}</Project>
       <Name>Aki.Common</Name>
       <Private>False</Private>

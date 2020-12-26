@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ModuleLoader.cs" />
+    <Compile Include="RunUtil.cs" />
     <Compile Include="Target.cs" />
     <Compile Include="Instance.cs" />
   </ItemGroup>
