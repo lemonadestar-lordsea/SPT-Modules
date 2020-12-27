@@ -7,11 +7,10 @@ Client-side runtime patches to alter the client's behaviour to match EFT (Live)
 SPTarkov.Common         | Common utilities used across projects.
 SPTarkov.Core           | Required patches to start the game.
 SPTarkov.SinglePlayer   | Simulating online game offline.
-SPTarkov.RuntimeBundles | Loading custom asset bundles mods.
 
 ## Requirements
 
-- Escape From Tarkov 0.12.8.9888
+- Escape From Tarkov 0.12.9.10423
 - Visual Studio Build Tools (.NET desktop workload)
 - .NET Framework 4.6.1
 
