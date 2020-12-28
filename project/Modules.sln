@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Tools", "Aki.Tools\Aki.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Loader", "Aki.Loader\Aki.Loader.csproj", "{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Bundles", "Aki.Bundles\Aki.Bundles.csproj", "{DD923A53-4605-49CE-AF1D-B61137D0E4A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD923A53-4605-49CE-AF1D-B61137D0E4A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD923A53-4605-49CE-AF1D-B61137D0E4A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD923A53-4605-49CE-AF1D-B61137D0E4A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD923A53-4605-49CE-AF1D-B61137D0E4A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
