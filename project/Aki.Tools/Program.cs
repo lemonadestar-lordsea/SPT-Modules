@@ -18,9 +18,9 @@ namespace Aki.Tools
 	{
 		static void Main(string[] args)
 		{
-			Debug.LogError("Aki.Tools: Loaded");
+			//Debug.LogError("Aki.Tools: Loaded");
 
-			PatcherUtil.Patch<CoordinatesPatch>();
+			//PatcherUtil.Patch<CoordinatesPatch>();
 		}
 	}
 }

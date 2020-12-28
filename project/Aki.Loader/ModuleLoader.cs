@@ -43,6 +43,7 @@ namespace Aki.Loader
                     if (File.Exists(file))
                     {
                         Exception error = RunUtil.LoadAndRun(file);
+                        
                         if (error == null)
                         {
                             Debug.LogError($"Aki.Loader: Loaded '{file}'!");

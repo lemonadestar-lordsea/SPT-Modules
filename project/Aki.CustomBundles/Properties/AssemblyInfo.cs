@@ -1,4 +1,4 @@
-/* AssemblyInfo.cs
+﻿/* AssemblyInfo.cs
  * License: NCSA Open Source License
  * 
  * Copyright: Merijn Hendriks
@@ -10,11 +10,11 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Common Module")]
+[assembly: AssemblyTitle("Aki.CustomBundles")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Aki")]
-[assembly: AssemblyProduct("Aki.Common")]
+[assembly: AssemblyCompany("Project Aki")]
+[assembly: AssemblyProduct("Aki.CustomBundles")]
 [assembly: AssemblyCopyright("Copyright (c) Project Aki 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
