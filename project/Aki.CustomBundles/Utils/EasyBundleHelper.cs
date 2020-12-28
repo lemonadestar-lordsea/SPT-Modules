@@ -57,12 +57,12 @@ namespace Aki.CustomBundles.Utils
         {
             get
             {
-                return _trav.Field<IBundleLock>($"{typeof(GInterface250).Name}_0").Value;
+                return _trav.Field<IBundleLock>($"{typeof(GInterface250).Name.ToLower()}_0").Value;
             }
 
             set
             {
-                _trav.Field<IBundleLock>($"{typeof(GInterface250).Name}_0").Value = value;
+                _trav.Field<IBundleLock>($"{typeof(GInterface250).Name.ToLower()}_0").Value = value;
             }
         }
 
