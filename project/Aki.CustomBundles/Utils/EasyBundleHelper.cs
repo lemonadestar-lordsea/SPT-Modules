@@ -34,7 +34,7 @@ namespace Aki.CustomBundles.Utils
         private static readonly string _keyPropertyName = "Key";
         private static readonly string _loadStatePropertyName = "LoadState";
         private static readonly string _progressPropertyName = "Progress";
-        private static readonly string _bundlePropertyName = "Bundle";
+        private static readonly string _bundlePropertyName = "assetBundle_0";
         private static readonly string _loadingAssetOperationFieldName = "assetBundleRequest_0";
         private static readonly string _assetsPropertyName = "Assets";
         private static readonly string _sameNameAssetPropertyName = "SameNameAsset";
