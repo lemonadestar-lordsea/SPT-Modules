@@ -14,7 +14,7 @@ using UnityEngine;
 using Newtonsoft.Json.Linq;
 using Aki.Common.Utils.HTTP;
 
-namespace Aki.Bundles.Utils
+namespace Aki.CustomBundles.Utils
 {
     public class Settings
     {
@@ -38,14 +38,14 @@ namespace Aki.Bundles.Utils
                 CleanCache();
             } catch
             {
-                Debug.LogError("Aki.Bundles: The cache cleanup failed and will try again at the next game startup.");
+                Debug.LogError("Aki.CustomBundles: The cache cleanup failed and will try again at the next game startup.");
             }
             
             var json = new Request(Session, BackendUrl).GetJson("/singleplayer/bundles");
 
             if (string.IsNullOrWhiteSpace(json))
 			{
-				Debug.LogError("Aki.Bundles: Bundles data is Null, using fallback");
+				Debug.LogError("Aki.CustomBundles: Bundles data is Null, using fallback");
 				return;
 			}
 
@@ -62,7 +62,7 @@ namespace Aki.Bundles.Utils
                 }
             }
             
-            Debug.LogError("Aki.Bundles: Successfully received Bundles");
+            Debug.LogError("Aki.CustomBundles: Successfully received Bundles");
 		}
 
         private void CleanCache()

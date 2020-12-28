@@ -23,13 +23,13 @@ using Diz.Jobs;
 using Diz.Resources;
 using JetBrains.Annotations;
 using Aki.Common.Utils.Patching;
-using Aki.Bundles.Utils;
+using Aki.CustomBundles.Utils;
 using IEasyBundle = GInterface249; //Property: SameNameAsset 
 using IBundleLock = GInterface250; //Property: IsLocked
 using BundleLock = GClass2174; //Property: MaxConcurrentOperations
 using DependencyGraph = GClass2175<GInterface249>; // Method: GetDefaultNode()
 
-namespace Aki.Bundles.Patches
+namespace Aki.CustomBundles.Patches
 {
     public class EasyAssetsPatch : GenericPatch<EasyAssetsPatch>
     {

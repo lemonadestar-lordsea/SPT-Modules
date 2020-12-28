@@ -46,36 +46,36 @@ namespace Aki.Loader
 
         internal static Exception LoadAssAndEntryPoint(string dllPath, out MethodInfo entryPoint, out bool hasStringArray)
         {
-
+            Assembly asm;
             entryPoint = null;
             hasStringArray = false;
 
-            Assembly ass;
             try
             {
-                ass = LoadAssembly(dllPath);
+                asm = LoadAssembly(dllPath);
             }
             catch (Exception e)
             {
                 return e;
             }
 
-            var entry = FindMainFunction(ass, out hasStringArray);
+            var entry = FindMainFunction(asm, out hasStringArray);
+
             if (entry != null)
             {
-
-                LoadDeps(ass, new FileInfo(dllPath).DirectoryName);
-
+                LoadDeps(asm, new FileInfo(dllPath).DirectoryName);
                 entryPoint = entry;
                 return null;
             }
 
-            return new Exception($"Failed to find entry point in {ass.FullName}");
+            return new Exception($"Failed to find entry point in {asm.FullName}");
         }
 
         internal static Assembly LoadAssembly(string dllPath)
         {
             byte[] bytes;
+            Assembly asm;
+
             try
             {
                 bytes = File.ReadAllBytes(dllPath);
@@ -85,17 +85,16 @@ namespace Aki.Loader
                 throw new Exception($"Failed to read assembly bytes from '{dllPath}'", e);
             }
 
-            Assembly ass;
             try
             {
-                ass = Assembly.Load(bytes);
+                asm = Assembly.Load(bytes);
             }
             catch (Exception e)
             {
                 throw new Exception("Failed created assembly from file bytes. Duplicate assembly?", e);
             }
 
-            return ass;
+            return asm;
         }
 
         internal static Exception LoadDeps(Assembly a, string sourceFolder)
@@ -110,10 +109,12 @@ namespace Aki.Loader
                     if (item.ToString() == name.ToString())
                         return true;
                 }
+                
                 return false;
             }
 
             var refs = a.GetReferencedAssemblies();
+
             foreach (var item in refs)
             {
                 bool loaded = IsLoaded(item);
@@ -152,7 +153,6 @@ namespace Aki.Loader
             string path = Path.Combine(root, dllName);
 
             Console.WriteLine($"Loading dependency '{dllName}' from '{root}'... ");
-
             return LoadAssembly(path);
         }
 
@@ -165,8 +165,9 @@ namespace Aki.Loader
                 if (type.IsGenericType)
                     continue;
 
-                foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic |
-                                                       BindingFlags.Static))
+                foreach (var method in type.GetMethods(BindingFlags.Public
+                                                     | BindingFlags.NonPublic
+                                                     | BindingFlags.Static))
                 {
                     if (method.IsGenericMethod)
                         continue;

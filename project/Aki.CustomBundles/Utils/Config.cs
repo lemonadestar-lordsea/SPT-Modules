@@ -13,7 +13,7 @@ using EFT;
 using ISession = GInterface27;
 using ClientConfig = GClass331;
 
-namespace Aki.Bundles.Utils
+namespace Aki.CustomBundles.Utils
 {
     public static class Config
     {

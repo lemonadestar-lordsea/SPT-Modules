@@ -9,17 +9,17 @@
 
 
 using Aki.Common.Utils.Patching;
-using Aki.Bundles.Patches;
-using Aki.Bundles.Utils;
+using Aki.CustomBundles.Patches;
+using Aki.CustomBundles.Utils;
 using UnityEngine;
 
-namespace Aki.Bundles
+namespace Aki.CustomBundles
 {
     class Program
     {
         static void Main(string[] args)
 		{
-            Debug.LogError("Aki.Bundles: Loaded");
+            Debug.LogError("Aki.CustomBundles: Loaded");
 
             new Settings(null, Config.BackendUrl);
 

@@ -10,11 +10,11 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Aki.Bundles")]
+[assembly: AssemblyTitle("Aki.CustomBundles")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Project Aki")]
-[assembly: AssemblyProduct("Aki.Bundles")]
+[assembly: AssemblyProduct("Aki.CustomBundles")]
 [assembly: AssemblyCopyright("Copyright (c) Project Aki 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -7,8 +7,8 @@
     <ProjectGuid>{DD923A53-4605-49CE-AF1D-B61137D0E4A3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Aki.Bundles</RootNamespace>
-    <AssemblyName>aki-bundles</AssemblyName>
+    <RootNamespace>Aki.CustomBundles</RootNamespace>
+    <AssemblyName>aki-custombundles</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

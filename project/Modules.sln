@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Tools", "Aki.Tools\Aki.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Loader", "Aki.Loader\Aki.Loader.csproj", "{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Bundles", "Aki.Bundles\Aki.Bundles.csproj", "{DD923A53-4605-49CE-AF1D-B61137D0E4A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.CustomBundles", "Aki.CustomBundles\Aki.CustomBundles.csproj", "{DD923A53-4605-49CE-AF1D-B61137D0E4A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

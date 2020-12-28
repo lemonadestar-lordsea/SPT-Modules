@@ -17,9 +17,9 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
 using Aki.Common.Utils.Patching;
-using Aki.Bundles.Utils;
+using Aki.CustomBundles.Utils;
 
-namespace Aki.Bundles.Patches
+namespace Aki.CustomBundles.Patches
 {
     public class BundleLoadPatch : GenericPatch<BundleLoadPatch>
     {

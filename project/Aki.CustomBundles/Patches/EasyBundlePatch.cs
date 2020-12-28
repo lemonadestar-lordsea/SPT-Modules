@@ -18,12 +18,12 @@ using System.Linq;
 using System.Reflection;
 using Diz.DependencyManager;
 using Aki.Common.Utils.Patching;
-using Aki.Bundles.Utils;
+using Aki.CustomBundles.Utils;
 using IEasyBundle = GInterface249; //Property: SameNameAsset 
 using IBundleLock = GInterface250; //Property: IsLocked
 using BindableState = GClass2160<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
 
-namespace Aki.Bundles.Patches
+namespace Aki.CustomBundles.Patches
 {
 	public class EasyBundlePatch : GenericPatch<EasyBundlePatch>
 	{

@@ -20,7 +20,7 @@ using HarmonyLib;
 using IBundleLock = GInterface250; //Property: IsLocked
 using BindableState = GClass2160<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
 
-namespace Aki.Bundles.Utils
+namespace Aki.CustomBundles.Utils
 {
     class EasyBundleHelper
     {
