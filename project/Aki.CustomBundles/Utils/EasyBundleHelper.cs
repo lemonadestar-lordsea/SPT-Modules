@@ -32,10 +32,9 @@ using BindableState = GClass2160<Diz.DependencyManager.ELoadState>; //Construct 
  * dnSpy:
  *   - Open the un-obfuscated EFT CSharp Assemply "\EscapeFromTarkov_Data\Managed\Assembly-CSharp.dll"
  *   - Within the Assembly Expoler Tress, select the "Assembly-CSharp (0.0.0.0) file
-  *   - Search for "IsLocked"      using Options Search For: "Property", "Selected Files" and update "IBundleLock" to the Interface found
+ *   - Search for "IsLocked"      using Options Search For: "Property", "Selected Files" and update "IBundleLock" to the Interface found
  *   - Search for "initialValue"  using Options Search For: "Parameter", "Selected Files" and update "BindableState" to the Class found
  */
-
 namespace Aki.CustomBundles.Utils
 {
     class EasyBundleHelper
@@ -58,64 +57,160 @@ namespace Aki.CustomBundles.Utils
 
         public IEnumerable<string> DependencyKeys
         {
-            get => _trav.Property<IEnumerable<string>>(_dependencyKeysPropertyName).Value; set => _trav.Property<IEnumerable<string>>(_dependencyKeysPropertyName).Value = value;
+            get
+            {
+                return _trav.Property<IEnumerable<string>>(_dependencyKeysPropertyName).Value;
+            }
+
+            set
+            {
+                _trav.Property<IEnumerable<string>>(_dependencyKeysPropertyName).Value = value;
+            }
         }
 
         public IBundleLock BundleLock
         {
-            get => _trav.Field<IBundleLock>($"{nameof(IBundleLock).ToLower()}_0").Value; set => _trav.Field<IBundleLock>($"{nameof(IBundleLock).ToLower()}_0").Value = value;
+            get
+            {
+                return _trav.Field<IBundleLock>($"{typeof(GInterface250).Name.ToLower()}_0").Value;
+            }
+
+            set
+            {
+                _trav.Field<IBundleLock>($"{typeof(GInterface250).Name.ToLower()}_0").Value = value;
+            }
         }
 
         public Task LoadingJob
         {
-            get => _trav.Field<Task>(_loadingJobPropertyName).Value; set => _trav.Field<Task>(_loadingJobPropertyName).Value = value;
+            get
+            {
+                return _trav.Field<Task>(_loadingJobPropertyName).Value;
+            }
+
+            set
+            {
+                _trav.Field<Task>(_loadingJobPropertyName).Value = value;
+            }
         }
 
         public string Path
         {
-            get => _trav.Field<string>(_pathFieldName).Value; set => _trav.Field<string>(_pathFieldName).Value = value;
+            get
+            {
+                return _trav.Field<string>(_pathFieldName).Value;
+            }
+
+            set
+            {
+                _trav.Field<string>(_pathFieldName).Value = value;
+            }
         }
 
         public string Key
         {
-            get => _trav.Property<string>(_keyPropertyName).Value; set => _trav.Property<string>(_keyPropertyName).Value = value;
+            get
+            {
+                return _trav.Property<string>(_keyPropertyName).Value;
+            }
+
+            set
+            {
+                _trav.Property<string>(_keyPropertyName).Value = value;
+            }
         }
 
         public BindableState LoadState
         {
-            get => _trav.Property<BindableState>(_loadStatePropertyName).Value; set => _trav.Property<BindableState>(_loadStatePropertyName).Value = value;
+            get
+            {
+                return _trav.Property<BindableState>(_loadStatePropertyName).Value;
+            }
+
+            set
+            {
+                _trav.Property<BindableState>(_loadStatePropertyName).Value = value;
+            }
         }
 
         public float Progress
         {
-            get => _trav.Property<float>(_progressPropertyName).Value; set => _trav.Property<float>(_progressPropertyName).Value = value;
+            get
+            {
+                return _trav.Property<float>(_progressPropertyName).Value;
+            }
+
+            set
+            {
+                _trav.Property<float>(_progressPropertyName).Value = value;
+            }
         }
 
-        
+
         public AssetBundle Bundle
         {
-            get => _trav.Field<AssetBundle>(_bundlePropertyName).Value; set => _trav.Field<AssetBundle>(_bundlePropertyName).Value = value;
+            get
+            {
+                return _trav.Field<AssetBundle>(_bundlePropertyName).Value;
+            }
+
+            set
+            {
+                _trav.Field<AssetBundle>(_bundlePropertyName).Value = value;
+            }
         }
-        
+
         public AssetBundleRequest loadingAssetOperation
         {
-            get => _trav.Field<AssetBundleRequest>(_loadingAssetOperationFieldName).Value; set => _trav.Field<AssetBundleRequest>(_loadingAssetOperationFieldName).Value = value;
+            get
+            {
+                return _trav.Field<AssetBundleRequest>(_loadingAssetOperationFieldName).Value;
+            }
+
+            set
+            {
+                _trav.Field<AssetBundleRequest>(_loadingAssetOperationFieldName).Value = value;
+            }
         }
 
 
         public Object[] Assets
         {
-            get => _trav.Property<UnityEngine.Object[]>(_assetsPropertyName).Value; set => _trav.Property<UnityEngine.Object[]>(_assetsPropertyName).Value = value;
+            get
+            {
+                return _trav.Property<UnityEngine.Object[]>(_assetsPropertyName).Value;
+            }
+
+            set
+            {
+                _trav.Property<UnityEngine.Object[]>(_assetsPropertyName).Value = value;
+            }
         }
 
         public UnityEngine.Object SameNameAsset
         {
-            get => _trav.Property<UnityEngine.Object>(_sameNameAssetPropertyName).Value; set => _trav.Property<UnityEngine.Object>(_sameNameAssetPropertyName).Value = value;
+            get
+            {
+                return _trav.Property<UnityEngine.Object>(_sameNameAssetPropertyName).Value;
+            }
+
+            set
+            {
+                _trav.Property<UnityEngine.Object>(_sameNameAssetPropertyName).Value = value;
+            }
         }
 
         public string KeyWithoutExtension
         {
-            get => _trav.Field<string>(_keyWithoutExtensionFieldName).Value; set => _trav.Field<string>(_keyWithoutExtensionFieldName).Value = value;
+            get
+            {
+                return _trav.Field<string>(_keyWithoutExtensionFieldName).Value;
+            }
+
+            set
+            {
+                _trav.Field<string>(_keyWithoutExtensionFieldName).Value = value;
+            }
         }
 
         public EasyBundleHelper(object easyBundle)
