@@ -23,6 +23,20 @@ using IEasyBundle = GInterface249; //Property: SameNameAsset
 using IBundleLock = GInterface250; //Property: IsLocked
 using BindableState = GClass2160<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
 
+/* Maintenance Tips
+ * 
+ * This patch is used to change behaivior of the "Diz Plugings - Achievements System"
+ * The target class is an implementation of the bundle class called "EasyBundle", this patch will replace portions of the existing class and will not run the original code after.
+ * 
+ * Use dnSpy to find the correct GClass/GInterface/Property Name used within each patch.
+ * 
+ * dnSpy:
+ *   - Open the un-obfuscated EFT CSharp Assemply "\EscapeFromTarkov_Data\Managed\Assembly-CSharp.dll"
+ *   - Within the Assembly Expoler Tress, select the "Assembly-CSharp (0.0.0.0) file
+ *   - Search for "SameNameAsset" using Options Search For: "Property", "Selected Files" and update "IEasyBundle" to the Interface found
+ *   - Search for "IsLocked"      using Options Search For: "Property", "Selected Files" and update "IBundleLock" to the Interface found
+ *   - Search for "initialValue"  using Options Search For: "Parameter", "Selected Files" and update "BindableState" to the Class found
+ */
 namespace Aki.CustomBundles.Patches
 {
 	public class EasyBundlePatch : GenericPatch<EasyBundlePatch>
@@ -31,14 +45,17 @@ namespace Aki.CustomBundles.Patches
 
 		protected override MethodBase GetTargetMethod()
 		{
+            // Locate the first class constructor
             return PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType).GetConstructors()[0];
         }
 
+        // Locate the target class; must have a Property named "SameNameAsset"
         private static bool IsTargetType(Type type)
         {
             return type.IsClass && type.GetProperty("SameNameAsset") != null;
         }
 
+        // Execute this code instead of original
         static bool PatchPrefix(IEasyBundle __instance, string key, string rootPath, UnityEngine.AssetBundleManifest manifest, IBundleLock bundleLock)
 		{
             var easyBundle = new EasyBundleHelper(__instance);
