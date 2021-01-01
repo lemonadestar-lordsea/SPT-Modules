@@ -26,8 +26,8 @@ using Aki.Common.Utils.Patching;
 using Aki.CustomBundles.Utils;
 using IEasyBundle = GInterface249; //Property: SameNameAsset 
 using IBundleLock = GInterface250; //Property: IsLocked
-using BundleLock = GClass2174; //Property: MaxConcurrentOperations
-using DependencyGraph = GClass2175<GInterface249>; // Method: GetDefaultNode()
+using BundleLock = GClass2175; //Property: MaxConcurrentOperations
+using DependencyGraph = GClass2176<GInterface249>; // Method: GetDefaultNode()
 
 /* Maintenance Tips
  * 

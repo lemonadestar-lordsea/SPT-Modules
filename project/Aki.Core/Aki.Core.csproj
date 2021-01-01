@@ -65,6 +65,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Patches\BattleEyePatch.cs" />
     <Compile Include="Patches\NotificationSslPatch.cs" />
+    <Compile Include="Patches\NotifierDefaultPatch.cs" />
     <Compile Include="Patches\SslCertificatePatch.cs" />
     <Compile Include="Patches\UnityWebRequestPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

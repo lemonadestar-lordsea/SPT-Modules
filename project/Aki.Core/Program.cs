@@ -23,6 +23,7 @@ namespace Aki.Core
             PatcherUtil.Patch<SslCertificatePatch>();
             PatcherUtil.Patch<UnityWebRequestPatch>();
             PatcherUtil.Patch<NotificationSslPatch>();
+            PatcherUtil.Patch<NotifierDefaultPatch>();
         }
 	}
 }

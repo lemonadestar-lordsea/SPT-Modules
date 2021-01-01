@@ -107,20 +107,5 @@ namespace Aki.Common.Utils.HTTP
 				}
 			}
 		}
-
-		public Texture2D GetImage(string url, bool compress = true)
-		{
-			using (var stream = Send(url, "GET", null, compress))
-			{
-				using (var ms = new MemoryStream())
-				{
-					var texture = new Texture2D(8, 8);
-
-					stream.CopyTo(ms);
-					texture.LoadImage(ms.ToArray());
-					return texture;
-				}
-			}
-		}
 	}
 }

@@ -18,7 +18,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using HarmonyLib;
 using IBundleLock = GInterface250; //Property: IsLocked
-using BindableState = GClass2160<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
+using BindableState = GClass2161<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
 
 /* Maintenance Tips
  * 
