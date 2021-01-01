@@ -3,19 +3,23 @@
  * 
  * Copyright: Merijn Hendriks
  * AUTHORS:
+ * GGaulin
  * Merijn Hendriks
  */
 
 
-using System;
 using System.Linq;
 using System.Reflection;
+using HarmonyLib;
 using Aki.Common.Utils.Patching;
+using NotifierManager = GClass1328;
+using NotifierCallback = GClass792;
 
 namespace Aki.Core.Patches
 {
-	/* In patch 0.12.9.10510 they did a small refactor to ApplyTansportType to default to websocket.
-	 * With this patch we force to use HTTP notifier on startup regardless of the game defaults.
+	/* In patch 0.12.9.10510 they did a small refactor to ApplyTansportType.
+	 * It forced creation of websocket regardless of user choice for the default channel.
+	 * With this patch we enable the game to respect user choice again.
 	 * Targeted method is unique and only appears in GClass1328
 	 */
 
@@ -23,28 +27,20 @@ namespace Aki.Core.Patches
 	{
 		public NotifierDefaultPatch() : base(prefix: nameof(PatchPrefix)) { }
 
-		public static Type __type;
-		public static FieldInfo __channel;
+		static AccessTools.FieldRef<NotifierManager, NotifierCallback> callbackField = AccessTools.FieldRefAccess<NotifierManager, NotifierCallback>($"{typeof(GClass792).Name.ToLower()}_0");
 
 		protected override MethodBase GetTargetMethod()
 		{
 			var methodName = "ApplyTransportType";
-			var flags = BindingFlags.Public | BindingFlags.Instance;
-			
-			__type = PatcherConstants.TargetAssembly.GetTypes().Single(x => x.GetMethod(methodName, flags) != null);
-			__channel = __type.GetField($"{typeof(GClass792).Name.ToLower()}_0", BindingFlags.NonPublic | BindingFlags.Instance);
-
-			return __type.GetMethod(methodName, flags);
+			return PatcherConstants.TargetAssembly.GetTypes().Single(x => x.GetMethod(methodName) != null).GetMethod(methodName);
 		}
 
-		static bool PatchPrefix(ref object __instance, ENotificationTransportType transportType)
+		static bool PatchPrefix(NotifierManager __instance)
 		{
-			if (transportType == ENotificationTransportType.Default && __channel.GetValue(__instance) == null)
-			{
-				// game requires websock to run at least once before we can initialize HTTP notifier
-				__type.GetMethod("ApplyTransportType").Invoke(__instance, new object[] { ENotificationTransportType.WebSocket });
-			}
-
+			var callback = new NotifierCallback();
+			
+			callback.url = "https://";
+			callbackField(__instance) = callback;
 			return true;
 		}
 	}
