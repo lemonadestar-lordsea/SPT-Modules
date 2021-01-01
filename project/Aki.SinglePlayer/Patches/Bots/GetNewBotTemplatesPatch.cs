@@ -21,7 +21,7 @@ using WaveInfo = GClass926;
 using BotsPresets = GClass360;
 using BotData = GInterface15;
 using PoolManager = GClass1164;
-using JobPriority = GClass2140;
+using JobPriority = GClass2141;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
