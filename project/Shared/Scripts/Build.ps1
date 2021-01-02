@@ -73,10 +73,7 @@ if (($vsWhere -eq("")) -or(-not(Test-Path $vsWhere)))
     return
 }
 
-$msbuild = & $vsWhere -nologo -latest -find "MSBuild\Current\bin" | Out-String
-
-$msbuild = $msbuild -replace "`n","" -replace "`r",""
-$msbuild = "$($msbuild)\MSBuild.exe"
+$msbuild = & $vsWhere -latest -products * -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe
 
 if (($msbuild -eq("")) -or(-Not(Test-Path $msbuild)))
 {
