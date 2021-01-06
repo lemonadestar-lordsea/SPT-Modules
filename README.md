@@ -2,11 +2,13 @@
 
 Client-side runtime patches to alter the client's behaviour to match EFT (Live)
 
-**Project**             | **Function**
------------------------ | --------------------------------------------
-SPTarkov.Common         | Common utilities used across projects.
-SPTarkov.Core           | Required patches to start the game.
-SPTarkov.SinglePlayer   | Simulating online game offline.
+**Project**        | **Function**
+------------------ | --------------------------------------------
+Aki.Common         | Common utilities used across projects
+Aki.Core           | Required patches to start the game
+Aki.SinglePlayer   | Simulating online game offline
+Aki.CustomBundles  | Loading custom assets into the game
+Aki.Tools          | Debugging utilities
 
 ## Requirements
 
