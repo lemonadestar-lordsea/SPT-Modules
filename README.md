@@ -1,9 +1,10 @@
 # Modules
 
-Client-side runtime patches to alter the client's behaviour to match EFT (Live)
+Client-side modificatioins to alter Escape From Tarkov's behaviour
 
 **Project**        | **Function**
 ------------------ | --------------------------------------------
+Aki.Loader         | Loads custom assemblies into the game
 Aki.Common         | Common utilities used across projects
 Aki.Core           | Required patches to start the game
 Aki.SinglePlayer   | Simulating online game offline
