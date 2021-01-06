@@ -1,6 +1,6 @@
 # Modules
 
-Client-side modificatioins to alter Escape From Tarkov's behaviour
+Client-side modifications to alter Escape From Tarkov's behaviour
 
 **Project**        | **Function**
 ------------------ | --------------------------------------------
