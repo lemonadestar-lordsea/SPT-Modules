@@ -1,4 +1,4 @@
-# Build.ps1
+﻿# Build.ps1
 # Copyright: © SPT-AKI 2020
 # License: NCSA
 # Authors:
@@ -110,7 +110,6 @@ if(Test-Path $buildDir)
 
 #get all release dlls and exe files
 $dllAndExeFiles = Resolve-Path -Path "*\bin\release\" | % {Get-ChildItem -Path $_} | where {$_.Name -like "*.dll" -or $_.Name -like "*.exe"}
-$dllAndExeFiles += [System.IO.FileInfo]::new((Resolve-Path -Path ".\Shared\References\Assembly-CSharp.dll"))
 $dllAndExeFiles += [System.IO.FileInfo]::new((Resolve-Path -Path ".\Shared\Resources\NLog.dll.nlog"))
 
 #create the build directory structure

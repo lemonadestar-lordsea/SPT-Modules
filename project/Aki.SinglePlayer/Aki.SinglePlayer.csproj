@@ -115,6 +115,7 @@
     <ProjectReference Include="..\Aki.Loader\Aki.Loader.csproj">
       <Project>{966ef83a-7b4e-4de1-bc73-e06b18eb411c}</Project>
       <Name>Aki.Loader</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Aki.Common\Aki.Common.csproj">
       <Project>{7584f43a-5937-417e-abf4-c5f680f300fb}</Project>
