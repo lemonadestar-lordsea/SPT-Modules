@@ -10,7 +10,7 @@ SPTarkov.SinglePlayer   | Simulating online game offline.
 
 ## Requirements
 
-- Escape From Tarkov 0.12.9.10519
+- Escape From Tarkov 0.12.9.10900
 - Visual Studio Build Tools (.NET desktop workload)
 - .NET Framework 4.6.1
 
