@@ -10,6 +10,7 @@
 using System.Reflection;
 using UnityEngine.Networking;
 using Aki.Common.Utils.Patching;
+using Aki.Core.Utils;
 
 namespace Aki.Core.Patches
 {
@@ -35,7 +36,7 @@ namespace Aki.Core.Patches
         {
             protected override bool ValidateCertificate(byte[] certificateData)
             {
-                return true;
+                return ValidationUtil.Validate();
             }
         }
     }

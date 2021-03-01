@@ -41,12 +41,19 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         private bool IsTargetType(Type type)
         {
+            var flags = BindingFlags.NonPublic | BindingFlags.Instance;
+
             if (!targetInterface.IsAssignableFrom(type))
             {
                 return false;
             }
 
-            var fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+            if (type.GetMethod("method_1", flags) == null)
+            {
+                return false;
+            }
+
+            var fields = type.GetFields(flags);
             
             if (!fields.Any(f => f.FieldType == typeof(WildSpawnType)) || !fields.Any(f => f.FieldType == typeof(BotDifficulty)))
             {

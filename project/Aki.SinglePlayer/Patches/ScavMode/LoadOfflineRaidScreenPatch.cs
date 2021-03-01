@@ -31,23 +31,13 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
     public class LoadOfflineRaidScreenPatch : GenericPatch<LoadOfflineRaidScreenPatch>
     {
-        private static readonly string kBotsSettingsFieldName = "gstruct232_0";
-        private static readonly string kWeatherSettingsFieldName = "gstruct92_0";
-        private static readonly string kWavesSettingsFieldName = "gstruct93_0";
-
-        private const string kMainControllerFieldName = "gclass1190_0";
-        private const string kMenuControllerInnerType = "Class818";
-        private const string kTargetMethodName = "method_2";
-        private const string kLoadReadyScreenMethodName = "method_35";
-        private const string kReadyMethodName = "method_50";
-
         public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler)) { }
 
         protected override MethodBase GetTargetMethod()
         {
             return typeof(MenuController).GetNestedTypes(BindingFlags.NonPublic)
-                .Single(x => x.Name == kMenuControllerInnerType)
-                .GetMethod(kTargetMethodName, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                .Single(x => x.Name == "Class818")
+                .GetMethod("method_2", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
         static IEnumerable<CodeInstruction> PatchTranspiler(IEnumerable<CodeInstruction> instructions)
@@ -66,9 +56,8 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         private static MenuController GetMenuController()
         {
             return PrivateValueAccessor.GetPrivateFieldValue(typeof(MainApplication), 
-                kMainControllerFieldName, ClientAppUtils.GetMainApp()) as MenuController;
+                $"{typeof(GClass1190).Name.ToLower()}_0", ClientAppUtils.GetMainApp()) as MenuController;
         }
-
 
         // Refer to MatchmakerOfflineRaid's subclass's OnShowNextScreen action definitions if these structs numbers change.
         public static void LoadOfflineRaidNextScreen(bool local, WeatherSettings weatherSettings, BotsSettings botsSettings, WavesSettings wavesSettings)
@@ -81,11 +70,12 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             }
 
             SetMenuControllerFieldValue(menuController, "bool_0", local);
-            SetMenuControllerFieldValue(menuController, kBotsSettingsFieldName, botsSettings);
-            SetMenuControllerFieldValue(menuController, kWavesSettingsFieldName, wavesSettings);
-            SetMenuControllerFieldValue(menuController, kWeatherSettingsFieldName, weatherSettings);
+            SetMenuControllerFieldValue(menuController, $"{typeof(GStruct232).Name.ToLower()}_0", botsSettings);
+            SetMenuControllerFieldValue(menuController, $"{typeof(GStruct93).Name.ToLower()}_0", wavesSettings);
+            SetMenuControllerFieldValue(menuController, $"{typeof(GStruct92).Name.ToLower()}_0", weatherSettings);
 
-            typeof(MenuController).GetMethod(kLoadReadyScreenMethodName, BindingFlags.NonPublic | BindingFlags.Instance).Invoke(menuController, null);
+            // load ready screen method
+            typeof(MenuController).GetMethod("method_35", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(menuController, null);
         }
 
         public static void LoadOfflineRaidScreenForScav()
@@ -94,7 +84,9 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var gclass = new MatchmakerOfflineRaid.GClass2022();
 
             gclass.OnShowNextScreen += LoadOfflineRaidNextScreen;
-            gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, kReadyMethodName);
+
+            // ready method
+            gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, "method_50");
             gclass.ShowScreen(EScreenState.Queued);
         }
 

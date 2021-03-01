@@ -9,8 +9,9 @@
 
 using System.Linq;
 using System.Reflection;
-using Aki.Common.Utils.Patching;
 using UnityEngine.Networking;
+using Aki.Common.Utils.Patching;
+using Aki.Core.Utils;
 
 namespace Aki.Core.Patches
 {
@@ -27,8 +28,7 @@ namespace Aki.Core.Patches
 
 		static bool PatchPrefix(ref bool __result)
 		{
-			__result = true;
-
+			__result = ValidationUtil.Validate();
 			return false;
 		}
 	}

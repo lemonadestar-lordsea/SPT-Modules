@@ -13,7 +13,7 @@ using UnityEngine;
 using Aki.Common.Utils.HTTP;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;
-using BotDifficultyHandler = GClass301;
+using System.Linq;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
@@ -25,7 +25,12 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         protected override MethodBase GetTargetMethod()
         {
-			return typeof(BotDifficultyHandler).GetMethod("LoadCoreByString", BindingFlags.Public | BindingFlags.Static);
+			var methodName = "LoadCoreByString";
+			var flags = BindingFlags.Public | BindingFlags.Static;
+
+			return PatcherConstants.TargetAssembly
+                .GetTypes().Single(x => x.GetMethod(methodName, flags) != null)
+                .GetMethod(methodName, flags);
 		}
 
 		public static bool PatchPrefix(ref string __result)
