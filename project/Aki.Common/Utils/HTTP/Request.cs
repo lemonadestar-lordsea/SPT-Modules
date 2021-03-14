@@ -27,7 +27,7 @@ namespace Aki.Common.Utils.HTTP
 			RemoteEndPoint = remoteEndPoint;
 		}
 
-		private Stream Send(string url, string method = "GET", string data = null, bool compress = true)
+		public Stream Send(string url, string method = "GET", string data = null, bool compress = true, bool getResponse = true)
         {
 			// disable SSL encryption
 			ServicePointManager.Expect100Continue = true;
@@ -66,14 +66,19 @@ namespace Aki.Common.Utils.HTTP
 			}
 
 			// get response stream
-			try
+			var response = request.GetResponse();
+
+			if (getResponse)
 			{
-				var response = request.GetResponse();
-				return response.GetResponseStream();
-			}
-			catch (Exception e)
-			{
-				Debug.LogError(e);
+				// get response stream
+				try
+				{
+					return response.GetResponseStream();
+				}
+				catch (Exception e)
+				{
+					Debug.LogError(e);
+				}
 			}
 
 			return null;

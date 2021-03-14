@@ -45,10 +45,11 @@ namespace Aki.SinglePlayer.Patches.Progression
             var spawnPoints = ___ginterface217_0.ToList();
             var unfilteredSpawnPoints = spawnPoints.ToList();
             var infils = spawnPoints.Select(sp => sp.Infiltration).Distinct();
-            Debug.LogError($"PatchPrefix SelectSpawnPoint Infiltrations: {spawnPoints.Count} | {String.Join(", ", infils)}");
 
+            Debug.LogError($"PatchPrefix SelectSpawnPoint Infiltrations: {spawnPoints.Count} | {string.Join(", ", infils)}");
             Debug.LogError($"Filter by Infiltration: {infiltration}");
-            spawnPoints = spawnPoints.Where(sp =>  sp != null && sp.Infiltration != null && (String.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();
+            spawnPoints = spawnPoints.Where(sp =>  sp != null && sp.Infiltration != null && (string.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();
+
             if (spawnPoints.Count == 0)
             {
                 __result = GetFallBackSpawnPoint(unfilteredSpawnPoints, category, side, infiltration);
@@ -57,6 +58,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 
             Debug.LogError($"Filter by Categories: {category}");
             spawnPoints = spawnPoints.Where(sp => sp.Categories.Contain(category)).ToList();
+
             if (spawnPoints.Count == 0)
             {
                 __result = GetFallBackSpawnPoint(unfilteredSpawnPoints, category, side, infiltration);
@@ -65,6 +67,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 
             Debug.LogError($"Filter by Side: {side}");
             spawnPoints = spawnPoints.Where(sp => sp.Sides.Contain(side)).ToList();
+
             if (spawnPoints.Count == 0)
             {
                 __result = GetFallBackSpawnPoint(unfilteredSpawnPoints, category, side, infiltration);

@@ -64,11 +64,13 @@ namespace Aki.CustomBundles.Patches
             // This is the AssetBundle class that contains that property name  
             easyBundleType = PatcherConstants.TargetAssembly.GetTypes()
                 .Single(type => type.IsClass && type.GetProperty("SameNameAsset") != null);
+
             // This is the EasyAssets class's property name that holds the AssetBundle collection 
             bundlesFieldName = easyBundleType.Name.ToLower() + "_0";
 
             // This targets the EasyAssets Class
             var targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
+
             // This returns the "method_0" method
             return AccessTools.GetDeclaredMethods(targetType).Single(IsTargetMethod);
         }

@@ -22,6 +22,8 @@ namespace Aki.SinglePlayer.Patches.Progression
     public class SingleModeJamPatch : GenericPatch<SingleModeJamPatch>
     {
         private static MethodInfo _onFireEventMethod;
+        private const string target = "PrepareShot";
+        private const BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 
         public SingleModeJamPatch() : base(postfix: nameof(PatchPostfix))
         {
@@ -31,7 +33,7 @@ namespace Aki.SinglePlayer.Patches.Progression
         {
             var targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
             _onFireEventMethod = targetType.GetMethod("OnFireEvent", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-            return targetType.GetMethod("PrepareShot", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            return targetType.GetMethod(target, flags);
         }
 
         private static bool IsTargetType(Type type)
@@ -44,15 +46,16 @@ namespace Aki.SinglePlayer.Patches.Progression
                 return false;
             }
 
-            var methods = type.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            var methods = type.GetMethods(flags);
 
-            if (!methods.Any(x => x.Name == "PrepareShot"))
+            if (!methods.Any(x => x.Name == target))
             {
                 return false;
             }
 
-            var prepareShotMethod = type.GetMethod("PrepareShot", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            var prepareShotMethod = type.GetMethod(target, flags);
             var methodbody = prepareShotMethod.GetMethodBody();
+
             if (!methodbody.LocalVariables.Any(x => x.LocalType == typeof(Weapon.EMalfunctionState)))
             {
                 return false;
