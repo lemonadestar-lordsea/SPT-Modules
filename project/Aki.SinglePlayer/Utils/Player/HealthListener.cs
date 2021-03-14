@@ -10,13 +10,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using IHealthController = GInterface169;
-using StDamage = GStruct239;
-using IEffect = GInterface128;
+using UnityEngine;
 using Aki.Loader;
 using Aki.Common.Utils.HTTP;
-using UnityEngine;
+using IHealthController = GInterface169;
+using DamageInfo = GStruct239;
+using IEffect = GInterface128;
 
 namespace Aki.SinglePlayer.Utils.Player
 {
@@ -26,9 +25,7 @@ namespace Aki.SinglePlayer.Utils.Player
         private static HealthListener _instance = null;
 
         private IHealthController _healthController;
-        private bool _inRaid;
         private IDisposable _disposable = null;
-        private readonly Request _request;
         private readonly SimpleTimer _simpleTimer;
 
         public PlayerHealth CurrentHealth { get; }
@@ -37,7 +34,8 @@ namespace Aki.SinglePlayer.Utils.Player
         {
             get
             {
-                if (_instance == null) {
+                if (_instance == null)
+                {
                     lock (_lock)
                     {
                         if (_instance == null)
@@ -58,10 +56,8 @@ namespace Aki.SinglePlayer.Utils.Player
             {
                 CurrentHealth = new PlayerHealth();
             }
-
-            _request = new Request(Config.BackEndSession.GetPhpSessionId(), Config.BackendUrl);
+            
             _simpleTimer = Target.HookObject.GetOrAddComponent<SimpleTimer>();
-            _simpleTimer.syncHealthAction = () => Task.Run(() => _request.PostJson("/player/health/sync", CurrentHealth.ToJson()));
         }
 
         /// <summary>
@@ -75,14 +71,13 @@ namespace Aki.SinglePlayer.Utils.Player
         {
             // cleanup
             if (_disposable != null)
+            {
                 _disposable.Dispose();
+            }
 
             // init dependencies
             _healthController = healthController;
-            _inRaid = inRaid;
-
             _simpleTimer.isSyncHealthEnabled = !inRaid;
-
             CurrentHealth.IsAlive = true;
 
             // init current health
@@ -140,37 +135,43 @@ namespace Aki.SinglePlayer.Utils.Player
             CurrentHealth.IsAlive = false;
         }
 
-        public void OnHealthChangedEvent(EBodyPart bodyPart, float diff, StDamage effect)
+        public void OnHealthChangedEvent(EBodyPart bodyPart, float diff, DamageInfo effect)
         {
             CurrentHealth.Health[bodyPart].ChangeHealth(diff);
-
             _simpleTimer.isHealthSynchronized = false;
         }
 
         public void OnEffectAddedEvent(IEffect effect)
         {
             if (effect == null)
+            {
                 return;
+            }
 
             string effectType = effect.GetType().Name;
 
             if (effectType != "Fracture")
+            {
                 return;
+            }
 
             CurrentHealth.Health[effect.BodyPart].AddEffect(BodyPartEffect.Fracture);
-
             _simpleTimer.isHealthSynchronized = false;
         }
 
         public void OnEffectRemovedEvent(IEffect effect)
         {
             if (effect == null)
+            {
                 return;
+            }
 
             string effectType = effect.GetType().Name;
 
             if (effectType != "Fracture")
+            {
                 return;
+            }
 
             CurrentHealth.Health[effect.BodyPart].RemoveEffect(BodyPartEffect.Fracture);
             _simpleTimer.isHealthSynchronized = false;
@@ -218,28 +219,27 @@ namespace Aki.SinglePlayer.Utils.Player
 
             public bool isSyncHealthEnabled = false;
             public bool isHealthSynchronized = false;
-            public Func<Task> syncHealthAction;
+            private Request _request;
 
-            async void Update()
+            void Start()
+            {
+                _request = new Request(Config.BackEndSession.GetPhpSessionId(), Config.BackendUrl);
+            }
+
+            void Update()
             {
                 timer += Time.deltaTime;
 
                 if (timer > sleepTime)
                 {
                     timer -= sleepTime;
-                    await Tick();
-                }
-            }
 
-            Task Tick()
-            {
-                if (isSyncHealthEnabled && !isHealthSynchronized)
-                {
-                    isHealthSynchronized = true;
-                    return syncHealthAction();
+                    if (isSyncHealthEnabled && !isHealthSynchronized)
+                    {
+                        isHealthSynchronized = true;
+                        _request.Send("/player/health/sync", "POST", Instance.CurrentHealth.ToJson(), true, false);
+                    }
                 }
-
-                return Task.CompletedTask;
             }
         }
     }

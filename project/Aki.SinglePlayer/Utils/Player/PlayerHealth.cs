@@ -21,7 +21,6 @@ namespace Aki.SinglePlayer.Utils.Player
     class BodyPartHealth
     {
         private Dictionary<BodyPartEffect, float> _effects = new Dictionary<BodyPartEffect, float>();
-
         public float Maximum { get; private set; }
         public float Current { get; private set; }
 
@@ -46,7 +45,9 @@ namespace Aki.SinglePlayer.Utils.Player
         public void RemoveEffect(BodyPartEffect bodyPartEffect)
         {
             if (_effects.ContainsKey(bodyPartEffect))
+            {
                 _effects.Remove(bodyPartEffect);
+            }
         }
     }
 
