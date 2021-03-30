@@ -14,7 +14,7 @@ using UnityEngine;
 using EFT;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;
-using AmmoInfo = GClass1705;
+using AmmoInfo = GClass1746;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {

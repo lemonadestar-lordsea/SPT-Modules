@@ -19,9 +19,9 @@ using System.Reflection;
 using Diz.DependencyManager;
 using Aki.Common.Utils.Patching;
 using Aki.CustomBundles.Utils;
-using IEasyBundle = GInterface249; //Property: SameNameAsset 
-using IBundleLock = GInterface250; //Property: IsLocked
-using BindableState = GClass2161<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
+using IEasyBundle = GInterface253; //Property: SameNameAsset 
+using IBundleLock = GInterface254; //Property: IsLocked
+using BindableState = GClass2206<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
 
 /* Maintenance Tips
  * 

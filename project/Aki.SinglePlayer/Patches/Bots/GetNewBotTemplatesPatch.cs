@@ -17,10 +17,10 @@ using UnityEngine;
 using Comfort.Common;
 using EFT;
 using Aki.Common.Utils.Patching;
-using BotsPresets = GClass360;
-using BotData = GInterface15;
-using PoolManager = GClass1164;
-using JobPriority = GClass2141;
+using BotsPresets = GClass363;
+using BotData = GInterface16;
+using PoolManager = GClass1198;
+using JobPriority = GClass2186;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {

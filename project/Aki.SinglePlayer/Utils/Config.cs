@@ -9,8 +9,8 @@
 
 using Comfort.Common;
 using EFT;
-using ISession = GInterface27;
-using ClientConfig = GClass331;
+using ISession = GInterface28;
+using ClientConfig = GClass334;
 
 namespace Aki.SinglePlayer.Utils
 {

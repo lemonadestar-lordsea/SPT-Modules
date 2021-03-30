@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Aki.Loader;
 using Aki.Common.Utils.HTTP;
-using IHealthController = GInterface169;
-using DamageInfo = GStruct239;
-using IEffect = GInterface128;
+using IHealthController = GInterface171;
+using DamageInfo = GStruct240;
+using IEffect = GInterface130;
 
 namespace Aki.SinglePlayer.Utils.Player
 {

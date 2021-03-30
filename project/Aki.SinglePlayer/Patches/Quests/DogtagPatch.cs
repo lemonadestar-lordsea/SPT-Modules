@@ -15,8 +15,8 @@ using UnityEngine;
 using EFT;
 using EFT.InventoryLogic;
 using Aki.Common.Utils.Patching;
-using Equipment = GClass1688;
-using DamageInfo = GStruct239;
+using Equipment = GClass1729;
+using DamageInfo = GStruct240;
 
 namespace Aki.SinglePlayer.Patches.Quests
 {

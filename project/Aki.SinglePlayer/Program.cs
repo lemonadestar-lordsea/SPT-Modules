@@ -25,14 +25,14 @@ namespace Aki.SinglePlayer
         static void Main(string[] args)
         {
             Debug.LogError("Aki.SinglePlayer: Loaded");
-
-			PatcherUtil.Patch<OfflineLootPatch>();
+            
 			PatcherUtil.Patch<OfflineSaveProfilePatch>();
             PatcherUtil.Patch<OfflineSpawnPointPatch>();
+            PatcherUtil.Patch<ExperienceGainPatch>();
+            PatcherUtil.Patch<OnLoadRaidPatch>();
             PatcherUtil.Patch<WeaponDurabilityPatch>();
             PatcherUtil.Patch<SingleModeJamPatch>();
-            PatcherUtil.Patch<ExperienceGainPatch>();
-
+            
             PatcherUtil.Patch<Patches.Healing.MainMenuControllerPatch>();
 			PatcherUtil.Patch<Patches.Healing.PlayerPatch>();
 

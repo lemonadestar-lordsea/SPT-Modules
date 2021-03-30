@@ -16,8 +16,8 @@ using EFT;
 using Aki.Common.Utils.HTTP;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;
-using WaveInfo = GClass925;
-using BotsPresets = GClass360;
+using WaveInfo = GClass956;
+using BotsPresets = GClass363;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
