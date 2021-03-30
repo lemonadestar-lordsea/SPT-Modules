@@ -21,7 +21,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 {
 	public class OnLoadRaidPatch : GenericPatch<OnLoadRaidPatch>
 	{
-		public OnLoadRaidPatch() : base(prefix: nameof(PatchPostfix))
+		public OnLoadRaidPatch() : base(postfix: nameof(PatchPostfix))
 		{
         }
 
@@ -32,18 +32,18 @@ namespace Aki.SinglePlayer.Patches.Progression
 
 		public static void PatchPostfix(string locationId)
 		{
-			SendLocationName(locationId);
 			Config.WeaponDurabilityEnabled = GetDurabilityState();
+			SendLocationName(locationId);
 		}
 
 		private static void SendLocationName(string locationId)
 		{
-			new Request(Utils.Config.BackEndSession.GetPhpSessionId(), Config.BackendUrl).Send($"/raid/map/name?locationId={locationId}");
+			var json = new Request(Utils.Config.BackEndSession.GetPhpSessionId(), Config.BackendUrl).GetJson($"/raid/map/name?locationId={locationId}");
 		}
 
 		private static bool GetDurabilityState()
 		{
-			var json = new Request(null, Config.BackendUrl).GetJson("/singleplayer/settings/weapon/durability");
+			var json = new Request(Utils.Config.BackEndSession.GetPhpSessionId(), Config.BackendUrl).GetJson("/singleplayer/settings/weapon/durability");
 
 			if (string.IsNullOrWhiteSpace(json))
 			{
