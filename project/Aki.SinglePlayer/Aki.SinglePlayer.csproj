@@ -93,7 +93,7 @@
     <Compile Include="Utils\Player\HealthListener.cs" />
     <Compile Include="Patches\Healing\MainMenuControllerPatch.cs" />
     <Compile Include="Patches\Quests\DogtagPatch.cs" />
-    <Compile Include="Patches\Progression\OfflineLootPatch.cs" />
+    <Compile Include="Patches\Progression\OnLoadRaidPatch.cs" />
     <Compile Include="Patches\Matchmaker\MatchmakerOfflineRaidPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSavePatch.cs" />
     <Compile Include="Patches\Quests\BeaconPatch.cs" />
