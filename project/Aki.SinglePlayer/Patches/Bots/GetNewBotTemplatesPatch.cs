@@ -17,7 +17,6 @@ using UnityEngine;
 using Comfort.Common;
 using EFT;
 using Aki.Common.Utils.Patching;
-using WaveInfo = GClass926;
 using BotsPresets = GClass360;
 using BotData = GInterface15;
 using PoolManager = GClass1164;
@@ -33,7 +32,6 @@ namespace Aki.SinglePlayer.Patches.Bots
         public GetNewBotTemplatesPatch() : base(prefix: nameof(PatchPrefix))
         {
             // compile-time checks
-            _ = nameof(WaveInfo.Difficulty);
             _ = nameof(BotsPresets.GetNewProfile);
             _ = nameof(BotData.PrepareToLoadBackend);
             _ = nameof(PoolManager.LoadBundlesAndCreatePools);
