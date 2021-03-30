@@ -38,7 +38,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 
 		private static void SendLocationName(string locationId)
 		{
-			new Request(Utils.Config.BackEndSession.GetPhpSessionId(), Config.BackendUrl).Send($"/raid/map/name?locationId={locationId}"));
+			new Request(Utils.Config.BackEndSession.GetPhpSessionId(), Config.BackendUrl).Send($"/raid/map/name?locationId={locationId}");
 		}
 
 		private static bool GetDurabilityState()
