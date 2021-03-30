@@ -15,7 +15,7 @@ using Comfort.Common;
 using EFT;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils.Player;
-using ClientMetrics = GClass1367;
+using ClientMetrics = GClass1407;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
@@ -29,7 +29,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.MainApplicationType.GetMethod("method_40", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            return PatcherConstants.MainApplicationType.GetMethod("method_41", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
         public static void PatchPrefix(ESideType ___esideType_0, Result<ExitStatus, TimeSpan, ClientMetrics> result)

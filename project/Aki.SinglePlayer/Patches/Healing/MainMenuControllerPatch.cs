@@ -9,8 +9,8 @@
 
 using System.Reflection;
 using Aki.Common.Utils.Patching;
-using MainMenuController = GClass1190;
-using IHealthController = GInterface169;
+using MainMenuController = GClass1224;
+using IHealthController = GInterface171;
 
 namespace Aki.SinglePlayer.Patches.Healing
 {

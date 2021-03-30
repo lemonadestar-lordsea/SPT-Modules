@@ -40,9 +40,9 @@ namespace Aki.SinglePlayer.Patches.Progression
             return !type.IsInterface;
         }
 
-        public static bool PatchPrefix(ref ISpawnPoint __result, GInterface217 ___ginterface217_0, ESpawnCategory category, EPlayerSide side, string infiltration)
+        public static bool PatchPrefix(ref ISpawnPoint __result, GInterface222 ___ginterface222_0, ESpawnCategory category, EPlayerSide side, string infiltration)
         {
-            var spawnPoints = ___ginterface217_0.ToList();
+            var spawnPoints = ___ginterface222_0.ToList();
             var unfilteredSpawnPoints = spawnPoints.ToList();
             var infils = spawnPoints.Select(sp => sp.Infiltration).Distinct();
 

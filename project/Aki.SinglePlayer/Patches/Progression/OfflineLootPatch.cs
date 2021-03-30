@@ -15,7 +15,7 @@ using Aki.Common.Utils.App;
 using Aki.Common.Utils.HTTP;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;
-using LocationInfo = GClass779.GClass781;
+using LocationInfo = GClass783.GClass785;
 using System;
 
 namespace Aki.SinglePlayer.Patches.Progression
@@ -34,8 +34,8 @@ namespace Aki.SinglePlayer.Patches.Progression
         {
 			var localGameBaseType = PatcherConstants.LocalGameType.BaseType;
 
-			_property = localGameBaseType.GetProperty($"{nameof(GClass779.GClass781)}_0", BindingFlags.NonPublic | BindingFlags.Instance);
-			return localGameBaseType.GetMethod("method_5", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+			_property = localGameBaseType.GetProperty($"{nameof(GClass783.GClass785)}_0", BindingFlags.NonPublic | BindingFlags.Instance);
+			return localGameBaseType.GetMethod("method_6", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 		}
 
 		/// <summary>

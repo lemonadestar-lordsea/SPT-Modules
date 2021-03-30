@@ -17,8 +17,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using HarmonyLib;
-using IBundleLock = GInterface250; //Property: IsLocked
-using BindableState = GClass2161<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
+using IBundleLock = GInterface254; //Property: IsLocked
+using BindableState = GClass2206<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
 
 /* Maintenance Tips
  * 
@@ -72,12 +72,12 @@ namespace Aki.CustomBundles.Utils
         {
             get
             {
-                return _trav.Field<IBundleLock>($"{typeof(GInterface250).Name.ToLower()}_0").Value;
+                return _trav.Field<IBundleLock>($"{typeof(GInterface254).Name.ToLower()}_0").Value;
             }
 
             set
             {
-                _trav.Field<IBundleLock>($"{typeof(GInterface250).Name.ToLower()}_0").Value = value;
+                _trav.Field<IBundleLock>($"{typeof(GInterface254).Name.ToLower()}_0").Value = value;
             }
         }
 

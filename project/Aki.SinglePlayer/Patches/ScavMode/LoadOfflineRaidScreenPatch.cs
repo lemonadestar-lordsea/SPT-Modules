@@ -20,9 +20,9 @@ using EFT.UI.Matchmaker;
 using EFT.UI.Screens;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils.Reflection;
-using MenuController = GClass1190;
+using MenuController = GClass1224;
 using WeatherSettings = GStruct92;
-using BotsSettings = GStruct232;
+using BotsSettings = GStruct233;
 using WavesSettings = GStruct93;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
@@ -36,7 +36,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         protected override MethodBase GetTargetMethod()
         {
             return typeof(MenuController).GetNestedTypes(BindingFlags.NonPublic)
-                .Single(x => x.Name == "Class818")
+                .Single(x => x.Name == "Class814")
                 .GetMethod("method_2", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
@@ -56,7 +56,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         private static MenuController GetMenuController()
         {
             return PrivateValueAccessor.GetPrivateFieldValue(typeof(MainApplication), 
-                $"{typeof(GClass1190).Name.ToLower()}_0", ClientAppUtils.GetMainApp()) as MenuController;
+                $"{typeof(GClass1224).Name.ToLower()}_0", ClientAppUtils.GetMainApp()) as MenuController;
         }
 
         // Refer to MatchmakerOfflineRaid's subclass's OnShowNextScreen action definitions if these structs numbers change.
@@ -81,7 +81,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         public static void LoadOfflineRaidScreenForScav()
         {
             var menuController = (object)GetMenuController();
-            var gclass = new MatchmakerOfflineRaid.GClass2022();
+            var gclass = new MatchmakerOfflineRaid.GClass2066();
 
             gclass.OnShowNextScreen += LoadOfflineRaidNextScreen;
 
