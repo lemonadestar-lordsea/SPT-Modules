@@ -219,12 +219,6 @@ namespace Aki.SinglePlayer.Utils.Player
 
             public bool isSyncHealthEnabled = false;
             public bool isHealthSynchronized = false;
-            private Request _request;
-
-            void Start()
-            {
-                _request = new Request(Config.BackEndSession.GetPhpSessionId(), Config.BackendUrl);
-            }
 
             void Update()
             {
@@ -236,8 +230,8 @@ namespace Aki.SinglePlayer.Utils.Player
 
                     if (isSyncHealthEnabled && !isHealthSynchronized)
                     {
+                        var json = new Request(Config.BackEndSession.GetPhpSessionId(), Config.BackendUrl).PostJson("/player/health/sync", Instance.CurrentHealth.ToJson());
                         isHealthSynchronized = true;
-                        _request.Send("/player/health/sync", "POST", Instance.CurrentHealth.ToJson(), true, false);
                     }
                 }
             }
