@@ -104,7 +104,6 @@
     <Compile Include="Utils\Reflection\CodeWrapper\CodeWithLabel.cs" />
     <Compile Include="Utils\Config.cs" />
     <Compile Include="Utils\Player\PlayerHealth.cs" />
-    <Compile Include="Utils\Player\SaveLootUtil.cs" />
     <Compile Include="Utils\Reflection\ClientAppUtils.cs" />
     <Compile Include="Utils\Reflection\PrivateMethodAccessor.cs" />
     <Compile Include="Utils\Reflection\PrivateValueAccessor.cs" />

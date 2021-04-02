@@ -14,6 +14,7 @@ using System.Reflection;
 using Comfort.Common;
 using EFT;
 using Aki.Common.Utils.Patching;
+using Aki.Common.Utils.HTTP;
 using Aki.SinglePlayer.Utils.Player;
 using ClientMetrics = GClass1407;
 
@@ -34,6 +35,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         public static void PatchPrefix(ESideType ___esideType_0, Result<ExitStatus, TimeSpan, ClientMetrics> result)
         {
+            var currentHealth = Utils.Player.HealthListener.Instance.CurrentHealth;
             var session = Utils.Config.BackEndSession;
             var isPlayerScav = false;
             var profile = session.Profile;
@@ -43,10 +45,30 @@ namespace Aki.SinglePlayer.Patches.Progression
                 profile = session.ProfileOfPet;
                 isPlayerScav = true;
             }
-
-            var currentHealth = Utils.Player.HealthListener.Instance.CurrentHealth;
-
-            SaveLootUtil.SaveProfileProgress(Utils.Config.BackendUrl, session.GetPhpSessionId(), result.Value0, profile, currentHealth, isPlayerScav);
+            
+            SaveProfileProgress(Utils.Config.BackendUrl, session.GetPhpSessionId(), result.Value0, profile, currentHealth, isPlayerScav);
         }
+
+        public static void SaveProfileProgress(string backendUrl, string session, ExitStatus exitStatus, Profile profileData, PlayerHealth currentHealth, bool isPlayerScav)
+		{
+			SaveProfileRequest request = new SaveProfileRequest
+			{
+				exit = exitStatus.ToString().ToLower(),
+				profile = profileData,
+				health = currentHealth,
+				isPlayerScav = isPlayerScav
+			};
+
+			// ToJson() uses an internal converter which prevents loops and do other internal things
+			new Request(session, backendUrl).Send("/raid/profile/save", "PUT", request.ToJson(), true, false);
+		}
+
+		internal class SaveProfileRequest
+		{
+			public string exit = "left";
+			public Profile profile;
+			public bool isPlayerScav;
+			public PlayerHealth health;
+		}
     }
 }
