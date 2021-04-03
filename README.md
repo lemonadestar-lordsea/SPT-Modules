@@ -13,7 +13,7 @@ Aki.Tools          | Debugging utilities
 
 ## Requirements
 
-- Escape From Tarkov 0.12.10.11565
+- Escape From Tarkov 0.12.10.11611
 - Visual Studio Build Tools (.NET desktop workload)
 - .NET Framework 4.6.1
 
