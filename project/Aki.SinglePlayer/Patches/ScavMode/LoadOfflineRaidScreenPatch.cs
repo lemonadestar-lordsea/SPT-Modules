@@ -36,7 +36,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         protected override MethodBase GetTargetMethod()
         {
             return typeof(MenuController).GetNestedTypes(BindingFlags.NonPublic)
-                .Single(x => x.Name == "Class814")
+                .Single(x => x.Name == "Class815")
                 .GetMethod("method_2", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
