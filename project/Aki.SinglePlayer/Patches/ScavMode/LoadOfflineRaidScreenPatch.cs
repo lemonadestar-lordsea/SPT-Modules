@@ -55,8 +55,8 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         private static MenuController GetMenuController()
         {
-            return PrivateValueAccessor.GetPrivateFieldValue(typeof(MainApplication), 
-                $"{typeof(GClass1224).Name.ToLower()}_0", ClientAppUtils.GetMainApp()) as MenuController;
+            return PrivateValueAccessor.GetPrivateFieldValue(typeof(MainApplication), $"{typeof(GClass1224).Name.ToLower()}_0",
+                                                             ClientAppUtils.GetMainApp()) as MenuController;
         }
 
         // Refer to MatchmakerOfflineRaid's subclass's OnShowNextScreen action definitions if these structs numbers change.
@@ -70,9 +70,9 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             }
 
             SetMenuControllerFieldValue(menuController, "bool_0", local);
-            SetMenuControllerFieldValue(menuController, $"{typeof(GStruct232).Name.ToLower()}_0", botsSettings);
-            SetMenuControllerFieldValue(menuController, $"{typeof(GStruct93).Name.ToLower()}_0", wavesSettings);
             SetMenuControllerFieldValue(menuController, $"{typeof(GStruct92).Name.ToLower()}_0", weatherSettings);
+            SetMenuControllerFieldValue(menuController, $"{typeof(GStruct93).Name.ToLower()}_0", wavesSettings);
+            SetMenuControllerFieldValue(menuController, $"{typeof(GStruct233).Name.ToLower()}_0", botsSettings);
 
             // load ready screen method
             typeof(MenuController).GetMethod("method_35", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(menuController, null);
