@@ -12,10 +12,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Aki.Loader;
-using Aki.Common.Utils.HTTP;
+using Aki.SinglePlayer.Utils;
 using IHealthController = GInterface171;
 using DamageInfo = GStruct240;
 using IEffect = GInterface130;
+using Aki.Common.Utils.App;
 
 namespace Aki.SinglePlayer.Utils.Player
 {
@@ -23,7 +24,6 @@ namespace Aki.SinglePlayer.Utils.Player
     {
         private static object _lock = new object();
         private static HealthListener _instance = null;
-
         private IHealthController _healthController;
         private IDisposable _disposable = null;
         private readonly SimpleTimer _simpleTimer;
@@ -230,7 +230,7 @@ namespace Aki.SinglePlayer.Utils.Player
 
                     if (isSyncHealthEnabled && !isHealthSynchronized)
                     {
-                        var json = new Request(Config.BackEndSession.GetPhpSessionId(), Config.BackendUrl).PostJson("/player/health/sync", Instance.CurrentHealth.ToJson());
+                        RequestHandler.SynchroniseHealth(Json.Serialize(Instance.CurrentHealth));
                         isHealthSynchronized = true;
                     }
                 }

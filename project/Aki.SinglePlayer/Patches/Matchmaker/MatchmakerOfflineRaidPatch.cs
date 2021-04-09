@@ -14,10 +14,8 @@ using UnityEngine;
 using Newtonsoft.Json;
 using EFT.UI;
 using EFT.UI.Matchmaker;
-using Aki.Common.Utils.HTTP;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;
-using Aki.SinglePlayer.Utils.DefaultSettings;
 
 namespace Aki.SinglePlayer.Patches.Matchmaker
 {
@@ -35,7 +33,7 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
             ____offlineModeToggle.gameObject.SetActive(false);
             ____botsEnabledToggle.isOn = true;
 
-            var defaultRaidSettings = Request();
+            var defaultRaidSettings = RequestHandler.GetDefaultRaidSettings();
 
             if (defaultRaidSettings != null)
             {
@@ -53,29 +51,6 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
         protected override MethodBase GetTargetMethod()
         {
             return typeof(MatchmakerOfflineRaid).GetMethod("Show", BindingFlags.NonPublic | BindingFlags.Instance);
-        }
-
-        private static DefaultRaidSettings Request()
-        {
-            var json = new Request(null, Config.BackendUrl).GetJson("/singleplayer/settings/raid/menu");
-
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                Debug.LogError("Aki.SinglePlayer: Received NULL response for DefaultRaidSettings. Defaulting to fallback.");
-                return null;
-            }
-
-            Debug.LogError("Aki.SinglePlayer: Successfully received DefaultRaidSettings");
-
-            try
-            {
-                return JsonConvert.DeserializeObject<DefaultRaidSettings>(json);
-            }
-            catch (Exception exception)
-            {
-                Debug.LogError("Aki.SinglePlayer: Failed to deserialize DefaultRaidSettings from server. Check your gameplay.json config in your server. Defaulting to fallback. Exception: " + exception);
-                return null;
-            }
         }
     }
 }

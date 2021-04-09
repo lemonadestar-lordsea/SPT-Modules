@@ -13,7 +13,6 @@ using System.Reflection;
 using System;
 using UnityEngine;
 using EFT;
-using Aki.Common.Utils.HTTP;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;
 using WaveInfo = GClass956;
@@ -48,22 +47,8 @@ namespace Aki.SinglePlayer.Patches.Bots
             
             foreach (WaveInfo wave in __result)
             {
-                wave.Limit = Request(wave.Role);
+                wave.Limit = RequestHandler.GetBotLimit(wave.Role);
             }
-        }
-
-        private static int Request(WildSpawnType role)
-        {
-            var json = new Request(null, Config.BackendUrl).GetJson("/singleplayer/settings/bot/limit/" + role.ToString());
-
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                Debug.LogError("Aki.SinglePlayer: Received bot " + role.ToString() + " limit data is NULL, using fallback");
-                return 30;
-            }
-
-            Debug.LogError("Aki.SinglePlayer: Successfully received bot " + role.ToString() + " limit data");
-            return Convert.ToInt32(json);
         }
     }
 }

@@ -12,7 +12,6 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using EFT;
-using Aki.Common.Utils.HTTP;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;
 
@@ -74,7 +73,7 @@ namespace Aki.SinglePlayer.Patches.Progression
         private static bool PrefixPatch(object __instance)
         {
             var profileId = _profileIdProperty.GetValue(__instance) as string;
-            var enabled = Request();
+            var enabled = RequestHandler.GetEndState();
 
             if (!enabled)
             {
@@ -83,20 +82,6 @@ namespace Aki.SinglePlayer.Patches.Progression
 
             _stopRaidMethod.Invoke(__instance, new object[] { profileId, ExitStatus.MissingInAction, null, 0f });
             return false;
-        }
-
-        private static bool Request()
-        {
-            var json = new Request(null, Config.BackendUrl).GetJson("/singleplayer/settings/raid/endstate");
-
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                Debug.LogError("Aki.SinglePlayer: Received NULL response for DefaultRaidSettings. Defaulting to fallback.");
-                return false;
-            }
-
-            Debug.LogError("Aki.SinglePlayer: Successfully received DefaultRaidSettings");
-            return Convert.ToBoolean(json);
         }
     }
 }
