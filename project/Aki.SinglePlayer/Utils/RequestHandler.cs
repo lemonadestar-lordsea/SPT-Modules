@@ -15,6 +15,7 @@ namespace Aki.SinglePlayer.Utils
         static RequestHandler()
         {
             request = new Request(Config.BackEndSession.GetPhpSessionId(), Config.BackendUrl);
+            Debug.LogError($"Aki.SinglePlayer: session: {request.Session}, host: {request.RemoteEndPoint}");
         }
 
         public static void SaveLoot(string json)
