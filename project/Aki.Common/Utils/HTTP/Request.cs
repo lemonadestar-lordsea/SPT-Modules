@@ -45,7 +45,6 @@ namespace Aki.Common.Utils.HTTP
 
 			request.Headers.Add("Accept-Encoding", "deflate");
 			request.Method = method;
-			request.Timeout = 3000;
 
 			if (method != "GET" && !string.IsNullOrWhiteSpace(data))
 			{

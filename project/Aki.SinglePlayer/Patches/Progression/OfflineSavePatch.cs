@@ -40,7 +40,7 @@ namespace Aki.SinglePlayer.Patches.Progression
             SaveProfileRequest request = new SaveProfileRequest
 			{
 				exit = result.Value0.ToString().ToLower(),
-				profile = (___esideType_0 == ESideType.Savage) session.ProfileOfPet ? : session.Profile,
+				profile = (___esideType_0 == ESideType.Savage) ? session.ProfileOfPet : session.Profile,
 				health = Utils.Player.HealthListener.Instance.CurrentHealth,
 				isPlayerScav = (___esideType_0 == ESideType.Savage)
 			};
