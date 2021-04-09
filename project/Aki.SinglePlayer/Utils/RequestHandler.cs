@@ -19,11 +19,13 @@ namespace Aki.SinglePlayer.Utils
 
         public static void SaveLoot(string json)
         {
+            Debug.LogError("Aki.SinglePlayer: Saving profile loot");
             request.Send("/raid/profile/save", "PUT", json, true, false);
         }
 
         public static void SynchroniseHealth(string json)
         {
+            Debug.LogError("Aki.SinglePlayer: Synchronize health");
             request.PostJson("/player/health/sync", json);
         }
 
