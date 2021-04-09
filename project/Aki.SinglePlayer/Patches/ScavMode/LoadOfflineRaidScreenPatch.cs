@@ -75,7 +75,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             SetMenuControllerFieldValue(menuController, $"{typeof(GStruct233).Name.ToLower()}_0", botsSettings);
 
             // load ready screen method
-            typeof(MenuController).GetMethod("method_35", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(menuController, null);
+            typeof(MenuController).GetMethod("method_38", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(menuController, null);
         }
 
         public static void LoadOfflineRaidScreenForScav()

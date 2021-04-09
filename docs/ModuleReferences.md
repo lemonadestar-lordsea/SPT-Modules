@@ -50,7 +50,7 @@ GStruct239       | GStruct240
 GClass360.method_1           | GClass363.method_1
 GClass1190.Class818.method_2 | GClass1224.Class814.method_2
 GClass1190.method_1          | GClass1224.method_1
-GClass1190.method_35         | GClass1224.method_35
+GClass1190.method_35         | GClass1224.method_38
 GClass1190.method_50         | GClass1224.method_56
 LocalBaseGame.method_5       | LocalBaseGame.method_6
 MainApplication.method_40    | MainApplication.method_41
