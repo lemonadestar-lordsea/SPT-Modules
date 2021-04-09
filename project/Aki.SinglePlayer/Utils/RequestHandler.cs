@@ -19,19 +19,17 @@ namespace Aki.SinglePlayer.Utils
 
         public static void SaveLoot(string json)
         {
-            request.Send("/raid/profile/save", "PUT", json.ToJson(), true, false);
+            request.Send("/raid/profile/save", "PUT", json, true, false);
         }
 
-        public static string SynchroniseHealth(string json)
+        public static void SynchroniseHealth(string json)
         {
-            var result = request.PostJson("/player/health/sync", json);
-            return string.IsNullOrWhiteSpace(result) ? null : result;
+            request.PostJson("/player/health/sync", json);
         }
 
-        public static string SendLocationName(string locationId)
+        public static void SendLocationName(string locationId)
 		{
-			var result = request.GetJson($"/raid/map/name?locationId={locationId}");
-            return string.IsNullOrWhiteSpace(result) ? null : result;
+			request.GetJson($"/raid/map/name?locationId={locationId}");
 		}
 
         public static string GetBotCoreDifficulty()
