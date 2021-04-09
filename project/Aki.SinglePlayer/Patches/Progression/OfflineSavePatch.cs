@@ -35,23 +35,14 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         public static void PatchPrefix(ESideType ___esideType_0, Result<ExitStatus, TimeSpan, ClientMetrics> result)
         {
-            var currentHealth = Utils.Player.HealthListener.Instance.CurrentHealth;
             var session = Utils.Config.BackEndSession;
-            var profileData = session.Profile;
-            var isPlayerScav = false;
-
-            if (___esideType_0 == ESideType.Savage)
-            {
-                profileData = session.ProfileOfPet;
-                isPlayerScav = true;
-            }
 
             SaveProfileRequest request = new SaveProfileRequest
 			{
 				exit = result.Value0.ToString().ToLower(),
-				profile = profileData,
-				health = currentHealth,
-				isPlayerScav = isPlayerScav
+				profile = (___esideType_0 == ESideType.Savage) session.ProfileOfPet ? : session.Profile,
+				health = Utils.Player.HealthListener.Instance.CurrentHealth,
+				isPlayerScav = (___esideType_0 == ESideType.Savage)
 			};
 
 			RequestHandler.SaveLoot(request.ToJson());
