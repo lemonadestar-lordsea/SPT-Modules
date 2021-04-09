@@ -1,9 +1,10 @@
+using System;
+using Comfort.Common;
 using UnityEngine;
-using Aki.Common.Utils.HTTP;
-using Aki.SinglePlayer.Utils.DefaultSettings;
 using EFT;
 using Aki.Common.Utils.App;
-using System;
+using Aki.Common.Utils.HTTP;
+using Aki.SinglePlayer.Utils.DefaultSettings;
 
 namespace Aki.SinglePlayer.Utils
 {
@@ -18,7 +19,7 @@ namespace Aki.SinglePlayer.Utils
 
         public static void SaveLoot(string json)
         {
-            request.Send("/raid/profile/save", "PUT", Json.Serialize(json), true, false);
+            request.Send("/raid/profile/save", "PUT", json.ToJson(), true, false);
         }
 
         public static string SynchroniseHealth(string json)

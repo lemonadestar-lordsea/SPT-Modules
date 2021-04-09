@@ -17,7 +17,6 @@ using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;
 using Aki.SinglePlayer.Utils.Player;
 using ClientMetrics = GClass1407;
-using Aki.Common.Utils.App;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
@@ -55,7 +54,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 				isPlayerScav = isPlayerScav
 			};
 
-			RequestHandler.SaveLoot(Json.Serialize(request));
+			RequestHandler.SaveLoot(request.ToJson());
         }
 
 		internal class SaveProfileRequest

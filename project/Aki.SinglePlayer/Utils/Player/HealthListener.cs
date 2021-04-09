@@ -230,7 +230,7 @@ namespace Aki.SinglePlayer.Utils.Player
 
                     if (isSyncHealthEnabled && !isHealthSynchronized)
                     {
-                        RequestHandler.SynchroniseHealth(Json.Serialize(Instance.CurrentHealth));
+                        RequestHandler.SynchroniseHealth(Instance.CurrentHealth.ToJson());
                         isHealthSynchronized = true;
                     }
                 }
