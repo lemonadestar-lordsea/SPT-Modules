@@ -119,15 +119,19 @@ namespace Aki.Common.Utils
         public string Session;
         public string RemoteEndPoint;
 
-        public Request(string endpoint, string session)
+        public Request(string session, string endpoint)
 		{
             Session = session;
 			RemoteEndPoint = endpoint;
-            headers = new Dictionary<string, string>()
+
+            if (!string.IsNullOrWhiteSpace(session))
             {
-                { "Cookie", $"PHPSESSID={session}"},
-                { "SessionId", session}
-            };
+                headers = new Dictionary<string, string>()
+                {
+                    { "Cookie", $"PHPSESSID={session}" },
+                    { "SessionId", session }
+                };
+            }
 		}
 
 		/// <summary>
@@ -136,7 +140,7 @@ namespace Aki.Common.Utils
 		/// </summary>
 		public byte[] Send(string url, string method, byte[] data = null, bool compress = true, string mime = null, Dictionary<string, string> headers = null)
 		{
-			Uri uri = new Uri(url);
+			Uri uri = new Uri(RemoteEndPoint + url);
 			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
 
 			if (uri.Scheme == "https")
@@ -205,17 +209,17 @@ namespace Aki.Common.Utils
 
 		public void PutJson(string url, string data, bool compress = true, string mime = "application/json")
 		{
-			Send(url, "PUT", Encoding.UTF8.GetBytes(data), compress, mime);
+			Send(url, "PUT", Encoding.UTF8.GetBytes(data), compress, mime, headers);
 		}
 
 		public string GetJson(string url, bool compress = true, string mime = "application/json")
 		{
-			return Encoding.UTF8.GetString(Send(url, "GET", null, compress, mime));
+			return Encoding.UTF8.GetString(Send(url, "GET", null, compress, mime, headers));
 		}
 
 		public string PostJson(string url, string data, bool compress = true, string mime = "application/json")
 		{
-			return Encoding.UTF8.GetString(Send(url, "POST", Encoding.UTF8.GetBytes(data), compress, mime));
+			return Encoding.UTF8.GetString(Send(url, "POST", Encoding.UTF8.GetBytes(data), compress, mime, headers));
 		}
 	}
 }
