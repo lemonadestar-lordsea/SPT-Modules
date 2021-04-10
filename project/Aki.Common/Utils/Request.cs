@@ -119,7 +119,7 @@ namespace Aki.Common.Utils
         public string Session;
         public string RemoteEndPoint;
 
-        public Request(string session, string endpoint)
+        public Request(string endpoint, string session)
 		{
             Session = session;
 			RemoteEndPoint = endpoint;
