@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using UnityEngine;
 
 namespace Aki.Common.Utils
 {
@@ -158,10 +159,13 @@ namespace Aki.Common.Utils
 			request.Method = method;
 			request.Headers.Add("Accept-Encoding", "deflate");
 
+            Debug.LogError($"[DEBUG] url: {RemoteEndPoint + url}");
+
 			if (headers != null)
 			{
 				foreach (KeyValuePair<string, string> item in headers)
 				{
+                    Debug.Log($"[DEBUG] key: {item.Key}, value: {item.Value}");
 					request.Headers.Add(item.Key, item.Value);
 				}
 			}
@@ -172,6 +176,8 @@ namespace Aki.Common.Utils
 
 				request.ContentType = HttpConstants.IsValidMime(mime) ? mime : "application/octet-stream";
 				request.ContentLength = body.Length;
+
+                Debug.Log($"[DEBUG] mime: {request.ContentType}");
 
 				if (compress)
 				{

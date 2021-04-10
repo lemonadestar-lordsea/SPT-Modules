@@ -78,7 +78,7 @@ namespace Aki.SinglePlayer.Utils.Player
 
             // init dependencies
             _healthController = healthController;
-            _simpleTimer.isSyncHealthEnabled = !inRaid;
+            _simpleTimer.isEnabled = !inRaid;
             CurrentHealth.IsAlive = true;
 
             // init current health
@@ -139,7 +139,7 @@ namespace Aki.SinglePlayer.Utils.Player
         public void OnHealthChangedEvent(EBodyPart bodyPart, float diff, DamageInfo effect)
         {
             CurrentHealth.Health[bodyPart].ChangeHealth(diff);
-            _simpleTimer.isHealthSynchronized = false;
+            _simpleTimer.isSynchronized = false;
         }
 
         public void OnEffectAddedEvent(IEffect effect)
@@ -157,7 +157,7 @@ namespace Aki.SinglePlayer.Utils.Player
             }
 
             CurrentHealth.Health[effect.BodyPart].AddEffect(BodyPartEffect.Fracture);
-            _simpleTimer.isHealthSynchronized = false;
+            _simpleTimer.isSynchronized = false;
         }
 
         public void OnEffectRemovedEvent(IEffect effect)
@@ -175,26 +175,26 @@ namespace Aki.SinglePlayer.Utils.Player
             }
 
             CurrentHealth.Health[effect.BodyPart].RemoveEffect(BodyPartEffect.Fracture);
-            _simpleTimer.isHealthSynchronized = false;
+            _simpleTimer.isSynchronized = false;
         }
 
 
         public void OnHydrationChangedEvent(float diff)
         {
             CurrentHealth.Hydration += diff;
-            _simpleTimer.isHealthSynchronized = false;
+            _simpleTimer.isSynchronized = false;
         }
 
         public void OnEnergyChangedEvent(float diff)
         {
             CurrentHealth.Energy += diff;
-            _simpleTimer.isHealthSynchronized = false;
+            _simpleTimer.isSynchronized = false;
         }
 
         public void OnTemperatureChangedEvent(float diff)
         {
             CurrentHealth.Temperature += diff;
-            _simpleTimer.isHealthSynchronized = false;
+            _simpleTimer.isSynchronized = false;
         }
 
         class Disposable : IDisposable
@@ -214,12 +214,10 @@ namespace Aki.SinglePlayer.Utils.Player
 
         class SimpleTimer : MonoBehaviour
         {
-            // tick each 5 seconds
-            float sleepTime = 5f;
+            public bool isEnabled = false;
+            public bool isSynchronized = false;
+            float sleepTime = 10f;
             float timer = 0f;
-
-            public bool isSyncHealthEnabled = false;
-            public bool isHealthSynchronized = false;
 
             void Update()
             {
@@ -229,10 +227,10 @@ namespace Aki.SinglePlayer.Utils.Player
                 {
                     timer -= sleepTime;
 
-                    if (isSyncHealthEnabled && !isHealthSynchronized)
+                    if (isEnabled && !isSynchronized)
                     {
                         RequestHandler.SynchroniseHealth(Instance.CurrentHealth.ToJson());
-                        isHealthSynchronized = true;
+                        isSynchronized = true;
                     }
                 }
             }
