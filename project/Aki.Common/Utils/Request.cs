@@ -154,6 +154,7 @@ namespace Aki.Common.Utils
 				throw new ArgumentException("request method is invalid");
 			}
 
+            request.Timeout = 1000;
 			request.Method = method;
 			request.Headers.Add("Accept-Encoding", "deflate");
 
