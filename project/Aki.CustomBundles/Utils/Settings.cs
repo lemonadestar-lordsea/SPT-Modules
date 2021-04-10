@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
-using Aki.Common.Utils.HTTP;
+using Aki.Common.Utils;
 
 namespace Aki.CustomBundles.Utils
 {

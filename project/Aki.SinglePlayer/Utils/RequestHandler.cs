@@ -1,9 +1,8 @@
 using System;
-using Comfort.Common;
+using System.Text;
 using UnityEngine;
 using EFT;
-using Aki.Common.Utils.App;
-using Aki.Common.Utils.HTTP;
+using Aki.Common.Utils;
 using Aki.SinglePlayer.Utils.DefaultSettings;
 
 namespace Aki.SinglePlayer.Utils
@@ -21,11 +20,12 @@ namespace Aki.SinglePlayer.Utils
         public static void SaveLoot(string json)
         {
             Debug.LogError("Aki.SinglePlayer: Saving profile loot");
-            request.Send("/raid/profile/save", "PUT", json, true, false);
+            request.Send("/raid/profile/save", "PUT", Encoding.UTF8.GetBytes(json), true);
         }
 
         public static void SynchroniseHealth(string json)
         {
+            Debug.LogError($"Aki.SinglePlayer: /player/health/sync: {request.Session}, host: {request.RemoteEndPoint}, json: {json}");
             Debug.LogError("Aki.SinglePlayer: Synchronize health");
             request.PostJson("/player/health/sync", json);
         }

@@ -9,7 +9,7 @@
 
 using System;
 
-namespace Aki.Common.Utils.App
+namespace Aki.Common.Utils
 {
     public class Logger
     {

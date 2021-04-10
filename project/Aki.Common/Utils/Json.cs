@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
 
-namespace Aki.Common.Utils.App
+namespace Aki.Common.Utils
 {
     public static class Json
 	{

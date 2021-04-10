@@ -12,7 +12,7 @@ using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
-using Aki.Common.Utils.App;
+using Aki.Common.Utils;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;
 
