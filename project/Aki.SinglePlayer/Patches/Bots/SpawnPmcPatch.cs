@@ -12,7 +12,6 @@ namespace Aki.SinglePlayer.Patches.Bots
     {
         private static Type targetInterface;
         private static Type targetType;
-
         private static AccessTools.FieldRef<object, WildSpawnType> wildSpawnTypeField;
         private static AccessTools.FieldRef<object, BotDifficulty> botDifficultyField;
 

@@ -22,7 +22,9 @@ namespace Aki.SinglePlayer.Patches.Bundles
         private static Type easyBundleType;
         private static string bundlesFieldName;
 
-        public EasyAssetsPatch() : base(prefix: nameof(PatchPrefix)) { }
+        public EasyAssetsPatch() : base(prefix: nameof(PatchPrefix))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {

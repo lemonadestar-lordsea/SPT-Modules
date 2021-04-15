@@ -10,9 +10,13 @@ namespace Aki.SinglePlayer.Patches.Progression
 {
     public class WeaponDurabilityPatch : GenericPatch<WeaponDurabilityPatch>
     {
-        public WeaponDurabilityPatch() : base(postfix: nameof(PatchPostfix))
+        static WeaponDurabilityPatch()
         {
             _ = nameof(AmmoInfo.AmmoLifeTimeSec);
+        }
+
+        public WeaponDurabilityPatch() : base(postfix: nameof(PatchPostfix))
+        {
         }
 
         protected override MethodBase GetTargetMethod()

@@ -110,11 +110,11 @@ namespace Aki.SinglePlayer.Utils.Healing
             // set effects
             if (healthController.IsBodyPartBroken(bodyPart))
             {
-                dictionary[bodyPart].AddEffect(BodyPartEffect.Fracture);
+                dictionary[bodyPart].AddEffect(EBodyPartEffect.Fracture);
             }
             else
             {
-                dictionary[bodyPart].RemoveEffect(BodyPartEffect.Fracture);
+                dictionary[bodyPart].RemoveEffect(EBodyPartEffect.Fracture);
             }
         }
 
@@ -143,7 +143,7 @@ namespace Aki.SinglePlayer.Utils.Healing
                 return;
             }
 
-            CurrentHealth.Health[effect.BodyPart].AddEffect(BodyPartEffect.Fracture);
+            CurrentHealth.Health[effect.BodyPart].AddEffect(EBodyPartEffect.Fracture);
             _simpleTimer.isSynchronized = false;
         }
 
@@ -161,7 +161,7 @@ namespace Aki.SinglePlayer.Utils.Healing
                 return;
             }
 
-            CurrentHealth.Health[effect.BodyPart].RemoveEffect(BodyPartEffect.Fracture);
+            CurrentHealth.Health[effect.BodyPart].RemoveEffect(EBodyPartEffect.Fracture);
             _simpleTimer.isSynchronized = false;
         }
 

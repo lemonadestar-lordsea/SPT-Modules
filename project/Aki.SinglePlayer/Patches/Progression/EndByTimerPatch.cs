@@ -7,7 +7,7 @@ using Aki.SinglePlayer.Utils;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    class EndByTimerPatch : GenericPatch<EndByTimerPatch>
+    public class EndByTimerPatch : GenericPatch<EndByTimerPatch>
     {
         private static PropertyInfo _profileIdProperty;
         private static MethodInfo _stopRaidMethod;
@@ -22,6 +22,10 @@ namespace Aki.SinglePlayer.Patches.Progression
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
                 .SingleOrDefault(IsStopRaidMethod)
                 ?? throw new InvalidOperationException("Method not found");
+        }
+
+        public EndByTimerPatch() : base(prefix: nameof(PrefixPatch))
+        {
         }
 
         private static bool IsStopRaidMethod(MethodInfo mi)
@@ -43,8 +47,6 @@ namespace Aki.SinglePlayer.Patches.Progression
 
             return true;
         }
-
-        public EndByTimerPatch() : base(prefix: nameof(PrefixPatch)) { }
 
         protected override MethodBase GetTargetMethod()
         {

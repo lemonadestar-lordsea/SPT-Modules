@@ -20,7 +20,9 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
     public class LoadOfflineRaidScreenPatch : GenericPatch<LoadOfflineRaidScreenPatch>
     {
-        public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler)) { }
+        public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {

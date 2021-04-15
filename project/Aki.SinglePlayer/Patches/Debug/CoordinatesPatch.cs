@@ -13,7 +13,9 @@ namespace Aki.Singleplayer.Patches.Debug
         public static PropertyInfo _uiProperty;
         public static bool firstTime = true;
 
-        public CoordinatesPatch() : base(prefix: nameof(PrefixPatch)) { }
+        public CoordinatesPatch() : base(prefix: nameof(PrefixPatch))
+        {
+        }
 
         static void PrefixPatch(object __instance)
         {

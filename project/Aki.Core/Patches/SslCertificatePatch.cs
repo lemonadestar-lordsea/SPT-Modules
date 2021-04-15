@@ -8,7 +8,9 @@ namespace Aki.Core.Patches
 {
 	public class SslCertificatePatch : GenericPatch<SslCertificatePatch>
 	{
-		public SslCertificatePatch() : base(prefix: nameof(PatchPrefix)) {}
+		public SslCertificatePatch() : base(prefix: nameof(PatchPrefix))
+		{
+		}
 
 		protected override MethodBase GetTargetMethod()
 		{

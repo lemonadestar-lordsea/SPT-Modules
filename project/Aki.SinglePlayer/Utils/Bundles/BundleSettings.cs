@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 using Aki.Common.Utils;
+using Aki.SinglePlayer.Models;
 
 namespace Aki.SinglePlayer.Utils.Bundles
 {
     public class BundleSettings
     {
-        public static readonly string cachePach = "Cache/StreamingAssets/windows/";
+        public const string cachePach = "Cache/StreamingAssets/windows/";
         public readonly static Dictionary<string, BundleInfo> bundles = new Dictionary<string, BundleInfo>();
 
 		public BundleSettings()
@@ -39,17 +40,5 @@ namespace Aki.SinglePlayer.Utils.Bundles
 		}
     }
 
-    public class BundleInfo
-    {
-        public string Key { get;}
-        public string Path { get;}
-        public string[] DependencyKeys { get;}
-
-        public BundleInfo(string key, string path, string[] dependencyKeys)
-        {
-            Key = key;
-            Path = path;
-            DependencyKeys = dependencyKeys;
-        }
-    }
+    
 }

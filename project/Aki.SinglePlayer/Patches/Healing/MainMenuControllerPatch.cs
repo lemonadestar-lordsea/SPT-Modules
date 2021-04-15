@@ -13,7 +13,9 @@ namespace Aki.SinglePlayer.Patches.Healing
             _ = nameof(MainMenuController.HealthController);
         }
 
-        public MainMenuControllerPatch() : base(postfix: nameof(PatchPostfix)) { }
+        public MainMenuControllerPatch() : base(postfix: nameof(PatchPostfix))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {

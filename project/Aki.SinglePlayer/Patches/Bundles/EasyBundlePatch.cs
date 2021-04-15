@@ -14,9 +14,11 @@ namespace Aki.SinglePlayer.Patches.Bundles
 {
 	public class EasyBundlePatch : GenericPatch<EasyBundlePatch>
 	{
-        public EasyBundlePatch() : base(prefix: nameof(PatchPrefix)) {}
+        public EasyBundlePatch() : base(prefix: nameof(PatchPrefix))
+        {
+        }
 
-		protected override MethodBase GetTargetMethod()
+        protected override MethodBase GetTargetMethod()
 		{
             return PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType).GetConstructors()[0];
         }

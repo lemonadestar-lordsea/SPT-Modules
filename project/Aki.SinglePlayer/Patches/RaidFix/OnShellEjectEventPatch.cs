@@ -6,7 +6,9 @@ namespace Aki.SinglePlayer.Patches.RaidFix
 {
     public class OnShellEjectEventPatch : GenericPatch<OnShellEjectEventPatch>
     {
-        public OnShellEjectEventPatch() : base(prefix: nameof(PatchPrefix)) { }
+        public OnShellEjectEventPatch() : base(prefix: nameof(PatchPrefix))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {

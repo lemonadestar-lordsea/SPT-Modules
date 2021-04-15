@@ -9,7 +9,9 @@ namespace Aki.SinglePlayer.Patches.Healing
     {
         private static string _playerAccountId;
 
-        public PlayerPatch() : base(postfix: nameof(PatchPostfix)) { }
+        public PlayerPatch() : base(postfix: nameof(PatchPostfix))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {

@@ -8,7 +8,9 @@ namespace Aki.SinglePlayer.Patches.Bots
     {
         private static float[] bossSpawnPercent;
 
-        public BossSpawnChancePatch() : base(prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch)) { }
+        public BossSpawnChancePatch() : base(prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
+        {
+        }
 
         static void PrefixPatch(BossLocationSpawn[] bossLocationSpawn)
         {

@@ -10,7 +10,9 @@ namespace Aki.Core.Patches
 	{
         public static PropertyInfo __property;
 		
-        public BattleEyePatch() : base(prefix: nameof(PatchPrefix)) {}
+        public BattleEyePatch() : base(prefix: nameof(PatchPrefix))
+		{
+		}
 
 		protected override MethodBase GetTargetMethod()
 		{

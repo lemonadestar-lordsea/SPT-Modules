@@ -15,11 +15,13 @@ namespace Aki.SinglePlayer.Patches.Bots
         private static Type targetType;
         private static AccessTools.FieldRef<object, List<Profile>> profilesField;
 
+        static RemoveUsedBotProfilePatch()
+        {
+            _ = nameof(BotData.ChooseProfile);
+        }
+
         public RemoveUsedBotProfilePatch() : base(prefix: nameof(PatchPrefix))
         {
-            // compile-time check
-            _ = nameof(BotData.ChooseProfile);
-
             targetInterface = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetInterface);
             targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
             profilesField = AccessTools.FieldRefAccess<List<Profile>>(targetType, "list_0");

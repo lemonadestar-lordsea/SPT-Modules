@@ -11,9 +11,9 @@ namespace Aki.SinglePlayer.Patches.Progression
 {
     public class SingleModeJamPatch : GenericPatch<SingleModeJamPatch>
     {
-        private static MethodInfo _onFireEventMethod;
-        private const string target = "PrepareShot";
         private const BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+        private const string target = "PrepareShot";
+        private static MethodInfo _onFireEventMethod;
 
         public SingleModeJamPatch() : base(postfix: nameof(PatchPostfix))
         {

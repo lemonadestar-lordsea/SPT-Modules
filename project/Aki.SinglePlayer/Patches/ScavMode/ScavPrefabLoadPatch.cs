@@ -12,7 +12,9 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 {
     public class ScavPrefabLoadPatch : GenericPatch<ScavPrefabLoadPatch>
     {
-        public ScavPrefabLoadPatch() : base(transpiler: nameof(PatchTranspile)) {}
+        public ScavPrefabLoadPatch() : base(transpiler: nameof(PatchTranspile))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {

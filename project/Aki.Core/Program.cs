@@ -1,12 +1,3 @@
-/* Instance.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using UnityEngine;
 using Aki.Core.Patches;
 using Aki.Common.Utils.Patching;

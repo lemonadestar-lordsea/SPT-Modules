@@ -13,11 +13,14 @@ namespace Aki.SinglePlayer.Patches.Quests
     {
         private static Func<Player, Equipment> getEquipmentProperty;
 
-        public DogtagPatch() : base(postfix: nameof(PatchPostfix))
+        static DogtagPatch()
         {
             _ = nameof(Equipment.GetSlot);
             _ = nameof(DamageInfo.Weapon);
+        }
 
+        public DogtagPatch() : base(postfix: nameof(PatchPostfix))
+        {
             getEquipmentProperty = typeof(Player)
                 .GetProperty("Equipment", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetGetMethod(true)

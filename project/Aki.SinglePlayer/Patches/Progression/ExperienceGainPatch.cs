@@ -7,7 +7,9 @@ namespace Aki.SinglePlayer.Patches.Progression
 {
     public class ExperienceGainPatch : GenericPatch<ExperienceGainPatch>
     {
-        public ExperienceGainPatch() : base(prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch)) { }
+        public ExperienceGainPatch() : base(prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
+        {
+        }
 
         static void PrefixPatch(ref bool isLocal)
         {

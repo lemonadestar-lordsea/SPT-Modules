@@ -13,7 +13,9 @@ namespace Aki.SinglePlayer.Patches.RaidFix
 {
     public class OnDeadPatch : GenericPatch<OnDeadPatch>
     {
-        public OnDeadPatch() : base(transpiler: nameof(PatchTranspile)) {}
+        public OnDeadPatch() : base(transpiler: nameof(PatchTranspile))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {

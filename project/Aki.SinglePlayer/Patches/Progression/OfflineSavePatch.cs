@@ -11,10 +11,13 @@ namespace Aki.SinglePlayer.Patches.Progression
 {
     class OfflineSaveProfilePatch : GenericPatch<OfflineSaveProfilePatch>
     {
+        static OfflineSaveProfilePatch()
+        {
+            _ = nameof(ClientMetrics.Metrics);
+        }
+
         public OfflineSaveProfilePatch() : base(prefix: nameof(PatchPrefix))
         {
-            // compile-time check
-            _ = nameof(ClientMetrics.Metrics);
         }
 
         protected override MethodBase GetTargetMethod()

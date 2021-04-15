@@ -83,6 +83,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\BodyPartHealth.cs" />
+    <Compile Include="Models\BundleInfo.cs" />
+    <Compile Include="Models\EBodyPartEffect.cs" />
+    <Compile Include="Models\PlayerHealth.cs" />
     <Compile Include="Models\SaveProfileRequest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Patches\Bots\BossSpawnChancePatch.cs" />
@@ -127,7 +131,6 @@
     <Compile Include="Utils\Bundles\EasyBundleHelper.cs" />
     <Compile Include="Utils\Bundles\BundleSettings.cs" />
     <Compile Include="Utils\Healing\HealthListener.cs" />
-    <Compile Include="Utils\Healing\PlayerHealth.cs" />
     <Compile Include="Utils\Reflection\ClientAppUtils.cs" />
     <Compile Include="Utils\Reflection\PrivateMethodAccessor.cs" />
     <Compile Include="Utils\Reflection\PrivateValueAccessor.cs" />

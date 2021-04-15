@@ -9,7 +9,9 @@ namespace Aki.Core.Patches
     {
         private static readonly CertificateHandler _certificateHandler = new FakeCertificateHandler();
 
-        public UnityWebRequestPatch() : base(postfix: nameof(PatchPostfix)) {}
+        public UnityWebRequestPatch() : base(postfix: nameof(PatchPostfix))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {

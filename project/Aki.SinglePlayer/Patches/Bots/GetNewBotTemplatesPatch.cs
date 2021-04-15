@@ -19,15 +19,16 @@ namespace Aki.SinglePlayer.Patches.Bots
         public static FieldInfo __field;
         private static Func<BotsPresets, BotData, Profile> _getNewProfileFunc;
 
-        public GetNewBotTemplatesPatch() : base(prefix: nameof(PatchPrefix))
+        static GetNewBotTemplatesPatch()
         {
-            // compile-time checks
             _ = nameof(BotsPresets.GetNewProfile);
             _ = nameof(BotData.PrepareToLoadBackend);
             _ = nameof(PoolManager.LoadBundlesAndCreatePools);
             _ = nameof(JobPriority.General);
+        }
 
-            // creating delegate
+        public GetNewBotTemplatesPatch() : base(prefix: nameof(PatchPrefix))
+        {
             _getNewProfileFunc = typeof(BotsPresets)
                 .GetMethod(nameof(BotsPresets.GetNewProfile), BindingFlags.NonPublic | BindingFlags.Instance)
                 .CreateDelegate(typeof(Func<BotsPresets, BotData, Profile>)) as Func<BotsPresets, BotData, Profile>;

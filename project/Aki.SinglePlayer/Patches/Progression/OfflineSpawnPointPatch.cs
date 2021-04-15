@@ -11,7 +11,9 @@ namespace Aki.SinglePlayer.Patches.Progression
 {
     class OfflineSpawnPointPatch : GenericPatch<OfflineSpawnPointPatch>
     {
-        public OfflineSpawnPointPatch() : base(prefix: nameof(PatchPrefix)) { }
+        public OfflineSpawnPointPatch() : base(prefix: nameof(PatchPrefix))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {
@@ -24,7 +26,9 @@ namespace Aki.SinglePlayer.Patches.Progression
             var methods = type.GetMethods(PatcherConstants.DefaultBindingFlags);
 
             if (!methods.Any(x => x.Name.IndexOf("CheckFarthestFromOtherPlayers", StringComparison.OrdinalIgnoreCase) != -1))
+            {
                 return false;
+            }
 
             return !type.IsInterface;
         }
