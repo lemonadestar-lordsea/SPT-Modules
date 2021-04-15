@@ -1,24 +1,15 @@
-/* PlayerHealth.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Collections.Generic;
 
 namespace Aki.SinglePlayer.Utils.Healing
 {
-    enum BodyPartEffect
+    public enum BodyPartEffect
     {
         Fracture,
         LightBleeding,
         HeavyBleeding
     }
 
-    class BodyPartHealth
+    public class BodyPartHealth
     {
         private Dictionary<BodyPartEffect, float> _effects = new Dictionary<BodyPartEffect, float>();
         public float Maximum { get; private set; }
@@ -51,7 +42,7 @@ namespace Aki.SinglePlayer.Utils.Healing
         }
     }
 
-    class PlayerHealth
+    public class PlayerHealth
     {
         private readonly Dictionary<EBodyPart, BodyPartHealth> _health = new Dictionary<EBodyPart, BodyPartHealth>() {
             { EBodyPart.Head, new BodyPartHealth() },

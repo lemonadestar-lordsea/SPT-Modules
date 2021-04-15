@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-
-/*
+﻿/*
  * Loads and runs an assembly file.
  * Assembly file is expected to have a static function called
  * Main() with either no args or a string[] array.
@@ -13,6 +9,10 @@ using System.Reflection;
  *
  * Author Epicguru.
  */
+
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace Aki.Loader
 {

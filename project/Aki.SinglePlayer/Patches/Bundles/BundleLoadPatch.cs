@@ -1,13 +1,3 @@
-/* BundleLoadPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Craink
- * Merijn Hendriks
- */
-
-
 using System;
 using System.Linq;
 using System.Reflection;
@@ -17,13 +7,6 @@ using Aki.Common.Utils;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;
 using Aki.SinglePlayer.Utils.Bundles;
-
-/* Description
- * 
- * This patch is used to change behaivior of the "Diz Plugings - Achievements System"
- * The target class is an implementation of the bundle class called "EasyBundle", this patch will replace portions of the existing class and will not run the original code after.
- * 
- */
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {

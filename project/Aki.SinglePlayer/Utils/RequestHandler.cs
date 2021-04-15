@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using EFT;
 using Aki.Common.Utils;
-using Aki.SinglePlayer.Utils.DefaultSettings;
+using Aki.SinglePlayer.Models;
 
 namespace Aki.SinglePlayer.Utils
 {

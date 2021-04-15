@@ -1,23 +1,10 @@
-/* HealthListener.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Ginja
- * Merijn Hendriks
- */
-
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Aki.Loader;
-using Aki.Common.Utils;
-using Aki.SinglePlayer.Utils;
 using IHealthController = GInterface171;
-using DamageInfo = GStruct240;
 using IEffect = GInterface130;
-
+using DamageInfo = GStruct240;
 
 namespace Aki.SinglePlayer.Utils.Healing
 {

@@ -1,21 +1,10 @@
-/* OfflineSavePatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- * Martynas Gestautas
- * Ginja
- */
-
-
 using System;
 using System.Reflection;
 using Comfort.Common;
 using EFT;
 using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils;
-using Aki.SinglePlayer.Utils.Healing;
 using ClientMetrics = GClass1407;
 
 namespace Aki.SinglePlayer.Patches.Progression
@@ -47,13 +36,5 @@ namespace Aki.SinglePlayer.Patches.Progression
 
 			RequestHandler.SaveLoot(request.ToJson());
         }
-
-		internal class SaveProfileRequest
-		{
-			public string exit = "left";
-			public Profile profile;
-			public bool isPlayerScav;
-			public PlayerHealth health;
-		}
     }
 }

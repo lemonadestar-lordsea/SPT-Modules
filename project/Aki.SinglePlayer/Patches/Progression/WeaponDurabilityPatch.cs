@@ -1,13 +1,3 @@
-/* WeaponDurabilityPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- * Martynas Gestautas
- */
-
-
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
@@ -22,13 +12,11 @@ namespace Aki.SinglePlayer.Patches.Progression
     {
         public WeaponDurabilityPatch() : base(postfix: nameof(PatchPostfix))
         {
-            // compile-time check
             _ = nameof(AmmoInfo.AmmoLifeTimeSec);
         }
 
         protected override MethodBase GetTargetMethod()
         {
-            //private void method_46(GClass1564 ammo)
             return typeof(Player.FirearmController).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Single(IsTargetMethod);
         }
 

@@ -83,6 +83,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\SaveProfileRequest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Patches\Bots\BossSpawnChancePatch.cs" />
     <Compile Include="Patches\Bots\BotTemplateLimitPatch.cs" />
@@ -108,7 +109,7 @@
     <Compile Include="Patches\ScavMode\LoadOfflineRaidScreenPatch.cs" />
     <Compile Include="Patches\ScavMode\ScavExfilPatch.cs" />
     <Compile Include="Patches\ScavMode\ScavPrefabLoadPatch.cs" />
-    <Compile Include="Patches\ScavMode\ScavProfileLoadPatch.cs" />   
+    <Compile Include="Patches\ScavMode\ScavProfileLoadPatch.cs" />
     <Compile Include="Patches\Healing\MainMenuControllerPatch.cs" />
     <Compile Include="Patches\Quests\DogtagPatch.cs" />
     <Compile Include="Patches\Progression\OnLoadRaidPatch.cs" />
@@ -130,7 +131,7 @@
     <Compile Include="Utils\Reflection\ClientAppUtils.cs" />
     <Compile Include="Utils\Reflection\PrivateMethodAccessor.cs" />
     <Compile Include="Utils\Reflection\PrivateValueAccessor.cs" />
-    <Compile Include="Utils\DefaultSettings\DefaultRaidSettings.cs" />
+    <Compile Include="Models\DefaultRaidSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aki.Loader\Aki.Loader.csproj">

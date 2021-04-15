@@ -1,19 +1,10 @@
-/* Instance.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using UnityEngine;
 
 namespace Aki.Common
 {
-	public class Instance : MonoBehaviour
+	public class Program
 	{
-		private void Start()
+		static void Main(string[] args)
 		{
 			Debug.LogError("Aki.Common: Loaded");
 		}

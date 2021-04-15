@@ -1,13 +1,3 @@
-/* GetNewBotTemplatesPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- * Martynas Gestautas
- */
-
-
 using System;
 using System.Linq;
 using System.Reflection;
@@ -17,8 +7,8 @@ using UnityEngine;
 using Comfort.Common;
 using EFT;
 using Aki.Common.Utils.Patching;
-using BotsPresets = GClass363;
 using BotData = GInterface16;
+using BotsPresets = GClass363;
 using PoolManager = GClass1198;
 using JobPriority = GClass2186;
 

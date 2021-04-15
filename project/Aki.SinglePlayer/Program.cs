@@ -1,14 +1,3 @@
-/* Instance.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Ginja
- * Merijn Hendriks
- * Martynas Gestautas
- */
-
-
 using UnityEngine;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Patches.Bots;
@@ -17,7 +6,7 @@ using Aki.SinglePlayer.Patches.Progression;
 using Aki.SinglePlayer.Patches.Quests;
 using Aki.SinglePlayer.Patches.RaidFix;
 using Aki.SinglePlayer.Patches.ScavMode;
-using Aki.Singleplayer.Patches.Debug;
+//using Aki.Singleplayer.Patches.Debug;
 using Aki.SinglePlayer.Patches.Bundles;
 using Aki.SinglePlayer.Utils.Bundles;
 

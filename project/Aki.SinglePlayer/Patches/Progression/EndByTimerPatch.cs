@@ -1,25 +1,12 @@
-/* EndByTimerPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System;
 using System.Linq;
 using System.Reflection;
-using UnityEngine;
 using EFT;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    /// <summary>
-    /// Fixes exit status to 'MissingInAction' when the raid time ends. Default is Survived.
-    /// </summary>
     class EndByTimerPatch : GenericPatch<EndByTimerPatch>
     {
         private static PropertyInfo _profileIdProperty;
@@ -27,15 +14,11 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         static EndByTimerPatch()
         {
-            _profileIdProperty = PatcherConstants.LocalGameType
-                .BaseType
+            _profileIdProperty = PatcherConstants.LocalGameType.BaseType
                 .GetProperty("ProfileId", BindingFlags.NonPublic | BindingFlags.Instance)
                 ?? throw new InvalidOperationException("'ProfileId' property not found");
 
-            // find method
-            // protected void method_11(string profileId, ExitStatus exitStatus, string exitName, float delay = 0f)
-            _stopRaidMethod = PatcherConstants.LocalGameType
-                .BaseType
+            _stopRaidMethod = PatcherConstants.LocalGameType.BaseType
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
                 .SingleOrDefault(IsStopRaidMethod)
                 ?? throw new InvalidOperationException("Method not found");
@@ -44,6 +27,7 @@ namespace Aki.SinglePlayer.Patches.Progression
         private static bool IsStopRaidMethod(MethodInfo mi)
         {
             var parameters = mi.GetParameters();
+
             if (parameters.Length != 4
             || parameters[0].ParameterType != typeof(string)
             || parameters[0].Name != "profileId"
@@ -64,10 +48,9 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.LocalGameType
-                .BaseType
+            return PatcherConstants.LocalGameType.BaseType
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .Single(x => x.Name.EndsWith("StopGame"));  // find explicit interface implementation
+                .Single(x => x.Name.EndsWith("StopGame"));
         }
 
         private static bool PrefixPatch(object __instance)

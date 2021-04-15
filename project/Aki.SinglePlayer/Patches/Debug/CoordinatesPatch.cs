@@ -1,12 +1,3 @@
-/* CoordinatesPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: SPT AKI
- * AUTHORS:
- * Ginja
- */
-
-
 using System.Reflection;
 using UnityEngine;
 using TMPro;

@@ -1,12 +1,3 @@
-/* ScavProfileLoadPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
@@ -102,9 +93,8 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         private static bool IsTargetNestedType(System.Type nestedType)
         {
-            return nestedType.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly).
-                Count(x => x.GetParameters().Length == 1 && x.GetParameters()[0].ParameterType == typeof(string)) > 0 &&
-                nestedType.GetField("savageProfile") != null;
+            return nestedType.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                .Count(x => x.GetParameters().Length == 1 && x.GetParameters()[0].ParameterType == typeof(string)) > 0 && nestedType.GetField("savageProfile") != null;
         }
 
     }

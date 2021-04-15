@@ -1,14 +1,3 @@
-/* DogtagPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- * Martynas Gestautas
- * Ginja
- */
-
-
 using System;
 using System.Reflection;
 using UnityEngine;
@@ -26,7 +15,6 @@ namespace Aki.SinglePlayer.Patches.Quests
 
         public DogtagPatch() : base(postfix: nameof(PatchPostfix))
         {
-            // compile-time checks
             _ = nameof(Equipment.GetSlot);
             _ = nameof(DamageInfo.Weapon);
 

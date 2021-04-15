@@ -1,13 +1,3 @@
-/* BattleEyePatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Martynas Gestautas
- * Merijn Hendriks
- */
-
-
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;

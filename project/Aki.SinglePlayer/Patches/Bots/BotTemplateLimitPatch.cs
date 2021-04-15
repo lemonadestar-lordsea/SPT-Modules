@@ -1,13 +1,3 @@
-/* BotTemplateLimitPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- * Martynas Gestautas
- */
-
-
 using System.Collections.Generic;
 using System.Reflection;
 using System;

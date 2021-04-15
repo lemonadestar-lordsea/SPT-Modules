@@ -1,12 +1,3 @@
-/* UnityWebRequestPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Reflection;
 using UnityEngine.Networking;
 using Aki.Common.Utils.Patching;

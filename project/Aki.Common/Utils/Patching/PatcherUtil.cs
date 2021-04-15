@@ -1,13 +1,3 @@
-/* PatcherUtil.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Martynas Gestautas
- * Merijn Hendriks
- */
-
-
 using System;
 using System.Reflection;
 using HarmonyLib;
@@ -34,14 +24,18 @@ namespace Aki.Common.Utils.Patching
 			try
 			{
 				var patch = new T();
+
 				if (patch.TargetMethod == null)
+				{
 					throw new InvalidOperationException("TargetMethod is null");
+				}
 
 				harmony.Patch(patch.TargetMethod,
 							  prefix: patch.Prefix.ToHarmonyMethod(),
 							  postfix: patch.Postfix.ToHarmonyMethod(),
 							  transpiler: patch.Transpiler.ToHarmonyMethod(),
 							  finalizer: patch.Finalizer.ToHarmonyMethod());
+
 				Debug.LogError("Aki.Common: Applied patch " + typeof(T).Name);
 			}
 			catch (Exception ex)
@@ -55,9 +49,7 @@ namespace Aki.Common.Utils.Patching
 	{
 		public static HarmonyMethod ToHarmonyMethod(this MethodInfo methodInfo)
 		{
-			return methodInfo != null 
-				? new HarmonyMethod(methodInfo)
-				: null;
+			return methodInfo != null ? new HarmonyMethod(methodInfo) : null;
 		}
 	}
 }

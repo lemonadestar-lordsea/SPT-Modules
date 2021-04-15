@@ -1,12 +1,3 @@
-/* OnShellEjectEventPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Reflection;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils.Reflection;

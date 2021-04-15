@@ -1,12 +1,3 @@
-/* PlayerPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Reflection;
 using System.Threading.Tasks;
 using EFT;

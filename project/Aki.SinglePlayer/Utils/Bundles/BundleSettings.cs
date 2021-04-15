@@ -1,18 +1,7 @@
-/* Settings.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Craink
- * Merijn Hendriks
- */
-
-
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 using Aki.Common.Utils;
-using Aki.SinglePlayer.Utils;
 
 namespace Aki.SinglePlayer.Utils.Bundles
 {
