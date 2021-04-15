@@ -9,15 +9,14 @@
 
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using UnityEngine;
-using UnityEngine.Networking;
+using Aki.Common.Utils;
 using Aki.Common.Utils.Patching;
-using Aki.CustomBundles.Utils;
+using Aki.SinglePlayer.Utils;
+using Aki.SinglePlayer.Utils.Bundles;
 
 /* Description
  * 
@@ -26,13 +25,13 @@ using Aki.CustomBundles.Utils;
  * 
  */
 
-namespace Aki.CustomBundles.Patches
+namespace Aki.SinglePlayer.Patches.Bundles
 {
     public class BundleLoadPatch : GenericPatch<BundleLoadPatch>
     {
-        private static readonly CertificateHandler _certificateHandler = new FakeCertificateHandler();
-
-        public BundleLoadPatch() : base(prefix: nameof(PatchPrefix)) { }
+        public BundleLoadPatch() : base(prefix: nameof(PatchPrefix))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {
@@ -68,45 +67,21 @@ namespace Aki.CustomBundles.Patches
             var easyBundle = new EasyBundleHelper(__instance);
             var path = easyBundle.Path;
             var bundleKey = Regex.Split(path, "bundle/", RegexOptions.IgnoreCase)[1];
-            var cachePath = Settings.cachePach;
+            var cachePath = BundleSettings.cachePach;
+            var filepath = cachePath + bundleKey;
 
-            if (path.IndexOf("http") != -1)
+            if (path.Contains("http"))
             {
-                using (UnityWebRequest unityWebRequest = UnityWebRequest.Get(path))
+                var data = RequestHandler.GetBundle(path);
+                
+                if (data != null)
                 {
-                    unityWebRequest.certificateHandler = _certificateHandler;
-                    unityWebRequest.disposeCertificateHandlerOnDispose = false;
-                    await unityWebRequest.SendWebRequest().Await();
-
-                    if (!unityWebRequest.isNetworkError && !unityWebRequest.isHttpError)
-                    {
-                        var fileName = path.Split('/').ToList().Last();
-                        var dirPath = Regex.Split(bundleKey, fileName, RegexOptions.IgnoreCase)[0];
-
-                        if (!Directory.Exists(cachePath + dirPath))
-                        {
-                            Directory.CreateDirectory(cachePath + dirPath);
-                        }
-
-                        File.WriteAllBytes(cachePath + bundleKey, unityWebRequest.downloadHandler.data);
-                        easyBundle.Path = cachePath + bundleKey;
-                    }
-                    else
-                    {
-                        Debug.Log("cant load " + path + " because of error " + unityWebRequest.error);
-                    }
+                    VFS.WriteFile(filepath, data);
+                    easyBundle.Path = filepath;
                 }
             }
 
             await easyBundle.LoadingCoroutine();
-        }
-    }
-
-    internal class FakeCertificateHandler : CertificateHandler
-    {
-        protected override bool ValidateCertificate(byte[] certificateData)
-        {
-            return true;
         }
     }
 }

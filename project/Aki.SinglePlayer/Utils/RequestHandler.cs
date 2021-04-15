@@ -33,6 +33,34 @@ namespace Aki.SinglePlayer.Utils
 			request.GetJson($"/raid/map/name?locationId={locationId}");
 		}
 
+        public static string GetBundles()
+        {
+            var json = request.GetJson("/singleplayer/bundles");
+
+            if (string.IsNullOrWhiteSpace(json))
+			{
+				Debug.LogError("Aki.Singleplayer: Bundles data is NULL, using fallback");
+				return null;
+			}
+
+            Debug.LogError("Aki.SinglePlayer: Successfully received bundles");
+            return json;
+        }
+
+        public static byte[] GetBundle(string path)
+        {
+            var data = request.GetData(path);
+
+            if (data == null)
+			{
+				Debug.LogError($"Aki.Singleplayer: Bundle data for {path} is NULL");
+				return null;
+			}
+
+            Debug.LogError($"Aki.SinglePlayer: Successfully received bundle {path}");
+            return data;
+        }
+
         public static string GetBotCoreDifficulty()
         {
             var result = request.GetJson("/singleplayer/settings/bot/difficulty/core/core");
@@ -49,29 +77,29 @@ namespace Aki.SinglePlayer.Utils
 
         public static string GetBotDifficulty(WildSpawnType role, BotDifficulty botDifficulty)
         {
-            var result = request.GetJson("/singleplayer/settings/bot/difficulty/" + role.ToString() + "/" + botDifficulty.ToString());
+            var result = request.GetJson($"/singleplayer/settings/bot/difficulty/{role.ToString()}/{botDifficulty.ToString()}");
 
             if (string.IsNullOrWhiteSpace(result))
             {
-                Debug.LogError("Aki.SinglePlayer: Received bot " + role.ToString() + " " + botDifficulty.ToString() + " difficulty data is NULL, using fallback");
+                Debug.LogError($"Aki.SinglePlayer: Received bot {role.ToString()} {botDifficulty.ToString()} difficulty data is NULL, using fallback");
                 return null;
             }
 
-            Debug.LogError("Aki.SinglePlayer: Successfully received bot " + role.ToString() + " " + botDifficulty.ToString() + " difficulty data");
+            Debug.LogError($"Aki.SinglePlayer: Successfully received bot {role.ToString()} {botDifficulty.ToString()} difficulty data");
             return result;
         }
 
         public static int GetBotLimit(WildSpawnType role)
         {
-            var result = request.GetJson("/singleplayer/settings/bot/limit/" + role.ToString());
+            var result = request.GetJson($"/singleplayer/settings/bot/limit/{role.ToString()}");
 
             if (string.IsNullOrWhiteSpace(result))
             {
-                Debug.LogError("Aki.SinglePlayer: Received bot " + role.ToString() + " limit data is NULL, using fallback");
+                Debug.LogError($"Aki.SinglePlayer: Received bot {role.ToString()} limit data is NULL, using fallback");
                 return 30;
             }
 
-            Debug.LogError("Aki.SinglePlayer: Successfully received bot " + role.ToString() + " limit data");
+            Debug.LogError($"Aki.SinglePlayer: Successfully received bot {role.ToString()} limit data");
             return Convert.ToInt32(result);
         }
 

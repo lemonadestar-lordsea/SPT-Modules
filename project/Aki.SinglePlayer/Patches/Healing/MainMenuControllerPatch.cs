@@ -32,7 +32,7 @@ namespace Aki.SinglePlayer.Patches.Healing
         static void PatchPostfix(MainMenuController __instance)
         {
             var healthController = __instance.HealthController;
-            var listener = Utils.Player.HealthListener.Instance;
+            var listener = Utils.Healing.HealthListener.Instance;
             listener.Init(healthController, false);
         }
     }

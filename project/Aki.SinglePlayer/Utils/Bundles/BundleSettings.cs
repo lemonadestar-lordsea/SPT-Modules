@@ -9,47 +9,33 @@
 
 
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 using Aki.Common.Utils;
+using Aki.SinglePlayer.Utils;
 
-namespace Aki.CustomBundles.Utils
+namespace Aki.SinglePlayer.Utils.Bundles
 {
-    public class Settings
+    public class BundleSettings
     {
-		private static string Session;
-		private static string BackendUrl;
         public static readonly string cachePach = "Cache/StreamingAssets/windows/";
         public readonly static Dictionary<string, BundleInfo> bundles = new Dictionary<string, BundleInfo>();
 
-		public Settings(string session, string backendUrl)
-		{
-            Session = session;
-            BackendUrl = backendUrl;
-
-            Init(); 
-        }
-
-		private void Init()
+		public BundleSettings()
 		{
             try
             {
-                CleanCache();
-            } catch
+                if (VFS.Exists(cachePach))
+                {
+                    VFS.DeleteDirectory(cachePach);
+                }
+            }
+            catch
             {
                 Debug.LogError("Aki.CustomBundles: The cache cleanup failed and will try again at the next game startup.");
             }
             
-            var json = new Request(Session, BackendUrl).GetJson("/singleplayer/bundles");
-
-            if (string.IsNullOrWhiteSpace(json))
-			{
-				Debug.LogError("Aki.CustomBundles: Bundles data is Null, using fallback");
-				return;
-			}
-
-            var jArray = JArray.Parse(json);
+            var jArray = JArray.Parse(RequestHandler.GetBundles());
 
             foreach (var jObj in jArray)
             {
@@ -61,17 +47,7 @@ namespace Aki.CustomBundles.Utils
                     bundles.Add(bundle.Key, bundle);
                 }
             }
-            
-            Debug.LogError("Aki.CustomBundles: Successfully received Bundles");
 		}
-
-        private void CleanCache()
-        {
-            if (Directory.Exists(cachePach))
-            {
-                Directory.Delete(cachePach, true);
-            }
-        }
     }
 
     public class BundleInfo

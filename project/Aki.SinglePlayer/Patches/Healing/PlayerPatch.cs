@@ -41,7 +41,7 @@ namespace Aki.SinglePlayer.Patches.Healing
 
             await __result;
 
-            var listener = Utils.Player.HealthListener.Instance;
+            var listener = Utils.Healing.HealthListener.Instance;
             listener.Init(__instance.HealthController, true);
         }
     }

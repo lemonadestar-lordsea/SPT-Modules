@@ -35,7 +35,7 @@ using BindableState = GClass2206<Diz.DependencyManager.ELoadState>; //Construct 
  *   - Search for "IsLocked"      using Options Search For: "Property", "Selected Files" and update "IBundleLock" to the Interface found
  *   - Search for "initialValue"  using Options Search For: "Parameter", "Selected Files" and update "BindableState" to the Class found
  */
-namespace Aki.CustomBundles.Utils
+namespace Aki.SinglePlayer.Utils.Bundles
 {
     class EasyBundleHelper
     {

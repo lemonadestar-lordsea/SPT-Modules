@@ -9,7 +9,7 @@
 
 using System.Collections.Generic;
 
-namespace Aki.SinglePlayer.Utils.Player
+namespace Aki.SinglePlayer.Utils.Healing
 {
     enum BodyPartEffect
     {

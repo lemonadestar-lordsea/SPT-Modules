@@ -18,7 +18,7 @@ using System.Linq;
 using System.Reflection;
 using Diz.DependencyManager;
 using Aki.Common.Utils.Patching;
-using Aki.CustomBundles.Utils;
+using Aki.SinglePlayer.Utils.Bundles;
 using IEasyBundle = GInterface253; //Property: SameNameAsset 
 using IBundleLock = GInterface254; //Property: IsLocked
 using BindableState = GClass2206<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
@@ -37,7 +37,7 @@ using BindableState = GClass2206<Diz.DependencyManager.ELoadState>; //Construct 
  *   - Search for "IsLocked"      using Options Search For: "Property", "Selected Files" and update "IBundleLock" to the Interface found
  *   - Search for "initialValue"  using Options Search For: "Parameter", "Selected Files" and update "BindableState" to the Class found
  */
-namespace Aki.CustomBundles.Patches
+namespace Aki.SinglePlayer.Patches.Bundles
 {
 	public class EasyBundlePatch : GenericPatch<EasyBundlePatch>
 	{
@@ -64,7 +64,7 @@ namespace Aki.CustomBundles.Patches
             var path = rootPath + key;
             var bundle = (BundleInfo)null;
 
-            if (Settings.bundles.TryGetValue(key, out bundle))
+            if (BundleSettings.bundles.TryGetValue(key, out bundle))
             {
                 path = bundle.Path;
             }
@@ -74,7 +74,7 @@ namespace Aki.CustomBundles.Patches
 
             var dependencyKeys = manifest.GetDirectDependencies(key);
 
-            foreach (KeyValuePair<string, BundleInfo> kvp in Settings.bundles)
+            foreach (KeyValuePair<string, BundleInfo> kvp in BundleSettings.bundles)
             {
                 if (!key.Equals(kvp.Key))
                 {

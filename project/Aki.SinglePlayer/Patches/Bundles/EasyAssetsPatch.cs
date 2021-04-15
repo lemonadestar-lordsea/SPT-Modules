@@ -23,7 +23,7 @@ using Diz.Jobs;
 using Diz.Resources;
 using JetBrains.Annotations;
 using Aki.Common.Utils.Patching;
-using Aki.CustomBundles.Utils;
+using Aki.SinglePlayer.Utils.Bundles;
 using IEasyBundle = GInterface253; //Property: SameNameAsset 
 using IBundleLock = GInterface254; //Property: IsLocked
 using BundleLock = GClass2220; //Property: MaxConcurrentOperations
@@ -49,7 +49,7 @@ using DependencyGraph = GClass2221<GInterface253>; // Method: GetDefaultNode()
  *       - Press Ctrl+Shift+R to Analyze the usage 
  *       - Expand the Used By list and look for an instantiation of this class with and interface and update the GInterface for the DependencyGraph above
  */
-namespace Aki.CustomBundles.Patches
+namespace Aki.SinglePlayer.Patches.Bundles
 {
     public class EasyAssetsPatch : GenericPatch<EasyAssetsPatch>
     {
@@ -122,7 +122,7 @@ namespace Aki.CustomBundles.Patches
             var result = manifest.GetAllAssetBundles().ToList<string>();
             var resourcesModbundles = new List<string>();
 
-            foreach (KeyValuePair<string, BundleInfo> kvp in Settings.bundles)
+            foreach (KeyValuePair<string, BundleInfo> kvp in BundleSettings.bundles)
             {
                 resourcesModbundles.Add(kvp.Key);
             }

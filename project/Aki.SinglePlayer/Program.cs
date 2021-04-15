@@ -17,6 +17,8 @@ using Aki.SinglePlayer.Patches.Progression;
 using Aki.SinglePlayer.Patches.Quests;
 using Aki.SinglePlayer.Patches.RaidFix;
 using Aki.SinglePlayer.Patches.ScavMode;
+using Aki.SinglePlayer.Patches.Bundles;
+using Aki.SinglePlayer.Utils.Bundles;
 
 namespace Aki.SinglePlayer
 {
@@ -25,6 +27,12 @@ namespace Aki.SinglePlayer
         static void Main(string[] args)
         {
             Debug.LogError("Aki.SinglePlayer: Loaded");
+
+            new BundleSettings();
+
+            PatcherUtil.Patch<EasyAssetsPatch>();
+            PatcherUtil.Patch<EasyBundlePatch>();
+            PatcherUtil.Patch<BundleLoadPatch>();
             
 			PatcherUtil.Patch<OfflineSaveProfilePatch>();
             PatcherUtil.Patch<OfflineSpawnPointPatch>();

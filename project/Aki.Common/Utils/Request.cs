@@ -214,14 +214,19 @@ namespace Aki.Common.Utils
 			}
 		}
 
+        public byte[] GetData(string url)
+		{
+			return Send(url, "GET", null, headers: headers);
+		}
+
+        public string GetJson(string url)
+		{
+			return Encoding.UTF8.GetString(Send(url, "GET", headers: headers));
+		}
+
 		public void PutJson(string url, string data, bool compress = true, string mime = "application/json")
 		{
 			Send(url, "PUT", Encoding.UTF8.GetBytes(data), compress, mime, headers);
-		}
-
-		public string GetJson(string url, bool compress = true, string mime = "application/json")
-		{
-			return Encoding.UTF8.GetString(Send(url, "GET", null, compress, mime, headers));
 		}
 
 		public string PostJson(string url, string data, bool compress = true, string mime = "application/json")

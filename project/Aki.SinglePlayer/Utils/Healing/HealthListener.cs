@@ -19,7 +19,7 @@ using DamageInfo = GStruct240;
 using IEffect = GInterface130;
 
 
-namespace Aki.SinglePlayer.Utils.Player
+namespace Aki.SinglePlayer.Utils.Healing
 {
     class HealthListener
     {

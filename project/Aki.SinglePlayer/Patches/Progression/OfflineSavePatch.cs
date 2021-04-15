@@ -15,7 +15,7 @@ using Comfort.Common;
 using EFT;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;
-using Aki.SinglePlayer.Utils.Player;
+using Aki.SinglePlayer.Utils.Healing;
 using ClientMetrics = GClass1407;
 
 namespace Aki.SinglePlayer.Patches.Progression
@@ -41,7 +41,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 			{
 				exit = result.Value0.ToString().ToLower(),
 				profile = (___esideType_0 == ESideType.Savage) ? session.ProfileOfPet : session.Profile,
-				health = Utils.Player.HealthListener.Instance.CurrentHealth,
+				health = Utils.Healing.HealthListener.Instance.CurrentHealth,
 				isPlayerScav = (___esideType_0 == ESideType.Savage)
 			};
 
