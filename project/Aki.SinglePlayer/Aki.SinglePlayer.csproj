@@ -65,6 +65,18 @@
       <HintPath>..\Shared\References\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>..\Shared\References\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>..\Shared\References\Unity.TextMeshPro.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>..\Shared\References\UnityEngine.UIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>..\Shared\References\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
@@ -82,6 +94,7 @@
     <Compile Include="Patches\Bundles\EasyAssetsPatch.cs" />
     <Compile Include="Patches\Bundles\BundleLoadPatch.cs" />
     <Compile Include="Patches\Bundles\EasyBundlePatch.cs" />
+    <Compile Include="Patches\Debug\CoordinatesPatch.cs" />
     <Compile Include="Patches\Healing\PlayerPatch.cs" />
     <Compile Include="Patches\Matchmaker\InsuranceScreenPatch.cs" />
     <Compile Include="Patches\Matchmaker\MatchMakerSelectionLocationScreenPatch.cs" />
@@ -132,16 +145,4 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent Condition="'$(OS)' != 'Unix'">
-      xcopy /Y /I $(TargetDir)*.dll $(SolutionDir)\Build\EscapeFromTarkov_Data\Managed\
-    </PostBuildEvent>
-    <PostBuildEvent Condition="'$(OS)' == 'Unix'">
-      cp $(TargetDir)*.dll $(SolutionDir)/Build/EscapeFromTarkov_Data/Managed/
-    </PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
 </Project>

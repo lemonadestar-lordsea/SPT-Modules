@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Core", "Aki.Core\Aki.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.SinglePlayer", "Aki.SinglePlayer\Aki.SinglePlayer.csproj", "{CA2CDB32-6C34-4B23-AB90-E7A776AD40F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Tools", "Aki.Tools\Aki.Tools.csproj", "{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Loader", "Aki.Loader\Aki.Loader.csproj", "{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{CA2CDB32-6C34-4B23-AB90-E7A776AD40F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA2CDB32-6C34-4B23-AB90-E7A776AD40F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA2CDB32-6C34-4B23-AB90-E7A776AD40F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{09840E37-3F9F-4FFD-9BF5-16C25DBBF969}.Release|Any CPU.Build.0 = Release|Any CPU
 		{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{966EF83A-7B4E-4DE1-BC73-E06B18EB411C}.Release|Any CPU.ActiveCfg = Release|Any CPU

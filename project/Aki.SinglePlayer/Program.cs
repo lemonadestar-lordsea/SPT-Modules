@@ -17,6 +17,7 @@ using Aki.SinglePlayer.Patches.Progression;
 using Aki.SinglePlayer.Patches.Quests;
 using Aki.SinglePlayer.Patches.RaidFix;
 using Aki.SinglePlayer.Patches.ScavMode;
+using Aki.Singleplayer.Patches.Debug;
 using Aki.SinglePlayer.Patches.Bundles;
 using Aki.SinglePlayer.Utils.Bundles;
 
@@ -69,6 +70,8 @@ namespace Aki.SinglePlayer
             PatcherUtil.Patch<ScavExfilPatch>();
 
             PatcherUtil.Patch<EndByTimerPatch>();
+
+            //PatcherUtil.Patch<CoordinatesPatch>();
         }
     }
 }

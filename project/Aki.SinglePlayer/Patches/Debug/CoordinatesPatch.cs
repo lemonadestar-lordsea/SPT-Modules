@@ -8,12 +8,12 @@
 
 
 using System.Reflection;
+using UnityEngine;
+using TMPro;
 using EFT;
 using Aki.Common.Utils.Patching;
-using TMPro;
-using UnityEngine;
 
-namespace Aki.Tools.Patches
+namespace Aki.Singleplayer.Patches.Debug
 {
     public class CoordinatesPatch : GenericPatch<CoordinatesPatch>
     {
