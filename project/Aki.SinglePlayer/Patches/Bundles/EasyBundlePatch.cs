@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Diz.DependencyManager;
 using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils.Bundles;
 using IEasyBundle = GInterface253;                                  // Property: SameNameAsset 
 using IBundleLock = GInterface254;                                  // Property: IsLocked

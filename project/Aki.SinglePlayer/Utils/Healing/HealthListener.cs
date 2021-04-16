@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Aki.Loader;
+using Aki.SinglePlayer.Models;
 using IHealthController = GInterface171;
 using IEffect = GInterface130;
 using DamageInfo = GStruct240;
