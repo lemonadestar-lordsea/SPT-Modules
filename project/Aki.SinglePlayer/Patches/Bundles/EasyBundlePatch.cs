@@ -37,6 +37,11 @@ namespace Aki.SinglePlayer.Patches.Bundles
             var path = rootPath + key;
             var bundle = (BundleInfo)null;
 
+            if (BundleSettings.bundles.Count == 0)
+            {
+                BundleSettings.GetBundles();
+            }
+
             if (BundleSettings.bundles.TryGetValue(key, out bundle))
             {
                 path = bundle.Path;

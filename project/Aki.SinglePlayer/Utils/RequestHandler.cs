@@ -12,7 +12,7 @@ namespace Aki.SinglePlayer.Utils
 
         static RequestHandler()
         {
-            request = new Request(Config.BackEndSession.GetPhpSessionId(), Config.BackendUrl);
+            request = new Request(Utils.Config.BackEndSession.GetPhpSessionId(), Utils.Config.BackendUrl);
             Debug.LogError($"Aki.SinglePlayer: session: {request.Session}, host: {request.RemoteEndPoint}");
         }
 

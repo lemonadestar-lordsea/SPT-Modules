@@ -23,8 +23,7 @@ namespace Aki.SinglePlayer.Patches.Healing
             if (_playerAccountId == null)
             {
                 var backendSession = Utils.Config.BackEndSession;
-                var profile = backendSession.Profile;
-                _playerAccountId = profile.AccountId;
+                _playerAccountId = backendSession.Profile.AccountId;
             }
 
 			if (__instance.Profile.AccountId != _playerAccountId)

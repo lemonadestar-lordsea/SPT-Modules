@@ -8,7 +8,6 @@ using Aki.SinglePlayer.Patches.RaidFix;
 using Aki.SinglePlayer.Patches.ScavMode;
 //using Aki.Singleplayer.Patches.Debug;
 using Aki.SinglePlayer.Patches.Bundles;
-using Aki.SinglePlayer.Utils.Bundles;
 
 namespace Aki.SinglePlayer
 {
@@ -17,8 +16,6 @@ namespace Aki.SinglePlayer
         static void Main(string[] args)
         {
             Debug.LogError("Aki.SinglePlayer: Loaded");
-
-            new BundleSettings();
 
             PatcherUtil.Patch<EasyAssetsPatch>();
             PatcherUtil.Patch<EasyBundlePatch>();

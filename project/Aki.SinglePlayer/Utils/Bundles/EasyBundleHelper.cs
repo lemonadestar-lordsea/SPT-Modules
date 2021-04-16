@@ -9,7 +9,7 @@ using BindableState = GClass2206<Diz.DependencyManager.ELoadState>; //Construct 
 
 namespace Aki.SinglePlayer.Utils.Bundles
 {
-    class EasyBundleHelper
+    public class EasyBundleHelper
     {
         private const string _pathFieldName = "string_1";
         private const string _keyWithoutExtensionFieldName = "string_0";
@@ -191,7 +191,8 @@ namespace Aki.SinglePlayer.Utils.Bundles
 
             if (_loadingCoroutineMethod == null)
             {
-                _loadingCoroutineMethod = easyBundle.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic).Single(x => x.GetParameters().Length == 0 && x.ReturnType == typeof(Task));
+                _loadingCoroutineMethod = easyBundle.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic)
+                                                    .Single(x => x.GetParameters().Length == 0 && x.ReturnType == typeof(Task));
             }
         }
 

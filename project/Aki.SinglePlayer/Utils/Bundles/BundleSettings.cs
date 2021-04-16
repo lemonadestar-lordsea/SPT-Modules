@@ -9,23 +9,23 @@ namespace Aki.SinglePlayer.Utils.Bundles
     public class BundleSettings
     {
         public const string cachePach = "Cache/StreamingAssets/windows/";
-        public readonly static Dictionary<string, BundleInfo> bundles = new Dictionary<string, BundleInfo>();
+        public readonly static Dictionary<string, BundleInfo> bundles;
 
-		public BundleSettings()
-		{
-            try
+        static BundleSettings()
+        {
+            bundles = new Dictionary<string, BundleInfo>();
+
+            // clear cache
+            if (VFS.Exists(cachePach))
             {
-                if (VFS.Exists(cachePach))
-                {
-                    VFS.DeleteDirectory(cachePach);
-                }
+                VFS.DeleteDirectory(cachePach);
             }
-            catch
-            {
-                Debug.LogError("Aki.CustomBundles: The cache cleanup failed and will try again at the next game startup.");
-            }
-            
-            var jArray = JArray.Parse(RequestHandler.GetBundles());
+        }
+
+        public static void GetBundles()
+        {
+            var json = RequestHandler.GetBundles();
+            var jArray = JArray.Parse(json);
 
             foreach (var jObj in jArray)
             {
@@ -37,8 +37,6 @@ namespace Aki.SinglePlayer.Utils.Bundles
                     bundles.Add(bundle.Key, bundle);
                 }
             }
-		}
+        }
     }
-
-    
 }
