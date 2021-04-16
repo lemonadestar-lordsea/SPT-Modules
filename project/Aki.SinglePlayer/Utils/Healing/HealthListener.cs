@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Aki.Loader;
 using Aki.SinglePlayer.Models;
-using IHealthController = GInterface171;
 using IEffect = GInterface130;
+using IHealthController = GInterface171;
 using DamageInfo = GStruct240;
 
 namespace Aki.SinglePlayer.Utils.Healing
 {
-    class HealthListener
+    public class HealthListener
     {
         private static object _lock = new object();
         private static HealthListener _instance = null;
@@ -37,8 +37,7 @@ namespace Aki.SinglePlayer.Utils.Healing
                 return _instance;
             }
         }
-
-        // ctor
+-
         private HealthListener()
         {
             if (CurrentHealth == null)
