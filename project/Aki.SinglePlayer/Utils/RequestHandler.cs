@@ -2,156 +2,145 @@ using System;
 using UnityEngine;
 using EFT;
 using Aki.Common.Utils;
-using Aki.SinglePlayer.Models;
 
 namespace Aki.SinglePlayer.Utils
 {
     public static class RequestHandler
     {
-        private static Request request;
+        private static readonly Request request;
 
         static RequestHandler()
         {
-            request = new Request(Utils.Config.BackEndSession.GetPhpSessionId(), Utils.Config.BackendUrl);
-            Debug.LogError($"Aki.SinglePlayer: session: {request.Session}, host: {request.RemoteEndPoint}");
+            var backendUrl = Utils.Config.BackendUrl;
+            request = new Request(null, backendUrl);
+            Debug.LogError($"Aki.SinglePlayer: Request host: {backendUrl}");
+        }
+
+        private static void PrepareRequest(string url)
+        {
+            Debug.LogError($"Aki.SinglePlayer: Request: {url}");
+
+            var backend = Utils.Config.BackEndSession;
+
+            if (backend == null)
+            {
+                Debug.LogError($"Aki.SinglePlayer: Request session not active");
+                return;
+            }
+
+            if (request.Session == null)
+            {
+                request.Session = backend.GetPhpSessionId();
+                Debug.LogError($"Aki.SinglePlayer: Request session: {request.Session}");
+            }
+        }
+
+        private static void ValidateData(byte[] data)
+        {
+            if (data == null)
+            {
+                Debug.LogError($"Aki.SinglePlayer: Request failed, body is null");
+            }
+
+            Debug.LogError($"Aki.SinglePlayer: Request was successful");
+        }
+
+        private static void ValidateJson(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                Debug.LogError($"Aki.SinglePlayer: Request failed, body is null");
+            }
+
+            Debug.LogError($"Aki.SinglePlayer: Request was successful");
+        }
+
+        private static byte[] GetData(string url)
+        {
+            PrepareRequest(url);
+            var result = request.GetData(url);
+            ValidateData(result);
+            return result;
+        }
+
+        private static string GetJson(string url)
+        {
+            PrepareRequest(url);
+            var result = request.GetJson(url);
+            ValidateJson(result);
+            return result;
+        }
+
+        private static string PostJson(string url, string json)
+        {
+            PrepareRequest(url);
+            var result = request.PostJson(url, json);
+            ValidateJson(result);
+            return result;
+        }
+
+        private static void PutJson(string url, string json)
+        {
+            PrepareRequest(url);
+            request.PutJson(url, json);
         }
 
         public static void SaveLoot(string json)
         {
-            Debug.LogError("Aki.SinglePlayer: Saving profile loot");
-            request.PutJson("/raid/profile/save", json);
+            PutJson("/raid/profile/save", json);
         }
 
         public static void SynchroniseHealth(string json)
         {
-            Debug.LogError("Aki.SinglePlayer: Synchronize health");
-            request.PostJson("/player/health/sync", json);
+            PostJson("/player/health/sync", json);
         }
 
         public static void SendLocationName(string locationId)
 		{
-			request.GetJson($"/raid/map/name?locationId={locationId}");
+			GetJson($"/raid/map/name?locationId={locationId}");
 		}
 
         public static string GetBundles()
         {
-            var json = request.GetJson("/singleplayer/bundles");
-
-            if (string.IsNullOrWhiteSpace(json))
-			{
-				Debug.LogError("Aki.Singleplayer: Bundles data is NULL, using fallback");
-				return null;
-			}
-
-            Debug.LogError("Aki.SinglePlayer: Successfully received bundles");
-            return json;
+            return GetJson("/singleplayer/bundles");
         }
 
         public static byte[] GetBundle(string path)
         {
-            var data = request.GetData(path);
-
-            if (data == null)
-			{
-				Debug.LogError($"Aki.Singleplayer: Bundle data for {path} is NULL");
-				return null;
-			}
-
-            Debug.LogError($"Aki.SinglePlayer: Successfully received bundle {path}");
-            return data;
+            return GetData(path);
         }
 
         public static string GetBotCoreDifficulty()
         {
-            var result = request.GetJson("/singleplayer/settings/bot/difficulty/core/core");
-
-            if (string.IsNullOrWhiteSpace(result))
-            {
-                Debug.LogError("Aki.SinglePlayer: Received core bot difficulty data is NULL, using fallback");
-                return null;
-            }
-
-            Debug.LogError("Aki.SinglePlayer: Successfully received core bot difficulty data");
-            return result;
+            return GetJson("/singleplayer/settings/bot/difficulty/core/core");
         }
 
         public static string GetBotDifficulty(WildSpawnType role, BotDifficulty botDifficulty)
         {
-            var result = request.GetJson($"/singleplayer/settings/bot/difficulty/{role.ToString()}/{botDifficulty.ToString()}");
-
-            if (string.IsNullOrWhiteSpace(result))
-            {
-                Debug.LogError($"Aki.SinglePlayer: Received bot {role.ToString()} {botDifficulty.ToString()} difficulty data is NULL, using fallback");
-                return null;
-            }
-
-            Debug.LogError($"Aki.SinglePlayer: Successfully received bot {role.ToString()} {botDifficulty.ToString()} difficulty data");
-            return result;
+            return GetJson($"/singleplayer/settings/bot/difficulty/{role.ToString()}/{botDifficulty.ToString()}");
         }
 
         public static int GetBotLimit(WildSpawnType role)
         {
-            var result = request.GetJson($"/singleplayer/settings/bot/limit/{role.ToString()}");
-
-            if (string.IsNullOrWhiteSpace(result))
-            {
-                Debug.LogError($"Aki.SinglePlayer: Received bot {role.ToString()} limit data is NULL, using fallback");
-                return 30;
-            }
-
-            Debug.LogError($"Aki.SinglePlayer: Successfully received bot {role.ToString()} limit data");
-            return Convert.ToInt32(result);
+            var json = GetJson($"/singleplayer/settings/bot/limit/{role.ToString()}");
+            return (string.IsNullOrWhiteSpace(json)) ? 30 : Convert.ToInt32(json);
         }
 
         public static bool GetDurabilityState()
 		{
-			var result = request.GetJson("/singleplayer/settings/weapon/durability");
-
-			if (string.IsNullOrWhiteSpace(result))
-			{
-				Debug.LogError("Aki.SinglePlayer: Received weapon durability state data is NULL, using fallback");
-				return false;
-			}
-
-			Debug.LogError("Aki.SinglePlayer: Successfully received weapon durability state");
-			return Convert.ToBoolean(result);
+			var json = GetJson("/singleplayer/settings/weapon/durability");
+			return (string.IsNullOrWhiteSpace(json)) ? false : Convert.ToBoolean(json);
 		}
 
         public static bool GetEndState()
         {
-            var json = request.GetJson("/singleplayer/settings/raid/endstate");
-
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                Debug.LogError("Aki.SinglePlayer: Received NULL response for DefaultRaidSettings. Defaulting to fallback.");
-                return false;
-            }
-
-            Debug.LogError("Aki.SinglePlayer: Successfully received DefaultRaidSettings");
-            return Convert.ToBoolean(json);
+            var json = GetJson("/singleplayer/settings/raid/endstate");
+            return (string.IsNullOrWhiteSpace(json)) ? false : Convert.ToBoolean(json);
         }
 
-        public static DefaultRaidSettings GetDefaultRaidSettings()
+        public static string GetDefaultRaidSettings()
         {
-            var json = request.GetJson("/singleplayer/settings/raid/menu");
-
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                Debug.LogError("Aki.SinglePlayer: Received NULL response for DefaultRaidSettings. Defaulting to fallback.");
-                return null;
-            }
-
-            Debug.LogError("Aki.SinglePlayer: Successfully received DefaultRaidSettings");
-
-            try
-            {
-                return Json.Deserialize<DefaultRaidSettings>(json);
-            }
-            catch (Exception exception)
-            {
-                Debug.LogError("Aki.SinglePlayer: Failed to deserialize DefaultRaidSettings from server. Check your gameplay.json config in your server. Defaulting to fallback. Exception: " + exception);
-                return null;
-            }
+            return GetJson("/singleplayer/settings/raid/menu");
         }
     }   
 }
