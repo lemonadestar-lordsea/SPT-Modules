@@ -37,7 +37,7 @@ namespace Aki.SinglePlayer.Utils.Healing
                 return _instance;
             }
         }
--
+
         private HealthListener()
         {
             if (CurrentHealth == null)
