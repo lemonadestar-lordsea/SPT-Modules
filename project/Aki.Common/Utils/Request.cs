@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Text;
 using UnityEngine;
 
 namespace Aki.Common.Utils
@@ -106,33 +105,13 @@ namespace Aki.Common.Utils
 
     public class Request
     {
-		
-		private static Dictionary<string, string> headers;
-        public string Session;
-        public string RemoteEndPoint;
-
-        public Request(string session, string endpoint)
-		{
-            Session = session;
-			RemoteEndPoint = endpoint;
-
-            if (!string.IsNullOrWhiteSpace(session))
-            {
-                headers = new Dictionary<string, string>()
-                {
-                    { "Cookie", $"PHPSESSID={session}" },
-                    { "SessionId", session }
-                };
-            }
-		}
-
 		/// <summary>
 		/// Send a request to remote endpoint and optionally receive a response body.
 		/// Deflate is the accepted compression format.
 		/// </summary>
 		public byte[] Send(string url, string method, byte[] data = null, bool compress = true, string mime = null, Dictionary<string, string> headers = null)
 		{
-			Uri uri = new Uri(RemoteEndPoint + url);
+			Uri uri = new Uri(url);
 			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
 
 			if (uri.Scheme == "https")
@@ -149,8 +128,6 @@ namespace Aki.Common.Utils
             request.Timeout = 1000;
 			request.Method = method;
 			request.Headers.Add("Accept-Encoding", "deflate");
-
-            Debug.LogError($"[DEBUG] url: {RemoteEndPoint + url}");
 
 			if (headers != null)
 			{
@@ -203,26 +180,6 @@ namespace Aki.Common.Utils
 			{
 				return null;
 			}
-		}
-
-        public byte[] GetData(string url)
-		{
-			return Send(url, "GET", null, headers: headers);
-		}
-
-        public string GetJson(string url)
-		{
-			return Encoding.UTF8.GetString(Send(url, "GET", headers: headers));
-		}
-
-		public void PutJson(string url, string data, bool compress = true, string mime = "application/json")
-		{
-			Send(url, "PUT", Encoding.UTF8.GetBytes(data), compress, mime, headers);
-		}
-
-		public string PostJson(string url, string data, bool compress = true, string mime = "application/json")
-		{
-			return Encoding.UTF8.GetString(Send(url, "POST", Encoding.UTF8.GetBytes(data), compress, mime, headers));
 		}
 	}
 }

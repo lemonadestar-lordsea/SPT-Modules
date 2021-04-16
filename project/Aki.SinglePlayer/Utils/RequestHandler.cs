@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using EFT;
 using Aki.Common.Utils;
@@ -8,12 +10,16 @@ namespace Aki.SinglePlayer.Utils
     public static class RequestHandler
     {
         private static readonly Request request;
+        private static readonly string host;
+        private static string session;
+        private static Dictionary<string, string> headers;
 
         static RequestHandler()
         {
-            var backendUrl = Utils.Config.BackendUrl;
-            request = new Request(null, backendUrl);
-            Debug.LogError($"Aki.SinglePlayer: Request host: {backendUrl}");
+            host = Utils.Config.BackendUrl;
+            session = null;
+            request = new Request();
+            Debug.LogError($"Aki.SinglePlayer: Request host: {host}");
         }
 
         private static void PrepareRequest(string url)
@@ -28,10 +34,16 @@ namespace Aki.SinglePlayer.Utils
                 return;
             }
 
-            if (request.Session == null)
+            if (session == null)
             {
-                request.Session = backend.GetPhpSessionId();
-                Debug.LogError($"Aki.SinglePlayer: Request session: {request.Session}");
+                session = backend.GetPhpSessionId();
+                headers = new Dictionary<string, string>()
+                {
+                    { "Cookie", $"PHPSESSID={session}" },
+                    { "SessionId", session }
+                };
+
+                Debug.LogError($"Aki.SinglePlayer: Request session: {session}");
             }
         }
 
@@ -58,7 +70,9 @@ namespace Aki.SinglePlayer.Utils
         private static byte[] GetData(string url)
         {
             PrepareRequest(url);
-            var result = request.GetData(url);
+            
+            var result = request.Send(host + url, "GET", null, headers: headers);
+            
             ValidateData(result);
             return result;
         }
@@ -66,7 +80,10 @@ namespace Aki.SinglePlayer.Utils
         private static string GetJson(string url)
         {
             PrepareRequest(url);
-            var result = request.GetJson(url);
+
+            var data = request.Send(host + url, "GET", headers: headers);
+            var result = Encoding.UTF8.GetString(data);
+            
             ValidateJson(result);
             return result;
         }
@@ -74,7 +91,10 @@ namespace Aki.SinglePlayer.Utils
         private static string PostJson(string url, string json)
         {
             PrepareRequest(url);
-            var result = request.PostJson(url, json);
+
+            var data = request.Send(host + url, "POST", Encoding.UTF8.GetBytes(json), true, "application/json", headers);
+            var result = Encoding.UTF8.GetString(data);
+            
             ValidateJson(result);
             return result;
         }
@@ -82,7 +102,7 @@ namespace Aki.SinglePlayer.Utils
         private static void PutJson(string url, string json)
         {
             PrepareRequest(url);
-            request.PutJson(url, json);
+            request.Send(host + url, "PUT", Encoding.UTF8.GetBytes(json), true, "application/json", headers);
         }
 
         public static void SaveLoot(string json)
