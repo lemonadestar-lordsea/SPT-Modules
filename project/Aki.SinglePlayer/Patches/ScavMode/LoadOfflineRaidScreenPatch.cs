@@ -1,15 +1,4 @@
-﻿/* LoadOfflineRaidScreenPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- * reider123
- * Ginja
- */
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -31,7 +20,9 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
     public class LoadOfflineRaidScreenPatch : GenericPatch<LoadOfflineRaidScreenPatch>
     {
-        public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler)) { }
+        public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {

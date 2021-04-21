@@ -1,13 +1,3 @@
-/* GetNewBotTemplatesPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- * Martynas Gestautas
- */
-
-
 using System;
 using System.Linq;
 using System.Reflection;
@@ -17,8 +7,8 @@ using UnityEngine;
 using Comfort.Common;
 using EFT;
 using Aki.Common.Utils.Patching;
-using BotsPresets = GClass363;
 using BotData = GInterface16;
+using BotsPresets = GClass363;
 using PoolManager = GClass1198;
 using JobPriority = GClass2186;
 
@@ -29,15 +19,16 @@ namespace Aki.SinglePlayer.Patches.Bots
         public static FieldInfo __field;
         private static Func<BotsPresets, BotData, Profile> _getNewProfileFunc;
 
-        public GetNewBotTemplatesPatch() : base(prefix: nameof(PatchPrefix))
+        static GetNewBotTemplatesPatch()
         {
-            // compile-time checks
             _ = nameof(BotsPresets.GetNewProfile);
             _ = nameof(BotData.PrepareToLoadBackend);
             _ = nameof(PoolManager.LoadBundlesAndCreatePools);
             _ = nameof(JobPriority.General);
+        }
 
-            // creating delegate
+        public GetNewBotTemplatesPatch() : base(prefix: nameof(PatchPrefix))
+        {
             _getNewProfileFunc = typeof(BotsPresets)
                 .GetMethod(nameof(BotsPresets.GetNewProfile), BindingFlags.NonPublic | BindingFlags.Instance)
                 .CreateDelegate(typeof(Func<BotsPresets, BotData, Profile>)) as Func<BotsPresets, BotData, Profile>;

@@ -1,12 +1,3 @@
-/* ExperienceGainPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Ginja
- */
-
-
 using EFT.UI.SessionEnd;
 using Aki.Common.Utils.Patching;
 using System.Linq;
@@ -16,7 +7,9 @@ namespace Aki.SinglePlayer.Patches.Progression
 {
     public class ExperienceGainPatch : GenericPatch<ExperienceGainPatch>
     {
-        public ExperienceGainPatch() : base(prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch)) { }
+        public ExperienceGainPatch() : base(prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
+        {
+        }
 
         static void PrefixPatch(ref bool isLocal)
         {
@@ -40,10 +33,10 @@ namespace Aki.SinglePlayer.Patches.Progression
             var parameters = mi.GetParameters();
 
             if (parameters.Length != 3
-                || parameters[0].Name != "profile"
-                || parameters[1].ParameterType != typeof(bool)
-                || parameters[1].Name != "isLocal"
-                || parameters[2].Name != "exitStatus")
+            || parameters[0].Name != "profile"
+            || parameters[1].ParameterType != typeof(bool)
+            || parameters[1].Name != "isLocal"
+            || parameters[2].Name != "exitStatus")
             {
                 return false;
             }

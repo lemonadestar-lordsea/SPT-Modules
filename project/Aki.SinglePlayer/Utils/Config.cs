@@ -1,12 +1,3 @@
-/* Config.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using Comfort.Common;
 using EFT;
 using ISession = GInterface28;

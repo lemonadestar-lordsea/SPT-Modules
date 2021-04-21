@@ -1,13 +1,3 @@
-/* BattleEyePatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Martynas Gestautas
- * Merijn Hendriks
- */
-
-
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -20,7 +10,9 @@ namespace Aki.Core.Patches
 	{
         public static PropertyInfo __property;
 		
-        public BattleEyePatch() : base(prefix: nameof(PatchPrefix)) {}
+        public BattleEyePatch() : base(prefix: nameof(PatchPrefix))
+		{
+		}
 
 		protected override MethodBase GetTargetMethod()
 		{

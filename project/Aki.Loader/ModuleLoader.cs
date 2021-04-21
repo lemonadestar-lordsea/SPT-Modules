@@ -1,12 +1,4 @@
-﻿/* ModuleLoader.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;

@@ -1,18 +1,5 @@
-/* BotTemplateLimitPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- * Martynas Gestautas
- */
-
-
 using System.Collections.Generic;
 using System.Reflection;
-using System;
-using UnityEngine;
-using EFT;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;
 using WaveInfo = GClass956;
@@ -22,11 +9,14 @@ namespace Aki.SinglePlayer.Patches.Bots
 {
     public class BotTemplateLimitPatch : GenericPatch<BotTemplateLimitPatch>
     {
-        public BotTemplateLimitPatch() : base(postfix: nameof(PatchPostfix))
+        static BotTemplateLimitPatch()
         {
-            // compile-time checks
             _ = nameof(BotsPresets.CreateProfile);
             _ = nameof(WaveInfo.Difficulty);
+        }
+
+        public BotTemplateLimitPatch() : base(postfix: nameof(PatchPostfix))
+        {
         }
 
         protected override MethodBase GetTargetMethod()

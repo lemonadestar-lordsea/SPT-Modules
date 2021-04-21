@@ -1,12 +1,3 @@
-/* MainMenuControllerPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Reflection;
 using Aki.Common.Utils.Patching;
 using MainMenuController = GClass1224;
@@ -22,7 +13,9 @@ namespace Aki.SinglePlayer.Patches.Healing
             _ = nameof(MainMenuController.HealthController);
         }
 
-        public MainMenuControllerPatch() : base(postfix: nameof(PatchPostfix)) { }
+        public MainMenuControllerPatch() : base(postfix: nameof(PatchPostfix))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {
@@ -32,7 +25,7 @@ namespace Aki.SinglePlayer.Patches.Healing
         static void PatchPostfix(MainMenuController __instance)
         {
             var healthController = __instance.HealthController;
-            var listener = Utils.Player.HealthListener.Instance;
+            var listener = Utils.Healing.HealthListener.Instance;
             listener.Init(healthController, false);
         }
     }

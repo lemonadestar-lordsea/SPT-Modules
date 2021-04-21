@@ -1,12 +1,3 @@
-/* BotStationaryWeaponPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -23,9 +14,11 @@ namespace Aki.SinglePlayer.Patches.RaidFix
     // Fix null reference exception errors when bots are trying to think about using stationary weapons (i.e. on Reserve).
     public class BotStationaryWeaponPatch : GenericPatch<BotStationaryWeaponPatch>
     {
-        private static readonly string kMethodName = "CheckWantTakeStationary";
+        private const string kMethodName = "CheckWantTakeStationary";
 
-        public BotStationaryWeaponPatch() : base(transpiler: nameof(PatchTranspile)) { }
+        public BotStationaryWeaponPatch() : base(transpiler: nameof(PatchTranspile))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {

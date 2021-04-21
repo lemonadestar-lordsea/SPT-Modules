@@ -1,15 +1,6 @@
-/* DefaultRaidSettings.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using EFT.Bots;
 
-namespace Aki.SinglePlayer.Utils.DefaultSettings
+namespace Aki.SinglePlayer.Models
 {
     public class DefaultRaidSettings
     {

@@ -1,14 +1,3 @@
-/* DogtagPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- * Martynas Gestautas
- * Ginja
- */
-
-
 using System;
 using System.Reflection;
 using UnityEngine;
@@ -24,12 +13,14 @@ namespace Aki.SinglePlayer.Patches.Quests
     {
         private static Func<Player, Equipment> getEquipmentProperty;
 
-        public DogtagPatch() : base(postfix: nameof(PatchPostfix))
+        static DogtagPatch()
         {
-            // compile-time checks
             _ = nameof(Equipment.GetSlot);
             _ = nameof(DamageInfo.Weapon);
+        }
 
+        public DogtagPatch() : base(postfix: nameof(PatchPostfix))
+        {
             getEquipmentProperty = typeof(Player)
                 .GetProperty("Equipment", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetGetMethod(true)

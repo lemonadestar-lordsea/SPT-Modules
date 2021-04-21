@@ -1,12 +1,3 @@
-/* OnDeadPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -22,7 +13,9 @@ namespace Aki.SinglePlayer.Patches.RaidFix
 {
     public class OnDeadPatch : GenericPatch<OnDeadPatch>
     {
-        public OnDeadPatch() : base(transpiler: nameof(PatchTranspile)) {}
+        public OnDeadPatch() : base(transpiler: nameof(PatchTranspile))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {

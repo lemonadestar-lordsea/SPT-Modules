@@ -1,31 +1,23 @@
-/* OfflineSavePatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- * Martynas Gestautas
- * Ginja
- */
-
-
 using System;
 using System.Reflection;
 using Comfort.Common;
 using EFT;
 using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils;
-using Aki.SinglePlayer.Utils.Player;
 using ClientMetrics = GClass1407;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
     class OfflineSaveProfilePatch : GenericPatch<OfflineSaveProfilePatch>
     {
+        static OfflineSaveProfilePatch()
+        {
+            _ = nameof(ClientMetrics.Metrics);
+        }
+
         public OfflineSaveProfilePatch() : base(prefix: nameof(PatchPrefix))
         {
-            // compile-time check
-            _ = nameof(ClientMetrics.Metrics);
         }
 
         protected override MethodBase GetTargetMethod()
@@ -41,19 +33,11 @@ namespace Aki.SinglePlayer.Patches.Progression
 			{
 				exit = result.Value0.ToString().ToLower(),
 				profile = (___esideType_0 == ESideType.Savage) ? session.ProfileOfPet : session.Profile,
-				health = Utils.Player.HealthListener.Instance.CurrentHealth,
+				health = Utils.Healing.HealthListener.Instance.CurrentHealth,
 				isPlayerScav = (___esideType_0 == ESideType.Savage)
 			};
 
 			RequestHandler.SaveLoot(request.ToJson());
         }
-
-		internal class SaveProfileRequest
-		{
-			public string exit = "left";
-			public Profile profile;
-			public bool isPlayerScav;
-			public PlayerHealth health;
-		}
     }
 }

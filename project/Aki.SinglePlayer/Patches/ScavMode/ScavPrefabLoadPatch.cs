@@ -1,12 +1,3 @@
-/* ScavPrefabLoadPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
@@ -21,12 +12,14 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 {
     public class ScavPrefabLoadPatch : GenericPatch<ScavPrefabLoadPatch>
     {
-        public ScavPrefabLoadPatch() : base(transpiler: nameof(PatchTranspile)) {}
+        public ScavPrefabLoadPatch() : base(transpiler: nameof(PatchTranspile))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MainApplication).GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly).
-                Single(x => x.GetField("entryPoint") != null && x.GetField("timeAndWeather") != null && x.Name.Contains("Struct"))
+            return typeof(MainApplication).GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                .Single(x => x.GetField("entryPoint") != null && x.GetField("timeAndWeather") != null && x.Name.Contains("Struct"))
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
                 .FirstOrDefault(x => x.Name == "MoveNext");
         }

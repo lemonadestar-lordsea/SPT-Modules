@@ -1,14 +1,3 @@
-/* OfflineSpawnPointPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- * Martynas Gestautas
- */
-
-
-
 using System.Reflection;
 using EFT;
 using Aki.Common.Utils.Patching;
@@ -22,7 +11,9 @@ namespace Aki.SinglePlayer.Patches.Progression
 {
     class OfflineSpawnPointPatch : GenericPatch<OfflineSpawnPointPatch>
     {
-        public OfflineSpawnPointPatch() : base(prefix: nameof(PatchPrefix)) { }
+        public OfflineSpawnPointPatch() : base(prefix: nameof(PatchPrefix))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {
@@ -35,7 +26,9 @@ namespace Aki.SinglePlayer.Patches.Progression
             var methods = type.GetMethods(PatcherConstants.DefaultBindingFlags);
 
             if (!methods.Any(x => x.Name.IndexOf("CheckFarthestFromOtherPlayers", StringComparison.OrdinalIgnoreCase) != -1))
+            {
                 return false;
+            }
 
             return !type.IsInterface;
         }

@@ -1,12 +1,3 @@
-/* SslCertificatePatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Linq;
 using System.Reflection;
 using UnityEngine.Networking;
@@ -17,7 +8,9 @@ namespace Aki.Core.Patches
 {
 	public class SslCertificatePatch : GenericPatch<SslCertificatePatch>
 	{
-		public SslCertificatePatch() : base(prefix: nameof(PatchPrefix)) {}
+		public SslCertificatePatch() : base(prefix: nameof(PatchPrefix))
+		{
+		}
 
 		protected override MethodBase GetTargetMethod()
 		{

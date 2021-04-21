@@ -1,12 +1,3 @@
-/* UnityWebRequestPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Reflection;
 using UnityEngine.Networking;
 using Aki.Common.Utils.Patching;
@@ -18,7 +9,9 @@ namespace Aki.Core.Patches
     {
         private static readonly CertificateHandler _certificateHandler = new FakeCertificateHandler();
 
-        public UnityWebRequestPatch() : base(postfix: nameof(PatchPostfix)) {}
+        public UnityWebRequestPatch() : base(postfix: nameof(PatchPostfix))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {

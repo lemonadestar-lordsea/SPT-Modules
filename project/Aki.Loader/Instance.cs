@@ -1,12 +1,4 @@
-﻿/* Instance.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Aki.Loader

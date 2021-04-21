@@ -1,13 +1,3 @@
-/* SpawnPmcPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Martynas Gestautas
- * Merijn Hendriks
- */
-
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +12,6 @@ namespace Aki.SinglePlayer.Patches.Bots
     {
         private static Type targetInterface;
         private static Type targetType;
-
         private static AccessTools.FieldRef<object, WildSpawnType> wildSpawnTypeField;
         private static AccessTools.FieldRef<object, BotDifficulty> botDifficultyField;
 

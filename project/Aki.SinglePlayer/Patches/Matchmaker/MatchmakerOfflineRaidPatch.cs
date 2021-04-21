@@ -1,25 +1,15 @@
-/* MatchmakerOfflineRaidPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- * Martynas Gestautas
- */
-
-
-using System;
 using System.Reflection;
 using UnityEngine;
-using Newtonsoft.Json;
 using EFT.UI;
 using EFT.UI.Matchmaker;
+using Aki.Common.Utils;
 using Aki.Common.Utils.Patching;
+using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils;
 
 namespace Aki.SinglePlayer.Patches.Matchmaker
 {
-    class MatchmakerOfflineRaidPatch : GenericPatch<MatchmakerOfflineRaidPatch>
+    public class MatchmakerOfflineRaidPatch : GenericPatch<MatchmakerOfflineRaidPatch>
     {
         public MatchmakerOfflineRaidPatch() : base(postfix: nameof(PatchPostfix))
         {
@@ -29,23 +19,35 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
             TMPDropDownBox ____aiAmountDropdown, TMPDropDownBox ____aiDifficultyDropdown, UpdatableToggle ____enableBosses,
             UpdatableToggle ____scavWars, UpdatableToggle ____taggedAndCursed)
         {
-            ____offlineModeToggle.isOn = true;
-            ____offlineModeToggle.gameObject.SetActive(false);
-            ____botsEnabledToggle.isOn = true;
-
-            var defaultRaidSettings = RequestHandler.GetDefaultRaidSettings();
-
-            if (defaultRaidSettings != null)
-            {
-                ____aiAmountDropdown.UpdateValue((int)defaultRaidSettings.AiAmount, false);
-                ____aiDifficultyDropdown.UpdateValue((int)defaultRaidSettings.AiDifficulty, false);
-                ____enableBosses.isOn = defaultRaidSettings.BossEnabled;
-                ____scavWars.isOn = defaultRaidSettings.ScavWars;
-                ____taggedAndCursed.isOn = defaultRaidSettings.TaggedAndCursed;
-            }
-
+            // disable "no progression save" panel
             var warningPanel = GameObject.Find("Warning Panel");
             UnityEngine.Object.Destroy(warningPanel);
+
+            // disable offline mode toggle
+            ____offlineModeToggle.isOn = true;
+            ____offlineModeToggle.gameObject.SetActive(false);
+
+            // enable bots by defaults
+            ____botsEnabledToggle.isOn = true;
+
+            // get settings from server
+            try
+            {
+                var json = RequestHandler.GetDefaultRaidSettings();
+                var settings = Json.Deserialize<DefaultRaidSettings>(json);
+
+                if (settings != null)
+                {
+                    ____aiAmountDropdown.UpdateValue((int)settings.AiAmount, false);
+                    ____aiDifficultyDropdown.UpdateValue((int)settings.AiDifficulty, false);
+                    ____enableBosses.isOn = settings.BossEnabled;
+                    ____scavWars.isOn = settings.ScavWars;
+                    ____taggedAndCursed.isOn = settings.TaggedAndCursed;
+                }
+            }
+            catch
+            {
+            }
         }
 
         protected override MethodBase GetTargetMethod()

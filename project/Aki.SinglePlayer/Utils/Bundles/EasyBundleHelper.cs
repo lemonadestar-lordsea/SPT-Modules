@@ -1,16 +1,3 @@
-/* EasyBundleHelper.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Craink
- * reider123
- * GGaulin
- * Ginja
- * Merijn Hendriks
- */
-
-
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,39 +7,23 @@ using HarmonyLib;
 using IBundleLock = GInterface254; //Property: IsLocked
 using BindableState = GClass2206<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
 
-/* Maintenance Tips
- * 
- * This class is used to help change the behaivior of the "Diz Plugings - Achievements System"
- * There are convenience methods
- * 
- * Note: It looks like there was an attempt to abstract some of the hard coded class / interface dependances in the patches but this looks like WIP and not fully implemented.
- * 
- * Use dnSpy to find the correct GClass/GInterface/Property Name used within each patch.
- * 
- * dnSpy:
- *   - Open the un-obfuscated EFT CSharp Assemply "\EscapeFromTarkov_Data\Managed\Assembly-CSharp.dll"
- *   - Within the Assembly Expoler Tress, select the "Assembly-CSharp (0.0.0.0) file
- *   - Search for "IsLocked"      using Options Search For: "Property", "Selected Files" and update "IBundleLock" to the Interface found
- *   - Search for "initialValue"  using Options Search For: "Parameter", "Selected Files" and update "BindableState" to the Class found
- */
-namespace Aki.CustomBundles.Utils
+namespace Aki.SinglePlayer.Utils.Bundles
 {
-    class EasyBundleHelper
+    public class EasyBundleHelper
     {
+        private const string _pathFieldName = "string_1";
+        private const string _keyWithoutExtensionFieldName = "string_0";
+        private const string _loadingJobPropertyName = "task_0";
+        private const string _dependencyKeysPropertyName = "DependencyKeys";
+        private const string _keyPropertyName = "Key";
+        private const string _loadStatePropertyName = "LoadState";
+        private const string _progressPropertyName = "Progress";
+        private const string _bundlePropertyName = "assetBundle_0";
+        private const string _loadingAssetOperationFieldName = "assetBundleRequest_0";
+        private const string _assetsPropertyName = "Assets";
+        private const string _sameNameAssetPropertyName = "SameNameAsset";
         private readonly object _instance;
         private readonly Traverse _trav;
-
-        private static readonly string _pathFieldName = "string_1";
-        private static readonly string _keyWithoutExtensionFieldName = "string_0";
-        private static readonly string _loadingJobPropertyName = "task_0";
-        private static readonly string _dependencyKeysPropertyName = "DependencyKeys";
-        private static readonly string _keyPropertyName = "Key";
-        private static readonly string _loadStatePropertyName = "LoadState";
-        private static readonly string _progressPropertyName = "Progress";
-        private static readonly string _bundlePropertyName = "assetBundle_0";
-        private static readonly string _loadingAssetOperationFieldName = "assetBundleRequest_0";
-        private static readonly string _assetsPropertyName = "Assets";
-        private static readonly string _sameNameAssetPropertyName = "SameNameAsset";
         private static MethodInfo _loadingCoroutineMethod;
 
         public IEnumerable<string> DependencyKeys
@@ -220,8 +191,8 @@ namespace Aki.CustomBundles.Utils
 
             if (_loadingCoroutineMethod == null)
             {
-                _loadingCoroutineMethod = easyBundle.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic).Single(x => x.GetParameters().Length == 0 && x.ReturnType == typeof(Task));
-                //TODO:Search member names by condition
+                _loadingCoroutineMethod = easyBundle.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic)
+                                                    .Single(x => x.GetParameters().Length == 0 && x.ReturnType == typeof(Task));
             }
         }
 

@@ -1,27 +1,15 @@
-/* HealthListener.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Ginja
- * Merijn Hendriks
- */
-
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Aki.Loader;
-using Aki.Common.Utils;
-using Aki.SinglePlayer.Utils;
+using Aki.SinglePlayer.Models;
+using IEffect = GInterface130;
 using IHealthController = GInterface171;
 using DamageInfo = GStruct240;
-using IEffect = GInterface130;
 
-
-namespace Aki.SinglePlayer.Utils.Player
+namespace Aki.SinglePlayer.Utils.Healing
 {
-    class HealthListener
+    public class HealthListener
     {
         private static object _lock = new object();
         private static HealthListener _instance = null;
@@ -50,7 +38,6 @@ namespace Aki.SinglePlayer.Utils.Player
             }
         }
 
-        // ctor
         private HealthListener()
         {
             if (CurrentHealth == null)
@@ -123,11 +110,11 @@ namespace Aki.SinglePlayer.Utils.Player
             // set effects
             if (healthController.IsBodyPartBroken(bodyPart))
             {
-                dictionary[bodyPart].AddEffect(BodyPartEffect.Fracture);
+                dictionary[bodyPart].AddEffect(EBodyPartEffect.Fracture);
             }
             else
             {
-                dictionary[bodyPart].RemoveEffect(BodyPartEffect.Fracture);
+                dictionary[bodyPart].RemoveEffect(EBodyPartEffect.Fracture);
             }
         }
 
@@ -156,7 +143,7 @@ namespace Aki.SinglePlayer.Utils.Player
                 return;
             }
 
-            CurrentHealth.Health[effect.BodyPart].AddEffect(BodyPartEffect.Fracture);
+            CurrentHealth.Health[effect.BodyPart].AddEffect(EBodyPartEffect.Fracture);
             _simpleTimer.isSynchronized = false;
         }
 
@@ -174,7 +161,7 @@ namespace Aki.SinglePlayer.Utils.Player
                 return;
             }
 
-            CurrentHealth.Health[effect.BodyPart].RemoveEffect(BodyPartEffect.Fracture);
+            CurrentHealth.Health[effect.BodyPart].RemoveEffect(EBodyPartEffect.Fracture);
             _simpleTimer.isSynchronized = false;
         }
 

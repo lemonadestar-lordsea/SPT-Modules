@@ -1,16 +1,5 @@
-/* BotDifficultyPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- * Martynas Gestautas
- */
-
-
 using System.Reflection;
 using System.Linq;
-using UnityEngine;
 using EFT;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;

@@ -1,12 +1,3 @@
-/* InsuranceScreenPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Linq;
 using System.Reflection;
 using Aki.Common.Utils.Patching;
@@ -21,9 +12,10 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
             _ = nameof(MainMenuController.InventoryController);
         }
 
-        public InsuranceScreenPatch() : base(prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch)) { }
+        public InsuranceScreenPatch() : base(prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
+        {
+        }
 
-        // don't forget 'ref'
         static void PrefixPatch(ref bool local)
         {
             local = false;
@@ -36,8 +28,6 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
 
         protected override MethodBase GetTargetMethod()
         {
-            // find method 
-            // private void method_53(bool local, GStruct73 weatherSettings, GStruct177 botsSettings, GStruct74 wavesSettings)
             return typeof(MainMenuController)
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
                 .FirstOrDefault(IsTargetMethod);    // controller contains 2 methods with same signature. Usually target method is first of them.

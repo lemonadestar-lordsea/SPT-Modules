@@ -1,15 +1,4 @@
-/* CoreDifficultyPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- * Martynas Gestautas
- */
-
-
 using System.Reflection;
-using UnityEngine;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils;
 using System.Linq;

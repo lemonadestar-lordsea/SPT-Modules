@@ -1,12 +1,3 @@
-/* BossSpawnChancePatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Linq;
 using System.Reflection;
 using Aki.Common.Utils.Patching;
@@ -17,7 +8,9 @@ namespace Aki.SinglePlayer.Patches.Bots
     {
         private static float[] bossSpawnPercent;
 
-        public BossSpawnChancePatch() : base(prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch)) { }
+        public BossSpawnChancePatch() : base(prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
+        {
+        }
 
         static void PrefixPatch(BossLocationSpawn[] bossLocationSpawn)
         {

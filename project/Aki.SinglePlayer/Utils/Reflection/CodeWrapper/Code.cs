@@ -1,12 +1,3 @@
-/* Code.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System;
 using System.Reflection.Emit;
 

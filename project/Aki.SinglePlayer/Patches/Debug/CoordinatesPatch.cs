@@ -1,19 +1,10 @@
-/* CoordinatesPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: SPT AKI
- * AUTHORS:
- * Ginja
- */
-
-
 using System.Reflection;
+using UnityEngine;
+using TMPro;
 using EFT;
 using Aki.Common.Utils.Patching;
-using TMPro;
-using UnityEngine;
 
-namespace Aki.Tools.Patches
+namespace Aki.Singleplayer.Patches.Debug
 {
     public class CoordinatesPatch : GenericPatch<CoordinatesPatch>
     {
@@ -22,7 +13,9 @@ namespace Aki.Tools.Patches
         public static PropertyInfo _uiProperty;
         public static bool firstTime = true;
 
-        public CoordinatesPatch() : base(prefix: nameof(PrefixPatch)) { }
+        public CoordinatesPatch() : base(prefix: nameof(PrefixPatch))
+        {
+        }
 
         static void PrefixPatch(object __instance)
         {

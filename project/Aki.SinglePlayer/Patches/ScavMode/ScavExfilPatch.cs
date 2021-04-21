@@ -1,12 +1,3 @@
-/* ScavExfilPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
@@ -22,7 +13,9 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 {
     public class ScavExfilPatch : GenericPatch<ScavExfilPatch>
     {
-        public ScavExfilPatch() : base(transpiler: nameof(PatchTranspile)) { }
+        public ScavExfilPatch() : base(transpiler: nameof(PatchTranspile))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {

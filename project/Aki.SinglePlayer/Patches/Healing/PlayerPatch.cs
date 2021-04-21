@@ -1,12 +1,3 @@
-/* PlayerPatch.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
 using System.Reflection;
 using System.Threading.Tasks;
 using EFT;
@@ -18,7 +9,9 @@ namespace Aki.SinglePlayer.Patches.Healing
     {
         private static string _playerAccountId;
 
-        public PlayerPatch() : base(postfix: nameof(PatchPostfix)) { }
+        public PlayerPatch() : base(postfix: nameof(PatchPostfix))
+        {
+        }
 
         protected override MethodBase GetTargetMethod()
         {
@@ -30,8 +23,7 @@ namespace Aki.SinglePlayer.Patches.Healing
             if (_playerAccountId == null)
             {
                 var backendSession = Utils.Config.BackEndSession;
-                var profile = backendSession.Profile;
-                _playerAccountId = profile.AccountId;
+                _playerAccountId = backendSession.Profile.AccountId;
             }
 
 			if (__instance.Profile.AccountId != _playerAccountId)
@@ -41,7 +33,7 @@ namespace Aki.SinglePlayer.Patches.Healing
 
             await __result;
 
-            var listener = Utils.Player.HealthListener.Instance;
+            var listener = Utils.Healing.HealthListener.Instance;
             listener.Init(__instance.HealthController, true);
         }
     }

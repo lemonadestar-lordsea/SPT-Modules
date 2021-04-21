@@ -1,13 +1,4 @@
-﻿/* Target.cs
- * License: NCSA Open Source License
- * 
- * Copyright: Merijn Hendriks
- * AUTHORS:
- * Merijn Hendriks
- */
-
-
-using NLog.Targets;
+﻿using NLog.Targets;
 using UnityEngine;
 
 namespace Aki.Loader
