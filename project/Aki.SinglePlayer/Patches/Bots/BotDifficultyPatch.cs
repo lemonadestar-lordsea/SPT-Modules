@@ -24,7 +24,7 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         private static bool PatchPrefix(ref string __result, BotDifficulty botDifficulty, WildSpawnType role)
         {
-            __result = RequestHandler.GetBotDifficulty(role, botDifficulty);
+            __result = RequestHandler.GetJson($"/singleplayer/settings/bot/difficulty/{role.ToString()}/{botDifficulty.ToString()}");
             return string.IsNullOrWhiteSpace(__result);
         }
     }

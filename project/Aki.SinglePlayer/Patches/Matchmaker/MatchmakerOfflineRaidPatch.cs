@@ -15,6 +15,11 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
         {
         }
 
+        protected override MethodBase GetTargetMethod()
+        {
+            return typeof(MatchmakerOfflineRaid).GetMethod("Show", BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+
         public static void PatchPostfix(UpdatableToggle ____offlineModeToggle, UpdatableToggle ____botsEnabledToggle,
             TMPDropDownBox ____aiAmountDropdown, TMPDropDownBox ____aiDifficultyDropdown, UpdatableToggle ____enableBosses,
             UpdatableToggle ____scavWars, UpdatableToggle ____taggedAndCursed)
@@ -33,7 +38,7 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
             // get settings from server
             try
             {
-                var json = RequestHandler.GetDefaultRaidSettings();
+                var json = RequestHandler.GetJson("/singleplayer/settings/raid/menu");
                 var settings = Json.Deserialize<DefaultRaidSettings>(json);
 
                 if (settings != null)
@@ -48,11 +53,6 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
             catch
             {
             }
-        }
-
-        protected override MethodBase GetTargetMethod()
-        {
-            return typeof(MatchmakerOfflineRaid).GetMethod("Show", BindingFlags.NonPublic | BindingFlags.Instance);
         }
     }
 }

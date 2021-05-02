@@ -37,7 +37,8 @@ namespace Aki.SinglePlayer.Patches.Bots
             
             foreach (WaveInfo wave in __result)
             {
-                wave.Limit = RequestHandler.GetBotLimit(wave.Role);
+                var json = RequestHandler.GetJson($"/singleplayer/settings/bot/limit/{wave.Role.ToString()}");
+                wave.Limit = (string.IsNullOrWhiteSpace(json)) ? 30 : Convert.ToInt32(json);
             }
         }
     }

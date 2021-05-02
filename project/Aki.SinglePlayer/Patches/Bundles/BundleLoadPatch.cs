@@ -55,7 +55,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
             if (path.Contains("http"))
             {
-                var data = RequestHandler.GetBundle(path);
+                var data = RequestHandler.GetData(path);
                 
                 if (data != null)
                 {
