@@ -216,7 +216,7 @@ namespace Aki.SinglePlayer.Utils.Healing
 
                     if (isEnabled && !isSynchronized)
                     {
-                        RequestHandler.SynchroniseHealth(Instance.CurrentHealth.ToJson());
+                        RequestHandler.PostJson("/player/health/sync", Instance.CurrentHealth.ToJson());
                         isSynchronized = true;
                     }
                 }

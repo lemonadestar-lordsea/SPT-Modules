@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
@@ -23,9 +24,8 @@ namespace Aki.SinglePlayer.Patches.Progression
 
 		public static void PatchPostfix(string locationId)
 		{
-			Config.WeaponDurabilityEnabled = RequestHandler.GetDurabilityState();
-			RequestHandler.SendLocationName(locationId);
 			SetRaidID();
+			SetWeaponDurability();
 		}
 
 		private static void SetRaidID()
@@ -40,6 +40,14 @@ namespace Aki.SinglePlayer.Patches.Progression
 				var raidID = Path.GetRandomFileName().Replace(".", "").Substring(0, 4).ToUpper();
 				preloader.SetSessionId(raidID);
 			}
+		}
+
+		private static void SetWeaponDurability()
+		{
+			var json = RequestHandler.GetJson("/singleplayer/settings/weapon/durability");
+			var enabled = (string.IsNullOrWhiteSpace(json)) ? false : Convert.ToBoolean(json);
+
+			Config.WeaponDurabilityEnabled = enabled;
 		}
 	}
 }

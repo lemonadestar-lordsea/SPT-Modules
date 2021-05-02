@@ -37,7 +37,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 				isPlayerScav = (___esideType_0 == ESideType.Savage)
 			};
 
-			RequestHandler.SaveLoot(request.ToJson());
+			RequestHandler.PutJson("/raid/profile/save", request.ToJson());
         }
     }
 }

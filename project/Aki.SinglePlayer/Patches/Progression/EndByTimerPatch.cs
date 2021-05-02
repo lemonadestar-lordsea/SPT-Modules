@@ -58,7 +58,8 @@ namespace Aki.SinglePlayer.Patches.Progression
         private static bool PrefixPatch(object __instance)
         {
             var profileId = _profileIdProperty.GetValue(__instance) as string;
-            var enabled = RequestHandler.GetEndState();
+            var json = RequestHandler.GetJson("/singleplayer/settings/raid/endstate");
+            var enabled = (string.IsNullOrWhiteSpace(json)) ? false : Convert.ToBoolean(json);
 
             if (!enabled)
             {
