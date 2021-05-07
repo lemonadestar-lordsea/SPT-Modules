@@ -24,7 +24,7 @@ namespace Aki.SinglePlayer.Utils.Bundles
 
         public static void GetBundles()
         {
-            var json = RequestHandler.GetBundles();
+            var json = RequestHandler.GetJson("/singleplayer/bundles");
             var jArray = JArray.Parse(json);
 
             foreach (var jObj in jArray)
