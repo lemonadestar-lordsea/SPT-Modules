@@ -8,12 +8,10 @@ Aki.Loader         | Loads custom assemblies into the game
 Aki.Common         | Common utilities used across projects
 Aki.Core           | Required patches to start the game
 Aki.SinglePlayer   | Simulating online game offline
-Aki.CustomBundles  | Loading custom assets into the game
-Aki.Tools          | Debugging utilities
 
 ## Requirements
 
-- Escape From Tarkov 0.12.10.12102
+- Escape From Tarkov 0.12.10.12192
 - Visual Studio Build Tools (.NET desktop workload)
 - .NET Framework 4.6.1
 
