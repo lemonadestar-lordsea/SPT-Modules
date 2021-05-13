@@ -65,7 +65,7 @@ namespace Aki.SinglePlayer.Patches.Quests
             itemComponent.Side = victimProfileInfo.Side;
             itemComponent.KillerName = aggressor.Profile.Info.Nickname;
             itemComponent.Time = DateTime.Now;
-            itemComponent.Status = "Killed by";
+            itemComponent.Status = "Killed by ";
             itemComponent.KillerAccountId = aggressor.Profile.AccountId;
             itemComponent.KillerProfileId = aggressor.Profile.Id;
             itemComponent.WeaponName = damageInfo.Weapon.Name;
