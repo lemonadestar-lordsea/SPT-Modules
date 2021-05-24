@@ -158,7 +158,7 @@ namespace Aki.Common.Utils
 				}
 			}
 
-			using (WebResponse response = request.GetResponse());
+			using (WebResponse response = request.GetResponse())
             {
                 using (MemoryStream ms = new MemoryStream())
                 {
