@@ -158,28 +158,28 @@ namespace Aki.Common.Utils
 				}
 			}
 
-			WebResponse response = request.GetResponse();
+			using (WebResponse response = request.GetResponse())
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    response.GetResponseStream().CopyTo(ms);
+                    byte[] body = ms.ToArray();
 
-			try
-			{
-				using (MemoryStream ms = new MemoryStream())
-				{
-					response.GetResponseStream().CopyTo(ms);
+                    if (body.Length == 0)
+                    {
+                        return null;
+                    }                    
 
-					try
-					{
-						return Zlib.CheckHeader(ms.ToArray()) ? Zlib.Decompress(ms.ToArray()) : ms.ToArray();
-					}
-					catch
-					{
-						return ms.ToArray();
-					}
-				}
-			}
-			catch
-			{
-				return null;
-			}
+                    if (Zlib.CheckHeader(body))
+                    {
+                        return Zlib.Decompress(body);
+                    }
+                    else
+                    {
+                        return body;
+                    }
+                }
+            }
 		}
 	}
 }
