@@ -6,11 +6,11 @@ using Aki.Common.Utils.Patching;
 
 namespace Aki.Core.Patches
 {
-	public class FileConsistencyvPatch : GenericPatch<FileConsistencyvPatch>
+	public class FileConsistencyPatch : GenericPatch<FileConsistencyPatch>
 	{
 		private Assembly assembly;
 
-		public FileConsistencyvPatch() : base(prefix: nameof(PatchPrefix))
+		public FileConsistencyPatch() : base(prefix: nameof(PatchPrefix))
 		{
 			assembly = typeof(ICheckResult).Assembly;
 		}
