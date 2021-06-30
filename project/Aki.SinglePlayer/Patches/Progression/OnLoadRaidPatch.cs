@@ -25,7 +25,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 		public static void PatchPostfix(string locationId)
 		{
 			SetRaidID();
-			SetWeaponDurability();
+			//SetWeaponDurability();
 		}
 
 		private static void SetRaidID()
@@ -42,6 +42,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 			}
 		}
 
+		/*
 		private static void SetWeaponDurability()
 		{
 			var json = RequestHandler.GetJson("/singleplayer/settings/weapon/durability");
@@ -49,5 +50,6 @@ namespace Aki.SinglePlayer.Patches.Progression
 
 			Config.WeaponDurabilityEnabled = enabled;
 		}
+		*/
 	}
 }
