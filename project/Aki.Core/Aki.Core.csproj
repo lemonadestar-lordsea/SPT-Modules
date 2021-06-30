@@ -45,7 +45,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="FilesChecker">
-      <HintPath>..\..\..\..\..\Visual Studio\Aki.PacketSniffer\Aki.PacketSniffer\References\FilesChecker.dll</HintPath>
+      <HintPath>..\Shared\References\FilesChecker.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="UnityEngine">
@@ -68,7 +68,7 @@
   <ItemGroup>
     <Compile Include="Patches\FileConsistencyvPatch.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Patches\BattleEyePatch.cs" />
+    <Compile Include="Patches\BattlEyePatch.cs" />
     <Compile Include="Patches\SslCertificatePatch.cs" />
     <Compile Include="Patches\UnityWebRequestPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
