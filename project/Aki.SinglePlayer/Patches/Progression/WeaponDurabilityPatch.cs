@@ -55,17 +55,17 @@ namespace Aki.SinglePlayer.Patches.Progression
             {
                 return;
             }
-
+            
             var item = __instance.Item;
             var durability = item.Repairable.Durability;
-            var deterioration = ammo.Deterioration;
+            var deterioration = ammo.DurabilityBurnModificator;
             var operatingResource = (item.Template.OperatingResource > 0) ? item.Template.OperatingResource : 1;
-
+            
             if (durability <= 0f)
             {
                 return;
             }
-
+            
             durability -= item.Repairable.MaxDurability / operatingResource * deterioration;
             item.Repairable.Durability = (durability > 0) ? durability : 0;
         }

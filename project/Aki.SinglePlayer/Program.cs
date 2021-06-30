@@ -28,8 +28,11 @@ namespace Aki.SinglePlayer
             PatcherUtil.Patch<OfflineSpawnPointPatch>();
             PatcherUtil.Patch<ExperienceGainPatch>();
             PatcherUtil.Patch<OnLoadRaidPatch>();
-            PatcherUtil.Patch<WeaponDurabilityPatch>();
-            PatcherUtil.Patch<SingleModeJamPatch>();
+
+            // Disabling these, as the related systems have been updated
+            // TODO: Test and figure out if patches are still needed
+            // PatcherUtil.Patch<WeaponDurabilityPatch>();
+            // PatcherUtil.Patch<SingleModeJamPatch>();
             
             PatcherUtil.Patch<Patches.Healing.MainMenuControllerPatch>();
 			PatcherUtil.Patch<Patches.Healing.PlayerPatch>();
@@ -46,9 +49,10 @@ namespace Aki.SinglePlayer
 			PatcherUtil.Patch<CoreDifficultyPatch>();
 			PatcherUtil.Patch<BotDifficultyPatch>();
 
-            PatcherUtil.Patch<OnDeadPatch>();
-            PatcherUtil.Patch<OnShellEjectEventPatch>();
-            PatcherUtil.Patch<BotStationaryWeaponPatch>();
+            // TODO: Potentially obsolete patches - needs testing
+            // PatcherUtil.Patch<OnDeadPatch>();
+            // PatcherUtil.Patch<OnShellEjectEventPatch>();
+            // PatcherUtil.Patch<BotStationaryWeaponPatch>();
 
             PatcherUtil.Patch<BeaconPatch>();
 			PatcherUtil.Patch<DogtagPatch>();
