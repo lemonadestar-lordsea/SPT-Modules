@@ -48,7 +48,7 @@ GStruct239       | GStruct240        | GStruct241
 **0.12.9.10532**             | **0.12.10.11565**            | **0.12.11.13074**
 ---------------------------- | ---------------------------- | -------------------------------
 GClass360.method_1           | GClass363.method_1           | GClass379.method_1
-GClass1190.Class818.method_2 | GClass1224.Class814.method_2 | GClass1253.Class846.method_2
+GClass1190.Class818.method_2 | GClass1224.Class815.method_2 | GClass1253.Class847.method_2
 GClass1190.method_1          | GClass1224.method_1          | GClass1253.method_1
 GClass1190.method_35         | GClass1224.method_38         | GClass1253.method_40
 GClass1190.method_50         | GClass1224.method_56         | GClass1253.method_61
