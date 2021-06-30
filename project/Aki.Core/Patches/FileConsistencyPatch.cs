@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using FilesChecker;
@@ -8,16 +9,15 @@ namespace Aki.Core.Patches
 {
 	public class FileConsistencyPatch : GenericPatch<FileConsistencyPatch>
 	{
-		private Assembly assembly;
-
 		public FileConsistencyPatch() : base(prefix: nameof(PatchPrefix))
 		{
-			assembly = typeof(ICheckResult).Assembly;
 		}
 
 		protected override MethodBase GetTargetMethod()
 		{
-			return assembly.GetType("ConsistencyController").GetMethod("EnsureConsistency", BindingFlags.NonPublic | BindingFlags.Instance);
+			return Assembly.GetAssembly(typeof(ICheckResult))
+				.GetTypes().Single(x => x.Name == "ConsistencyController")
+				.GetMethod("EnsureConsistency", BindingFlags.Public | BindingFlags.Instance);
 		}
 
 		private static bool PatchPrefix(ref Task<ICheckResult> __result)
