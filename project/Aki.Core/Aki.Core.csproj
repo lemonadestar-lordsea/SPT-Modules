@@ -48,10 +48,6 @@
       <HintPath>..\Shared\References\Comfort.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="FilesChecker">
-      <HintPath>..\Shared\References\FilesChecker.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="UnityEngine">
       <HintPath>..\Shared\References\UnityEngine.dll</HintPath>
@@ -71,7 +67,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Patches\FileConsistencyPatch.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Patches\BattlEyePatch.cs" />
     <Compile Include="Patches\SslCertificatePatch.cs" />
