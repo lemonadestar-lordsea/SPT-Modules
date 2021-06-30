@@ -6,11 +6,11 @@ using Aki.Core.Utils;
 
 namespace Aki.Core.Patches
 {
-	public class BattleEyePatch : GenericPatch<BattleEyePatch>
+	public class BattlEyePatch : GenericPatch<BattlEyePatch>
 	{
         public static PropertyInfo __property;
 		
-        public BattleEyePatch() : base(prefix: nameof(PatchPrefix))
+        public BattlEyePatch() : base(prefix: nameof(PatchPrefix))
 		{
 		}
 
@@ -18,11 +18,11 @@ namespace Aki.Core.Patches
 		{
 			var methodName = "RunValidation";
 			var flags = BindingFlags.Public | BindingFlags.Instance;
-			var __type = PatcherConstants.TargetAssembly.GetTypes().Single(x => x.GetMethod(methodName, flags) != null);
+			var type = PatcherConstants.TargetAssembly.GetTypes().Single(x => x.GetMethod(methodName, flags) != null);
 
-            __property = __type.GetProperty("Succeed", flags);
+            __property = type.GetProperty("Succeed", flags);
 
-            return __type.GetMethod(methodName, flags);
+            return type.GetMethod(methodName, flags);
         }
 
         private static bool PatchPrefix(ref Task __result, object __instance)

@@ -10,7 +10,7 @@ namespace Aki.Core
 		{
             Debug.LogError("Aki.Core: Loaded");
 
-            PatcherUtil.Patch<BattleEyePatch>();
+            PatcherUtil.Patch<BattlEyePatch>();
             PatcherUtil.Patch<SslCertificatePatch>();
             PatcherUtil.Patch<UnityWebRequestPatch>();
             PatcherUtil.Patch<FileConsistencyvPatch>();
