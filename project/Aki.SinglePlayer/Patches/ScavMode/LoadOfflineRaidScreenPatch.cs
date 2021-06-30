@@ -9,10 +9,10 @@ using EFT.UI.Matchmaker;
 using EFT.UI.Screens;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils.Reflection;
-using MenuController = GClass1224;
-using WeatherSettings = GStruct92;
-using BotsSettings = GStruct233;
-using WavesSettings = GStruct93;
+using MenuController = GClass1253;
+using WeatherSettings = GStruct93;
+using BotsSettings = GStruct234;
+using WavesSettings = GStruct94;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
@@ -27,7 +27,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         protected override MethodBase GetTargetMethod()
         {
             return typeof(MenuController).GetNestedTypes(BindingFlags.NonPublic)
-                .Single(x => x.Name == "Class815")
+                .Single(x => x.Name == "Class846")
                 .GetMethod("method_2", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
@@ -46,7 +46,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         private static MenuController GetMenuController()
         {
-            return PrivateValueAccessor.GetPrivateFieldValue(typeof(MainApplication), $"{typeof(GClass1224).Name.ToLower()}_0",
+            return PrivateValueAccessor.GetPrivateFieldValue(typeof(MainApplication), $"{typeof(GClass1253).Name.ToLower()}_0",
                                                              ClientAppUtils.GetMainApp()) as MenuController;
         }
 
@@ -61,23 +61,23 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             }
 
             SetMenuControllerFieldValue(menuController, "bool_0", local);
-            SetMenuControllerFieldValue(menuController, $"{typeof(GStruct92).Name.ToLower()}_0", weatherSettings);
-            SetMenuControllerFieldValue(menuController, $"{typeof(GStruct93).Name.ToLower()}_0", wavesSettings);
-            SetMenuControllerFieldValue(menuController, $"{typeof(GStruct233).Name.ToLower()}_0", botsSettings);
+            SetMenuControllerFieldValue(menuController, $"{typeof(GStruct93).Name.ToLower()}_0", weatherSettings);
+            SetMenuControllerFieldValue(menuController, $"{typeof(GStruct94).Name.ToLower()}_0", wavesSettings);
+            SetMenuControllerFieldValue(menuController, $"{typeof(GStruct234).Name.ToLower()}_0", botsSettings);
 
             // load ready screen method
-            typeof(MenuController).GetMethod("method_38", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(menuController, null);
+            typeof(MenuController).GetMethod("method_40", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(menuController, null);
         }
 
         public static void LoadOfflineRaidScreenForScav()
         {
             var menuController = (object)GetMenuController();
-            var gclass = new MatchmakerOfflineRaid.GClass2066();
+            var gclass = new MatchmakerOfflineRaid.GClass2112();
 
             gclass.OnShowNextScreen += LoadOfflineRaidNextScreen;
 
             // ready method
-            gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, "method_56");
+            gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, "method_61");
             gclass.ShowScreen(EScreenState.Queued);
         }
 

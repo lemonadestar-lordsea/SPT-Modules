@@ -7,9 +7,9 @@ using Diz.DependencyManager;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils.Bundles;
-using IEasyBundle = GInterface253;                                  // Property: SameNameAsset 
-using IBundleLock = GInterface254;                                  // Property: IsLocked
-using BindableState = GClass2206<Diz.DependencyManager.ELoadState>; // Construct method parameter: initialValue
+using IEasyBundle = GInterface263;                                  // Property: SameNameAsset 
+using IBundleLock = GInterface264;                                  // Property: IsLocked
+using BindableState = GClass2251<Diz.DependencyManager.ELoadState>; // Construct method parameter: initialValue
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {

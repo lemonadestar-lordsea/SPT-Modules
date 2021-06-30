@@ -56,7 +56,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         public static void PatchPostfix(object __instance, Weapon ___weapon_0, FirearmsAnimator ___firearmsAnimator_0, FirearmController ___firearmController_0)
         {
-            if (!Config.WeaponDurabilityEnabled || ___weapon_0.MalfunctionState != Weapon.EMalfunctionState.Jam)
+            if (!Config.WeaponDurabilityEnabled || ___weapon_0.MalfState.State != Weapon.EMalfunctionState.Jam)
             {
                 return;
             }
