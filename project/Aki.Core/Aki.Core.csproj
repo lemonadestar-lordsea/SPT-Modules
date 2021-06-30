@@ -71,7 +71,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Patches\FileConsistencyvPatch.cs" />
+    <Compile Include="Patches\FileConsistencyPatch.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Patches\BattlEyePatch.cs" />
     <Compile Include="Patches\SslCertificatePatch.cs" />
