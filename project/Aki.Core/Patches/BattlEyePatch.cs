@@ -21,7 +21,6 @@ namespace Aki.Core.Patches
 			var type = PatcherConstants.TargetAssembly.GetTypes().Single(x => x.GetMethod(methodName, flags) != null);
 
             __property = type.GetProperty("Succeed", flags);
-
             return type.GetMethod(methodName, flags);
         }
 
