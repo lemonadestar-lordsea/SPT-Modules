@@ -16,7 +16,6 @@ namespace Aki.Common.Utils.Patching
         public static Type MainApplicationType = TargetAssembly.GetTypes().Single(x => x.Name == "MainApplication");
         public static Type LocalGameType = TargetAssembly.GetTypes().Single(x => x.Name == "LocalGame");
         public static Type MatchmakerOfflineRaidType = TargetAssembly.GetTypes().Single(x => x.Name == "MatchmakerOfflineRaid");
-        public static Type MenuControllerType = TargetAssembly.GetTypes().Single(x => x.GetProperty("QuestController") != null);
 
         public static Type BackendInterfaceType = TargetAssembly.GetTypes().Single(
             x => x.GetMethods().Select(y => y.Name).Contains("CreateClientSession") && x.IsInterface);
