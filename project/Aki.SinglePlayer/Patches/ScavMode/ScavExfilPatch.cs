@@ -66,7 +66,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 new Code(OpCodes.Ldarg_0),
                 new Code(OpCodes.Call, PatcherConstants.LocalGameType.BaseType, "get_Profile_0"),
                 new Code(OpCodes.Ldfld, typeof(Profile), "Id"),
-                new Code(OpCodes.Callvirt, PatcherConstants.ExfilPointManagerType, "ScavExfiltrationClaim", new System.Type[]{ typeof(Vector3), typeof(string) }),
+                new Code(OpCodes.Callvirt, PatcherConstants.ExfilPointManagerType, "ScavExfiltrationClaim", new System.Type[]{ typeof(Vector3), typeof(string), typeof(int) }),
                 new Code(OpCodes.Call, PatcherConstants.ExfilPointManagerType, "get_Instance"),
                 new Code(OpCodes.Call, PatcherConstants.ExfilPointManagerType, "get_Instance"),
                 new Code(OpCodes.Ldarg_0),
@@ -82,11 +82,14 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 new Code(OpCodes.Ldarg_0),
                 new Code(OpCodes.Call, PatcherConstants.LocalGameType.BaseType, "get_Profile_0"),
                 new Code(OpCodes.Callvirt, PatcherConstants.ExfilPointManagerType, "EligiblePoints", new System.Type[]{ typeof(Profile) }),
-                new CodeWithLabel(OpCodes.Stloc_0, brLabel)
+                new CodeWithLabel(OpCodes.Stloc_2, brLabel)
             });
 
             codes.RemoveRange(searchIndex, 5);
             codes.InsertRange(searchIndex, newCodes);
+
+            // TODO: Remove this after issues are fixed
+            Debug.LogError($"Code instructions:\n{string.Join("\n", codes.Select(x => x.ToString()))}");
 
             return codes.AsEnumerable();
         }
