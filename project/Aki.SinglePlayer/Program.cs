@@ -28,11 +28,6 @@ namespace Aki.SinglePlayer
             PatcherUtil.Patch<OfflineSpawnPointPatch>();
             PatcherUtil.Patch<ExperienceGainPatch>();
             PatcherUtil.Patch<OnLoadRaidPatch>();
-
-            // Disabling these, as the related systems have been updated
-            // TODO: Test and figure out if patches are still needed
-            // PatcherUtil.Patch<WeaponDurabilityPatch>();
-            // PatcherUtil.Patch<SingleModeJamPatch>();
             
             PatcherUtil.Patch<Patches.Healing.MainMenuControllerPatch>();
 			PatcherUtil.Patch<Patches.Healing.PlayerPatch>();
@@ -43,16 +38,11 @@ namespace Aki.SinglePlayer
 
             PatcherUtil.Patch<BossSpawnChancePatch>();
 			PatcherUtil.Patch<BotTemplateLimitPatch>();
-            PatcherUtil.Patch<GetNewBotTemplatesPatch>();
+            
             PatcherUtil.Patch<RemoveUsedBotProfilePatch>();
             PatcherUtil.Patch<SpawnPmcPatch>();
 			PatcherUtil.Patch<CoreDifficultyPatch>();
 			PatcherUtil.Patch<BotDifficultyPatch>();
-
-            // TODO: Potentially obsolete patches - needs testing
-            // PatcherUtil.Patch<OnDeadPatch>();
-            // PatcherUtil.Patch<OnShellEjectEventPatch>();
-            // PatcherUtil.Patch<BotStationaryWeaponPatch>();
 
             PatcherUtil.Patch<BeaconPatch>();
 			PatcherUtil.Patch<DogtagPatch>();
@@ -64,6 +54,13 @@ namespace Aki.SinglePlayer
 
             PatcherUtil.Patch<EndByTimerPatch>();
 
+            // TODO: Potentially obsolete patches - needs testing
+            // PatcherUtil.Patch<WeaponDurabilityPatch>();
+            // PatcherUtil.Patch<SingleModeJamPatch>();
+            // PatcherUtil.Patch<GetNewBotTemplatesPatch>();
+            // PatcherUtil.Patch<OnDeadPatch>();
+            // PatcherUtil.Patch<OnShellEjectEventPatch>();
+            // PatcherUtil.Patch<BotStationaryWeaponPatch>();
             // PatcherUtil.Patch<EnableCommandQueueDebugLogs>();
             // PatcherUtil.Patch<CoordinatesPatch>();
         }
