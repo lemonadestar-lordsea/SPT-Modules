@@ -16,6 +16,11 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
         {
         }
 
+        protected override MethodBase GetTargetMethod()
+        {
+            return typeof(MainMenuController).GetMethod("method_60");
+        }
+
         static void PrefixPatch(ref bool local)
         {
             local = false;
@@ -31,23 +36,6 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
             return typeof(MainMenuController)
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
                 .FirstOrDefault(IsTargetMethod);    // controller contains 2 methods with same signature. Usually target method is first of them.
-        }
-
-        private static bool IsTargetMethod(MethodInfo mi)
-        {
-            var parameters = mi.GetParameters();
-
-            if (parameters.Length != 4
-            || parameters[0].ParameterType != typeof(bool)
-            || parameters[0].Name != "local"
-            || parameters[1].Name != "weatherSettings"
-            || parameters[2].Name != "botsSettings"
-            || parameters[3].Name != "wavesSettings")
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }
