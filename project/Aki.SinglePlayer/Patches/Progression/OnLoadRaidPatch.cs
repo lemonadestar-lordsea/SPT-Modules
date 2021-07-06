@@ -1,10 +1,8 @@
-using System;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
 using EFT.UI;
 using Aki.Common.Utils.Patching;
-using Aki.SinglePlayer.Utils;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
@@ -25,7 +23,6 @@ namespace Aki.SinglePlayer.Patches.Progression
 		public static void PatchPostfix(string locationId)
 		{
 			SetRaidID();
-			//SetWeaponDurability();
 		}
 
 		private static void SetRaidID()
@@ -41,15 +38,5 @@ namespace Aki.SinglePlayer.Patches.Progression
 				preloader.SetSessionId(raidID);
 			}
 		}
-
-		/*
-		private static void SetWeaponDurability()
-		{
-			var json = RequestHandler.GetJson("/singleplayer/settings/weapon/durability");
-			var enabled = (string.IsNullOrWhiteSpace(json)) ? false : Convert.ToBoolean(json);
-
-			Config.WeaponDurabilityEnabled = enabled;
-		}
-		*/
 	}
 }

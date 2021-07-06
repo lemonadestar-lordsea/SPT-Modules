@@ -15,6 +15,5 @@ namespace Aki.SinglePlayer.Utils
 
         public static ISession BackEndSession => Singleton<ClientApplication>.Instance.GetClientBackEndSession();
         public static string BackendUrl => ClientConfig.Config.BackendUrl;
-        public static bool WeaponDurabilityEnabled = false;
     }
 }

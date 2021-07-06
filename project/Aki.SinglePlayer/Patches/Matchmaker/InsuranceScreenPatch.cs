@@ -30,12 +30,5 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
         {
             ___bool_0 = true;
         }
-
-        protected override MethodBase GetTargetMethod()
-        {
-            return typeof(MainMenuController)
-                .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .FirstOrDefault(IsTargetMethod);    // controller contains 2 methods with same signature. Usually target method is first of them.
-        }
     }
 }

@@ -3,11 +3,9 @@ using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils.Bundles;
 using Aki.SinglePlayer.Patches.Bots;
 using Aki.SinglePlayer.Patches.Bundles;
-using Aki.Singleplayer.Patches.Debug;
 using Aki.SinglePlayer.Patches.Matchmaker;
 using Aki.SinglePlayer.Patches.Progression;
 using Aki.SinglePlayer.Patches.Quests;
-using Aki.SinglePlayer.Patches.RaidFix;
 using Aki.SinglePlayer.Patches.ScavMode;
 
 namespace Aki.SinglePlayer
@@ -53,15 +51,6 @@ namespace Aki.SinglePlayer
             PatcherUtil.Patch<ScavExfilPatch>();
 
             PatcherUtil.Patch<EndByTimerPatch>();
-
-            // TODO: Potentially obsolete patches - needs testing
-            // PatcherUtil.Patch<WeaponDurabilityPatch>();
-            // PatcherUtil.Patch<SingleModeJamPatch>();
-            // PatcherUtil.Patch<OnDeadPatch>();
-            // PatcherUtil.Patch<OnShellEjectEventPatch>();
-            // PatcherUtil.Patch<BotStationaryWeaponPatch>();
-            // PatcherUtil.Patch<EnableCommandQueueDebugLogs>();
-            // PatcherUtil.Patch<CoordinatesPatch>();
         }
     }
 }
