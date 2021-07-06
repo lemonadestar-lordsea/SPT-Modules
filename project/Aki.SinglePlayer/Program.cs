@@ -36,13 +36,13 @@ namespace Aki.SinglePlayer
 			PatcherUtil.Patch<MatchMakerSelectionLocationScreenPatch>();
 			PatcherUtil.Patch<InsuranceScreenPatch>();
 
-            PatcherUtil.Patch<BossSpawnChancePatch>();
 			PatcherUtil.Patch<BotTemplateLimitPatch>();
-            
+            PatcherUtil.Patch<GetNewBotTemplatesPatch>();
             PatcherUtil.Patch<RemoveUsedBotProfilePatch>();
             PatcherUtil.Patch<SpawnPmcPatch>();
 			PatcherUtil.Patch<CoreDifficultyPatch>();
 			PatcherUtil.Patch<BotDifficultyPatch>();
+            PatcherUtil.Patch<BossSpawnChancePatch>();
 
             PatcherUtil.Patch<BeaconPatch>();
 			PatcherUtil.Patch<DogtagPatch>();
@@ -57,7 +57,6 @@ namespace Aki.SinglePlayer
             // TODO: Potentially obsolete patches - needs testing
             // PatcherUtil.Patch<WeaponDurabilityPatch>();
             // PatcherUtil.Patch<SingleModeJamPatch>();
-            // PatcherUtil.Patch<GetNewBotTemplatesPatch>();
             // PatcherUtil.Patch<OnDeadPatch>();
             // PatcherUtil.Patch<OnShellEjectEventPatch>();
             // PatcherUtil.Patch<BotStationaryWeaponPatch>();
