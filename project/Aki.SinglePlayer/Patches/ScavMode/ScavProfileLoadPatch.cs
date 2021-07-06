@@ -7,6 +7,7 @@ using EFT;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils.Reflection.CodeWrapper;
 using Aki.SinglePlayer.Utils;
+using Comfort.Common;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
@@ -96,7 +97,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         private static bool IsTargetNestedType(System.Type nestedType)
         {
             return nestedType.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .Count(x => x.GetParameters().Length == 1 && x.GetParameters()[0].ParameterType == typeof(string)) > 0 && nestedType.GetField("savageProfile") != null;
+                .Count(x => x.GetParameters().Length == 1 && x.GetParameters()[0].ParameterType == typeof(IResult)) > 0 && nestedType.GetField("savageProfile") != null;
         }
 
     }

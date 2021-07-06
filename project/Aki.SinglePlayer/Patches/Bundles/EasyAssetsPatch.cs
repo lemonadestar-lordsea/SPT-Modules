@@ -11,10 +11,10 @@ using JetBrains.Annotations;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils.Bundles;
-using IEasyBundle = GInterface253;                  // Property: SameNameAsset 
-using IBundleLock = GInterface254;                  // Property: IsLocked
-using BundleLock = GClass2220;                      // Property: MaxConcurrentOperations
-using DependencyGraph = GClass2221<GInterface253>;  // Method: GetDefaultNode()
+using IEasyBundle = GInterface263;                  // Property: SameNameAsset 
+using IBundleLock = GInterface264;                  // Property: IsLocked
+using BundleLock = GClass2265;                      // Property: MaxConcurrentOperations
+using DependencyGraph = GClass2266<GInterface263>;  // Method: GetDefaultNode()
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {

@@ -53,7 +53,7 @@ namespace Aki.SinglePlayer.Utils.Reflection.CodeWrapper
 
         private static List<Label> GetLabelList(Code code) {
             if (code.GetLabel() == null)
-                return null;
+                return new List<Label>();
 
             return new List<Label>() { (Label)code.GetLabel() };
         }

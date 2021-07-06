@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Aki.SinglePlayer</RootNamespace>
     <AssemblyName>aki-singleplayer</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -89,6 +89,7 @@
     <Compile Include="Models\EBodyPartEffect.cs" />
     <Compile Include="Models\PlayerHealth.cs" />
     <Compile Include="Models\SaveProfileRequest.cs" />
+    <Compile Include="Patches\Debug\EnableCommandQueueDebugLogs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Patches\Bots\BossSpawnChancePatch.cs" />
     <Compile Include="Patches\Bots\BotTemplateLimitPatch.cs" />
