@@ -89,9 +89,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             codes.RemoveRange(searchIndex, 5);
             codes.InsertRange(searchIndex, newCodes);
 
-            // TODO: Remove this after issues are fixed
-            Debug.LogError($"Code instructions:\n{string.Join("\n", codes.Select(x => x.ToString()))}");
-
             return codes.AsEnumerable();
         }
 
