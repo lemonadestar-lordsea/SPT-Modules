@@ -3,7 +3,7 @@ using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils.Bundles;
 using Aki.SinglePlayer.Patches.Bots;
 using Aki.SinglePlayer.Patches.Bundles;
-//using Aki.Singleplayer.Patches.Debug;
+using Aki.Singleplayer.Patches.Debug;
 using Aki.SinglePlayer.Patches.Matchmaker;
 using Aki.SinglePlayer.Patches.Progression;
 using Aki.SinglePlayer.Patches.Quests;
@@ -64,7 +64,8 @@ namespace Aki.SinglePlayer
 
             PatcherUtil.Patch<EndByTimerPatch>();
 
-            //PatcherUtil.Patch<CoordinatesPatch>();
+            // PatcherUtil.Patch<EnableCommandQueueDebugLogs>();
+            // PatcherUtil.Patch<CoordinatesPatch>();
         }
     }
 }
