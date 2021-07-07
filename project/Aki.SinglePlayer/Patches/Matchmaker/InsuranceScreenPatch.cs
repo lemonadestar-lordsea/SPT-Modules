@@ -18,7 +18,9 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MainMenuController).GetMethod("method_60");
+            return typeof(MainMenuController)
+                .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                .FirstOrDefault(IsTargetMethod);
         }
 
         static void PrefixPatch(ref bool local)
@@ -29,6 +31,23 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
         static void PostfixPatch(ref bool ___bool_0)
         {
             ___bool_0 = true;
+        }
+
+        private static bool IsTargetMethod(MethodInfo mi)
+        {
+            var parameters = mi.GetParameters();
+
+            if (parameters.Length != 4
+            || parameters[0].ParameterType != typeof(bool)
+            || parameters[0].Name != "local"
+            || parameters[1].Name != "weatherSettings"
+            || parameters[2].Name != "botsSettings"
+            || parameters[3].Name != "wavesSettings")
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

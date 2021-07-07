@@ -20,9 +20,13 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
             return typeof(MatchmakerOfflineRaid).GetMethod("Show", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
-        public static void PatchPostfix(UpdatableToggle ____offlineModeToggle, UpdatableToggle ____botsEnabledToggle,
-            TMPDropDownBox ____aiAmountDropdown, TMPDropDownBox ____aiDifficultyDropdown, UpdatableToggle ____enableBosses,
-            UpdatableToggle ____scavWars, UpdatableToggle ____taggedAndCursed)
+        public static void PatchPostfix(UpdatableToggle ____offlineModeToggle,
+                                        UpdatableToggle ____botsEnabledToggle,
+                                        TMPDropDownBox ____aiAmountDropdown,
+                                        TMPDropDownBox ____aiDifficultyDropdown,
+                                        UpdatableToggle ____enableBosses,
+                                        UpdatableToggle ____scavWars,
+                                        UpdatableToggle ____taggedAndCursed)
         {
             // disable "no progression save" panel
             var warningPanel = GameObject.Find("Warning Panel");
@@ -36,22 +40,16 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
             ____botsEnabledToggle.isOn = true;
 
             // get settings from server
-            try
-            {
-                var json = RequestHandler.GetJson("/singleplayer/settings/raid/menu");
-                var settings = Json.Deserialize<DefaultRaidSettings>(json);
+            var json = RequestHandler.GetJson("/singleplayer/settings/raid/menu");
+            var settings = Json.Deserialize<DefaultRaidSettings>(json);
 
-                if (settings != null)
-                {
-                    ____aiAmountDropdown.UpdateValue((int)settings.AiAmount, false);
-                    ____aiDifficultyDropdown.UpdateValue((int)settings.AiDifficulty, false);
-                    ____enableBosses.isOn = settings.BossEnabled;
-                    ____scavWars.isOn = settings.ScavWars;
-                    ____taggedAndCursed.isOn = settings.TaggedAndCursed;
-                }
-            }
-            catch
+            if (settings != null)
             {
+                ____aiAmountDropdown.UpdateValue((int)settings.AiAmount, false);
+                ____aiDifficultyDropdown.UpdateValue((int)settings.AiDifficulty, false);
+                ____enableBosses.isOn = settings.BossEnabled;
+                ____scavWars.isOn = settings.ScavWars;
+                ____taggedAndCursed.isOn = settings.TaggedAndCursed;
             }
         }
     }
