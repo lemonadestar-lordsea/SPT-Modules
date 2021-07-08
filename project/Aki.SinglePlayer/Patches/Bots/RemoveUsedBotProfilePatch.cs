@@ -11,9 +11,9 @@ namespace Aki.SinglePlayer.Patches.Bots
 {
     public class RemoveUsedBotProfilePatch : GenericPatch<RemoveUsedBotProfilePatch>
     {
-        private static Type targetInterface;
-        private static Type targetType;
-        private static AccessTools.FieldRef<object, List<Profile>> profilesField;
+        private static Type _targetInterface;
+        private static Type _targetType;
+        private static AccessTools.FieldRef<object, List<Profile>> _profilesField;
 
         static RemoveUsedBotProfilePatch()
         {
@@ -22,9 +22,9 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         public RemoveUsedBotProfilePatch() : base(prefix: nameof(PatchPrefix))
         {
-            targetInterface = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetInterface);
-            targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
-            profilesField = AccessTools.FieldRefAccess<List<Profile>>(targetType, "list_0");
+            _targetInterface = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetInterface);
+            _targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
+            _profilesField = AccessTools.FieldRefAccess<List<Profile>>(_targetType, "list_0");
         }
 
         private static bool IsTargetInterface(Type type)
@@ -39,7 +39,7 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         private bool IsTargetType(Type type)
         {
-            if (!targetInterface.IsAssignableFrom(type) || !targetInterface.IsAssignableFrom(type.BaseType))
+            if (!_targetInterface.IsAssignableFrom(type) || !_targetInterface.IsAssignableFrom(type.BaseType))
             {
                 return false;
             }
@@ -49,12 +49,12 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         protected override MethodBase GetTargetMethod()
         {
-            return targetType.GetMethod("GetNewProfile", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            return _targetType.GetMethod("GetNewProfile", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
-        public static bool PatchPrefix(ref Profile __result, object __instance, BotData data)
+        private static bool PatchPrefix(ref Profile __result, object __instance, BotData data)
         {
-            var profiles = profilesField(__instance);
+            var profiles = _profilesField(__instance);
 
             if (profiles.Count > 0)
             {

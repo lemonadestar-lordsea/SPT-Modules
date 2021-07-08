@@ -19,7 +19,7 @@ namespace Aki.Core.Patches
 				.GetMethod("ValidateCertificate", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 		}
 
-		static bool PatchPrefix(ref bool __result)
+		private static bool PatchPrefix(ref bool __result)
 		{
 			__result = ValidationUtil.Validate();
 			return false;

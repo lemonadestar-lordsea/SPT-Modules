@@ -10,17 +10,17 @@ namespace Aki.SinglePlayer.Patches.Bots
 {
     public class SpawnPmcPatch : GenericPatch<SpawnPmcPatch>
     {
-        private static Type targetInterface;
-        private static Type targetType;
-        private static AccessTools.FieldRef<object, WildSpawnType> wildSpawnTypeField;
-        private static AccessTools.FieldRef<object, BotDifficulty> botDifficultyField;
+        private static Type _targetInterface;
+        private static Type _targetType;
+        private static AccessTools.FieldRef<object, WildSpawnType> _wildSpawnTypeField;
+        private static AccessTools.FieldRef<object, BotDifficulty> _botDifficultyField;
 
         public SpawnPmcPatch() : base(prefix: nameof(PatchPrefix))
         {
-            targetInterface = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetInterface);
-            targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
-            wildSpawnTypeField = AccessTools.FieldRefAccess<WildSpawnType>(targetType, "wildSpawnType_0");
-            botDifficultyField = AccessTools.FieldRefAccess<BotDifficulty>(targetType, "botDifficulty_0");
+            _targetInterface = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetInterface);
+            _targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
+            _wildSpawnTypeField = AccessTools.FieldRefAccess<WildSpawnType>(_targetType, "wildSpawnType_0");
+            _botDifficultyField = AccessTools.FieldRefAccess<BotDifficulty>(_targetType, "botDifficulty_0");
         }
 
         private static bool IsTargetInterface(Type type)
@@ -32,7 +32,7 @@ namespace Aki.SinglePlayer.Patches.Bots
         {
             var flags = BindingFlags.NonPublic | BindingFlags.Instance;
 
-            if (!targetInterface.IsAssignableFrom(type))
+            if (!_targetInterface.IsAssignableFrom(type))
             {
                 return false;
             }
@@ -54,13 +54,13 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         protected override MethodBase GetTargetMethod()
         {
-            return targetType.GetMethod("method_1", BindingFlags.NonPublic | BindingFlags.Instance);
+            return _targetType.GetMethod("method_1", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
-        public static bool PatchPrefix(object __instance, ref bool __result, Profile x)
+        private static bool PatchPrefix(object __instance, ref bool __result, Profile x)
         {
-            var botType = wildSpawnTypeField(__instance);
-            var botDifficulty = botDifficultyField(__instance);
+            var botType = _wildSpawnTypeField(__instance);
+            var botDifficulty = _botDifficultyField(__instance);
 
             __result = x.Info.Settings.Role == botType && x.Info.Settings.BotDifficulty == botDifficulty;
 

@@ -39,7 +39,7 @@ namespace Aki.SinglePlayer.Patches.Bots
             return typeof(BotsPresets).GetMethod(nameof(BotsPresets.CreateProfile), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
-        public static bool PatchPrefix(ref Task<Profile> __result, BotsPresets __instance, BotData data)
+        private static bool PatchPrefix(ref Task<Profile> __result, BotsPresets __instance, BotData data)
         {
             /*
                 in short when client wants new bot and GetNewProfile() return null (if not more available templates or they don't satisfied by Role and Difficulty condition)
@@ -77,7 +77,6 @@ namespace Aki.SinglePlayer.Patches.Bots
             var continuation = new Continuation(taskScheduler);
 
             __result = taskAwaiter.ContinueWith(continuation.LoadBundles, taskScheduler).Unwrap();
-
             return false;
         }
 

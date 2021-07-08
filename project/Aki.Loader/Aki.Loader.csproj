@@ -40,7 +40,7 @@
     <Compile Include="ModuleLoader.cs" />
     <Compile Include="RunUtil.cs" />
     <Compile Include="Target.cs" />
-    <Compile Include="Instance.cs" />
+    <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony">

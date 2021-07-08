@@ -52,7 +52,7 @@ namespace Aki.Common.Utils.Patching
                 return null;
             }
 
-            return typeof(T).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            return typeof(T).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
         }
 
         /// <summary>

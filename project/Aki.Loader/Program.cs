@@ -1,11 +1,10 @@
-﻿using UnityEngine;
-using Aki.Common.Utils;
+﻿using Aki.Common.Utils;
 
 namespace Aki.Loader
 {
-    public class Instance : MonoBehaviour
+    public class Program
     {
-        public void Start()
+        public static void Main(string[] args)
         {
             Log.Info("Aki.Loader: Loaded");
 

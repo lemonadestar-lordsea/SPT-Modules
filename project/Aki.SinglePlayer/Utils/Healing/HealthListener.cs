@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Aki.Loader;
 using Aki.SinglePlayer.Models;
 using IEffect = GInterface136;
 using IHealthController = GInterface177;
@@ -9,13 +8,54 @@ using DamageInfo = GStruct241;
 
 namespace Aki.SinglePlayer.Utils.Healing
 {
+    public class HealthSynchronizer : MonoBehaviour
+    {
+        public bool IsEnabled = false;
+        public bool IsSynchronized = false;
+        float _sleepTime = 10f;
+        float _timer = 0f;
+
+        public void Update()
+        {
+            _timer += Time.deltaTime;
+
+            if (_timer <= _sleepTime)
+            {
+                return;
+            }
+
+            _timer -= _sleepTime;
+
+            if (IsEnabled && !IsSynchronized)
+            {
+                RequestHandler.PostJson("/player/health/sync", HealthListener.Instance.CurrentHealth.ToJson());
+                IsSynchronized = true;
+            }
+        }
+    }
+
+    public class Disposable : IDisposable
+    {
+        private readonly Action _onDispose;
+
+        public Disposable(Action onDispose)
+        {
+            _onDispose = onDispose ?? throw new ArgumentNullException(nameof(onDispose));
+        }
+
+        public void Dispose()
+        {
+            _onDispose();
+        }
+    }
+
     public class HealthListener
     {
-        private static object _lock = new object();
-        private static HealthListener _instance = null;
+        private static object _lock;
+        private static HealthListener _instance;
         private IHealthController _healthController;
         private IDisposable _disposable = null;
-        private readonly SimpleTimer _simpleTimer;
+        private readonly HealthSynchronizer _simpleTimer;
 
         public PlayerHealth CurrentHealth { get; }
 
@@ -30,6 +70,7 @@ namespace Aki.SinglePlayer.Utils.Healing
                         if (_instance == null)
                         {
                             _instance = new HealthListener();
+                            _lock = new object();
                         }
                     }
                 }
@@ -45,16 +86,9 @@ namespace Aki.SinglePlayer.Utils.Healing
                 CurrentHealth = new PlayerHealth();
             }
             
-            _simpleTimer = Target.HookObject.GetOrAddComponent<SimpleTimer>();
+            _simpleTimer = HookObject.AddOrGetComponent<HealthSynchronizer>();
         }
 
-        /// <summary>
-        /// Initialize HealthListener.
-        /// This method is executed on loading profile in menu (on load game, on raid finish, on error...),
-        /// and on raid start
-        /// </summary>
-        /// <param name="healthController">player health controller</param>
-        /// <param name="inRaid">true - when executed from raid</param>
         public void Init(IHealthController healthController, bool inRaid)
         {
             // cleanup
@@ -65,7 +99,7 @@ namespace Aki.SinglePlayer.Utils.Healing
 
             // init dependencies
             _healthController = healthController;
-            _simpleTimer.isEnabled = !inRaid;
+            _simpleTimer.IsEnabled = !inRaid;
             CurrentHealth.IsAlive = true;
 
             // init current health
@@ -102,125 +136,77 @@ namespace Aki.SinglePlayer.Utils.Healing
             });
         }
 
-        private void SetCurrentHealth(IHealthController healthController, IReadOnlyDictionary<EBodyPart, BodyPartHealth> dictionary, EBodyPart bodyPart)
+        private void SetCurrentHealth(IHealthController healthController, IReadOnlyDictionary<EBodyPart, BodyPartHealth> bodyParts, EBodyPart bodyPart)
         {
             var bodyPartHealth = healthController.GetBodyPartHealth(bodyPart);
-            dictionary[bodyPart].Initialize(bodyPartHealth.Current, bodyPartHealth.Maximum);
+            bodyParts[bodyPart].Initialize(bodyPartHealth.Current, bodyPartHealth.Maximum);
 
             // set effects
             if (healthController.IsBodyPartBroken(bodyPart))
             {
-                dictionary[bodyPart].AddEffect(EBodyPartEffect.Fracture);
+                bodyParts[bodyPart].AddEffect(EBodyPartEffect.Fracture);
             }
             else
             {
-                dictionary[bodyPart].RemoveEffect(EBodyPartEffect.Fracture);
+                bodyParts[bodyPart].RemoveEffect(EBodyPartEffect.Fracture);
             }
+        }
+
+        private bool IsFracture(IEffect effect)
+        {
+            if (effect == null)
+            {
+                return false;
+            }
+
+            return effect.GetType().Name == "Fracture";
+        }
+
+        private void OnEffectAddedEvent(IEffect effect)
+        {
+            if (IsFracture(effect))
+            {
+                CurrentHealth.Health[effect.BodyPart].AddEffect(EBodyPartEffect.Fracture);
+                _simpleTimer.IsSynchronized = false;
+            }
+        }
+
+        private void OnEffectRemovedEvent(IEffect effect)
+        {
+            if (IsFracture(effect))
+            {
+                CurrentHealth.Health[effect.BodyPart].RemoveEffect(EBodyPartEffect.Fracture);
+                _simpleTimer.IsSynchronized = false;
+            }
+        }
+
+        private void OnHealthChangedEvent(EBodyPart bodyPart, float diff, DamageInfo effect)
+        {
+            CurrentHealth.Health[bodyPart].ChangeHealth(diff);
+            _simpleTimer.IsSynchronized = false;
+        }
+
+        private void OnHydrationChangedEvent(float diff)
+        {
+            CurrentHealth.Hydration += diff;
+            _simpleTimer.IsSynchronized = false;
+        }
+
+        private void OnEnergyChangedEvent(float diff)
+        {
+            CurrentHealth.Energy += diff;
+            _simpleTimer.IsSynchronized = false;
+        }
+
+        private void OnTemperatureChangedEvent(float diff)
+        {
+            CurrentHealth.Temperature += diff;
+            _simpleTimer.IsSynchronized = false;
         }
 
         private void OnDiedEvent(EFT.EDamageType obj)
         {
             CurrentHealth.IsAlive = false;
-        }
-
-        public void OnHealthChangedEvent(EBodyPart bodyPart, float diff, DamageInfo effect)
-        {
-            CurrentHealth.Health[bodyPart].ChangeHealth(diff);
-            _simpleTimer.isSynchronized = false;
-        }
-
-        public void OnEffectAddedEvent(IEffect effect)
-        {
-            if (effect == null)
-            {
-                return;
-            }
-
-            string effectType = effect.GetType().Name;
-
-            if (effectType != "Fracture")
-            {
-                return;
-            }
-
-            CurrentHealth.Health[effect.BodyPart].AddEffect(EBodyPartEffect.Fracture);
-            _simpleTimer.isSynchronized = false;
-        }
-
-        public void OnEffectRemovedEvent(IEffect effect)
-        {
-            if (effect == null)
-            {
-                return;
-            }
-
-            string effectType = effect.GetType().Name;
-
-            if (effectType != "Fracture")
-            {
-                return;
-            }
-
-            CurrentHealth.Health[effect.BodyPart].RemoveEffect(EBodyPartEffect.Fracture);
-            _simpleTimer.isSynchronized = false;
-        }
-
-
-        public void OnHydrationChangedEvent(float diff)
-        {
-            CurrentHealth.Hydration += diff;
-            _simpleTimer.isSynchronized = false;
-        }
-
-        public void OnEnergyChangedEvent(float diff)
-        {
-            CurrentHealth.Energy += diff;
-            _simpleTimer.isSynchronized = false;
-        }
-
-        public void OnTemperatureChangedEvent(float diff)
-        {
-            CurrentHealth.Temperature += diff;
-            _simpleTimer.isSynchronized = false;
-        }
-
-        class Disposable : IDisposable
-        {
-            private readonly Action _onDispose;
-
-            public Disposable(Action onDispose)
-            {
-                _onDispose = onDispose ?? throw new ArgumentNullException(nameof(onDispose));
-            }
-
-            public void Dispose()
-            {
-                _onDispose();
-            }
-        }
-
-        class SimpleTimer : MonoBehaviour
-        {
-            public bool isEnabled = false;
-            public bool isSynchronized = false;
-            float sleepTime = 10f;
-            float timer = 0f;
-
-            void Update()
-            {
-                timer += Time.deltaTime;
-
-                if (timer > sleepTime)
-                {
-                    timer -= sleepTime;
-
-                    if (isEnabled && !isSynchronized)
-                    {
-                        RequestHandler.PostJson("/player/health/sync", Instance.CurrentHealth.ToJson());
-                        isSynchronized = true;
-                    }
-                }
-            }
         }
     }
 }

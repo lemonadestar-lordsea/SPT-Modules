@@ -34,7 +34,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
         }
 
         // Execute this code instead of original
-        static bool PatchPrefix(object __instance,string ___string_1, ref Task __result)
+        private static bool PatchPrefix(object __instance,string ___string_1, ref Task __result)
         {
             if (___string_1.IndexOf("http") == -1)
             {
@@ -50,7 +50,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
             var easyBundle = new EasyBundleHelper(__instance);
             var path = easyBundle.Path;
             var bundleKey = Regex.Split(path, "bundle/", RegexOptions.IgnoreCase)[1];
-            var cachePath = BundleSettings.cachePach;
+            var cachePath = BundleSettings.CachePath;
             var filepath = cachePath + bundleKey;
 
             if (path.Contains("http"))
