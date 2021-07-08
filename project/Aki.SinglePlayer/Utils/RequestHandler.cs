@@ -17,18 +17,18 @@ namespace Aki.SinglePlayer.Utils
             _host = Utils.Config.BackendUrl;
             _session = null;
             _request = new Request();
-            Debug.LogError($"Aki.SinglePlayer: Request host: {_host}");
+            Log.Info($"Aki.SinglePlayer: Request host: {_host}");
         }
 
         private static void PrepareRequest(string url)
         {
-            Debug.LogError($"Aki.SinglePlayer: Request: {url}");
+            Log.Info($"Aki.SinglePlayer: Request: {url}");
 
             var backend = Utils.Config.BackEndSession;
 
             if (backend == null)
             {
-                Debug.LogError($"Aki.SinglePlayer: Request session not active");
+                Log.Info($"Aki.SinglePlayer: Request session not active");
                 return;
             }
 
@@ -41,7 +41,7 @@ namespace Aki.SinglePlayer.Utils
                     { "SessionId", _session }
                 };
 
-                Debug.LogError($"Aki.SinglePlayer: Request session: {_session}");
+                Log.Info($"Aki.SinglePlayer: Request session: {_session}");
             }
         }
 
@@ -49,20 +49,20 @@ namespace Aki.SinglePlayer.Utils
         {
             if (data == null)
             {
-                Debug.LogError($"Aki.SinglePlayer: Request failed, body is null");
+                Log.Error($"Aki.SinglePlayer: Request failed, body is null");
             }
 
-            Debug.LogError($"Aki.SinglePlayer: Request was successful");
+            Log.Info($"Aki.SinglePlayer: Request was successful");
         }
 
         private static void ValidateJson(string json)
         {
             if (string.IsNullOrWhiteSpace(json))
             {
-                Debug.LogError($"Aki.SinglePlayer: Request failed, body is null");
+                Log.Error($"Aki.SinglePlayer: Request failed, body is null");
             }
 
-            Debug.LogError($"Aki.SinglePlayer: Request was successful");
+            Log.Info($"Aki.SinglePlayer: Request was successful");
         }
 
         public static byte[] GetData(string url)

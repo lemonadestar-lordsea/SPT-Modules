@@ -37,17 +37,17 @@ namespace Aki.Loader
                         try
                         {
                             RunUtil.LoadAndRun(file);
-                            Debug.LogError($"Aki.Loader: Loaded '{file}'!");
+                            Log.Info($"Aki.Loader: Loaded '{file}'!");
                         }
                         catch(Exception ex)
                         {
-                            Debug.LogError($"Aki.Loader: Failed to load '{file}'! Exception below.");
-                            Debug.LogError(ex);
+                            Log.Error($"Aki.Loader: Failed to load '{file}'! Exception below.");
+                            Log.Data(ex.Message);
                         }
                     }
                     else
                     {
-                        Debug.LogError($"Aki.Loader: Failed to find module.dll in '{dir}'");
+                        Log.Error($"Aki.Loader: Failed to find module.dll in '{dir}'");
                     }
                 }
             }

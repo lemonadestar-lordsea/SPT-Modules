@@ -3,9 +3,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using UnityEngine;
 using Comfort.Common;
 using EFT;
+using Aki.Common.Utils;
 using Aki.Common.Utils.Patching;
 using BotData = GInterface17;
 using BotsPresets = GClass379;
@@ -62,14 +62,14 @@ namespace Aki.SinglePlayer.Patches.Bots
             if (profile == null)
             {
                 // load from server
-                Debug.LogError("Aki.SinglePlayer: Loading bot profile from server");
+                Log.Info("Aki.SinglePlayer: Loading bot profile from server");
                 var source = data.PrepareToLoadBackend(1).ToList();
                 taskAwaiter = session.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
             }
             else
             {
                 // return cached profile
-                Debug.LogError("Aki.SinglePlayer: Loading bot profile from cache");
+                Log.Info("Aki.SinglePlayer: Loading bot profile from cache");
                 taskAwaiter = Task.FromResult(profile);
             }
 

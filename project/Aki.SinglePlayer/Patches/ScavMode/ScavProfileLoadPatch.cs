@@ -4,9 +4,9 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using EFT;
+using Aki.Common.Utils;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils.Reflection.CodeWrapper;
-using Aki.SinglePlayer.Utils;
 using Comfort.Common;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
@@ -43,7 +43,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             // Patch failed.
             if (searchIndex == -1)
             {
-                PatchLogger.LogTranspileSearchError(MethodBase.GetCurrentMethod());
+                Log.Error(string.Format("Patch {0} failed: Could not find reference code.", MethodBase.GetCurrentMethod()));
                 return instructions;
             }
 

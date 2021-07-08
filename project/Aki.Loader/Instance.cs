@@ -7,7 +7,7 @@ namespace Aki.Loader
     {
         public void Start()
         {
-            Debug.LogError("Aki.Loader: Loaded");
+            Log.Info("Aki.Loader: Loaded");
 
             ModuleLoader.AddRepository(VFS.Combine(VFS.Cwd, "/Aki_Data/Modules/"));
             ModuleLoader.AddRepository(VFS.Combine(VFS.Cwd, "/user/mods/"));

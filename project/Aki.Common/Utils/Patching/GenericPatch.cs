@@ -63,11 +63,11 @@ namespace Aki.Common.Utils.Patching
             try
             {
                 _harmony.Patch(_targetMethod, _prefix, _postfix, _transpiler, _finalizer);
-                Debug.LogError($"Aki.Common: Applied patch {_harmony.Id}");
+                Log.Info($"Aki.Common: Applied patch {_harmony.Id}");
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Aki.Common: Error in applying patch {_harmony.Id}{Environment.NewLine}{ex}");
+                Log.Error($"Aki.Common: Error in applying patch {_harmony.Id}{Environment.NewLine}{ex}");
             }
         }
 
@@ -79,11 +79,11 @@ namespace Aki.Common.Utils.Patching
             try
             {
                 _harmony.Unpatch(_targetMethod, HarmonyPatchType.All, _harmony.Id);
-                Debug.LogError($"Aki.Common: Removed patch {_harmony.Id}");
+                Log.Info($"Aki.Common: Removed patch {_harmony.Id}");
             }
             catch (Exception ex)
             {
-                Debug.LogError($"Aki.Common: Error in removing patch {_harmony.Id}{Environment.NewLine}{ex}");
+                Log.Error($"Aki.Common: Error in removing patch {_harmony.Id}{Environment.NewLine}{ex}");
             }
         }
     }

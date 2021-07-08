@@ -1,11 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using EFT;
-using Aki.Common.Utils.Patching;
-using UnityEngine;
-using System.Linq;
-using System;
 using EFT.Game.Spawning;
-using System.Collections.Generic;
+using Aki.Common.Utils;
+using Aki.Common.Utils.Patching;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
@@ -39,8 +39,8 @@ namespace Aki.SinglePlayer.Patches.Progression
             var unfilteredSpawnPoints = spawnPoints.ToList();
             var infils = spawnPoints.Select(sp => sp.Infiltration).Distinct();
 
-            Debug.LogError($"PatchPrefix SelectSpawnPoint Infiltrations: {spawnPoints.Count} | {string.Join(", ", infils)}");
-            Debug.LogError($"Filter by Infiltration: {infiltration}");
+            Log.Info($"PatchPrefix SelectSpawnPoint Infiltrations: {spawnPoints.Count} | {string.Join(", ", infils)}");
+            Log.Info($"Filter by Infiltration: {infiltration}");
             spawnPoints = spawnPoints.Where(sp =>  sp != null && sp.Infiltration != null && (string.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();
 
             if (spawnPoints.Count == 0)
@@ -49,7 +49,7 @@ namespace Aki.SinglePlayer.Patches.Progression
                 return false;
             }
 
-            Debug.LogError($"Filter by Categories: {category}");
+            Log.Info($"Filter by Categories: {category}");
             spawnPoints = spawnPoints.Where(sp => sp.Categories.Contain(category)).ToList();
 
             if (spawnPoints.Count == 0)
@@ -58,7 +58,7 @@ namespace Aki.SinglePlayer.Patches.Progression
                 return false;
             }
 
-            Debug.LogError($"Filter by Side: {side}");
+            Log.Info($"Filter by Side: {side}");
             spawnPoints = spawnPoints.Where(sp => sp.Sides.Contain(side)).ToList();
 
             if (spawnPoints.Count == 0)
@@ -68,15 +68,15 @@ namespace Aki.SinglePlayer.Patches.Progression
             }
 
             __result = spawnPoints.RandomElement();
-            Debug.LogError($"PatchPrefix SelectSpawnPoint: {__result.Id}");
+            Log.Info($"PatchPrefix SelectSpawnPoint: {__result.Id}");
             return false;
         }
 
         private static ISpawnPoint GetFallBackSpawnPoint(List<ISpawnPoint> spawnPoints, ESpawnCategory category, EPlayerSide side, string infiltration)
         {
-            Debug.LogError($"PatchPrefix SelectSpawnPoint: Couldn't find any spawn points for:  {category}  |  {side}  |  {infiltration}");
+            Log.Warning($"PatchPrefix SelectSpawnPoint: Couldn't find any spawn points for:  {category}  |  {side}  |  {infiltration}");
             var spawn = spawnPoints.Where(sp => sp.Categories.Contain(ESpawnCategory.Player)).RandomElement();
-            Debug.LogError($"PatchPrefix SelectSpawnPoint: {spawn.Id}");
+            Log.Info($"PatchPrefix SelectSpawnPoint: {spawn.Id}");
             return spawn;
         }
     }

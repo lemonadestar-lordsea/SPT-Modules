@@ -1,8 +1,8 @@
 using System;
 using System.Reflection;
-using UnityEngine;
 using EFT;
 using EFT.InventoryLogic;
+using Aki.Common.Utils;
 using Aki.Common.Utils.Patching;
 using Equipment = GClass1757;
 using DamageInfo = GStruct241;
@@ -45,7 +45,7 @@ namespace Aki.SinglePlayer.Patches.Quests
 
             if (dogtagItem == null)
             {
-                Debug.LogError("DogtagPatch error > DogTag slot item is null somehow.");
+                Log.Error("DogtagPatch error > DogTag slot item is null somehow.");
                 return;
             }
 
@@ -53,7 +53,7 @@ namespace Aki.SinglePlayer.Patches.Quests
 
             if (itemComponent == null)
             {
-                Debug.LogError("DogtagPatch error > DogTagComponent on dog tag slot is null. Something went horrifically wrong!");
+                Log.Error("DogtagPatch error > DogTagComponent on dog tag slot is null. Something went horrifically wrong!");
                 return;
             }
 

@@ -1,4 +1,4 @@
-using UnityEngine;
+using Aki.Common.Utils;
 using Aki.SinglePlayer.Utils.Bundles;
 using Aki.SinglePlayer.Patches.Bots;
 using Aki.SinglePlayer.Patches.Bundles;
@@ -14,7 +14,7 @@ namespace Aki.SinglePlayer
     {
         static void Main(string[] args)
         {
-            Debug.LogError("Aki.SinglePlayer: Loaded");
+            Log.Info("Aki.SinglePlayer: Loaded");
 
             BundleSettings.GetBundles();
 
