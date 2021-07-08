@@ -1,5 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using Aki.Common.Utils;
 
 namespace Aki.Loader
 {
@@ -9,8 +9,8 @@ namespace Aki.Loader
         {
             Debug.LogError("Aki.Loader: Loaded");
 
-            ModuleLoader.AddRepository($@"{Environment.CurrentDirectory}\Aki_Data\Modules\");
-            ModuleLoader.AddRepository($@"{Environment.CurrentDirectory}\user\mods\");
+            ModuleLoader.AddRepository(VFS.Combine(VFS.Cwd, "/Aki_Data/Modules/"));
+            ModuleLoader.AddRepository(VFS.Combine(VFS.Cwd, "/user/mods/"));
             ModuleLoader.LoadAllAssemblies();
         }
     }

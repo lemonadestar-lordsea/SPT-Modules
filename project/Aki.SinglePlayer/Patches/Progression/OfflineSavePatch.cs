@@ -31,10 +31,10 @@ namespace Aki.SinglePlayer.Patches.Progression
 
             SaveProfileRequest request = new SaveProfileRequest
 			{
-				exit = result.Value0.ToString().ToLower(),
-				profile = (___esideType_0 == ESideType.Savage) ? session.ProfileOfPet : session.Profile,
-				health = Utils.Healing.HealthListener.Instance.CurrentHealth,
-				isPlayerScav = (___esideType_0 == ESideType.Savage)
+				Exit = result.Value0.ToString().ToLower(),
+				Profile = (___esideType_0 == ESideType.Savage) ? session.ProfileOfPet : session.Profile,
+				Health = Utils.Healing.HealthListener.Instance.CurrentHealth,
+				IsPlayerScav = (___esideType_0 == ESideType.Savage)
 			};
 
 			RequestHandler.PutJson("/raid/profile/save", request.ToJson());

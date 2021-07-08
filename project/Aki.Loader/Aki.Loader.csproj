@@ -63,5 +63,11 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aki.Common\Aki.Common.csproj">
+      <Project>{7584f43a-5937-417e-abf4-c5f680f300fb}</Project>
+      <Name>Aki.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

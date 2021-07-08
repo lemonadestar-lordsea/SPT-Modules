@@ -11,51 +11,51 @@ namespace Aki.Common.Utils
         /// <summary>
         /// HTML GET method.
         /// </summary>
-        public const string GET = "GET";
+        public const string Get = "GET";
 
         /// <summary>
         /// HTML HEAD method.
         /// </summary>
-        public const string HEAD = "HEAD";
+        public const string Head = "HEAD";
 
         /// <summary>
         /// HTML POST method.
         /// </summary>
-        public const string POST = "POST";
+        public const string Post = "POST";
 
         /// <summary>
         /// HTML PUT method.
         /// </summary>
-        public const string PUT = "PUT";
+        public const string Put = "PUT";
 
         /// <summary>
         /// HTML DELETE method.
         /// </summary>
-        public const string DELETE = "DELETE";
+        public const string Delete = "DELETE";
 
         /// <summary>
         /// HTML CONNECT method.
         /// </summary>
-        public const string CONNECT = "CONNECT";
+        public const string Connect = "CONNECT";
 
         /// <summary>
         /// HTML OPTIONS method.
         /// </summary>
-        public const string OPTIONS = "OPTIONS";
+        public const string Options = "OPTIONS";
 
         /// <summary>
         /// HTML TRACE method.
         /// </summary>
-        public const string TRACE = "TRACE";
+        public const string Trace = "TRACE";
 
         /// <summary>
         /// HTML MIME types.
         /// </summary>
-        public static readonly Dictionary<string, string> MIME;
+        public static readonly Dictionary<string, string> Mime;
 
         static HttpConstants()
         {
-            MIME = new Dictionary<string, string>()
+            Mime = new Dictionary<string, string>()
             {
                 { ".bin", "application/octet-stream" },
                 { ".txt", "text/plain" },
@@ -76,14 +76,14 @@ namespace Aki.Common.Utils
         /// </summary>
         public static bool IsValidMethod(string method)
         {
-            return method == GET
-                || method == HEAD
-                || method == POST
-                || method == PUT
-                || method == DELETE
-                || method == CONNECT
-                || method == OPTIONS
-                || method == TRACE;
+            return method == Get
+                || method == Head
+                || method == Post
+                || method == Put
+                || method == Delete
+                || method == Connect
+                || method == Options
+                || method == Trace;
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Aki.Common.Utils
         /// </summary>
 		public static bool IsValidMime(string mime)
         {
-            foreach (KeyValuePair<string, string> item in MIME)
+            foreach (KeyValuePair<string, string> item in Mime)
             {
                 if (item.Value == mime)
                 {
@@ -138,7 +138,7 @@ namespace Aki.Common.Utils
 				}
 			}
 
-			if (method != HttpConstants.GET && method != HttpConstants.HEAD && data != null)
+			if (method != HttpConstants.Get && method != HttpConstants.Head && data != null)
 			{
 				byte[] body = (compress) ? Zlib.Compress(data, ZlibCompression.Maximum) : data;
 
@@ -170,7 +170,7 @@ namespace Aki.Common.Utils
                         return null;
                     }                    
 
-                    if (Zlib.CheckHeader(body))
+                    if (Zlib.IsCompressed(body))
                     {
                         return Zlib.Decompress(body);
                     }

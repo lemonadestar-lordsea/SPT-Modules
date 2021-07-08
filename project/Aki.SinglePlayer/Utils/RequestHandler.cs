@@ -1,25 +1,23 @@
-using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using EFT;
 using Aki.Common.Utils;
 
 namespace Aki.SinglePlayer.Utils
 {
     public static class RequestHandler
     {
-        private static readonly Request request;
-        private static readonly string host;
-        private static string session;
-        private static Dictionary<string, string> headers;
+        private static readonly Request _request;
+        private static readonly string _host;
+        private static string _session;
+        private static Dictionary<string, string> _headers;
 
         static RequestHandler()
         {
-            host = Utils.Config.BackendUrl;
-            session = null;
-            request = new Request();
-            Debug.LogError($"Aki.SinglePlayer: Request host: {host}");
+            _host = Utils.Config.BackendUrl;
+            _session = null;
+            _request = new Request();
+            Debug.LogError($"Aki.SinglePlayer: Request host: {_host}");
         }
 
         private static void PrepareRequest(string url)
@@ -34,16 +32,16 @@ namespace Aki.SinglePlayer.Utils
                 return;
             }
 
-            if (session == null)
+            if (_session == null)
             {
-                session = backend.GetPhpSessionId();
-                headers = new Dictionary<string, string>()
+                _session = backend.GetPhpSessionId();
+                _headers = new Dictionary<string, string>()
                 {
-                    { "Cookie", $"PHPSESSID={session}" },
-                    { "SessionId", session }
+                    { "Cookie", $"PHPSESSID={_session}" },
+                    { "SessionId", _session }
                 };
 
-                Debug.LogError($"Aki.SinglePlayer: Request session: {session}");
+                Debug.LogError($"Aki.SinglePlayer: Request session: {_session}");
             }
         }
 
@@ -71,7 +69,7 @@ namespace Aki.SinglePlayer.Utils
         {
             PrepareRequest(url);
             
-            var result = request.Send(host + url, "GET", null, headers: headers);
+            var result = _request.Send(_host + url, "GET", null, headers: _headers);
             
             ValidateData(result);
             return result;
@@ -81,7 +79,7 @@ namespace Aki.SinglePlayer.Utils
         {
             PrepareRequest(url);
 
-            var data = request.Send(host + url, "GET", headers: headers);
+            var data = _request.Send(_host + url, "GET", headers: _headers);
             var result = Encoding.UTF8.GetString(data);
             
             ValidateJson(result);
@@ -92,7 +90,7 @@ namespace Aki.SinglePlayer.Utils
         {
             PrepareRequest(url);
 
-            var data = request.Send(host + url, "POST", Encoding.UTF8.GetBytes(json), true, "application/json", headers);
+            var data = _request.Send(_host + url, "POST", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
             var result = Encoding.UTF8.GetString(data);
             
             ValidateJson(result);
@@ -102,7 +100,7 @@ namespace Aki.SinglePlayer.Utils
         public static void PutJson(string url, string json)
         {
             PrepareRequest(url);
-            request.Send(host + url, "PUT", Encoding.UTF8.GetBytes(json), true, "application/json", headers);
+            _request.Send(_host + url, "PUT", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
         }
-    }   
+    }
 }

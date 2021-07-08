@@ -8,12 +8,12 @@ namespace Aki.Common.Utils
     public static class VFS
     {
         public static string Cwd { get; private set; }
-        private static object mutex;
+        private static object _mutex;
 
         static VFS()
         {
             Cwd = Environment.CurrentDirectory;
-            mutex = new object();
+            _mutex = new object();
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Aki.Common.Utils
         /// </summary>
         public static void MoveFile(string a, string b)
         {
-            lock (mutex)
+            lock (_mutex)
             {
                 new FileInfo(a).MoveTo(b);
             }
@@ -84,7 +84,7 @@ namespace Aki.Common.Utils
         /// </summary>
         public static bool Exists(string filepath)
         {
-            lock (mutex)
+            lock (_mutex)
             {
                 return Directory.Exists(filepath) || File.Exists(filepath);
             }
@@ -95,7 +95,7 @@ namespace Aki.Common.Utils
         /// </summary>
         public static void CreateDirectory(string filepath)
         {
-            lock (mutex)
+            lock (_mutex)
             {
                 Directory.CreateDirectory(filepath);
             }
@@ -106,7 +106,7 @@ namespace Aki.Common.Utils
         /// </summary>
         public static byte[] ReadFile(string filepath)
         {
-            lock (mutex)
+            lock (_mutex)
             {
                 return File.ReadAllBytes(filepath);
             }
@@ -125,7 +125,7 @@ namespace Aki.Common.Utils
         /// </summary>
         public static void WriteFile(string filepath, byte[] data, bool append = false)
         {
-            lock (mutex)
+            lock (_mutex)
             {
                 if (!Exists(filepath))
                 {
@@ -149,7 +149,7 @@ namespace Aki.Common.Utils
         /// </summary>
         public static string[] GetDirectories(string filepath)
         {
-            lock (mutex)
+            lock (_mutex)
             {
                 DirectoryInfo di = new DirectoryInfo(filepath);
                 List<string> paths = new List<string>();
@@ -168,7 +168,7 @@ namespace Aki.Common.Utils
         /// </summary>
         public static string[] GetFiles(string filepath)
         {
-            lock (mutex)
+            lock (_mutex)
             {
                 DirectoryInfo di = new DirectoryInfo(filepath);
                 List<string> paths = new List<string>();
@@ -187,7 +187,7 @@ namespace Aki.Common.Utils
         /// </summary>
         public static void DeleteDirectory(string filepath)
         {
-            lock (mutex)
+            lock (_mutex)
             {
                 DirectoryInfo di = new DirectoryInfo(filepath);
 
@@ -211,7 +211,7 @@ namespace Aki.Common.Utils
         /// </summary>
         public static void DeleteFile(string filepath)
         {
-            lock (mutex)
+            lock (_mutex)
             {
                 FileInfo file = new FileInfo(filepath);
 
@@ -225,7 +225,7 @@ namespace Aki.Common.Utils
         /// </summary>
         public static int GetFilesCount(string filepath)
         {
-            lock (mutex)
+            lock (_mutex)
             {
                 DirectoryInfo di = new DirectoryInfo(filepath);
                 int count = 0;

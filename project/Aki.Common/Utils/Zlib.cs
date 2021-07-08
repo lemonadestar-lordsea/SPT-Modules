@@ -16,49 +16,50 @@ namespace Aki.Common.Utils
 
 	public static class Zlib
 	{
-        // Level |     hex CM/CI FLG    | byte[]
-        // 1     | 78 01                | 120 1
-        // 2     | 78 5E                | 120 94
-        // 3     | 78 5E			    | 120 94
-        // 4     | 78 5E			    | 120 94
-        // 5     | 78 5E			    | 120 94
-        // 6     | 78 9C			    | 120 156
-        // 7     | 78 DA			    | 120 218
-        // 8     | 78 DA			    | 120 218
-        // 9     | 78 DA			    | 120 218
+		// Level | CM/CI FLG
+		// ----- | -------------
+		// 1     | 78 01        
+		// 2     | 78 5E        
+		// 3     | 78 5E		
+		// 4     | 78 5E		
+		// 5     | 78 5E		
+		// 6     | 78 9C		
+		// 7     | 78 DA		
+		// 8     | 78 DA		
+		// 9     | 78 DA		
 
-        private const byte CompressionMethodHeader = 120;
-        private const byte FastestCompressionHeader = 1;
-        private const byte LowCompressHeader = 94;
-        private const byte NormalCompressHeader = 156;
-        private const byte MaxCompressHeader = 218;
+		/// <summary>
+		/// Check if the file is ZLib compressed
+		/// </summary>
+		/// <param name="Data">Data</param>
+		/// <returns>If the file is Zlib compressed</returns>
+		public static bool IsCompressed(byte[] Data)
+		{
+			// We need the first two bytes;
+			// First byte:  Info (CM/CINFO) Header, should always be 0x78
+			// Second byte: Flags (FLG) Header, should define our compression level.
 
-        public static bool CheckHeader(byte[] Data)
-        {
-            //we need the first two data, if they arn't there, just return false.
-            //(first byte) Compression Method / Info (CM/CINFO) Header should always be 120
-            if (Data == null || Data.Length < 3 || Data[0] != CompressionMethodHeader)
-            {
-                return false;
-            }
+			if (Data == null || Data.Length < 3 || Data[0] != 0x78)
+			{
+				return false;
+			}
 
-            //(second byte) Flags (FLG) Header, should define our compression level.
-            switch (Data[1])
-            {
-                case FastestCompressionHeader:
-                case LowCompressHeader:
-                case NormalCompressHeader:
-                case MaxCompressHeader:
-                    return true;
-            }
+			switch (Data[1])
+			{
+				case 0x01:  // fastest
+				case 0x5E:  // low
+				case 0x9C:  // normal
+				case 0xDA:  // max
+					return true;
+			}
 
-            return false;
-        }
+			return false;
+		}
 
-        /// <summary>
-        /// Deflate data.
-        /// </summary>
-        public static byte[] Compress(byte[] data, ZlibCompression level)
+		/// <summary>
+		/// Deflate data.
+		/// </summary>
+		public static byte[] Compress(byte[] data, ZlibCompression level)
 		{
 			byte[] buffer = new byte[data.Length + 24];
 

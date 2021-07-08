@@ -18,46 +18,25 @@ namespace Aki.Loader
 {
     public static class RunUtil
     {
-        private static string depDir;
-        private static bool hasHooked = false;
+        private static string _depDir;
+        private static bool _hasHooked = false;
 
-        public static Exception LoadAndRun(string dllPath, params string[] args)
+        public static void LoadAndRun(string dllPath, params string[] args)
         {
-            if (!hasHooked)
+            if (!_hasHooked)
             {
                 AppDomain.CurrentDomain.AssemblyResolve += DomainAssemblyResolve;
-                hasHooked = true;
+                _hasHooked = true;
             }
 
-            Exception error = LoadAssAndEntryPoint(dllPath, out var entry, out bool hasStringArray);
-            if (error != null)
-                return error;
-
-            try
-            {
-                entry.Invoke(null, hasStringArray ? new object[] { args } : new object[0]);
-            }
-            catch (Exception e)
-            {
-                return e;
-            }
-            return null;
+            LoadAssAndEntryPoint(dllPath, out var entry, out bool hasStringArray);
+            entry.Invoke(null, hasStringArray ? new object[] { args } : new object[0]);
         }
 
-        internal static Exception LoadAssAndEntryPoint(string dllPath, out MethodInfo entryPoint, out bool hasStringArray)
+        internal static void LoadAssAndEntryPoint(string dllPath, out MethodInfo entryPoint, out bool hasStringArray)
         {
-            Assembly asm;
+            Assembly asm = LoadAssembly(dllPath);
             entryPoint = null;
-            hasStringArray = false;
-
-            try
-            {
-                asm = LoadAssembly(dllPath);
-            }
-            catch (Exception e)
-            {
-                return e;
-            }
 
             var entry = FindMainFunction(asm, out hasStringArray);
 
@@ -65,10 +44,9 @@ namespace Aki.Loader
             {
                 LoadDeps(asm, new FileInfo(dllPath).DirectoryName);
                 entryPoint = entry;
-                return null;
             }
 
-            return new Exception($"Failed to find entry point in {asm.FullName}");
+            throw new Exception($"Failed to find entry point in {asm.FullName}");
         }
 
         internal static Assembly LoadAssembly(string dllPath)
@@ -107,7 +85,9 @@ namespace Aki.Loader
                 {
                     // TODO make this comparison better.
                     if (item.ToString() == name.ToString())
+                    {
                         return true;
+                    }
                 }
                 
                 return false;
@@ -117,13 +97,13 @@ namespace Aki.Loader
 
             foreach (var item in refs)
             {
-                bool loaded = IsLoaded(item);
-                if (!loaded)
+                if (!IsLoaded(item))
                 {
                     Assembly created;
+
                     try
                     {
-                        depDir = sourceFolder;
+                        _depDir = sourceFolder;
                         created = domain.Load(item);
                     }
                     catch (Exception e)
@@ -131,11 +111,11 @@ namespace Aki.Loader
                         return e;
                     }
 
-                    // Note: source folder never changes, so all deps are expected be be in the same folder as main
-                    // dll.
+                    // Note: source folder never changes, so all deps are expected be be in the same folder as main dll.
                     // For example, if A depends on B and B depends on C then
                     // when loading A, B.dll and C.dll should be in the same folder as A.dll
                     Exception newError = LoadDeps(created, sourceFolder);
+
                     if (newError != null)
                     {
                         return newError;
@@ -148,7 +128,7 @@ namespace Aki.Loader
 
         private static Assembly DomainAssemblyResolve(object sender, ResolveEventArgs args)
         {
-            string root = depDir;
+            string root = _depDir;
             string dllName = args.Name.Split(',')[0].Trim() + ".dll";
             string path = Path.Combine(root, dllName);
 
@@ -161,16 +141,21 @@ namespace Aki.Loader
             foreach (var type in a.GetTypes())
             {
                 if (!type.IsClass)
+                {
                     continue;
-                if (type.IsGenericType)
-                    continue;
+                }
 
-                foreach (var method in type.GetMethods(BindingFlags.Public
-                                                     | BindingFlags.NonPublic
-                                                     | BindingFlags.Static))
+                if (type.IsGenericType)
+                {
+                    continue;
+                }
+
+                foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static))
                 {
                     if (method.IsGenericMethod)
+                    {
                         continue;
+                    }
 
                     // Must be called Main just like regular program.
                     if (method.Name == "Main")
@@ -192,6 +177,7 @@ namespace Aki.Loader
                     }
                 }
             }
+
             hasStringArray = false;
             return null;
         }

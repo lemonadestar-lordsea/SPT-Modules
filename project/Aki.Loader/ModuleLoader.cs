@@ -1,49 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
+using Aki.Common.Utils;
 
 namespace Aki.Loader
 {
     static class ModuleLoader
     {
-        private static readonly List<string> repositories;
+        private static readonly List<string> _repositories;
 
         static ModuleLoader()
         {
-            repositories = new List<string>();
+            _repositories = new List<string>();
         }
 
         public static void AddRepository(string path)
         {
-            if (Directory.Exists(path) && Directory.GetDirectories(path).Length > 0)
+            if (VFS.Exists(path) && VFS.GetDirectories(path).Length > 0)
             {
-                repositories.Add(path);
+                _repositories.Add(path);
             }
         }
 
         public static void LoadAllAssemblies()
         {
-            foreach (var repository in repositories)
+            foreach (var repository in _repositories)
             {
-                var dirs = Directory.GetDirectories(repository);
+                var dirs = VFS.GetDirectories(repository);
 
                 foreach (var dir in dirs)
                 {
                     var file = $"{dir}/module.dll";
 
-                    if (File.Exists(file))
+                    if (VFS.Exists(file))
                     {
-                        Exception error = RunUtil.LoadAndRun(file);
-                        
-                        if (error == null)
+                        try
                         {
+                            RunUtil.LoadAndRun(file);
                             Debug.LogError($"Aki.Loader: Loaded '{file}'!");
                         }
-                        else
+                        catch(Exception ex)
                         {
                             Debug.LogError($"Aki.Loader: Failed to load '{file}'! Exception below.");
-                            Debug.LogError(error);
+                            Debug.LogError(ex);
                         }
                     }
                     else

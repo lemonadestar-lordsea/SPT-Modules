@@ -121,7 +121,6 @@
     <Compile Include="Utils\Reflection\CodeWrapper\Code.cs" />
     <Compile Include="Utils\Reflection\CodeWrapper\CodeWithLabel.cs" />
     <Compile Include="Utils\Config.cs" />
-    <Compile Include="Utils\PatchLogger.cs" />
     <Compile Include="Utils\RequestHandler.cs" />
     <Compile Include="Utils\Bundles\EasyBundleHelper.cs" />
     <Compile Include="Utils\Bundles\BundleSettings.cs" />
