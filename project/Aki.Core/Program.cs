@@ -1,6 +1,5 @@
 using UnityEngine;
 using Aki.Core.Patches;
-using Aki.Common.Utils.Patching;
 
 namespace Aki.Core
 {
@@ -10,9 +9,9 @@ namespace Aki.Core
 		{
             Debug.LogError("Aki.Core: Loaded");
 
-            PatcherUtil.Patch<BattlEyePatch>();
-            PatcherUtil.Patch<SslCertificatePatch>();
-            PatcherUtil.Patch<UnityWebRequestPatch>();
+            new BattlEyePatch().Apply();
+            new SslCertificatePatch().Apply();
+            new UnityWebRequestPatch().Apply();
         }
 	}
 }
