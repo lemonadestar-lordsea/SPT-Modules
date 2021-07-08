@@ -70,7 +70,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
             return false;
         }
 
-        public static async Task Init(EasyAssets __instance, [CanBeNull] IBundleLock bundleLock, string defaultKey, string rootPath,
+        private static async Task Init(EasyAssets __instance, [CanBeNull] IBundleLock bundleLock, string defaultKey, string rootPath,
                                       string platformName, [CanBeNull] Func<string, bool> shouldExclude)
         {
             var traverse = Traverse.Create(__instance);

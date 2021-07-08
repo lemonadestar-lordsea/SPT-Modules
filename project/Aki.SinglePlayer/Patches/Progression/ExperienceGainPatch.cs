@@ -11,16 +11,6 @@ namespace Aki.SinglePlayer.Patches.Progression
         {
         }
 
-        static void PrefixPatch(ref bool isLocal)
-        {
-            isLocal = false;
-        }
-
-        static void PostfixPatch(ref bool isLocal)
-        {
-            isLocal = true;
-        }
-
         protected override MethodBase GetTargetMethod()
         {
            return typeof(SessionResultExperienceCount)
@@ -31,17 +21,21 @@ namespace Aki.SinglePlayer.Patches.Progression
         private static bool IsTargetMethod(MethodInfo mi)
         {
             var parameters = mi.GetParameters();
+            return (parameters.Length == 3
+                && parameters[0].Name == "profile"
+                && parameters[1].Name == "isLocal"
+                && parameters[2].Name == "exitStatus"
+                && parameters[1].ParameterType == typeof(bool));
+        }
 
-            if (parameters.Length != 3
-            || parameters[0].Name != "profile"
-            || parameters[1].ParameterType != typeof(bool)
-            || parameters[1].Name != "isLocal"
-            || parameters[2].Name != "exitStatus")
-            {
-                return false;
-            }
+        private static void PrefixPatch(ref bool isLocal)
+        {
+            isLocal = false;
+        }
 
-            return true;
+        private static void PostfixPatch(ref bool isLocal)
+        {
+            isLocal = true;
         }
     }
 }

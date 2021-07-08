@@ -5,7 +5,7 @@ using Aki.Common.Utils.Patching;
 
 namespace Aki.SinglePlayer.Patches.Healing
 {
-    class PlayerPatch : GenericPatch<PlayerPatch>
+    public class PlayerPatch : GenericPatch<PlayerPatch>
     {
         private static string _playerAccountId;
 

@@ -28,7 +28,7 @@ namespace Aki.SinglePlayer
             new MainMenuControllerPatch().Apply();
             new PlayerPatch().Apply();
             new MatchmakerOfflineRaidPatch().Apply();
-            new MatchMakerSelectionLocationScreenPatch().Apply();
+            new SelectLocationScreenPatch().Apply();
             new InsuranceScreenPatch().Apply();
             new BotTemplateLimitPatch().Apply();
             new GetNewBotTemplatesPatch().Apply();

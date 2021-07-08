@@ -26,22 +26,16 @@ namespace Aki.SinglePlayer.Patches.Quests
 
             var parameters = method.GetParameters();
 
-            if (parameters.Length != 2
-            || parameters[0].ParameterType != typeof(Item)
-            || parameters[0].Name != "item"
-            || parameters[1].ParameterType != typeof(string)
-            || parameters[1].Name != "zone")
-            {
-                return false;
-            }
-
-            return true;
+            return (parameters.Length == 2
+                && parameters[0].Name == "item"
+                && parameters[1].Name == "zone"
+                && parameters[0].ParameterType == typeof(Item)
+                && parameters[1].ParameterType == typeof(string));
         }
 
-        public static bool PatchPrefix(Player __instance, Item item, string zone)
+        private static bool PatchPrefix(Player __instance, Item item, string zone)
         {
             __instance.Profile.ItemDroppedAtPlace(item.TemplateId, zone);
-
             return false;
         }
     }

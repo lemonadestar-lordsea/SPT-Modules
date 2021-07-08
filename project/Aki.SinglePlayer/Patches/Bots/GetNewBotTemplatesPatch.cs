@@ -21,8 +21,8 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         static GetNewBotTemplatesPatch()
         {
-            _ = nameof(BotsPresets.GetNewProfile);
             _ = nameof(BotData.PrepareToLoadBackend);
+            _ = nameof(BotsPresets.GetNewProfile);
             _ = nameof(PoolManager.LoadBundlesAndCreatePools);
             _ = nameof(JobPriority.General);
         }

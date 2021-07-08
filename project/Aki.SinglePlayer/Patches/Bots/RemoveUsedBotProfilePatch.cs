@@ -27,6 +27,11 @@ namespace Aki.SinglePlayer.Patches.Bots
             _profilesField = AccessTools.FieldRefAccess<List<Profile>>(_targetType, "list_0");
         }
 
+        protected override MethodBase GetTargetMethod()
+        {
+            return _targetType.GetMethod("GetNewProfile", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+        }
+
         private static bool IsTargetInterface(Type type)
         {
             if (!type.IsInterface || type.GetProperty("StartProfilesLoaded") == null || type.GetMethod("CreateProfile") == null)
@@ -45,11 +50,6 @@ namespace Aki.SinglePlayer.Patches.Bots
             }
 
             return true;
-        }
-
-        protected override MethodBase GetTargetMethod()
-        {
-            return _targetType.GetMethod("GetNewProfile", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
         private static bool PatchPrefix(ref Profile __result, object __instance, BotData data)

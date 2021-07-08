@@ -25,12 +25,12 @@ namespace Aki.SinglePlayer.Patches.Bots
             return (parameters.Length != 2 || parameters[0].Name != "wavesSettings" || parameters[1].Name != "bossLocationSpawn") ? false : true;
         }
 
-        static void PrefixPatch(BossLocationSpawn[] bossLocationSpawn)
+        private static void PrefixPatch(BossLocationSpawn[] bossLocationSpawn)
         {
             _bossSpawnPercent = bossLocationSpawn.Select(s => s.BossChance).ToArray();
         }
 
-        static void PostfixPatch(ref BossLocationSpawn[] __result)
+        private static void PostfixPatch(ref BossLocationSpawn[] __result)
         {
             if (__result.Length != _bossSpawnPercent.Length)
             {

@@ -7,9 +7,7 @@ using Aki.Core.Utils;
 namespace Aki.Core.Patches
 {
 	public class BattlEyePatch : GenericPatch<BattlEyePatch>
-	{
-        public static PropertyInfo __property;
-		
+	{		
         public BattlEyePatch() : base(prefix: nameof(PatchPrefix))
 		{
 		}
@@ -20,13 +18,12 @@ namespace Aki.Core.Patches
 			var flags = BindingFlags.Public | BindingFlags.Instance;
 			var type = PatcherConstants.TargetAssembly.GetTypes().Single(x => x.GetMethod(methodName, flags) != null);
 
-            __property = type.GetProperty("Succeed", flags);
             return type.GetMethod(methodName, flags);
         }
 
-        private static bool PatchPrefix(ref Task __result, object __instance)
+        private static bool PatchPrefix(ref Task __result, ref bool ___Succeed)
 		{
-            __property.SetValue(__instance, ValidationUtil.Validate());
+            ___Succeed = ValidationUtil.Validate();
 			__result = Task.CompletedTask;
 			return false;
 		}

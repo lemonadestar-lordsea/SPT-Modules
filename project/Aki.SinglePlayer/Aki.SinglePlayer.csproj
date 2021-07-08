@@ -92,7 +92,7 @@
     <Compile Include="Patches\Bundles\EasyBundlePatch.cs" />
     <Compile Include="Patches\Healing\PlayerPatch.cs" />
     <Compile Include="Patches\Matchmaker\InsuranceScreenPatch.cs" />
-    <Compile Include="Patches\Matchmaker\MatchMakerSelectionLocationScreenPatch.cs" />
+    <Compile Include="Patches\Matchmaker\SelectLocationScreenPatch.cs" />
     <Compile Include="Patches\Progression\ExperienceGainPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSpawnPointPatch.cs" />
     <Compile Include="Patches\Progression\EndByTimerPatch.cs" />

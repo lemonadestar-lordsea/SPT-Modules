@@ -34,7 +34,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
         }
 
         // Execute this code instead of original
-        private static bool PatchPrefix(object __instance,string ___string_1, ref Task __result)
+        private static bool PatchPrefix(object __instance, string ___string_1, ref Task __result)
         {
             if (___string_1.IndexOf("http") == -1)
             {

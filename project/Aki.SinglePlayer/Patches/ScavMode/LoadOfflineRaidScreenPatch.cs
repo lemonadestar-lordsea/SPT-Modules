@@ -22,6 +22,10 @@ namespace Aki.SinglePlayer.Patches.ScavMode
     {
         public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler))
         {
+            _ = nameof(MenuController.InventoryController);
+            _ = nameof(WeatherSettings.IsRandomWeather);
+            _ = nameof(BotsSettings.IsScavWars);
+            _ = nameof(WavesSettings.IsBosses);
         }
 
         protected override MethodBase GetTargetMethod()
@@ -31,7 +35,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 .GetMethod("method_2", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
-        static IEnumerable<CodeInstruction> PatchTranspiler(IEnumerable<CodeInstruction> instructions)
+        private static IEnumerable<CodeInstruction> PatchTranspiler(IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
             var index = 26;
@@ -50,8 +54,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                                                              ClientAppUtils.GetMainApp()) as MenuController;
         }
 
-        // Refer to MatchmakerOfflineRaid's subclass's OnShowNextScreen action definitions if these structs numbers change.
-        public static void LoadOfflineRaidNextScreen(bool local, WeatherSettings weatherSettings, BotsSettings botsSettings, WavesSettings wavesSettings)
+        private static void LoadOfflineRaidNextScreen(bool local, WeatherSettings weatherSettings, BotsSettings botsSettings, WavesSettings wavesSettings)
         {
             var menuController = GetMenuController();
 
@@ -69,7 +72,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             typeof(MenuController).GetMethod("method_40", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(menuController, null);
         }
 
-        public static void LoadOfflineRaidScreenForScav()
+        private static void LoadOfflineRaidScreenForScav()
         {
             var menuController = (object)GetMenuController();
             var gclass = new MatchmakerOfflineRaid.GClass2112();

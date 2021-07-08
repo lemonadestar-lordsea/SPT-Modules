@@ -24,7 +24,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 .FirstOrDefault(x => x.Name == "MoveNext");
         }
 
-        static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
 

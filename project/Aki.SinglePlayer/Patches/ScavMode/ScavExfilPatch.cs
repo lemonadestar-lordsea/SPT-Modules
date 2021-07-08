@@ -19,10 +19,12 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.LocalGameType.BaseType.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.CreateInstance).Single(IsTargetMethod);
+            return PatcherConstants.LocalGameType.BaseType
+                    .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.CreateInstance)
+                    .Single(IsTargetMethod);
         }
 
-        static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
             var searchCode = new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(PatcherConstants.ExfilPointManagerType, "EligiblePoints", new System.Type[] { typeof(Profile) }));
@@ -94,7 +96,10 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         private static bool IsTargetMethod(MethodInfo methodInfo)
         {
-            return methodInfo.IsVirtual && methodInfo.GetParameters().Length == 0 && methodInfo.ReturnType == typeof(void) && methodInfo.GetMethodBody().LocalVariables.Count > 0;
+            return methodInfo.IsVirtual
+                && methodInfo.GetParameters().Length == 0
+                && methodInfo.ReturnType == typeof(void)
+                && methodInfo.GetMethodBody().LocalVariables.Count > 0;
         }
     }
 }

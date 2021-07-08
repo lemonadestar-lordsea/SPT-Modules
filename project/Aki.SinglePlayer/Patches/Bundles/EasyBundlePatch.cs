@@ -15,6 +15,13 @@ namespace Aki.SinglePlayer.Patches.Bundles
 {
 	public class EasyBundlePatch : GenericPatch<EasyBundlePatch>
 	{
+        static EasyBundlePatch()
+        {
+            _ = nameof(IEasyBundle.SameNameAsset);
+            _ = nameof(IBundleLock.IsLocked);
+            _ = nameof(BindableState.Bind);
+        }
+
         public EasyBundlePatch() : base(prefix: nameof(PatchPrefix))
         {
         }

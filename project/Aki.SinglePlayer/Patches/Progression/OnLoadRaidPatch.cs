@@ -20,12 +20,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 			return PatcherConstants.LocalGameType.BaseType.GetMethod("method_5", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 		}
 
-		public static void PatchPostfix(string locationId)
-		{
-			SetRaidID();
-		}
-
-		private static void SetRaidID()
+		private static void PatchPostfix()
 		{
 			if (preloader == null)
 			{

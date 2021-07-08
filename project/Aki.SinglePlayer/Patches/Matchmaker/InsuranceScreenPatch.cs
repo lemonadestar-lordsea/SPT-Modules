@@ -23,12 +23,12 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
                 .FirstOrDefault(IsTargetMethod);
         }
 
-        static void PrefixPatch(ref bool local)
+        private static void PrefixPatch(ref bool local)
         {
             local = false;
         }
 
-        static void PostfixPatch(ref bool ___bool_0)
+        private static void PostfixPatch(ref bool ___bool_0)
         {
             ___bool_0 = true;
         }
@@ -36,18 +36,12 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
         private static bool IsTargetMethod(MethodInfo mi)
         {
             var parameters = mi.GetParameters();
-
-            if (parameters.Length != 4
-            || parameters[0].ParameterType != typeof(bool)
-            || parameters[0].Name != "local"
-            || parameters[1].Name != "weatherSettings"
-            || parameters[2].Name != "botsSettings"
-            || parameters[3].Name != "wavesSettings")
-            {
-                return false;
-            }
-
-            return true;
+            return (parameters.Length == 4
+                    && parameters[0].Name == "local"
+                    && parameters[1].Name == "weatherSettings"
+                    && parameters[2].Name == "botsSettings"
+                    && parameters[3].Name == "wavesSettings"
+                    && parameters[0].ParameterType == typeof(bool));
         }
     }
 }

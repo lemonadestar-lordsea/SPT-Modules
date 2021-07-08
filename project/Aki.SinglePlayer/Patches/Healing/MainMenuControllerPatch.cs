@@ -5,7 +5,7 @@ using IHealthController = GInterface177;
 
 namespace Aki.SinglePlayer.Patches.Healing
 {
-    class MainMenuControllerPatch : GenericPatch<MainMenuControllerPatch>
+    public class MainMenuControllerPatch : GenericPatch<MainMenuControllerPatch>
     {
         static MainMenuControllerPatch()
         {

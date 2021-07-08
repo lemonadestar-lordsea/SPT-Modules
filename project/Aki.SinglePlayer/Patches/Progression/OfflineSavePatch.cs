@@ -9,7 +9,7 @@ using ClientMetrics = GClass1431;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    class OfflineSaveProfilePatch : GenericPatch<OfflineSaveProfilePatch>
+    public class OfflineSaveProfilePatch : GenericPatch<OfflineSaveProfilePatch>
     {
         static OfflineSaveProfilePatch()
         {
@@ -25,7 +25,7 @@ namespace Aki.SinglePlayer.Patches.Progression
             return PatcherConstants.MainApplicationType.GetMethod("method_44", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
-        public static void PatchPrefix(ESideType ___esideType_0, Result<ExitStatus, TimeSpan, ClientMetrics> result)
+        private static void PatchPrefix(ESideType ___esideType_0, Result<ExitStatus, TimeSpan, ClientMetrics> result)
         {
             var session = Utils.Config.BackEndSession;
 

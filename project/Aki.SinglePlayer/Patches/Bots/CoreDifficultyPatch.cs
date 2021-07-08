@@ -21,7 +21,7 @@ namespace Aki.SinglePlayer.Patches.Bots
                 .GetMethod(methodName, flags);
 		}
 
-		public static bool PatchPrefix(ref string __result)
+		private static bool PatchPrefix(ref string __result)
 		{
             __result = RequestHandler.GetJson("/singleplayer/settings/bot/difficulty/core/core");
 			return string.IsNullOrWhiteSpace(__result);
