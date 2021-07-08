@@ -1,44 +1,51 @@
 using System;
 using System.Reflection;
+using HarmonyLib;
+using UnityEngine;
 
 namespace Aki.Common.Utils.Patching
 {
     public abstract class GenericPatch<T> where T : GenericPatch<T>
     {
-        public MethodInfo Prefix { get; }
-        public MethodInfo Postfix { get; }
-        public MethodInfo Transpiler { get; }
-        public MethodInfo Finalizer { get; }
-        private MethodBase _targetMethod = null;
-        public MethodBase TargetMethod 
-        { 
-            get 
-            {
-                if (_targetMethod == null)
-                {
-                    _targetMethod = GetTargetMethod();
-                }
+        private Harmony _harmony;
+        private MethodBase _targetMethod;
+        private PatchMethod _prefix;
+        private PatchMethod _postfix;
+        private PatchMethod _transpiler;
+        private PatchMethod _finalizer;
 
-                return _targetMethod; 
-            } 
-        }
-
-        protected abstract MethodBase GetTargetMethod();
-
-        public GenericPatch(string prefix = null, string postfix = null, string transpiler = null, string finalizer = null)
+        public GenericPatch(string name = null, string prefix = null, string postfix = null, string transpiler = null, string finalizer = null)
         {
-            Prefix = GetMethodInfo(prefix);
-            Postfix = GetMethodInfo(postfix);
-            Transpiler = GetMethodInfo(transpiler);
-            Finalizer = GetMethodInfo(finalizer);
+            _harmony = new Harmony(name ?? typeof(T).Name);
+            _targetMethod = GetTargetMethod();
+            _prefix = GetPatchMethod(prefix);
+            _postfix = GetPatchMethod(postfix);
+            _transpiler = GetPatchMethod(transpiler);
+            _finalizer = GetPatchMethod(finalizer);
 
-            if (Prefix == null && Postfix == null && transpiler == null && finalizer == null)
+            if (_targetMethod == null)
+            {
+                throw new InvalidOperationException("TargetMethod is null");
+            }
+
+            if (_prefix == null && _postfix == null && _transpiler == null && _finalizer == null)
             {
                 throw new Exception("At least one of the patch methods must be specified");
             }
         }
 
-        private MethodInfo GetMethodInfo(string methodName)
+        /// <summary>
+        /// Get original method
+        /// </summary>
+        /// <returns>Method</returns>
+        protected abstract MethodBase GetTargetMethod();
+
+        /// <summary>
+        /// Get MethodInfo from string
+        /// </summary>
+        /// <param name="methodName">Method name</param>
+        /// <returns>Method</returns>
+        private PatchMethod GetPatchMethod(string methodName)
         {
             if (string.IsNullOrWhiteSpace(methodName))
             {
@@ -46,6 +53,38 @@ namespace Aki.Common.Utils.Patching
             }
 
             return typeof(T).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.DeclaredOnly);
+        }
+
+        /// <summary>
+        /// Apply patch to target
+        /// </summary>
+        public void Apply()
+        {
+            try
+            {
+                _harmony.Patch(_targetMethod, _prefix, _postfix, _transpiler, _finalizer);
+                Debug.LogError($"Aki.Common: Applied patch {_harmony.Id}");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Aki.Common: Error in applying patch {_harmony.Id}{Environment.NewLine}{ex}");
+            }
+        }
+
+        /// <summary>
+        /// Remove applied patch from target
+        /// </summary>
+        public void Remove()
+        {
+            try
+            {
+                _harmony.Unpatch(_targetMethod, HarmonyPatchType.All, _harmony.Id);
+                Debug.LogError($"Aki.Common: Removed patch {_harmony.Id}");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Aki.Common: Error in removing patch {_harmony.Id}{Environment.NewLine}{ex}");
+            }
         }
     }
 }
