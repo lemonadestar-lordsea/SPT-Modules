@@ -49,6 +49,7 @@ namespace Aki.SinglePlayer
             PatcherUtil.Patch<ScavPrefabLoadPatch>();
             PatcherUtil.Patch<ScavProfileLoadPatch>();
             PatcherUtil.Patch<ScavExfilPatch>();
+            PatcherUtil.Patch<ExfilPointManagerPatch>();
 
             PatcherUtil.Patch<EndByTimerPatch>();
         }
