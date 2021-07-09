@@ -44,14 +44,7 @@ namespace Aki.Common.Utils.Patching
                 return null;
             }
 
-            var patchedMethod = typeof(T).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-
-            if (patchedMethod == null)
-            {
-                throw new InvalidOperationException($"Patch method {methodName} is null");
-            }
-
-            return new HarmonyMethod(patchedMethod);
+            return new HarmonyMethod(typeof(T).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly));
         }
 
         /// <summary>
