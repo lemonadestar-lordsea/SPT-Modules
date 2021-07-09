@@ -10,6 +10,7 @@
  * Author Epicguru.
  */
 
+using Aki.Common.Utils;
 using System;
 using System.IO;
 using System.Reflection;
@@ -30,7 +31,13 @@ namespace Aki.Loader
             }
 
             LoadAssAndEntryPoint(dllPath, out var entry, out bool hasStringArray);
-            entry.Invoke(null, hasStringArray ? new object[] { args } : new object[0]);
+            if (entry == null)
+                Log.Error($"Entry point for {dllPath} was empty");
+            else
+            {
+                Log.Info($"Invoking {entry}");
+                entry.Invoke(null, hasStringArray ? new object[] { args } : new object[0]);
+            }
         }
 
         internal static void LoadAssAndEntryPoint(string dllPath, out MethodInfo entryPoint, out bool hasStringArray)
@@ -45,8 +52,8 @@ namespace Aki.Loader
                 LoadDeps(asm, new FileInfo(dllPath).DirectoryName);
                 entryPoint = entry;
             }
-
-            throw new Exception($"Failed to find entry point in {asm.FullName}");
+            else
+                throw new Exception($"Failed to find entry point in {asm.FullName}");
         }
 
         internal static Assembly LoadAssembly(string dllPath)
@@ -89,7 +96,7 @@ namespace Aki.Loader
                         return true;
                     }
                 }
-                
+
                 return false;
             }
 
@@ -140,26 +147,34 @@ namespace Aki.Loader
         {
             foreach (var type in a.GetTypes())
             {
+                Log.Info($"Testing {type}");
+
                 if (!type.IsClass)
                 {
+                    Log.Info("No, not a class");
                     continue;
                 }
 
                 if (type.IsGenericType)
                 {
+                    Log.Info("No, is generic");
                     continue;
                 }
 
+                Log.Info("Testing methods");
                 foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static))
                 {
                     if (method.IsGenericMethod)
                     {
+                        Log.Info("No, is generic");
                         continue;
                     }
 
                     // Must be called Main just like regular program.
                     if (method.Name == "Main")
                     {
+                        Log.Info("Main found, testing");
+
                         // Allowed parameters: none, or an array of strings (such as string[] args)
                         var args = method.GetParameters();
 

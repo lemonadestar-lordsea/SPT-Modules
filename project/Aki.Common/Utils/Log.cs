@@ -1,17 +1,20 @@
-using UnityEngine;
+using System;
+using System.IO;
 
 namespace Aki.Common.Utils
 {
-    public class Log
+    public static class Log
     {
+        private const string fn = "C:\\temp\\akitestlog.log";
+
         private static void Write(string type, string text)
         {
-            Debug.LogError(string.Format("{0} | {1}", type, text));
+            File.AppendAllText(fn, $"[{DateTime.Now}] {type} | {text}{Environment.NewLine}");
         }
 
         public static void Data(string text)
         {
-            Debug.LogError(string.Format("{0}", text));
+            File.AppendAllText(fn, $"[{DateTime.Now}] {text}{Environment.NewLine}");
         }
 
         public static void Info(string text)

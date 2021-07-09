@@ -21,6 +21,8 @@ namespace Aki.Common.Utils
         /// </summary>
         public static string Combine(string path1, string path2)
         {
+            Log.Info($"Combine '{path1}' and '{path2}'");
+
             return Path.Combine(path1, path2);
         }
 
