@@ -26,7 +26,7 @@ namespace Aki.Common.Utils.Patching
         /// <param name="self">Instance</param>
         public static implicit operator HarmonyMethod(PatchMethod self)
         {
-            return self._harmonyMethod;
+            return self?._harmonyMethod;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Aki.Common.Utils.Patching
         /// <param name="self">Instance</param>
         public static implicit operator MethodInfo(PatchMethod self)
         {
-            return self._methodInfo;
+            return self?._methodInfo;
         }
 
         /// <summary>
