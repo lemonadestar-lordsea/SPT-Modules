@@ -1,17 +1,16 @@
 using System;
 using System.Reflection;
 using HarmonyLib;
-using UnityEngine;
 
 namespace Aki.Common.Utils.Patching
 {
     public abstract class GenericPatch<T> where T : GenericPatch<T>
     {
         private Harmony _harmony;
-        private PatchMethod _prefix;
-        private PatchMethod _postfix;
-        private PatchMethod _transpiler;
-        private PatchMethod _finalizer;
+        private HarmonyMethod _prefix;
+        private HarmonyMethod _postfix;
+        private HarmonyMethod _transpiler;
+        private HarmonyMethod _finalizer;
 
         public GenericPatch(string name = null, string prefix = null, string postfix = null, string transpiler = null, string finalizer = null)
         {
@@ -38,14 +37,21 @@ namespace Aki.Common.Utils.Patching
         /// </summary>
         /// <param name="methodName">Method name</param>
         /// <returns>Method</returns>
-        private PatchMethod GetPatchMethod(string methodName)
+        private HarmonyMethod GetPatchMethod(string methodName)
         {
             if (string.IsNullOrWhiteSpace(methodName))
             {
                 return null;
             }
 
-            return typeof(T).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+            var patchedMethod = typeof(T).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+
+            if (patchedMethod == null)
+            {
+                throw new InvalidOperationException($"Patch method {methodName} is null");
+            }
+
+            return new HarmonyMethod(patchedMethod);
         }
 
         /// <summary>
