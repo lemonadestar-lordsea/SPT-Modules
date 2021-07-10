@@ -29,21 +29,21 @@ namespace Aki.Loader
 
                 foreach (var dir in dirs)
                 {
-                    var file = $"{dir}/module.dll";
+                    var file = VFS.Combine(dir, "./module.dll");
 
                     if (VFS.Exists(file))
                     {
-                        Exception error = RunUtil.LoadAndRun(file);
+                        Exception ex = RunUtil.LoadAndRun(file);
 
-                        if (error == null)
+                        if (ex == null)
                         {
-                            Log.Info($"Aki.Loader: Loaded '{file}'!");
+                            Log.Info($"Aki.Loader: Successfully loaded '{file}'");
                         }
                         else
                         {
-                            Log.Error($"Aki.Loader: Failed to load '{file}'! Exception below.");
-                            Log.Write(error.Message);
-                            Log.Write(error.StackTrace);
+                            Log.Error($"Aki.Loader: Failed to load '{file}'");
+                            Log.Write(ex.Message);
+                            Log.Write(ex.StackTrace);
                         }
                     }
                     else
