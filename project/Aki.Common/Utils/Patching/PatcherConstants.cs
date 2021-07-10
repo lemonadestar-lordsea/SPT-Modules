@@ -24,6 +24,8 @@ namespace Aki.Common.Utils.Patching
 
         public static Type ExfilPointManagerType = TargetAssembly.GetTypes().Single(x => x.GetMethod("InitAllExfiltrationPoints") != null);
         public static Type ProfileInfoType = TargetAssembly.GetTypes().Single(x => x.GetMethod("GetExperience") != null);
+        public static Type ProfileType = TargetAssembly.GetTypes().Single(x => x.GetMethod("AddToCarriedQuestItems") != null);
+        public static Type FenceTraderInfoType = TargetAssembly.GetTypes().Single(x => x.GetMethod("NewExfiltrationPrice") != null);
 
         public static Type FirearmControllerType = typeof(Player.FirearmController).GetNestedTypes().Single(x => x.GetFields(DefaultBindingFlags).
             Count(y => y.Name.Contains("gclass")) > 0 && x.GetFields(DefaultBindingFlags).Count(y => y.Name.Contains("callback")) > 0 && x.GetMethod("UseSecondMagForReload", DefaultBindingFlags) != null);
