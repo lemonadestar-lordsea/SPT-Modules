@@ -15,7 +15,7 @@ namespace Aki.Core.Patches
 
     public class UnityWebRequestPatch : GenericPatch<UnityWebRequestPatch>
     {
-        private static readonly CertificateHandler _certificateHandler = new FakeCertificateHandler();
+        private static CertificateHandler _certificateHandler = new FakeCertificateHandler();
 
         public UnityWebRequestPatch() : base(postfix: nameof(PatchPostfix))
         {

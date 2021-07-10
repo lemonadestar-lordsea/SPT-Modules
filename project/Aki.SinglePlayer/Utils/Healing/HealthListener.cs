@@ -36,7 +36,7 @@ namespace Aki.SinglePlayer.Utils.Healing
 
     public class Disposable : IDisposable
     {
-        private readonly Action _onDispose;
+        private Action _onDispose;
 
         public Disposable(Action onDispose)
         {
@@ -55,8 +55,7 @@ namespace Aki.SinglePlayer.Utils.Healing
         private static HealthListener _instance;
         private IHealthController _healthController;
         private IDisposable _disposable = null;
-        private readonly HealthSynchronizer _simpleTimer;
-
+        private HealthSynchronizer _simpleTimer { get; private set; }
         public PlayerHealth CurrentHealth { get; }
 
         public static HealthListener Instance

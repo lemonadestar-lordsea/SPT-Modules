@@ -22,8 +22,8 @@ namespace Aki.SinglePlayer.Utils.Bundles
         private const string _loadingAssetOperationFieldName = "assetBundleRequest_0";
         private const string _assetsPropertyName = "Assets";
         private const string _sameNameAssetPropertyName = "SameNameAsset";
-        private readonly object _instance;
-        private readonly Traverse _trav;
+        private object _instance;
+        private Traverse _trav;
         private static MethodInfo _loadingCoroutineMethod;
 
         static EasyBundleHelper()

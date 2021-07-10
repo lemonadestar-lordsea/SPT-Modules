@@ -8,7 +8,7 @@ namespace Aki.SinglePlayer.Utils.Bundles
     public class BundleSettings
     {
         public const string CachePath = "Cache/StreamingAssets/windows/";
-        public readonly static Dictionary<string, BundleInfo> Bundles;
+        public static Dictionary<string, BundleInfo> Bundles { get; private set; }
 
         static BundleSettings()
         {

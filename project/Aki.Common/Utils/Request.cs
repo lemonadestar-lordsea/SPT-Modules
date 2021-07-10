@@ -51,7 +51,7 @@ namespace Aki.Common.Utils
         /// <summary>
         /// HTML MIME types.
         /// </summary>
-        public static readonly Dictionary<string, string> Mime;
+        public static Dictionary<string, string> Mime { get; private set; }
 
         static HttpConstants()
         {

@@ -6,23 +6,26 @@ namespace Aki.SinglePlayer.Utils
 {
     public static class RequestHandler
     {
-        private static readonly Request _request;
-        private static readonly string _host;
+        private static Request _request;
+        private static string _host;
         private static string _session;
         private static Dictionary<string, string> _headers;
 
         static RequestHandler()
         {
-            _host = Utils.Config.BackendUrl;
             _session = null;
             _request = new Request();
-            Log.Info($"Aki.SinglePlayer: Request host: {_host}");
         }
 
         private static void PrepareRequest(string url)
         {
             Log.Info($"Aki.SinglePlayer: Request: {url}");
 
+            // set endpoint
+            _host = Utils.Config.BackendUrl;
+            Log.Info($"Aki.SinglePlayer: Request host: {_host}");
+
+            // set session
             var backend = Utils.Config.BackEndSession;
 
             if (backend == null)

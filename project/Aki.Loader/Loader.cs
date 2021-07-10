@@ -6,7 +6,7 @@ namespace Aki.Loader
 {
     public static class Loader
     {
-        private static readonly List<string> _repositories;
+        private static List<string> _repositories;
 
         static Loader()
         {
