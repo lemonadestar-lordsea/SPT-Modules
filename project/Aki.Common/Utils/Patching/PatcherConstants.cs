@@ -30,7 +30,7 @@ namespace Aki.Common.Utils.Patching
         public static Type FirearmControllerType = typeof(Player.FirearmController).GetNestedTypes().Single(x => x.GetFields(DefaultBindingFlags).
             Count(y => y.Name.Contains("gclass")) > 0 && x.GetFields(DefaultBindingFlags).Count(y => y.Name.Contains("callback")) > 0 && x.GetMethod("UseSecondMagForReload", DefaultBindingFlags) != null);
         public static string WeaponControllerFieldName = FirearmControllerType.GetFields(DefaultBindingFlags).
-                Single(x => x.Name.Contains("gclass")).Name;
+            Single(x => x.Name.Contains("gclass")).Name;
 
     }
 }
