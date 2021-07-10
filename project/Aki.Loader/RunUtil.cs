@@ -33,23 +33,8 @@ namespace Aki.Loader
             MethodInfo entry = null;
             bool hasStringArray = false;
 
-            try
-            {
-                LoadAssemblyAndEntryPoint(dllPath, out entry, out hasStringArray);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Failed to load entry point of {dllPath}", ex);
-            }
-
-            try
-            {
-                entry.Invoke(null, hasStringArray ? new object[] { args } : new object[0]);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Failed to execute entry point of {dllPath}", ex);
-            }
+            LoadAssemblyAndEntryPoint(dllPath, out entry, out hasStringArray);
+            entry.Invoke(null, hasStringArray ? new object[] { args } : new object[0]);
         }
 
         private static void LoadAssemblyAndEntryPoint(string dllPath, out MethodInfo entryPoint, out bool hasStringArray)
