@@ -20,12 +20,33 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
     public class LoadOfflineRaidScreenPatch : GenericPatch<LoadOfflineRaidScreenPatch>
     {
-        public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler))
+        private static MethodInfo _onReadyScreenMethod;
+        private static FieldInfo _menuControllerField;
+        private static FieldInfo _isLocalField;
+        private static FieldInfo _weatherSettingsField;
+        private static FieldInfo _botsSettingsField;
+        private static FieldInfo _waveSettingsField;
+
+        static LoadOfflineRaidScreenPatch()
         {
             _ = nameof(MenuController.InventoryController);
             _ = nameof(WeatherSettings.IsRandomWeather);
             _ = nameof(BotsSettings.IsScavWars);
             _ = nameof(WavesSettings.IsBosses);
+        }
+
+        public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler))
+        {
+            var flags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+            var mainApplicationFields = typeof(MainApplication).GetFields(flags);
+            var menuControllerFields = typeof(MenuController).GetFields(flags);
+
+            _onReadyScreenMethod = typeof(MenuController).GetMethod("method_40", flags);
+            _menuControllerField = mainApplicationFields.FirstOrDefault(x => x.Name == $"{nameof(GClass1253).ToLower()}_0");
+            _isLocalField = menuControllerFields.FirstOrDefault(x => x.Name == "bool_0");
+            _weatherSettingsField = menuControllerFields.FirstOrDefault(x => x.Name == $"{nameof(GStruct93).ToLower()}_0");
+            _botsSettingsField = menuControllerFields.FirstOrDefault(x => x.Name == $"{nameof(GStruct94).ToLower()}_0");
+            _waveSettingsField = menuControllerFields.FirstOrDefault(x => x.Name == $"{nameof(GStruct234).ToLower()}_0");
         }
 
         protected override MethodBase GetTargetMethod()
@@ -50,8 +71,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         private static MenuController GetMenuController()
         {
-            return PrivateValueAccessor.GetPrivateFieldValue(typeof(MainApplication), $"{nameof(GClass1253).ToLower()}_0",
-                                                             ClientAppUtils.GetMainApp()) as MenuController;
+            return _menuControllerField.GetValue(ClientAppUtils.GetMainApp()) as MenuController;                                  
         }
 
         private static void LoadOfflineRaidNextScreen(bool local, WeatherSettings weatherSettings, BotsSettings botsSettings, WavesSettings wavesSettings)
@@ -63,13 +83,14 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 wavesSettings.IsBosses = true;
             }
 
-            SetMenuControllerFieldValue(menuController, "bool_0", local);
-            SetMenuControllerFieldValue(menuController, $"{nameof(GStruct93).ToLower()}_0", weatherSettings);
-            SetMenuControllerFieldValue(menuController, $"{nameof(GStruct94).ToLower()}_0", wavesSettings);
-            SetMenuControllerFieldValue(menuController, $"{nameof(GStruct234).ToLower()}_0", botsSettings);
+            // set offline raid values
+            _isLocalField.SetValue(menuController, local);
+            _weatherSettingsField.SetValue(menuController, weatherSettings);
+            _botsSettingsField.SetValue(menuController, wavesSettings);
+            _waveSettingsField.SetValue(menuController, botsSettings);
 
             // load ready screen method
-            typeof(MenuController).GetMethod("method_40", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(menuController, null);
+            _onReadyScreenMethod.Invoke(menuController, null);
         }
 
         private static void LoadOfflineRaidScreenForScav()
@@ -82,11 +103,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             // ready method
             gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, "method_61");
             gclass.ShowScreen(EScreenState.Queued);
-        }
-
-        private static void SetMenuControllerFieldValue(MenuController instance, string fieldName, object value)
-        {
-            PrivateValueAccessor.SetPrivateFieldValue(typeof(MenuController), fieldName, instance, value);
         }
     }
 }
