@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 using Newtonsoft.Json.Linq;
 using Aki.Common.Utils;
 using Aki.SinglePlayer.Models;
@@ -8,17 +7,17 @@ namespace Aki.SinglePlayer.Utils.Bundles
 {
     public class BundleSettings
     {
-        public const string cachePach = "Cache/StreamingAssets/windows/";
-        public readonly static Dictionary<string, BundleInfo> bundles;
+        public const string CachePath = "Cache/StreamingAssets/windows/";
+        public static Dictionary<string, BundleInfo> Bundles { get; private set; }
 
         static BundleSettings()
         {
-            bundles = new Dictionary<string, BundleInfo>();
+            Bundles = new Dictionary<string, BundleInfo>();
 
             // clear cache
-            if (VFS.Exists(cachePach))
+            if (VFS.Exists(CachePath))
             {
-                VFS.DeleteDirectory(cachePach);
+                VFS.DeleteDirectory(CachePath);
             }
         }
 
@@ -31,10 +30,12 @@ namespace Aki.SinglePlayer.Utils.Bundles
             {
                 var bundle = (BundleInfo)null;
 
-                if (!bundles.TryGetValue(jObj["key"].ToString(), out bundle))
+                if (!Bundles.TryGetValue(jObj["key"].ToString(), out bundle))
                 {
-                    bundle = new BundleInfo(jObj["key"].ToString(), jObj["path"].ToString(), jObj["dependencyKeys"].ToObject<List<string>>().ToArray());
-                    bundles.Add(bundle.Key, bundle);
+                    bundle = new BundleInfo(jObj["key"].ToString(),
+                                            jObj["path"].ToString(),
+                                            jObj["dependencyKeys"].ToObject<List<string>>().ToArray());
+                    Bundles.Add(bundle.Key, bundle);
                 }
             }
         }

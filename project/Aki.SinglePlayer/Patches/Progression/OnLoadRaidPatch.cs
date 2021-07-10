@@ -20,12 +20,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 			return PatcherConstants.LocalGameType.BaseType.GetMethod("method_5", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 		}
 
-		public static void PatchPostfix(string locationId)
-		{
-			SetRaidID();
-		}
-
-		private static void SetRaidID()
+		private static void PatchPostfix()
 		{
 			if (preloader == null)
 			{
@@ -34,7 +29,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 
 			if (preloader != null)
 			{
-				var raidID = Path.GetRandomFileName().Replace(".", "").Substring(0, 4).ToUpper();
+				var raidID = Path.GetRandomFileName().Replace(".", string.Empty).Substring(0, 4).ToUpper();
 				preloader.SetSessionId(raidID);
 			}
 		}

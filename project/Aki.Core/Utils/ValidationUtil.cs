@@ -13,7 +13,7 @@ namespace Aki.Core.Utils
             try
             {
                 var v1 = Registry.LocalMachine.OpenSubKey(c0, false).GetValue("UninstallString");
-                var v2 = (v1 != null) ? v1.ToString() : "";
+                var v2 = (v1 != null) ? v1.ToString() : string.Empty;
                 var v3 = new FileInfo(v2);
                 var v4 = new FileInfo[]
                 {

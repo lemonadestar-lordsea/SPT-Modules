@@ -1,13 +1,25 @@
-﻿using EFT;
-using Aki.SinglePlayer.Utils.Healing;
+﻿using Newtonsoft.Json;
+using EFT;
 
 namespace Aki.SinglePlayer.Models
 {
     public class SaveProfileRequest
 	{
-		public string exit = "left";
-		public Profile profile;
-		public bool isPlayerScav;
-		public PlayerHealth health;
+		[JsonProperty("exit")]
+		public string Exit;
+
+		[JsonProperty("profile")]
+		public Profile Profile;
+
+		[JsonProperty("isPlayerScav")]
+		public bool IsPlayerScav;
+
+		[JsonProperty("health")]
+		public PlayerHealth Health;
+
+		public SaveProfileRequest()
+		{
+			Exit = "left";
+		}
 	}
 }

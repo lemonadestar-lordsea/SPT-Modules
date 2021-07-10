@@ -5,6 +5,8 @@ namespace Aki.SinglePlayer.Utils.Reflection.CodeWrapper
 {
     public class CodeWithLabel : Code
     {
+        public Label Label { get; }
+
         public CodeWithLabel(OpCode opCode, Label label) : base(opCode)
         {
             Label = label;
@@ -29,7 +31,5 @@ namespace Aki.SinglePlayer.Utils.Reflection.CodeWrapper
         {
             return Label;
         }
-
-        public Label Label { get; }
     }
 }

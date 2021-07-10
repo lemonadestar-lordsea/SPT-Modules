@@ -20,7 +20,7 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
             return typeof(MatchmakerOfflineRaid).GetMethod("Show", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
-        public static void PatchPostfix(UpdatableToggle ____offlineModeToggle,
+        private static void PatchPostfix(UpdatableToggle ____offlineModeToggle,
                                         UpdatableToggle ____botsEnabledToggle,
                                         TMPDropDownBox ____aiAmountDropdown,
                                         TMPDropDownBox ____aiDifficultyDropdown,

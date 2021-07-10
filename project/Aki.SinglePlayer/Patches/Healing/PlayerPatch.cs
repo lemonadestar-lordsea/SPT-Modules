@@ -5,7 +5,7 @@ using Aki.Common.Utils.Patching;
 
 namespace Aki.SinglePlayer.Patches.Healing
 {
-    class PlayerPatch : GenericPatch<PlayerPatch>
+    public class PlayerPatch : GenericPatch<PlayerPatch>
     {
         private static string _playerAccountId;
 
@@ -18,12 +18,11 @@ namespace Aki.SinglePlayer.Patches.Healing
             return typeof(Player).GetMethod("Init", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
-        static async void PatchPostfix(Player __instance, Task __result)
+        private static async void PatchPostfix(Player __instance, Task __result)
         {
             if (_playerAccountId == null)
             {
-                var backendSession = Utils.Config.BackEndSession;
-                _playerAccountId = backendSession.Profile.AccountId;
+                _playerAccountId = Utils.Config.BackEndSession.Profile.AccountId;
             }
 
 			if (__instance.Profile.AccountId != _playerAccountId)

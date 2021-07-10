@@ -1,49 +1,41 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using UnityEngine;
-using EFT;
 using Aki.Common.Utils;
+using Aki.SinglePlayer.Models;
 
 namespace Aki.SinglePlayer.Utils
 {
     public static class RequestHandler
     {
-        private static readonly Request request;
-        private static readonly string host;
-        private static string session;
-        private static Dictionary<string, string> headers;
+        private static string _host;
+        private static string _session;
+        private static Request _request;
+        private static Dictionary<string, string> _headers;
 
         static RequestHandler()
         {
-            host = Utils.Config.BackendUrl;
-            session = null;
-            request = new Request();
-            Debug.LogError($"Aki.SinglePlayer: Request host: {host}");
-        }
+            _request = new Request();
 
-        private static void PrepareRequest(string url)
-        {
-            Debug.LogError($"Aki.SinglePlayer: Request: {url}");
+            var args = Environment.GetCommandLineArgs();
 
-            var backend = Utils.Config.BackEndSession;
-
-            if (backend == null)
+            foreach (var arg in args)
             {
-                Debug.LogError($"Aki.SinglePlayer: Request session not active");
-                return;
-            }
-
-            if (session == null)
-            {
-                session = backend.GetPhpSessionId();
-                headers = new Dictionary<string, string>()
+                if (arg.Contains("BackendUrl"))
                 {
-                    { "Cookie", $"PHPSESSID={session}" },
-                    { "SessionId", session }
-                };
+                    var json = arg.Replace("-config=", string.Empty);
+                    _host = Json.Deserialize<ServerConfig>(json).BackendUrl;
+                }
 
-                Debug.LogError($"Aki.SinglePlayer: Request session: {session}");
+                if (arg.Contains("-token="))
+                {
+                    _session =  arg.Replace("-token=", string.Empty);
+                    _headers = new Dictionary<string, string>()
+                    {
+                        { "Cookie", $"PHPSESSID={_session}" },
+                        { "SessionId", _session }
+                    };
+                }
             }
         }
 
@@ -51,27 +43,27 @@ namespace Aki.SinglePlayer.Utils
         {
             if (data == null)
             {
-                Debug.LogError($"Aki.SinglePlayer: Request failed, body is null");
+                Log.Error($"Request failed, body is null");
             }
 
-            Debug.LogError($"Aki.SinglePlayer: Request was successful");
+            Log.Info($"Request was successful");
         }
 
         private static void ValidateJson(string json)
         {
             if (string.IsNullOrWhiteSpace(json))
             {
-                Debug.LogError($"Aki.SinglePlayer: Request failed, body is null");
+                Log.Error($"Request failed, body is null");
             }
 
-            Debug.LogError($"Aki.SinglePlayer: Request was successful");
+            Log.Info($"Request was successful");
         }
 
         public static byte[] GetData(string url)
         {
-            PrepareRequest(url);
+            Log.Info($"Request GET data: {_session}:{_host}{url}");
             
-            var result = request.Send(host + url, "GET", null, headers: headers);
+            var result = _request.Send(_host + url, "GET", null, headers: _headers);
             
             ValidateData(result);
             return result;
@@ -79,9 +71,9 @@ namespace Aki.SinglePlayer.Utils
 
         public static string GetJson(string url)
         {
-            PrepareRequest(url);
+            Log.Info($"Request GET json: {_session}:{_host}{url}");
 
-            var data = request.Send(host + url, "GET", headers: headers);
+            var data = _request.Send(_host + url, "GET", headers: _headers);
             var result = Encoding.UTF8.GetString(data);
             
             ValidateJson(result);
@@ -90,9 +82,9 @@ namespace Aki.SinglePlayer.Utils
 
         public static string PostJson(string url, string json)
         {
-            PrepareRequest(url);
+            Log.Info($"Request POST json: {_session}:{_host}{url}");
 
-            var data = request.Send(host + url, "POST", Encoding.UTF8.GetBytes(json), true, "application/json", headers);
+            var data = _request.Send(_host + url, "POST", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
             var result = Encoding.UTF8.GetString(data);
             
             ValidateJson(result);
@@ -101,8 +93,8 @@ namespace Aki.SinglePlayer.Utils
 
         public static void PutJson(string url, string json)
         {
-            PrepareRequest(url);
-            request.Send(host + url, "PUT", Encoding.UTF8.GetBytes(json), true, "application/json", headers);
+            Log.Info($"Request PUT json: {_session}:{_host}{url}");
+            _request.Send(_host + url, "PUT", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
         }
-    }   
+    }
 }

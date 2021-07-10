@@ -14,12 +14,11 @@ namespace Aki.Core.Patches
 
 		protected override MethodBase GetTargetMethod()
 		{
-			return PatcherConstants.TargetAssembly
-				.GetTypes().Single(x => x.BaseType == typeof(CertificateHandler))
+			return PatcherConstants.EftTypes.Single(x => x.BaseType == typeof(CertificateHandler))
 				.GetMethod("ValidateCertificate", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 		}
 
-		static bool PatchPrefix(ref bool __result)
+		private static bool PatchPrefix(ref bool __result)
 		{
 			__result = ValidationUtil.Validate();
 			return false;

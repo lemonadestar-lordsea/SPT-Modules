@@ -5,9 +5,17 @@ using Aki.Core.Utils;
 
 namespace Aki.Core.Patches
 {
-    class UnityWebRequestPatch : GenericPatch<UnityWebRequestPatch>
+    public class FakeCertificateHandler : CertificateHandler
     {
-        private static readonly CertificateHandler _certificateHandler = new FakeCertificateHandler();
+        protected override bool ValidateCertificate(byte[] certificateData)
+        {
+            return ValidationUtil.Validate();
+        }
+    }
+
+    public class UnityWebRequestPatch : GenericPatch<UnityWebRequestPatch>
+    {
+        private static CertificateHandler _certificateHandler = new FakeCertificateHandler();
 
         public UnityWebRequestPatch() : base(postfix: nameof(PatchPostfix))
         {
@@ -18,19 +26,11 @@ namespace Aki.Core.Patches
             return typeof(UnityWebRequestTexture).GetMethod(nameof(UnityWebRequestTexture.GetTexture), new[] { typeof(string) });
         }
 
-        static void PatchPostfix(UnityWebRequest __result)
+        private static void PatchPostfix(UnityWebRequest __result)
         {
             __result.certificateHandler = _certificateHandler;
             __result.disposeCertificateHandlerOnDispose = false;
             __result.timeout = 1000;
-        }
-
-        internal class FakeCertificateHandler : CertificateHandler
-        {
-            protected override bool ValidateCertificate(byte[] certificateData)
-            {
-                return ValidationUtil.Validate();
-            }
         }
     }
 }

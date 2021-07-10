@@ -4,8 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using HarmonyLib;
-using IBundleLock = GInterface264; //Property: IsLocked
-using BindableState = GClass2251<Diz.DependencyManager.ELoadState>; //Construct method parameter: initialValue
+using Aki.Common.Utils;
+using IBundleLock = GInterface264;
+using BindableState = GClass2251<Diz.DependencyManager.ELoadState>;
 
 namespace Aki.SinglePlayer.Utils.Bundles
 {
@@ -22,9 +23,15 @@ namespace Aki.SinglePlayer.Utils.Bundles
         private const string _loadingAssetOperationFieldName = "assetBundleRequest_0";
         private const string _assetsPropertyName = "Assets";
         private const string _sameNameAssetPropertyName = "SameNameAsset";
-        private readonly object _instance;
-        private readonly Traverse _trav;
+        private object _instance;
+        private Traverse _trav;
         private static MethodInfo _loadingCoroutineMethod;
+
+        static EasyBundleHelper()
+        {
+            _ = nameof(IBundleLock.IsLocked);
+            _ = nameof(BindableState.Bind);
+        }
 
         public IEnumerable<string> DependencyKeys
         {
@@ -43,12 +50,12 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return _trav.Field<IBundleLock>($"{typeof(GInterface264).Name.ToLower()}_0").Value;
+                return _trav.Field<IBundleLock>($"{nameof(GInterface264).ToLower()}_0").Value;
             }
 
             set
             {
-                _trav.Field<IBundleLock>($"{typeof(GInterface264).Name.ToLower()}_0").Value = value;
+                _trav.Field<IBundleLock>($"{nameof(GInterface264).ToLower()}_0").Value = value;
             }
         }
 

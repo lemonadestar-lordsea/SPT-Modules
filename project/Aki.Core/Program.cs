@@ -1,4 +1,4 @@
-using UnityEngine;
+using Aki.Common.Utils;
 using Aki.Core.Patches;
 
 namespace Aki.Core
@@ -7,7 +7,7 @@ namespace Aki.Core
 	{
 		static void Main(string[] args)
 		{
-            Debug.LogError("Aki.Core: Loaded");
+            Log.Info("Loading: Aki.Core");
 
             new BattlEyePatch().Apply();
             new SslCertificatePatch().Apply();

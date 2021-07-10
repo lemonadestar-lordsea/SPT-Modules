@@ -15,13 +15,10 @@ namespace Aki.SinglePlayer.Patches.Bots
         {
 			var methodName = "LoadCoreByString";
 			var flags = BindingFlags.Public | BindingFlags.Static;
-
-			return PatcherConstants.TargetAssembly
-                .GetTypes().Single(x => x.GetMethod(methodName, flags) != null)
-                .GetMethod(methodName, flags);
+			return PatcherConstants.EftTypes.Single(x => x.GetMethod(methodName, flags) != null).GetMethod(methodName, flags);
 		}
 
-		public static bool PatchPrefix(ref string __result)
+		private static bool PatchPrefix(ref string __result)
 		{
             __result = RequestHandler.GetJson("/singleplayer/settings/bot/difficulty/core/core");
 			return string.IsNullOrWhiteSpace(__result);

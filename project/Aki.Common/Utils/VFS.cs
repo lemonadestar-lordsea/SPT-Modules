@@ -8,12 +8,10 @@ namespace Aki.Common.Utils
     public static class VFS
     {
         public static string Cwd { get; private set; }
-        private static object mutex;
 
         static VFS()
         {
             Cwd = Environment.CurrentDirectory;
-            mutex = new object();
         }
 
         /// <summary>
@@ -38,7 +36,7 @@ namespace Aki.Common.Utils
         public static string GetDirectory(this string filepath)
         {
             string value = Path.GetDirectoryName(filepath);
-            return (!string.IsNullOrWhiteSpace(value)) ? value : "";
+            return (!string.IsNullOrWhiteSpace(value)) ? value : string.Empty;
         }
 
         /// <summary>
@@ -47,7 +45,7 @@ namespace Aki.Common.Utils
         public static string GetFile(this string filepath)
         {
             string value = Path.GetFileName(filepath);
-            return (!string.IsNullOrWhiteSpace(value)) ? value : "";
+            return (!string.IsNullOrWhiteSpace(value)) ? value : string.Empty;
         }
 
         /// <summary>
@@ -56,7 +54,7 @@ namespace Aki.Common.Utils
         public static string GetFileName(this string filepath)
         {
             string value = Path.GetFileNameWithoutExtension(filepath);
-            return (!string.IsNullOrWhiteSpace(value)) ? value : "";
+            return (!string.IsNullOrWhiteSpace(value)) ? value : string.Empty;
         }
 
         /// <summary>
@@ -65,7 +63,7 @@ namespace Aki.Common.Utils
         public static string GetFileExtension(this string filepath)
         {
             string value = Path.GetExtension(filepath);
-            return (!string.IsNullOrWhiteSpace(value)) ? value : "";
+            return (!string.IsNullOrWhiteSpace(value)) ? value : string.Empty;
         }
 
         /// <summary>
@@ -73,10 +71,7 @@ namespace Aki.Common.Utils
         /// </summary>
         public static void MoveFile(string a, string b)
         {
-            lock (mutex)
-            {
-                new FileInfo(a).MoveTo(b);
-            }
+            new FileInfo(a).MoveTo(b);
         }
 
         /// <summary>
@@ -84,10 +79,7 @@ namespace Aki.Common.Utils
         /// </summary>
         public static bool Exists(string filepath)
         {
-            lock (mutex)
-            {
-                return Directory.Exists(filepath) || File.Exists(filepath);
-            }
+            return Directory.Exists(filepath) || File.Exists(filepath);
         }
 
         /// <summary>
@@ -95,10 +87,7 @@ namespace Aki.Common.Utils
         /// </summary>
         public static void CreateDirectory(string filepath)
         {
-            lock (mutex)
-            {
-                Directory.CreateDirectory(filepath);
-            }
+            Directory.CreateDirectory(filepath);
         }
 
         /// <summary>
@@ -106,42 +95,48 @@ namespace Aki.Common.Utils
         /// </summary>
         public static byte[] ReadFile(string filepath)
         {
-            lock (mutex)
-            {
-                return File.ReadAllBytes(filepath);
-            }
+            return File.ReadAllBytes(filepath);
         }
 
         /// <summary>
         /// Get file content as string.
         /// </summary>
-        public static string ReadFile(string filepath, Encoding encoding = null)
+        public static string ReadTextFile(string filepath)
         {
-            return (encoding ?? Encoding.UTF8).GetString(ReadFile(filepath));
+            return File.ReadAllText(filepath);
         }
 
         /// <summary>
         /// Write data to file.
         /// </summary>
-        public static void WriteFile(string filepath, byte[] data, bool append = false)
+        public static void WriteFile(string filepath, byte[] data)
         {
-            lock (mutex)
+            if (!Exists(filepath))
             {
-                if (!Exists(filepath))
-                {
-                    CreateDirectory(filepath.GetDirectory());
-                }
-
-                File.WriteAllBytes(filepath, data);
+                CreateDirectory(filepath.GetDirectory());
             }
+
+            File.WriteAllBytes(filepath, data);
         }
 
         /// <summary>
         /// Write string to file.
         /// </summary>
-        public static void WriteFile(string filepath, string data, bool append = false, Encoding encoding = null)
+        public static void WriteTextFile(string filepath, string data, bool append = false)
         {
-            WriteFile(filepath, (encoding ?? Encoding.UTF8).GetBytes(data), append);
+            if (!Exists(filepath))
+            {
+                CreateDirectory(filepath.GetDirectory());
+            }
+
+            if (append)
+            {
+                File.AppendAllText(filepath, data);
+            }
+            else
+            {
+                File.WriteAllText(filepath, data);
+            }
         }
 
         /// <summary>
@@ -149,18 +144,15 @@ namespace Aki.Common.Utils
         /// </summary>
         public static string[] GetDirectories(string filepath)
         {
-            lock (mutex)
+            DirectoryInfo di = new DirectoryInfo(filepath);
+            List<string> paths = new List<string>();
+
+            foreach (DirectoryInfo directory in di.GetDirectories())
             {
-                DirectoryInfo di = new DirectoryInfo(filepath);
-                List<string> paths = new List<string>();
-
-                foreach (DirectoryInfo directory in di.GetDirectories())
-                {
-                    paths.Add(directory.FullName);
-                }
-
-                return paths.ToArray();
+                paths.Add(directory.FullName);
             }
+
+            return paths.ToArray();
         }
 
         /// <summary>
@@ -168,18 +160,15 @@ namespace Aki.Common.Utils
         /// </summary>
         public static string[] GetFiles(string filepath)
         {
-            lock (mutex)
+            DirectoryInfo di = new DirectoryInfo(filepath);
+            List<string> paths = new List<string>();
+
+            foreach (FileInfo file in di.GetFiles())
             {
-                DirectoryInfo di = new DirectoryInfo(filepath);
-                List<string> paths = new List<string>();
-
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    paths.Add(file.FullName);
-                }
-
-                return paths.ToArray();
+                paths.Add(file.FullName);
             }
+
+            return paths.ToArray();
         }
 
         /// <summary>
@@ -187,23 +176,20 @@ namespace Aki.Common.Utils
         /// </summary>
         public static void DeleteDirectory(string filepath)
         {
-            lock (mutex)
+            DirectoryInfo di = new DirectoryInfo(filepath);
+
+            foreach (FileInfo file in di.GetFiles())
             {
-                DirectoryInfo di = new DirectoryInfo(filepath);
-
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    file.IsReadOnly = false;
-                    file.Delete();
-                }
-
-                foreach (DirectoryInfo directory in di.GetDirectories())
-                {
-                    DeleteDirectory(directory.FullName);
-                }
-
-                di.Delete();
+                file.IsReadOnly = false;
+                file.Delete();
             }
+
+            foreach (DirectoryInfo directory in di.GetDirectories())
+            {
+                DeleteDirectory(directory.FullName);
+            }
+
+            di.Delete();
         }
 
         /// <summary>
@@ -211,37 +197,18 @@ namespace Aki.Common.Utils
         /// </summary>
         public static void DeleteFile(string filepath)
         {
-            lock (mutex)
-            {
-                FileInfo file = new FileInfo(filepath);
-
-                file.IsReadOnly = false;
-                file.Delete();
-            }
+            FileInfo file = new FileInfo(filepath);
+            file.IsReadOnly = false;
+            file.Delete();
         }
 
         /// <summary>
-        /// Get files count inside directory recusively
+        /// Get files count inside directory recursively
         /// </summary>
         public static int GetFilesCount(string filepath)
         {
-            lock (mutex)
-            {
-                DirectoryInfo di = new DirectoryInfo(filepath);
-                int count = 0;
-
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    ++count;
-                }
-
-                foreach (DirectoryInfo directory in di.GetDirectories())
-                {
-                    count += GetFilesCount(directory.FullName);
-                }
-
-                return count;
-            }
+            DirectoryInfo di = new DirectoryInfo(filepath);
+            return di.Exists ? di.GetFiles("*.*", SearchOption.AllDirectories).Length : -1;
         }
     }
 }

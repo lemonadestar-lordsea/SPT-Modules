@@ -12,39 +12,47 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using Aki.Common.Utils;
 
 namespace Aki.Loader
 {
     public static class RunUtil
     {
-        private static string depDir;
-        private static bool hasHooked = false;
+        private static string _depDir;
+        private static bool _hasHooked = false;
 
-        public static Exception LoadAndRun(string dllPath, params string[] args)
+        public static void LoadAndRun(string dllPath, params string[] args)
         {
-            if (!hasHooked)
+            if (!_hasHooked)
             {
                 AppDomain.CurrentDomain.AssemblyResolve += DomainAssemblyResolve;
-                hasHooked = true;
+                _hasHooked = true;
             }
 
-            Exception error = LoadAssAndEntryPoint(dllPath, out var entry, out bool hasStringArray);
-            if (error != null)
-                return error;
+            LoadAssemblyAndEntryPoint(dllPath, out MethodInfo entry, out bool hasStringArray);
 
             try
             {
-                entry.Invoke(null, hasStringArray ? new object[] { args } : new object[0]);
+                entry.Invoke(null, hasStringArray ? new object[] { args } : Array.Empty<object>());
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return e;
+                Log.Error(ex.Message);
+
+                Exception innerEx = ex.InnerException;
+
+                while (innerEx != null)
+                {
+                    Log.Error(innerEx.Message);
+                    Log.Write(innerEx.StackTrace);
+                    innerEx = innerEx.InnerException;
+                }
             }
-            return null;
         }
 
-        internal static Exception LoadAssAndEntryPoint(string dllPath, out MethodInfo entryPoint, out bool hasStringArray)
+        private static void LoadAssemblyAndEntryPoint(string dllPath, out MethodInfo entryPoint, out bool hasStringArray)
         {
             Assembly asm;
             entryPoint = null;
@@ -54,24 +62,31 @@ namespace Aki.Loader
             {
                 asm = LoadAssembly(dllPath);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return e;
+                throw new Exception($"Failed to load assembly {dllPath}", ex);
             }
 
-            var entry = FindMainFunction(asm, out hasStringArray);
-
-            if (entry != null)
+            try
             {
-                LoadDeps(asm, new FileInfo(dllPath).DirectoryName);
-                entryPoint = entry;
-                return null;
+                entryPoint = FindMainFunction(asm, out hasStringArray);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to find entry point in {asm.FullName}", ex);
             }
 
-            return new Exception($"Failed to find entry point in {asm.FullName}");
+            try
+            {
+                LoadDependencies(asm, new FileInfo(dllPath).DirectoryName);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to load dependencies in {asm.FullName}", ex);
+            }
         }
 
-        internal static Assembly LoadAssembly(string dllPath)
+        private static Assembly LoadAssembly(string dllPath)
         {
             byte[] bytes;
             Assembly asm;
@@ -80,120 +95,118 @@ namespace Aki.Loader
             {
                 bytes = File.ReadAllBytes(dllPath);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception($"Failed to read assembly bytes from '{dllPath}'", e);
+                throw new Exception($"Failed to read assembly bytes from '{dllPath}'", ex);
             }
 
             try
             {
                 asm = Assembly.Load(bytes);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception("Failed created assembly from file bytes. Duplicate assembly?", e);
+                throw new Exception("Failed creating assembly from file. Duplicate assembly?", ex);
             }
 
             return asm;
         }
 
-        internal static Exception LoadDeps(Assembly a, string sourceFolder)
+        private static bool IsLoaded(AssemblyName name)
+        {
+            // TODO make this comparison better
+            return AppDomain.CurrentDomain.GetAssemblies().Any(x => x.ToString() == name.ToString());
+        }
+
+        private static void LoadDependencies(Assembly a, string sourceFolder)
         {
             var domain = AppDomain.CurrentDomain;
+            var references = a.GetReferencedAssemblies();
 
-            bool IsLoaded(AssemblyName name)
+            foreach (var item in references)
             {
-                foreach (var item in domain.GetAssemblies())
+                if (!IsLoaded(item))
                 {
-                    // TODO make this comparison better.
-                    if (item.ToString() == name.ToString())
-                        return true;
+                    Assembly created;
+
+                    try
+                    {
+                        _depDir = sourceFolder;
+                        created = domain.Load(item);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception($"Failed to load dependency {item.FullName}", ex);
+                    }
+
+                    // Note: source folder never changes, so all deps are expected be be in the same folder as main dll.
+                    // For example, if A depends on B and B depends on C then
+                    // when loading A, B.dll and C.dll should be in the same folder as A.dll
+                    LoadDependencies(created, sourceFolder);
                 }
-                
+            }
+        }
+
+        private static MethodInfo FindMainFunction(Assembly a, out bool hasStringArray)
+        {
+            foreach (var type in a.GetTypes())
+            {
+                if (!type.IsClass || type.IsGenericType)
+                {
+                    continue;
+                }
+
+                foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static))
+                {
+                    if (IsMainMethod(method, out MethodInfo mainMethod, out hasStringArray))
+                    {
+                        return mainMethod;
+                    }
+                }
+            }
+
+            hasStringArray = false;
+            return null;
+        }
+
+        private static bool IsMainMethod(MethodInfo method, out MethodInfo mainMethod, out bool hasStringArray)
+        {
+            mainMethod = null;
+            hasStringArray = false;
+
+            if (method.IsGenericMethod || method.Name != "Main")
+            {
                 return false;
             }
 
-            var refs = a.GetReferencedAssemblies();
+            // Main method is called like a standard entry point
+            // Allowed parameters: none, or an array of strings (such as string[] args)
+            var args = method.GetParameters();
 
-            foreach (var item in refs)
+            if (args.Length == 0)
             {
-                bool loaded = IsLoaded(item);
-                if (!loaded)
-                {
-                    Assembly created;
-                    try
-                    {
-                        depDir = sourceFolder;
-                        created = domain.Load(item);
-                    }
-                    catch (Exception e)
-                    {
-                        return e;
-                    }
-
-                    // Note: source folder never changes, so all deps are expected be be in the same folder as main
-                    // dll.
-                    // For example, if A depends on B and B depends on C then
-                    // when loading A, B.dll and C.dll should be in the same folder as A.dll
-                    Exception newError = LoadDeps(created, sourceFolder);
-                    if (newError != null)
-                    {
-                        return newError;
-                    }
-                }
+                mainMethod = method;
+                return true;
             }
 
-            return null;
+            if (args.Length == 1 && args[0].ParameterType == typeof(string[]))
+            {
+                mainMethod = method;
+                hasStringArray = true;
+                return true;
+            }
+
+            return false;
         }
 
         private static Assembly DomainAssemblyResolve(object sender, ResolveEventArgs args)
         {
-            string root = depDir;
-            string dllName = args.Name.Split(',')[0].Trim() + ".dll";
+            string root = _depDir;
+            string dllName = $"{args.Name.Split(',')[0].Trim()}.dll";
             string path = Path.Combine(root, dllName);
 
-            Console.WriteLine($"Loading dependency '{dllName}' from '{root}'... ");
+            Log.Info($"Loading dependency '{dllName}' from '{root}'... ");
             return LoadAssembly(path);
-        }
-
-        internal static MethodInfo FindMainFunction(Assembly a, out bool hasStringArray)
-        {
-            foreach (var type in a.GetTypes())
-            {
-                if (!type.IsClass)
-                    continue;
-                if (type.IsGenericType)
-                    continue;
-
-                foreach (var method in type.GetMethods(BindingFlags.Public
-                                                     | BindingFlags.NonPublic
-                                                     | BindingFlags.Static))
-                {
-                    if (method.IsGenericMethod)
-                        continue;
-
-                    // Must be called Main just like regular program.
-                    if (method.Name == "Main")
-                    {
-                        // Allowed parameters: none, or an array of strings (such as string[] args)
-                        var args = method.GetParameters();
-
-                        if (args.Length == 0)
-                        {
-                            hasStringArray = false;
-                            return method;
-                        }
-
-                        if (args.Length == 1 && args[0].ParameterType == typeof(string[]))
-                        {
-                            hasStringArray = true;
-                            return method;
-                        }
-                    }
-                }
-            }
-            hasStringArray = false;
-            return null;
         }
     }
 }

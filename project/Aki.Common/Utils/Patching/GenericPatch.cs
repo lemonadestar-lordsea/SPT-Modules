@@ -1,7 +1,6 @@
 using System;
 using System.Reflection;
 using HarmonyLib;
-using UnityEngine;
 
 namespace Aki.Common.Utils.Patching
 {
@@ -12,16 +11,18 @@ namespace Aki.Common.Utils.Patching
         private HarmonyMethod _postfix;
         private HarmonyMethod _transpiler;
         private HarmonyMethod _finalizer;
+        private HarmonyMethod _ilmanipulator;
 
-        public GenericPatch(string name = null, string prefix = null, string postfix = null, string transpiler = null, string finalizer = null)
+        public GenericPatch(string name = null, string prefix = null, string postfix = null, string transpiler = null, string finalizer = null, string ilmanipulator = null)
         {
             _harmony = new Harmony(name ?? typeof(T).Name);
             _prefix = GetPatchMethod(prefix);
             _postfix = GetPatchMethod(postfix);
             _transpiler = GetPatchMethod(transpiler);
             _finalizer = GetPatchMethod(finalizer);
+            _ilmanipulator = GetPatchMethod(ilmanipulator);
 
-            if (_prefix == null && _postfix == null && _transpiler == null && _finalizer == null)
+            if (_prefix == null && _postfix == null && _transpiler == null && _finalizer == null && _ilmanipulator == null)
             {
                 throw new Exception("At least one of the patch methods must be specified");
             }
@@ -45,7 +46,7 @@ namespace Aki.Common.Utils.Patching
                 return null;
             }
 
-            return new HarmonyMethod(typeof(T).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.DeclaredOnly));
+            return new HarmonyMethod(typeof(T).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly));
         }
 
         /// <summary>
@@ -62,13 +63,12 @@ namespace Aki.Common.Utils.Patching
 
             try
             {
-                _harmony.Patch(targetMethod, _prefix, _postfix, _transpiler, _finalizer);
-                Debug.LogError($"Aki.Common: Applied patch {_harmony.Id}");
+                _harmony.Patch(targetMethod, _prefix, _postfix, _transpiler, _finalizer, _ilmanipulator);
+                Log.Info($"Applied patch {_harmony.Id}");
             }
-            catch
+            catch (Exception ex)
             {
-                Debug.LogError($"Aki.Common: Error in applying patch {_harmony.Id}");
-                throw;
+                throw new Exception($"Error in applying patch {_harmony.Id}", ex);
             }
         }
 
@@ -87,12 +87,11 @@ namespace Aki.Common.Utils.Patching
             try
             {
                 _harmony.Unpatch(targetMethod, HarmonyPatchType.All, _harmony.Id);
-                Debug.LogError($"Aki.Common: Removed patch {_harmony.Id}");
+                Log.Info($"Removed patch {_harmony.Id}");
             }
-            catch
+            catch (Exception ex)
             {
-                Debug.LogError($"Aki.Common: Error in removing patch {_harmony.Id}");
-                throw;
+                throw new Exception($"Error in removing patch {_harmony.Id}", ex);
             }
         }
     }

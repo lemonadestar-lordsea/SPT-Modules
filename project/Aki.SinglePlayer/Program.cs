@@ -1,4 +1,4 @@
-using UnityEngine;
+using Aki.Common.Utils;
 using Aki.SinglePlayer.Utils.Bundles;
 using Aki.SinglePlayer.Patches.Bots;
 using Aki.SinglePlayer.Patches.Bundles;
@@ -14,7 +14,7 @@ namespace Aki.SinglePlayer
     {
         static void Main(string[] args)
         {
-            Debug.LogError("Aki.SinglePlayer: Loaded");
+            Log.Info("Loading: Aki.SinglePlayer");
 
             BundleSettings.GetBundles();
 
@@ -28,7 +28,7 @@ namespace Aki.SinglePlayer
             new MainMenuControllerPatch().Apply();
             new PlayerPatch().Apply();
             new MatchmakerOfflineRaidPatch().Apply();
-            new MatchMakerSelectionLocationScreenPatch().Apply();
+            new SelectLocationScreenPatch().Apply();
             new InsuranceScreenPatch().Apply();
             new BotTemplateLimitPatch().Apply();
             new GetNewBotTemplatesPatch().Apply();
@@ -43,6 +43,7 @@ namespace Aki.SinglePlayer
             new ScavPrefabLoadPatch().Apply();
             new ScavProfileLoadPatch().Apply();
             new ScavExfilPatch().Apply();
+            new ExfilPointManagerPatch().Apply();
             new EndByTimerPatch().Apply();
         }
     }

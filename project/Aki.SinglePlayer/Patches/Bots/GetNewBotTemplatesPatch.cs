@@ -3,9 +3,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using UnityEngine;
 using Comfort.Common;
 using EFT;
+using Aki.Common.Utils;
 using Aki.Common.Utils.Patching;
 using BotData = GInterface17;
 using BotsPresets = GClass379;
@@ -21,8 +21,8 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         static GetNewBotTemplatesPatch()
         {
-            _ = nameof(BotsPresets.GetNewProfile);
             _ = nameof(BotData.PrepareToLoadBackend);
+            _ = nameof(BotsPresets.GetNewProfile);
             _ = nameof(PoolManager.LoadBundlesAndCreatePools);
             _ = nameof(JobPriority.General);
         }
@@ -39,7 +39,7 @@ namespace Aki.SinglePlayer.Patches.Bots
             return typeof(BotsPresets).GetMethod(nameof(BotsPresets.CreateProfile), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
-        public static bool PatchPrefix(ref Task<Profile> __result, BotsPresets __instance, BotData data)
+        private static bool PatchPrefix(ref Task<Profile> __result, BotsPresets __instance, BotData data)
         {
             /*
                 in short when client wants new bot and GetNewProfile() return null (if not more available templates or they don't satisfied by Role and Difficulty condition)
@@ -52,7 +52,6 @@ namespace Aki.SinglePlayer.Patches.Bots
                 then perform request to server and get only first value of resulting single element collection
             */
 
-            var session = Utils.Config.BackEndSession;
             var taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             var taskAwaiter = (Task<Profile>)null;
 
@@ -62,14 +61,14 @@ namespace Aki.SinglePlayer.Patches.Bots
             if (profile == null)
             {
                 // load from server
-                Debug.LogError("Aki.SinglePlayer: Loading bot profile from server");
+                Log.Info("Loading bot profile from server");
                 var source = data.PrepareToLoadBackend(1).ToList();
-                taskAwaiter = session.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
+                taskAwaiter = Utils.Config.BackEndSession.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
             }
             else
             {
                 // return cached profile
-                Debug.LogError("Aki.SinglePlayer: Loading bot profile from cache");
+                Log.Info("Loading bot profile from cache");
                 taskAwaiter = Task.FromResult(profile);
             }
 
@@ -77,7 +76,6 @@ namespace Aki.SinglePlayer.Patches.Bots
             var continuation = new Continuation(taskScheduler);
 
             __result = taskAwaiter.ContinueWith(continuation.LoadBundles, taskScheduler).Unwrap();
-
             return false;
         }
 

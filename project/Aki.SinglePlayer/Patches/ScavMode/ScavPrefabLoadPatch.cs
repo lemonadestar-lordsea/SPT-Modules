@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using EFT;
-using Aki.SinglePlayer.Utils;
+using Aki.Common.Utils;
 using Aki.Common.Utils.Patching;
 using Aki.SinglePlayer.Utils.Reflection.CodeWrapper;
 
@@ -24,7 +24,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 .FirstOrDefault(x => x.Name == "MoveNext");
         }
 
-        static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
 
@@ -44,7 +44,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             // Patch failed.
             if (searchIndex == -1)
             {
-                PatchLogger.LogTranspileSearchError(MethodBase.GetCurrentMethod());
+                Log.Error(string.Format("Patch {0} failed: Could not find reference code.", MethodBase.GetCurrentMethod()));
                 return instructions;
             }
 

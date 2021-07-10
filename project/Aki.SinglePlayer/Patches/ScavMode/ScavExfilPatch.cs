@@ -1,28 +1,38 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
-using UnityEngine;
 using HarmonyLib;
+using UnityEngine;
 using EFT;
+using Aki.Common.Utils;
 using Aki.Common.Utils.Patching;
-using Aki.SinglePlayer.Utils;
 using Aki.SinglePlayer.Utils.Reflection.CodeWrapper;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
     public class ScavExfilPatch : GenericPatch<ScavExfilPatch>
     {
+        private static Type _profileType;
+        private static Type _profileInfoType;
+        private static Type _fenceTraderInfoType;
+
         public ScavExfilPatch() : base(transpiler: nameof(PatchTranspile))
         {
+            _profileType = PatcherConstants.EftTypes.Single(x => x.GetMethod("AddToCarriedQuestItems") != null);
+            _profileInfoType = PatcherConstants.EftTypes.Single(x => x.GetMethod("GetExperience") != null);
+            _fenceTraderInfoType = PatcherConstants.EftTypes.Single(x => x.GetMethod("NewExfiltrationPrice") != null);
         }
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.LocalGameType.BaseType.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.CreateInstance).Single(IsTargetMethod);
+            return PatcherConstants.LocalGameType.BaseType
+                    .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.CreateInstance)
+                    .Single(IsTargetMethod);
         }
 
-        static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
             var searchCode = new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(PatcherConstants.ExfilPointManagerType, "EligiblePoints", new System.Type[] { typeof(Profile) }));
@@ -40,7 +50,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             // Patch failed.
             if (searchIndex == -1)
             {
-                PatchLogger.LogTranspileSearchError(MethodBase.GetCurrentMethod());
+                Log.Error(string.Format("Patch {0} failed: Could not find reference code.", MethodBase.GetCurrentMethod()));
                 return instructions;
             }
 
@@ -53,7 +63,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 new Code(OpCodes.Ldarg_0),
                 new Code(OpCodes.Call, PatcherConstants.LocalGameType.BaseType, "get_Profile_0"),
                 new Code(OpCodes.Ldfld, typeof(Profile), "Info"),
-                new Code(OpCodes.Ldfld, PatcherConstants.ProfileInfoType, "Side"),
+                new Code(OpCodes.Ldfld, _profileInfoType, "Side"),
                 new Code(OpCodes.Ldc_I4_4),
                 new Code(OpCodes.Ceq),
                 new Code(OpCodes.Brfalse, brFalseLabel),
@@ -66,7 +76,10 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 new Code(OpCodes.Ldarg_0),
                 new Code(OpCodes.Call, PatcherConstants.LocalGameType.BaseType, "get_Profile_0"),
                 new Code(OpCodes.Ldfld, typeof(Profile), "Id"),
-                new Code(OpCodes.Ldc_I4_8),
+                new Code(OpCodes.Ldarg_0),
+                new Code(OpCodes.Call, PatcherConstants.LocalGameType.BaseType, "get_Profile_0"),
+                new Code(OpCodes.Call, _profileType, "get_FenceInfo"),
+                new Code(OpCodes.Call, _fenceTraderInfoType, "get_AvailableExitsCount"),
                 new Code(OpCodes.Callvirt, PatcherConstants.ExfilPointManagerType, "ScavExfiltrationClaim", new System.Type[]{ typeof(Vector3), typeof(string), typeof(int) }),
                 new Code(OpCodes.Call, PatcherConstants.ExfilPointManagerType, "get_Instance"),
                 new Code(OpCodes.Call, PatcherConstants.ExfilPointManagerType, "get_Instance"),
@@ -94,7 +107,10 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         private static bool IsTargetMethod(MethodInfo methodInfo)
         {
-            return methodInfo.IsVirtual && methodInfo.GetParameters().Length == 0 && methodInfo.ReturnType == typeof(void) && methodInfo.GetMethodBody().LocalVariables.Count > 0;
+            return methodInfo.IsVirtual
+                && methodInfo.GetParameters().Length == 0
+                && methodInfo.ReturnType == typeof(void)
+                && methodInfo.GetMethodBody().LocalVariables.Count > 0;
         }
     }
 }

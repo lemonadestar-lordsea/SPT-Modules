@@ -15,13 +15,20 @@ namespace Aki.SinglePlayer.Patches.Bundles
 {
 	public class EasyBundlePatch : GenericPatch<EasyBundlePatch>
 	{
+        static EasyBundlePatch()
+        {
+            _ = nameof(IEasyBundle.SameNameAsset);
+            _ = nameof(IBundleLock.IsLocked);
+            _ = nameof(BindableState.Bind);
+        }
+
         public EasyBundlePatch() : base(prefix: nameof(PatchPrefix))
         {
         }
 
         protected override MethodBase GetTargetMethod()
 		{
-            return PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType).GetConstructors()[0];
+            return PatcherConstants.EftTypes.Single(IsTargetType).GetConstructors()[0];
         }
 
         private static bool IsTargetType(Type type)
@@ -29,7 +36,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
             return type.IsClass && type.GetProperty("SameNameAsset") != null;
         }
 
-        static bool PatchPrefix(IEasyBundle __instance, string key, string rootPath, UnityEngine.AssetBundleManifest manifest, IBundleLock bundleLock)
+        private static bool PatchPrefix(IEasyBundle __instance, string key, string rootPath, UnityEngine.AssetBundleManifest manifest, IBundleLock bundleLock)
 		{
             var easyBundle = new EasyBundleHelper(__instance);
             easyBundle.Key = key;
@@ -37,7 +44,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
             var path = rootPath + key;
             var bundle = (BundleInfo)null;
 
-            if (BundleSettings.bundles.TryGetValue(key, out bundle))
+            if (BundleSettings.Bundles.TryGetValue(key, out bundle))
             {
                 path = bundle.Path;
             }
@@ -47,7 +54,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
             var dependencyKeys = manifest.GetDirectDependencies(key);
 
-            foreach (KeyValuePair<string, BundleInfo> kvp in BundleSettings.bundles)
+            foreach (KeyValuePair<string, BundleInfo> kvp in BundleSettings.Bundles)
             {
                 if (!key.Equals(kvp.Key))
                 {
@@ -62,7 +69,6 @@ namespace Aki.SinglePlayer.Patches.Bundles
             easyBundle.DependencyKeys = dependencyKeys;
             easyBundle.LoadState = new BindableState(ELoadState.Unloaded, null);
             easyBundle.BundleLock = bundleLock;
-
             return false;
 		}
 	}
