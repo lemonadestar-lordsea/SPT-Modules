@@ -13,9 +13,9 @@ namespace Aki.Loader
             {
                 Log.Info("Aki.Loader: Loaded");
 
-                ModuleLoader.AddRepository(VFS.Combine(VFS.Cwd, "Aki_Data/Modules/"));
-                ModuleLoader.AddRepository(VFS.Combine(VFS.Cwd, "user/mods/"));
-                ModuleLoader.LoadAllAssemblies();
+                Loader.AddRepository(VFS.Combine(VFS.Cwd, "Aki_Data/Modules/"));
+                Loader.AddRepository(VFS.Combine(VFS.Cwd, "user/mods/"));
+                Loader.LoadAllAssemblies();
             }
             catch (Exception ex)
             {

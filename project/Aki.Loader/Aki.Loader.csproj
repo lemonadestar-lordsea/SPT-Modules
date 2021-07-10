@@ -37,7 +37,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ModuleLoader.cs" />
+    <Compile Include="Loader.cs" />
     <Compile Include="RunUtil.cs" />
     <Compile Include="Target.cs" />
     <Compile Include="Program.cs" />

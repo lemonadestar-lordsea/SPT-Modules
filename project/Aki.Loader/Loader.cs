@@ -4,33 +4,27 @@ using Aki.Common.Utils;
 
 namespace Aki.Loader
 {
-    static class ModuleLoader
+    public static class Loader
     {
         private static readonly List<string> _repositories;
 
-        static ModuleLoader()
+        static Loader()
         {
             _repositories = new List<string>();
         }
 
         public static void AddRepository(string path)
         {
-            Log.Info($"Trying to add '{path}' to repositories");
             if (VFS.Exists(path) && VFS.GetDirectories(path).Length > 0)
             {
                 _repositories.Add(path);
-                Log.Info("OK");
             }
-            else
-                Log.Error("Failed");
         }
 
         public static void LoadAllAssemblies()
         {
             foreach (var repository in _repositories)
             {
-                Log.Info($"Trying '{repository}'");
-
                 var dirs = VFS.GetDirectories(repository);
 
                 foreach (var dir in dirs)
@@ -39,19 +33,16 @@ namespace Aki.Loader
 
                     if (VFS.Exists(file))
                     {
-                        try
+                        Exception error = RunUtil.LoadAndRun(file);
+
+                        if (error == null)
                         {
-                            RunUtil.LoadAndRun(file);
                             Log.Info($"Aki.Loader: Loaded '{file}'!");
                         }
-                        catch (Exception ex)
+                        else
                         {
                             Log.Error($"Aki.Loader: Failed to load '{file}'! Exception below.");
-                            do
-                            {
-                                Log.Error($"{ex.GetType().Name}: {ex.Message}{Environment.NewLine}{ex.StackTrace}");
-                                ex = ex.InnerException;
-                            } while (ex != null);
+                            Log.Data(error.Message);
                         }
                     }
                     else

@@ -10,7 +10,6 @@
  * Author Epicguru.
  */
 
-using Aki.Common.Utils;
 using System;
 using System.IO;
 using System.Reflection;
@@ -22,7 +21,7 @@ namespace Aki.Loader
         private static string _depDir;
         private static bool _hasHooked = false;
 
-        public static void LoadAndRun(string dllPath, params string[] args)
+        public static Exception LoadAndRun(string dllPath, params string[] args)
         {
             if (!_hasHooked)
             {
@@ -30,20 +29,39 @@ namespace Aki.Loader
                 _hasHooked = true;
             }
 
-            LoadAssAndEntryPoint(dllPath, out var entry, out bool hasStringArray);
-            if (entry == null)
-                Log.Error($"Entry point for {dllPath} was empty");
-            else
+            Exception error = LoadAssAndEntryPoint(dllPath, out var entry, out bool hasStringArray);
+
+            if (error != null)
             {
-                Log.Info($"Invoking {entry}");
+                return error;
+            }
+
+            try
+            {
                 entry.Invoke(null, hasStringArray ? new object[] { args } : new object[0]);
             }
+            catch (Exception e)
+            {
+                return e;
+            }
+
+            return null;
         }
 
-        internal static void LoadAssAndEntryPoint(string dllPath, out MethodInfo entryPoint, out bool hasStringArray)
+        internal static Exception LoadAssAndEntryPoint(string dllPath, out MethodInfo entryPoint, out bool hasStringArray)
         {
-            Assembly asm = LoadAssembly(dllPath);
+            Assembly asm;
             entryPoint = null;
+            hasStringArray = false;
+
+            try
+            {
+                asm = LoadAssembly(dllPath);
+            }
+            catch (Exception e)
+            {
+                return e;
+            }
 
             var entry = FindMainFunction(asm, out hasStringArray);
 
@@ -51,9 +69,10 @@ namespace Aki.Loader
             {
                 LoadDeps(asm, new FileInfo(dllPath).DirectoryName);
                 entryPoint = entry;
+                return null;
             }
-            else
-                throw new Exception($"Failed to find entry point in {asm.FullName}");
+
+            return new Exception($"Failed to find entry point in {asm.FullName}");
         }
 
         internal static Assembly LoadAssembly(string dllPath)
@@ -96,7 +115,7 @@ namespace Aki.Loader
                         return true;
                     }
                 }
-
+                
                 return false;
             }
 
@@ -147,34 +166,26 @@ namespace Aki.Loader
         {
             foreach (var type in a.GetTypes())
             {
-                Log.Info($"Testing {type}");
-
                 if (!type.IsClass)
                 {
-                    Log.Info("No, not a class");
                     continue;
                 }
 
                 if (type.IsGenericType)
                 {
-                    Log.Info("No, is generic");
                     continue;
                 }
 
-                Log.Info("Testing methods");
                 foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static))
                 {
                     if (method.IsGenericMethod)
                     {
-                        Log.Info("No, is generic");
                         continue;
                     }
 
                     // Must be called Main just like regular program.
                     if (method.Name == "Main")
                     {
-                        Log.Info("Main found, testing");
-
                         // Allowed parameters: none, or an array of strings (such as string[] args)
                         var args = method.GetParameters();
 
