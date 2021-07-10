@@ -9,7 +9,8 @@ namespace Aki.SinglePlayer.Patches.Progression
 {
     public class EndByTimerPatch : GenericPatch<EndByTimerPatch>
     {
-        private static MethodInfo _stopRaidMethod;
+        private static PropertyInfo _profileId;
+        private static MethodInfo _stopRaid;
 
         static EndByTimerPatch()
         {
@@ -17,9 +18,13 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         public EndByTimerPatch() : base(prefix: nameof(PrefixPatch))
         {
-            _stopRaidMethod = PatcherConstants.LocalGameType.BaseType
-                .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .SingleOrDefault(IsStopRaidMethod);
+            var flags = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+
+            _profileId = PatcherConstants.LocalGameType.BaseType
+                .GetProperty("ProfileId", flags);
+
+            _stopRaid = PatcherConstants.LocalGameType.BaseType
+                .GetMethods(flags).SingleOrDefault(IsStopRaidMethod);
         }
 
         protected override MethodBase GetTargetMethod()
@@ -43,8 +48,9 @@ namespace Aki.SinglePlayer.Patches.Progression
                     && parameters[3].ParameterType == typeof(float));
         }
 
-        private static bool PrefixPatch(object __instance, ref string __profileId)
+        private static bool PrefixPatch(object __instance)
         {
+            var profileId = _profileId.GetValue(__instance) as string;
             var json = RequestHandler.GetJson("/singleplayer/settings/raid/endstate");
             var enabled = (!string.IsNullOrWhiteSpace(json)) ? Convert.ToBoolean(json) : false;
 
@@ -53,7 +59,7 @@ namespace Aki.SinglePlayer.Patches.Progression
                 return true;
             }
 
-            _stopRaidMethod.Invoke(__instance, new object[] { __profileId, ExitStatus.MissingInAction, null, 0f });
+            _stopRaid.Invoke(__instance, new object[] { profileId, ExitStatus.MissingInAction, null, 0f });
             return false;
         }
     }
