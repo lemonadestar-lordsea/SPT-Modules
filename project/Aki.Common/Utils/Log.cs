@@ -1,20 +1,29 @@
 using System;
-using System.IO;
 
 namespace Aki.Common.Utils
 {
     public static class Log
     {
-        private const string fn = "C:\\temp\\akitestlog.log";
+        private static string _filepath;
+
+        static Log()
+        {
+            _filepath = VFS.Combine(VFS.Cwd, "./user/logs/modules.log");
+
+            if (VFS.Exists(_filepath))
+            {
+                VFS.DeleteFile(_filepath);
+            }
+        }
 
         private static void Write(string type, string text)
         {
-            File.AppendAllText(fn, $"[{DateTime.Now}] {type} | {text}{Environment.NewLine}");
+            VFS.WriteFile(_filepath, $"[{DateTime.Now}] {type} | {text}{Environment.NewLine}", true);
         }
 
         public static void Data(string text)
         {
-            File.AppendAllText(fn, $"[{DateTime.Now}] {text}{Environment.NewLine}");
+            VFS.WriteFile(_filepath, $"[{DateTime.Now}] {text}{Environment.NewLine}", true);
         }
 
         public static void Info(string text)
