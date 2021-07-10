@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using Comfort.Common;
 using EFT;
@@ -22,7 +23,8 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.MainApplicationType.GetMethod("method_44", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            return PatcherConstants.EftTypes.Single(x => x.Name == "MainApplication")
+                    .GetMethod("method_44", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
         private static void PatchPrefix(ESideType ___esideType_0, Result<ExitStatus, TimeSpan, ClientMetrics> result)

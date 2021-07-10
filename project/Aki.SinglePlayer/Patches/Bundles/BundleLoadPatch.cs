@@ -18,7 +18,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType).GetMethods(BindingFlags.Instance | BindingFlags.NonPublic).Single(IsTargetMethod);
+            return PatcherConstants.EftTypes.Single(IsTargetType).GetMethods(BindingFlags.Instance | BindingFlags.NonPublic).Single(IsTargetMethod);
         }
 
         // Locate the target class; must have a Property named "SameNameAsset"

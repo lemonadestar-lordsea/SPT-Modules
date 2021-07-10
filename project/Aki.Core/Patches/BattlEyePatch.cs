@@ -16,7 +16,7 @@ namespace Aki.Core.Patches
         {
             var methodName = "RunValidation";
             var flags = BindingFlags.Public | BindingFlags.Instance;
-            var type = PatcherConstants.TargetAssembly.GetTypes().Single(x => x.GetMethod(methodName, flags) != null);
+            var type = PatcherConstants.EftTypes.Single(x => x.GetMethod(methodName, flags) != null);
 
             return type.GetMethod(methodName, flags);
         }

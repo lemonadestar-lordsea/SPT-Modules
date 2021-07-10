@@ -22,8 +22,8 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         public RemoveUsedBotProfilePatch() : base(prefix: nameof(PatchPrefix))
         {
-            _targetInterface = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetInterface);
-            _targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
+            _targetInterface = PatcherConstants.EftTypes.Single(IsTargetInterface);
+            _targetType = PatcherConstants.EftTypes.Single(IsTargetType);
             _profilesField = AccessTools.FieldRefAccess<List<Profile>>(_targetType, "list_0");
         }
 

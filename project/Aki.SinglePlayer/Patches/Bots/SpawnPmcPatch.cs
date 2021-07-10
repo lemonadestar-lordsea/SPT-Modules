@@ -17,8 +17,8 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         public SpawnPmcPatch() : base(prefix: nameof(PatchPrefix))
         {
-            _targetInterface = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetInterface);
-            _targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
+            _targetInterface = PatcherConstants.EftTypes.Single(IsTargetInterface);
+            _targetType = PatcherConstants.EftTypes.Single(IsTargetType);
             _wildSpawnTypeField = AccessTools.FieldRefAccess<WildSpawnType>(_targetType, "wildSpawnType_0");
             _botDifficultyField = AccessTools.FieldRefAccess<BotDifficulty>(_targetType, "botDifficulty_0");
         }

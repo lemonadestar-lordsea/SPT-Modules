@@ -28,7 +28,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
         protected override MethodBase GetTargetMethod()
 		{
-            return PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType).GetConstructors()[0];
+            return PatcherConstants.EftTypes.Single(IsTargetType).GetConstructors()[0];
         }
 
         private static bool IsTargetType(Type type)

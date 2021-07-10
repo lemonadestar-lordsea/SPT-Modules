@@ -12,6 +12,8 @@ namespace Aki.SinglePlayer.Patches.Progression
 {
     public class OfflineSpawnPointPatch : GenericPatch<OfflineSpawnPointPatch>
     {
+        private static BindingFlags _flags;
+
         static OfflineSpawnPointPatch()
         {
             _ = nameof(SpawnPoints.CreateSpawnPoint);
@@ -19,19 +21,17 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         public OfflineSpawnPointPatch() : base(prefix: nameof(PatchPrefix))
         {
+            _flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
         }
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.TargetAssembly
-                                    .GetTypes().First(IsTargetType)
-                                    .GetMethods(PatcherConstants.DefaultBindingFlags)
-                                    .First(m => m.Name.Contains("SelectSpawnPoint"));
+            return PatcherConstants.EftTypes.First(IsTargetType).GetMethods(_flags).First(m => m.Name.Contains("SelectSpawnPoint"));
         }
 
         private static bool IsTargetType(Type type)
         {
-            var methods = type.GetMethods(PatcherConstants.DefaultBindingFlags);
+            var methods = type.GetMethods(_flags);
             
             if (!methods.Any(x => x.Name.IndexOf("CheckFarthestFromOtherPlayers", StringComparison.OrdinalIgnoreCase) != -1))
             {

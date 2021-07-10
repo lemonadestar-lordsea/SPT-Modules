@@ -7,30 +7,19 @@ namespace Aki.Common.Utils.Patching
 {
     public static class PatcherConstants
     {
-        public const BindingFlags DefaultBindingFlags = BindingFlags.NonPublic
-                                               | BindingFlags.Public
-                                               | BindingFlags.Instance
-                                               | BindingFlags.DeclaredOnly;
+        public static Type[] EftTypes { get; private set; }
+        public static Type LocalGameType { get; private set; }
+        public static Type ExfilPointManagerType { get; private set; }
+        public static Type BackendInterfaceType { get; private set; }
+        public static Type SessionInterfaceType { get; private set; }
 
-        public static Assembly TargetAssembly = typeof(AbstractGame).Assembly;
-        public static Type MainApplicationType = TargetAssembly.GetTypes().Single(x => x.Name == "MainApplication");
-        public static Type LocalGameType = TargetAssembly.GetTypes().Single(x => x.Name == "LocalGame");
-        public static Type MatchmakerOfflineRaidType = TargetAssembly.GetTypes().Single(x => x.Name == "MatchmakerOfflineRaid");
-
-        public static Type BackendInterfaceType = TargetAssembly.GetTypes().Single(
-            x => x.GetMethods().Select(y => y.Name).Contains("CreateClientSession") && x.IsInterface);
-        public static Type SessionInterfaceType = TargetAssembly.GetTypes().Single(
-            x => x.GetMethods().Select(y => y.Name).Contains("GetPhpSessionId") && x.IsInterface);
-
-        public static Type ExfilPointManagerType = TargetAssembly.GetTypes().Single(x => x.GetMethod("InitAllExfiltrationPoints") != null);
-        public static Type ProfileInfoType = TargetAssembly.GetTypes().Single(x => x.GetMethod("GetExperience") != null);
-        public static Type ProfileType = TargetAssembly.GetTypes().Single(x => x.GetMethod("AddToCarriedQuestItems") != null);
-        public static Type FenceTraderInfoType = TargetAssembly.GetTypes().Single(x => x.GetMethod("NewExfiltrationPrice") != null);
-
-        public static Type FirearmControllerType = typeof(Player.FirearmController).GetNestedTypes().Single(x => x.GetFields(DefaultBindingFlags).
-            Count(y => y.Name.Contains("gclass")) > 0 && x.GetFields(DefaultBindingFlags).Count(y => y.Name.Contains("callback")) > 0 && x.GetMethod("UseSecondMagForReload", DefaultBindingFlags) != null);
-        public static string WeaponControllerFieldName = FirearmControllerType.GetFields(DefaultBindingFlags).
-            Single(x => x.Name.Contains("gclass")).Name;
-
+        static PatcherConstants()
+        {
+            EftTypes = typeof(AbstractGame).Assembly.GetTypes();
+            LocalGameType = EftTypes.Single(x => x.Name == "LocalGame");
+            ExfilPointManagerType = EftTypes.Single(x => x.GetMethod("InitAllExfiltrationPoints") != null);
+            BackendInterfaceType = EftTypes.Single(x => x.GetMethods().Select(y => y.Name).Contains("CreateClientSession") && x.IsInterface);
+            SessionInterfaceType = EftTypes.Single(x => x.GetMethods().Select(y => y.Name).Contains("GetPhpSessionId") && x.IsInterface);
+        }
     }
 }

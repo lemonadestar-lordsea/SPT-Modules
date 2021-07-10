@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
@@ -13,8 +14,15 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 {
     public class ScavExfilPatch : GenericPatch<ScavExfilPatch>
     {
+        private static Type _profileType;
+        private static Type _profileInfoType;
+        private static Type _fenceTraderInfoType;
+
         public ScavExfilPatch() : base(transpiler: nameof(PatchTranspile))
         {
+            _profileType = PatcherConstants.EftTypes.Single(x => x.GetMethod("AddToCarriedQuestItems") != null);
+            _profileInfoType = PatcherConstants.EftTypes.Single(x => x.GetMethod("GetExperience") != null);
+            _fenceTraderInfoType = PatcherConstants.EftTypes.Single(x => x.GetMethod("NewExfiltrationPrice") != null);
         }
 
         protected override MethodBase GetTargetMethod()
@@ -55,7 +63,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 new Code(OpCodes.Ldarg_0),
                 new Code(OpCodes.Call, PatcherConstants.LocalGameType.BaseType, "get_Profile_0"),
                 new Code(OpCodes.Ldfld, typeof(Profile), "Info"),
-                new Code(OpCodes.Ldfld, PatcherConstants.ProfileInfoType, "Side"),
+                new Code(OpCodes.Ldfld, _profileInfoType, "Side"),
                 new Code(OpCodes.Ldc_I4_4),
                 new Code(OpCodes.Ceq),
                 new Code(OpCodes.Brfalse, brFalseLabel),
@@ -70,8 +78,8 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 new Code(OpCodes.Ldfld, typeof(Profile), "Id"),
                 new Code(OpCodes.Ldarg_0),
                 new Code(OpCodes.Call, PatcherConstants.LocalGameType.BaseType, "get_Profile_0"),
-                new Code(OpCodes.Call, PatcherConstants.ProfileType, "get_FenceInfo"),
-                new Code(OpCodes.Call, PatcherConstants.FenceTraderInfoType, "get_AvailableExitsCount"),
+                new Code(OpCodes.Call, _profileType, "get_FenceInfo"),
+                new Code(OpCodes.Call, _fenceTraderInfoType, "get_AvailableExitsCount"),
                 new Code(OpCodes.Callvirt, PatcherConstants.ExfilPointManagerType, "ScavExfiltrationClaim", new System.Type[]{ typeof(Vector3), typeof(string), typeof(int) }),
                 new Code(OpCodes.Call, PatcherConstants.ExfilPointManagerType, "get_Instance"),
                 new Code(OpCodes.Call, PatcherConstants.ExfilPointManagerType, "get_Instance"),

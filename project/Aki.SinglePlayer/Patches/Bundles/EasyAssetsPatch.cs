@@ -33,10 +33,10 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
         protected override MethodBase GetTargetMethod()
         {
-            _easyBundleType = PatcherConstants.TargetAssembly.GetTypes().Single(type => type.IsClass && type.GetProperty("SameNameAsset") != null);
+            _easyBundleType = PatcherConstants.EftTypes.Single(type => type.IsClass && type.GetProperty("SameNameAsset") != null);
             _bundlesFieldName = $"{_easyBundleType.Name.ToLower()}_0";
 
-            var targetType = PatcherConstants.TargetAssembly.GetTypes().Single(IsTargetType);
+            var targetType = PatcherConstants.EftTypes.Single(IsTargetType);
             return AccessTools.GetDeclaredMethods(targetType).Single(IsTargetMethod);
         }
 
