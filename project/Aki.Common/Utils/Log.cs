@@ -21,11 +21,11 @@ namespace Aki.Common.Utils
             VFS.WriteFile(_filepath, $"{text}{Environment.NewLine}", true);
         }
 
-
         private static void Formatted(string type, string text)
         {
             Write($"[{DateTime.Now}] {type} | {text}");
         }
+
         public static void Info(string text)
         {
             Formatted("INFO", text);
