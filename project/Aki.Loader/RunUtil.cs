@@ -12,6 +12,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Aki.Common.Utils;
 
@@ -30,14 +31,11 @@ namespace Aki.Loader
                 _hasHooked = true;
             }
 
-            MethodInfo entry = null;
-            bool hasStringArray = false;
-
-            LoadAssemblyAndEntryPoint(dllPath, out entry, out hasStringArray);
+            LoadAssemblyAndEntryPoint(dllPath, out MethodInfo entry, out bool hasStringArray);
 
             try
             {
-                entry.Invoke(null, hasStringArray ? new object[] { args } : new object[0]);
+                entry.Invoke(null, hasStringArray ? new object[] { args } : Array.Empty<object>());
             }
             catch (Exception ex)
             {
@@ -116,18 +114,8 @@ namespace Aki.Loader
 
         private static bool IsLoaded(AssemblyName name)
         {
-            var domain = AppDomain.CurrentDomain;
-
-            foreach (var item in domain.GetAssemblies())
-            {
-                // TODO make this comparison better.
-                if (item.ToString() == name.ToString())
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            // TODO make this comparison better
+            return AppDomain.CurrentDomain.GetAssemblies().Any(x => x.ToString() == name.ToString());
         }
 
         private static void LoadDependencies(Assembly a, string sourceFolder)
@@ -163,46 +151,52 @@ namespace Aki.Loader
         {
             foreach (var type in a.GetTypes())
             {
-                if (!type.IsClass)
-                {
-                    continue;
-                }
-
-                if (type.IsGenericType)
+                if (!type.IsClass || type.IsGenericType)
                 {
                     continue;
                 }
 
                 foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static))
                 {
-                    if (method.IsGenericMethod)
+                    if (IsMainMethod(method, out MethodInfo mainMethod, out hasStringArray))
                     {
-                        continue;
-                    }
-
-                    // Must be called Main just like regular program.
-                    if (method.Name == "Main")
-                    {
-                        // Allowed parameters: none, or an array of strings (such as string[] args)
-                        var args = method.GetParameters();
-
-                        if (args.Length == 0)
-                        {
-                            hasStringArray = false;
-                            return method;
-                        }
-
-                        if (args.Length == 1 && args[0].ParameterType == typeof(string[]))
-                        {
-                            hasStringArray = true;
-                            return method;
-                        }
+                        return mainMethod;
                     }
                 }
             }
 
             hasStringArray = false;
             return null;
+        }
+
+        private static bool IsMainMethod(MethodInfo method, out MethodInfo mainMethod, out bool hasStringArray)
+        {
+            mainMethod = null;
+            hasStringArray = false;
+
+            if (method.IsGenericMethod || method.Name != "Main")
+            {
+                return false;
+            }
+
+            // Main method is called like a standard entry point
+            // Allowed parameters: none, or an array of strings (such as string[] args)
+            var args = method.GetParameters();
+
+            if (args.Length == 0)
+            {
+                mainMethod = method;
+                return true;
+            }
+
+            if (args.Length == 1 && args[0].ParameterType == typeof(string[]))
+            {
+                mainMethod = method;
+                hasStringArray = true;
+                return true;
+            }
+
+            return false;
         }
 
         private static Assembly DomainAssemblyResolve(object sender, ResolveEventArgs args)
