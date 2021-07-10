@@ -34,7 +34,20 @@ namespace Aki.Loader
             bool hasStringArray = false;
 
             LoadAssemblyAndEntryPoint(dllPath, out entry, out hasStringArray);
-            entry.Invoke(null, hasStringArray ? new object[] { args } : new object[0]);
+
+            try
+            {
+                entry.Invoke(null, hasStringArray ? new object[] { args } : new object[0]);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message);
+
+                if (ex.InnerException != null)
+                {
+                    Log.Error($"Inner exception: {ex.InnerException}");
+                }
+            }
         }
 
         private static void LoadAssemblyAndEntryPoint(string dllPath, out MethodInfo entryPoint, out bool hasStringArray)
