@@ -16,29 +16,29 @@ namespace Aki.Common.Utils
             }
         }
 
-        private static void Write(string type, string text)
+        public static void Write(string text)
         {
-            VFS.WriteFile(_filepath, $"[{DateTime.Now}] {type} | {text}{Environment.NewLine}", true);
+            VFS.WriteFile(_filepath, $"{text}{Environment.NewLine}", true);
         }
 
-        public static void Data(string text)
-        {
-            VFS.WriteFile(_filepath, $"[{DateTime.Now}] {text}{Environment.NewLine}", true);
-        }
 
+        private static void Formatted(string type, string text)
+        {
+            Write($"[{DateTime.Now}] {type} | {text}");
+        }
         public static void Info(string text)
         {
-            Write("INFO", text);
+            Formatted("INFO", text);
         }
 
         public static void Warning(string text)
         {
-            Write("WARNING", text);
+            Formatted("WARNING", text);
         }
 
         public static void Error(string text)
         {
-            Write("ERROR", text);
+            Formatted("ERROR", text);
         }
     }
 }
