@@ -36,7 +36,7 @@ namespace Aki.Common.Utils
         public static string GetDirectory(this string filepath)
         {
             string value = Path.GetDirectoryName(filepath);
-            return (!string.IsNullOrWhiteSpace(value)) ? value : "";
+            return (!string.IsNullOrWhiteSpace(value)) ? value : string.Empty;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Aki.Common.Utils
         public static string GetFile(this string filepath)
         {
             string value = Path.GetFileName(filepath);
-            return (!string.IsNullOrWhiteSpace(value)) ? value : "";
+            return (!string.IsNullOrWhiteSpace(value)) ? value : string.Empty;
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Aki.Common.Utils
         public static string GetFileName(this string filepath)
         {
             string value = Path.GetFileNameWithoutExtension(filepath);
-            return (!string.IsNullOrWhiteSpace(value)) ? value : "";
+            return (!string.IsNullOrWhiteSpace(value)) ? value : string.Empty;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Aki.Common.Utils
         public static string GetFileExtension(this string filepath)
         {
             string value = Path.GetExtension(filepath);
-            return (!string.IsNullOrWhiteSpace(value)) ? value : "";
+            return (!string.IsNullOrWhiteSpace(value)) ? value : string.Empty;
         }
 
         /// <summary>
@@ -101,9 +101,9 @@ namespace Aki.Common.Utils
         /// <summary>
         /// Get file content as string.
         /// </summary>
-        public static string ReadFile(string filepath, Encoding encoding = null)
+        public static string ReadTextFile(string filepath)
         {
-            return (encoding ?? Encoding.UTF8).GetString(ReadFile(filepath));
+            return File.ReadAllText(filepath);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Aki.Common.Utils
         /// <summary>
         /// Write string to file.
         /// </summary>
-        public static void WriteFile(string filepath, string data, bool append = false)
+        public static void WriteTextFile(string filepath, string data, bool append = false)
         {
             if (!Exists(filepath))
             {
@@ -203,24 +203,12 @@ namespace Aki.Common.Utils
         }
 
         /// <summary>
-        /// Get files count inside directory recusively
+        /// Get files count inside directory recursively
         /// </summary>
         public static int GetFilesCount(string filepath)
         {
             DirectoryInfo di = new DirectoryInfo(filepath);
-            int count = 0;
-
-            foreach (FileInfo file in di.GetFiles())
-            {
-                ++count;
-            }
-
-            foreach (DirectoryInfo directory in di.GetDirectories())
-            {
-                count += GetFilesCount(directory.FullName);
-            }
-
-            return count;
+            return di.Exists ? di.GetFiles("*.*", SearchOption.AllDirectories).Length : -1;
         }
     }
 }

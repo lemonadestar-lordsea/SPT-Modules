@@ -17,16 +17,16 @@ namespace Aki.Common.Utils
 	public static class Zlib
 	{
 		// Level | CM/CI FLG
-		// ----- | -------------
-		// 1     | 78 01        
-		// 2     | 78 5E        
-		// 3     | 78 5E		
-		// 4     | 78 5E		
-		// 5     | 78 5E		
-		// 6     | 78 9C		
-		// 7     | 78 DA		
-		// 8     | 78 DA		
-		// 9     | 78 DA		
+		// ----- | ---------
+		// 1     | 78 01
+		// 2     | 78 5E
+		// 3     | 78 5E
+		// 4     | 78 5E
+		// 5     | 78 5E
+		// 6     | 78 9C
+		// 7     | 78 DA
+		// 8     | 78 DA
+		// 9     | 78 DA
 
 		/// <summary>
 		/// Check if the file is ZLib compressed

@@ -32,7 +32,9 @@ namespace Aki.SinglePlayer.Utils.Bundles
 
                 if (!Bundles.TryGetValue(jObj["key"].ToString(), out bundle))
                 {
-                    bundle = new BundleInfo(jObj["key"].ToString(), jObj["path"].ToString(), jObj["dependencyKeys"].ToObject<List<string>>().ToArray());
+                    bundle = new BundleInfo(jObj["key"].ToString(),
+                                            jObj["path"].ToString(),
+                                            jObj["dependencyKeys"].ToObject<List<string>>().ToArray());
                     Bundles.Add(bundle.Key, bundle);
                 }
             }

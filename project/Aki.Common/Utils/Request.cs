@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using UnityEngine;
 
@@ -91,15 +92,7 @@ namespace Aki.Common.Utils
         /// </summary>
 		public static bool IsValidMime(string mime)
         {
-            foreach (KeyValuePair<string, string> item in Mime)
-            {
-                if (item.Value == mime)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return Mime.Any(x => x.Value == mime);
         }
     }
 
@@ -111,6 +104,11 @@ namespace Aki.Common.Utils
 		/// </summary>
 		public byte[] Send(string url, string method, byte[] data = null, bool compress = true, string mime = null, Dictionary<string, string> headers = null)
 		{
+            if (!HttpConstants.IsValidMethod(method))
+			{
+				throw new ArgumentException("request method is invalid");
+			}
+
 			Uri uri = new Uri(url);
 			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
 
@@ -119,11 +117,6 @@ namespace Aki.Common.Utils
 				ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 				request.ServerCertificateValidationCallback = delegate { return true; };
             }
-
-			if (!HttpConstants.IsValidMethod(method))
-			{
-				throw new ArgumentException("request method is invalid");
-			}
 
             request.Timeout = 1000;
 			request.Method = method;
@@ -174,10 +167,8 @@ namespace Aki.Common.Utils
                     {
                         return Zlib.Decompress(body);
                     }
-                    else
-                    {
-                        return body;
-                    }
+
+                    return body;
                 }
             }
 		}

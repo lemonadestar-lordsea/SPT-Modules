@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using HarmonyLib;
+using Aki.Common.Utils;
 using IBundleLock = GInterface264;
 using BindableState = GClass2251<Diz.DependencyManager.ELoadState>;
 
@@ -49,12 +50,12 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return _trav.Field<IBundleLock>($"{typeof(GInterface264).Name.ToLower()}_0").Value;
+                return _trav.Field<IBundleLock>($"{nameof(GInterface264).ToLower()}_0").Value;
             }
 
             set
             {
-                _trav.Field<IBundleLock>($"{typeof(GInterface264).Name.ToLower()}_0").Value = value;
+                _trav.Field<IBundleLock>($"{nameof(GInterface264).ToLower()}_0").Value = value;
             }
         }
 

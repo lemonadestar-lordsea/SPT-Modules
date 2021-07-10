@@ -74,7 +74,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
                                       string platformName, [CanBeNull] Func<string, bool> shouldExclude)
         {
             var traverse = Traverse.Create(__instance);
-            var path = $"{rootPath.Replace("file:///", "").Replace("file://", "")}/{platformName}/";
+            var path = $"{rootPath.Replace("file:///", string.Empty).Replace("file://", string.Empty)}/{platformName}/";
             
             var manifestLoading = AssetBundle.LoadFromFileAsync(path + platformName);
             await manifestLoading.Await();

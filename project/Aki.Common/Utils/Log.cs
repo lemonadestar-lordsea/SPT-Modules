@@ -19,7 +19,7 @@ namespace Aki.Common.Utils
 
         public static void Write(string text)
         {
-            VFS.WriteFile(_filepath, $"{text}{Environment.NewLine}", true);
+            VFS.WriteTextFile(_filepath, $"{text}{Environment.NewLine}", true);
         }
 
         private static void Formatted(string type, string text)

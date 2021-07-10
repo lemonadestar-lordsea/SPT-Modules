@@ -8,9 +8,9 @@ namespace Aki.SinglePlayer.Utils
 {
     public static class RequestHandler
     {
-        private static Request _request;
         private static string _host;
         private static string _session;
+        private static Request _request;
         private static Dictionary<string, string> _headers;
 
         static RequestHandler()
@@ -23,13 +23,13 @@ namespace Aki.SinglePlayer.Utils
             {
                 if (arg.Contains("BackendUrl"))
                 {
-                    var json = arg.Replace("-config=", "");
+                    var json = arg.Replace("-config=", string.Empty);
                     _host = Json.Deserialize<ServerConfig>(json).BackendUrl;
                 }
 
                 if (arg.Contains("-token="))
                 {
-                    _session =  arg.Replace("-token=", "");
+                    _session =  arg.Replace("-token=", string.Empty);
                     _headers = new Dictionary<string, string>()
                     {
                         { "Cookie", $"PHPSESSID={_session}" },

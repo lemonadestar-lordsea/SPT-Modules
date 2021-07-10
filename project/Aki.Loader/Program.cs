@@ -7,22 +7,11 @@ namespace Aki.Loader
     {
         public static void Main(string[] args)
         {
-            Log.Info("Executing Aki.Loader.Program.Main()");
+            Log.Info("Loading: Aki.Loader");
 
-            try
-            {
-                Log.Info("Aki.Loader: Loaded");
-
-                Loader.AddRepository(VFS.Combine(VFS.Cwd, "Aki_Data/Modules/"));
-                Loader.AddRepository(VFS.Combine(VFS.Cwd, "user/mods/"));
-                Loader.LoadAllAssemblies();
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"{ex.GetType().Name}: {ex.Message}{Environment.NewLine}{ex.StackTrace}");
-            }
-
-            Log.Info("Done with Aki.Loader.Program.Main()");
+            Loader.AddRepository(VFS.Combine(VFS.Cwd, "Aki_Data/Modules/"));
+            Loader.AddRepository(VFS.Combine(VFS.Cwd, "user/mods/"));
+            Loader.LoadAllAssemblies();
         }
     }
 }
