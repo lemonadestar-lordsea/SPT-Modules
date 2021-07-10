@@ -124,6 +124,11 @@ namespace Aki.Common.Utils
         /// </summary>
         public static void WriteFile(string filepath, string data, bool append = false)
         {
+            if (!Exists(filepath))
+            {
+                CreateDirectory(filepath.GetDirectory());
+            }
+
             if (append)
             {
                 File.AppendAllText(filepath, data);
