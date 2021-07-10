@@ -43,10 +43,13 @@ namespace Aki.Loader
             {
                 Log.Error(ex.Message);
 
-                if (ex.InnerException != null)
+                Exception innerEx = ex.InnerException;
+
+                while (innerEx != null)
                 {
-                    Log.Error(ex.InnerException.Message);
-                    Log.Write(ex.InnerException.StackTrace);
+                    Log.Error(innerEx.Message);
+                    Log.Write(innerEx.StackTrace);
+                    innerEx = innerEx.InnerException;
                 }
             }
         }
