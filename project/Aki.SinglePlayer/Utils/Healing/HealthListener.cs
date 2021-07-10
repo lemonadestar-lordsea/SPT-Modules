@@ -55,7 +55,7 @@ namespace Aki.SinglePlayer.Utils.Healing
         private static HealthListener _instance;
         private IHealthController _healthController;
         private IDisposable _disposable = null;
-        private HealthSynchronizer _simpleTimer { get; private set; }
+        private HealthSynchronizer _simpleTimer;
         public PlayerHealth CurrentHealth { get; }
 
         public static HealthListener Instance
