@@ -43,6 +43,7 @@ namespace Aki.Loader
                         {
                             Log.Error($"Aki.Loader: Failed to load '{file}'! Exception below.");
                             Log.Write(error.Message);
+                            Log.Write(error.StackTrace);
                         }
                     }
                     else
