@@ -2,7 +2,7 @@ using System.Linq;
 using System.Reflection;
 using EFT;
 using EFT.InventoryLogic;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
 
 namespace Aki.SinglePlayer.Patches.Quests
 {

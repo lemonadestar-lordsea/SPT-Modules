@@ -1,7 +1,7 @@
 using System;
 using System.Reflection.Emit;
 
-namespace Aki.SinglePlayer.Utils.Reflection.CodeWrapper
+namespace Aki.Reflection.CodeWrapper
 {
     public class CodeWithLabel : Code
     {

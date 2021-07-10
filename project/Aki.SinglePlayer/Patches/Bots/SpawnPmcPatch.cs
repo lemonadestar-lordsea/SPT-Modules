@@ -4,7 +4,8 @@ using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using EFT;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
@@ -17,8 +18,8 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         public SpawnPmcPatch() : base(prefix: nameof(PatchPrefix))
         {
-            _targetInterface = PatcherConstants.EftTypes.Single(IsTargetInterface);
-            _targetType = PatcherConstants.EftTypes.Single(IsTargetType);
+            _targetInterface = Constants.EftTypes.Single(IsTargetInterface);
+            _targetType = Constants.EftTypes.Single(IsTargetType);
             _wildSpawnTypeField = AccessTools.FieldRefAccess<WildSpawnType>(_targetType, "wildSpawnType_0");
             _botDifficultyField = AccessTools.FieldRefAccess<BotDifficulty>(_targetType, "botDifficulty_0");
         }

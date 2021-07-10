@@ -1,6 +1,6 @@
 using System;
 
-namespace Aki.Common.Utils
+namespace Aki.Common
 {
     public static class Log
     {

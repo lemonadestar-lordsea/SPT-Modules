@@ -8,7 +8,8 @@ using UnityEngine;
 using JetBrains.Annotations;
 using Diz.Jobs;
 using Diz.Resources;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils.Bundles;
 using IEasyBundle = GInterface263;
@@ -33,10 +34,10 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
         protected override MethodBase GetTargetMethod()
         {
-            _easyBundleType = PatcherConstants.EftTypes.Single(type => type.IsClass && type.GetProperty("SameNameAsset") != null);
+            _easyBundleType = Constants.EftTypes.Single(type => type.IsClass && type.GetProperty("SameNameAsset") != null);
             _bundlesFieldName = $"{_easyBundleType.Name.ToLower()}_0";
 
-            var targetType = PatcherConstants.EftTypes.Single(IsTargetType);
+            var targetType = Constants.EftTypes.Single(IsTargetType);
             return AccessTools.GetDeclaredMethods(targetType).Single(IsTargetMethod);
         }
 

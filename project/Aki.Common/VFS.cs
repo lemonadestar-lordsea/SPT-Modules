@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Aki.Common.Utils
+namespace Aki.Common
 {
     public static class VFS
     {

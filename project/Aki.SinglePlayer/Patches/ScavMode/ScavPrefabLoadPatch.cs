@@ -4,9 +4,10 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using EFT;
-using Aki.Common.Utils;
-using Aki.Common.Utils.Patching;
-using Aki.SinglePlayer.Utils.Reflection.CodeWrapper;
+using Aki.Common;
+using Aki.Reflection.CodeWrapper;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
@@ -29,7 +30,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var codes = new List<CodeInstruction>(instructions);
 
             // Search for code where backend.Session.getProfile() is called.
-            var searchCode = new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(PatcherConstants.SessionInterfaceType, "get_Profile"));
+            var searchCode = new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(Constants.SessionInterfaceType, "get_Profile"));
             var searchIndex = -1;
 
             for (var i = 0; i < codes.Count; i++)
@@ -58,15 +59,15 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             {
                 new Code(OpCodes.Ldloc_1),
                 new Code(OpCodes.Ldfld, typeof(ClientApplication), "_backEnd"),
-                new Code(OpCodes.Callvirt, PatcherConstants.BackendInterfaceType, "get_Session"),
+                new Code(OpCodes.Callvirt, Constants.BackendInterfaceType, "get_Session"),
                 new Code(OpCodes.Ldloc_1),
                 new Code(OpCodes.Ldfld, typeof(MainApplication), "esideType_0"),
                 new Code(OpCodes.Ldc_I4_0),
                 new Code(OpCodes.Ceq),
                 new Code(OpCodes.Brfalse, brFalseLabel),
-                new Code(OpCodes.Callvirt, PatcherConstants.SessionInterfaceType, "get_Profile"),
+                new Code(OpCodes.Callvirt, Constants.SessionInterfaceType, "get_Profile"),
                 new Code(OpCodes.Br, brLabel),
-                new CodeWithLabel(OpCodes.Callvirt, brFalseLabel, PatcherConstants.SessionInterfaceType, "get_ProfileOfPet"),
+                new CodeWithLabel(OpCodes.Callvirt, brFalseLabel, Constants.SessionInterfaceType, "get_ProfileOfPet"),
                 new CodeWithLabel(OpCodes.Ldc_I4_1, brLabel)
             });
 

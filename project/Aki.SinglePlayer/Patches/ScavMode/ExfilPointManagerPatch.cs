@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
-using Aki.Common.Utils;
-using Aki.Common.Utils.Patching;
-using Aki.SinglePlayer.Utils.Reflection.CodeWrapper;
+using Aki.Common;
+using Aki.Reflection.CodeWrapper;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
@@ -18,7 +19,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.ExfilPointManagerType
+            return Constants.ExfilPointManagerType
                 .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.CreateInstance)
                 .Single(IsTargetMethod);
         }
@@ -26,7 +27,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
-            var searchCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(PatcherConstants.ExfilPointManagerType, "RemoveProfileIdFromPoints", new System.Type[] { typeof(string) }));
+            var searchCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(Constants.ExfilPointManagerType, "RemoveProfileIdFromPoints", new System.Type[] { typeof(string) }));
             var searchIndex = -1;
 
             for (var i = 0; i < codes.Count; i++)
@@ -50,7 +51,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var newCodes = CodeGenerator.GenerateInstructions(new List<Code>()
             {
                 new Code(OpCodes.Ldarg_0),
-                new Code(OpCodes.Call, PatcherConstants.ExfilPointManagerType, "get_ScavExfiltrationPoints")
+                new Code(OpCodes.Call, Constants.ExfilPointManagerType, "get_ScavExfiltrationPoints")
             });
 
             codes.RemoveRange(searchIndex, 23);

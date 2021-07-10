@@ -1,7 +1,8 @@
 using System.Linq;
 using System.Reflection;
 using UnityEngine.Networking;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using Aki.Core.Utils;
 
 namespace Aki.Core.Patches
@@ -14,7 +15,7 @@ namespace Aki.Core.Patches
 
 		protected override MethodBase GetTargetMethod()
 		{
-			return PatcherConstants.EftTypes.Single(x => x.BaseType == typeof(CertificateHandler))
+			return Constants.EftTypes.Single(x => x.BaseType == typeof(CertificateHandler))
 				.GetMethod("ValidateCertificate", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 		}
 

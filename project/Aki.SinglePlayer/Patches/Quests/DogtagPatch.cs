@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using EFT;
 using EFT.InventoryLogic;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
 using Equipment = GClass1757;
 using DamageInfo = GStruct241;
 

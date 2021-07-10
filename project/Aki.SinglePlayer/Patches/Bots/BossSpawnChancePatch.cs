@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Reflection;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
@@ -14,7 +15,7 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.LocalGameType.BaseType
+            return Constants.LocalGameType.BaseType
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly)
                 .SingleOrDefault(m => IsTargetMethod(m));
         }

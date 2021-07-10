@@ -3,8 +3,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using Aki.Common.Utils;
-using Aki.Common.Utils.Patching;
+using Aki.Common;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Utils;
 using Aki.SinglePlayer.Utils.Bundles;
 
@@ -18,7 +19,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.EftTypes.Single(IsTargetType).GetMethods(BindingFlags.Instance | BindingFlags.NonPublic).Single(IsTargetMethod);
+            return Constants.EftTypes.Single(IsTargetType).GetMethods(BindingFlags.Instance | BindingFlags.NonPublic).Single(IsTargetMethod);
         }
 
         // Locate the target class; must have a Property named "SameNameAsset"

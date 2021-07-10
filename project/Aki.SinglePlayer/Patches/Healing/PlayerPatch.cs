@@ -1,7 +1,8 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using EFT;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.Healing
 {
@@ -22,7 +23,7 @@ namespace Aki.SinglePlayer.Patches.Healing
         {
             if (_playerAccountId == null)
             {
-                _playerAccountId = Utils.Config.BackEndSession.Profile.AccountId;
+                _playerAccountId = Constants.BackEndSession.Profile.AccountId;
             }
 
 			if (__instance.Profile.AccountId != _playerAccountId)

@@ -2,7 +2,8 @@ using System;
 using System.Linq;
 using System.Reflection;
 using EFT;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Utils;
 
 namespace Aki.SinglePlayer.Patches.Progression
@@ -20,16 +21,16 @@ namespace Aki.SinglePlayer.Patches.Progression
         {
             var flags = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 
-            _profileId = PatcherConstants.LocalGameType.BaseType
+            _profileId = Constants.LocalGameType.BaseType
                 .GetProperty("ProfileId", flags);
 
-            _stopRaid = PatcherConstants.LocalGameType.BaseType
+            _stopRaid = Constants.LocalGameType.BaseType
                 .GetMethods(flags).SingleOrDefault(IsStopRaidMethod);
         }
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.LocalGameType.BaseType
+            return Constants.LocalGameType.BaseType
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
                 .Single(x => x.Name.EndsWith("StopGame"));
         }

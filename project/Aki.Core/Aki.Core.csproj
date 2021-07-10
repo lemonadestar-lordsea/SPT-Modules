@@ -76,6 +76,11 @@
       <Name>Aki.Common</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Aki.Reflection\Aki.Reflection.csproj">
+      <Project>{aee7b6f5-b07d-4e3e-b509-c098adb8a50f}</Project>
+      <Name>Aki.Reflection</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

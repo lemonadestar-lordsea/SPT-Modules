@@ -1,8 +1,9 @@
 using System;
 using System.Reflection;
 using HarmonyLib;
+using Aki.Common;
 
-namespace Aki.Common.Utils.Patching
+namespace Aki.Reflection.Patching
 {
     public abstract class GenericPatch<T> where T : GenericPatch<T>
     {

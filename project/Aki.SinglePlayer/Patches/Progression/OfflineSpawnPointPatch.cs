@@ -4,8 +4,9 @@ using System.Linq;
 using System.Reflection;
 using EFT;
 using EFT.Game.Spawning;
-using Aki.Common.Utils;
-using Aki.Common.Utils.Patching;
+using Aki.Common;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using SpawnPoints = GInterface229;
 
 namespace Aki.SinglePlayer.Patches.Progression
@@ -26,7 +27,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.EftTypes.First(IsTargetType).GetMethods(_flags).First(m => m.Name.Contains("SelectSpawnPoint"));
+            return Constants.EftTypes.First(IsTargetType).GetMethods(_flags).First(m => m.Name.Contains("SelectSpawnPoint"));
         }
 
         private static bool IsTargetType(Type type)

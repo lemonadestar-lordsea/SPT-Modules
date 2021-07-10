@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Aki.SinglePlayer.Utils
+namespace Aki.Reflection.Utils
 {
     public static class HookObject
     {

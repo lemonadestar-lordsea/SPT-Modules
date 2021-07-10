@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Aki.Common.Utils;
+using Aki.Common;
 using Aki.SinglePlayer.Models;
 
 namespace Aki.SinglePlayer.Utils

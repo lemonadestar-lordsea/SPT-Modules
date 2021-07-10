@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace Aki.SinglePlayer.Utils.Reflection
+namespace Aki.Reflection.Utils
 {
     public class PrivateMethodAccessor
     {

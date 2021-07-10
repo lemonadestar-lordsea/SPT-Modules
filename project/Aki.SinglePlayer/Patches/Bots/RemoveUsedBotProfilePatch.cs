@@ -4,7 +4,8 @@ using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using EFT;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using BotData = GInterface17;
 
 namespace Aki.SinglePlayer.Patches.Bots
@@ -22,8 +23,8 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         public RemoveUsedBotProfilePatch() : base(prefix: nameof(PatchPrefix))
         {
-            _targetInterface = PatcherConstants.EftTypes.Single(IsTargetInterface);
-            _targetType = PatcherConstants.EftTypes.Single(IsTargetType);
+            _targetInterface = Constants.EftTypes.Single(IsTargetInterface);
+            _targetType = Constants.EftTypes.Single(IsTargetType);
             _profilesField = AccessTools.FieldRefAccess<List<Profile>>(_targetType, "list_0");
         }
 

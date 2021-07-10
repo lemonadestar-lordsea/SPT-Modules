@@ -5,8 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Comfort.Common;
 using EFT;
-using Aki.Common.Utils;
-using Aki.Common.Utils.Patching;
+using Aki.Common;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using BotData = GInterface17;
 using BotsPresets = GClass379;
 using PoolManager = GClass1230;
@@ -63,7 +64,7 @@ namespace Aki.SinglePlayer.Patches.Bots
                 // load from server
                 Log.Info("Loading bot profile from server");
                 var source = data.PrepareToLoadBackend(1).ToList();
-                taskAwaiter = Utils.Config.BackEndSession.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
+                taskAwaiter = Constants.BackEndSession.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
             }
             else
             {

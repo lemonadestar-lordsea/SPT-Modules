@@ -2,8 +2,8 @@ using System.Reflection;
 using UnityEngine;
 using EFT.UI;
 using EFT.UI.Matchmaker;
-using Aki.Common.Utils;
-using Aki.Common.Utils.Patching;
+using Aki.Common;
+using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils;
 
