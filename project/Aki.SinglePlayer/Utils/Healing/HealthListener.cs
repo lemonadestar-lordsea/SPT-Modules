@@ -51,7 +51,6 @@ namespace Aki.SinglePlayer.Utils.Healing
 
     public class HealthListener
     {
-        private static object _lock;
         private static HealthListener _instance;
         private IHealthController _healthController;
         private IDisposable _disposable = null;
@@ -64,14 +63,7 @@ namespace Aki.SinglePlayer.Utils.Healing
             {
                 if (_instance == null)
                 {
-                    lock (_lock)
-                    {
-                        if (_instance == null)
-                        {
-                            _instance = new HealthListener();
-                            _lock = new object();
-                        }
-                    }
+                    _instance = new HealthListener();
                 }
 
                 return _instance;
