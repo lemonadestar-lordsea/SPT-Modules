@@ -66,7 +66,6 @@
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\Patching\GenericPatch.cs" />
     <Compile Include="Utils\Patching\PatcherConstants.cs" />
-    <Compile Include="Utils\Patching\PatchMethod.cs" />
     <Compile Include="Utils\Request.cs" />
     <Compile Include="Utils\VFS.cs" />
     <Compile Include="Utils\Zlib.cs" />

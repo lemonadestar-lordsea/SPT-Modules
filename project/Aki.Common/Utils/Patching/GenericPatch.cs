@@ -8,25 +8,18 @@ namespace Aki.Common.Utils.Patching
     public abstract class GenericPatch<T> where T : GenericPatch<T>
     {
         private Harmony _harmony;
-        private MethodBase _targetMethod;
-        private PatchMethod _prefix;
-        private PatchMethod _postfix;
-        private PatchMethod _transpiler;
-        private PatchMethod _finalizer;
+        private HarmonyMethod _prefix;
+        private HarmonyMethod _postfix;
+        private HarmonyMethod _transpiler;
+        private HarmonyMethod _finalizer;
 
         public GenericPatch(string name = null, string prefix = null, string postfix = null, string transpiler = null, string finalizer = null)
         {
             _harmony = new Harmony(name ?? typeof(T).Name);
-            _targetMethod = GetTargetMethod();
             _prefix = GetPatchMethod(prefix);
             _postfix = GetPatchMethod(postfix);
             _transpiler = GetPatchMethod(transpiler);
             _finalizer = GetPatchMethod(finalizer);
-
-            if (_targetMethod == null)
-            {
-                throw new InvalidOperationException("TargetMethod is null");
-            }
 
             if (_prefix == null && _postfix == null && _transpiler == null && _finalizer == null)
             {
@@ -45,14 +38,14 @@ namespace Aki.Common.Utils.Patching
         /// </summary>
         /// <param name="methodName">Method name</param>
         /// <returns>Method</returns>
-        private PatchMethod GetPatchMethod(string methodName)
+        private HarmonyMethod GetPatchMethod(string methodName)
         {
             if (string.IsNullOrWhiteSpace(methodName))
             {
                 return null;
             }
 
-            return typeof(T).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.DeclaredOnly);
+            return new HarmonyMethod(typeof(T).GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.DeclaredOnly));
         }
 
         /// <summary>
@@ -60,14 +53,22 @@ namespace Aki.Common.Utils.Patching
         /// </summary>
         public void Apply()
         {
+            var targetMethod = GetTargetMethod();
+
+            if (targetMethod == null)
+            {
+                throw new InvalidOperationException("TargetMethod is null");
+            }
+
             try
             {
-                _harmony.Patch(_targetMethod, _prefix, _postfix, _transpiler, _finalizer);
+                _harmony.Patch(targetMethod, _prefix, _postfix, _transpiler, _finalizer);
                 Debug.LogError($"Aki.Common: Applied patch {_harmony.Id}");
             }
-            catch (Exception ex)
+            catch
             {
-                Debug.LogError($"Aki.Common: Error in applying patch {_harmony.Id}{Environment.NewLine}{ex}");
+                Debug.LogError($"Aki.Common: Error in applying patch {_harmony.Id}");
+                throw;
             }
         }
 
@@ -76,14 +77,22 @@ namespace Aki.Common.Utils.Patching
         /// </summary>
         public void Remove()
         {
+            var targetMethod = GetTargetMethod();
+
+            if (targetMethod == null)
+            {
+                throw new InvalidOperationException("TargetMethod is null");
+            }
+
             try
             {
-                _harmony.Unpatch(_targetMethod, HarmonyPatchType.All, _harmony.Id);
+                _harmony.Unpatch(targetMethod, HarmonyPatchType.All, _harmony.Id);
                 Debug.LogError($"Aki.Common: Removed patch {_harmony.Id}");
             }
-            catch (Exception ex)
+            catch
             {
-                Debug.LogError($"Aki.Common: Error in removing patch {_harmony.Id}{Environment.NewLine}{ex}");
+                Debug.LogError($"Aki.Common: Error in removing patch {_harmony.Id}");
+                throw;
             }
         }
     }
