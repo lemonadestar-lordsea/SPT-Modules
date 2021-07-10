@@ -64,11 +64,11 @@ namespace Aki.Common.Utils.Patching
             try
             {
                 _harmony.Patch(targetMethod, _prefix, _postfix, _transpiler, _finalizer, _ilmanipulator);
-                Log.Info($"Aki.Common: Applied patch {_harmony.Id}");
+                Log.Info($"Applied patch {_harmony.Id}");
             }
             catch (Exception ex)
             {
-                throw new Exception($"Aki.Common: Error in applying patch {_harmony.Id}", ex);
+                throw new Exception($"Error in applying patch {_harmony.Id}", ex);
             }
         }
 
@@ -87,11 +87,11 @@ namespace Aki.Common.Utils.Patching
             try
             {
                 _harmony.Unpatch(targetMethod, HarmonyPatchType.All, _harmony.Id);
-                Log.Info($"Aki.Common: Removed patch {_harmony.Id}");
+                Log.Info($"Removed patch {_harmony.Id}");
             }
             catch (Exception ex)
             {
-                throw new Exception($"Aki.Common: Error in removing patch {_harmony.Id}", ex);
+                throw new Exception($"Error in removing patch {_harmony.Id}", ex);
             }
         }
     }

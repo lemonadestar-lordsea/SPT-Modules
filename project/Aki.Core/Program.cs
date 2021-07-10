@@ -7,7 +7,7 @@ namespace Aki.Core
 	{
 		static void Main(string[] args)
 		{
-            Log.Info("Aki.Core: Loaded");
+            Log.Info("Loading: Aki.Core");
 
             new BattlEyePatch().Apply();
             new SslCertificatePatch().Apply();

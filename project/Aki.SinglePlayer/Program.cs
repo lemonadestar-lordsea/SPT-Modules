@@ -14,7 +14,7 @@ namespace Aki.SinglePlayer
     {
         static void Main(string[] args)
         {
-            Log.Info("Aki.SinglePlayer: Loaded");
+            Log.Info("Loading: Aki.SinglePlayer");
 
             BundleSettings.GetBundles();
 

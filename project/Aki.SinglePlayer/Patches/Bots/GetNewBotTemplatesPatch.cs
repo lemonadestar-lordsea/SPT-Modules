@@ -61,14 +61,14 @@ namespace Aki.SinglePlayer.Patches.Bots
             if (profile == null)
             {
                 // load from server
-                Log.Info("Aki.SinglePlayer: Loading bot profile from server");
+                Log.Info("Loading bot profile from server");
                 var source = data.PrepareToLoadBackend(1).ToList();
                 taskAwaiter = Utils.Config.BackEndSession.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
             }
             else
             {
                 // return cached profile
-                Log.Info("Aki.SinglePlayer: Loading bot profile from cache");
+                Log.Info("Loading bot profile from cache");
                 taskAwaiter = Task.FromResult(profile);
             }
 

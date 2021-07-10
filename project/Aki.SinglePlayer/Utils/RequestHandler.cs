@@ -43,25 +43,25 @@ namespace Aki.SinglePlayer.Utils
         {
             if (data == null)
             {
-                Log.Error($"Aki.SinglePlayer: Request failed, body is null");
+                Log.Error($"Request failed, body is null");
             }
 
-            Log.Info($"Aki.SinglePlayer: Request was successful");
+            Log.Info($"Request was successful");
         }
 
         private static void ValidateJson(string json)
         {
             if (string.IsNullOrWhiteSpace(json))
             {
-                Log.Error($"Aki.SinglePlayer: Request failed, body is null");
+                Log.Error($"Request failed, body is null");
             }
 
-            Log.Info($"Aki.SinglePlayer: Request was successful");
+            Log.Info($"Request was successful");
         }
 
         public static byte[] GetData(string url)
         {
-            Log.Info($"Aki.SinglePlayer: Request GET data: {_session}:{_host}{url}");
+            Log.Info($"Request GET data: {_session}:{_host}{url}");
             
             var result = _request.Send(_host + url, "GET", null, headers: _headers);
             
@@ -71,7 +71,7 @@ namespace Aki.SinglePlayer.Utils
 
         public static string GetJson(string url)
         {
-            Log.Info($"Aki.SinglePlayer: Request GET json: {_session}:{_host}{url}");
+            Log.Info($"Request GET json: {_session}:{_host}{url}");
 
             var data = _request.Send(_host + url, "GET", headers: _headers);
             var result = Encoding.UTF8.GetString(data);
@@ -82,7 +82,7 @@ namespace Aki.SinglePlayer.Utils
 
         public static string PostJson(string url, string json)
         {
-            Log.Info($"Aki.SinglePlayer: Request POST json: {_session}:{_host}{url}");
+            Log.Info($"Request POST json: {_session}:{_host}{url}");
 
             var data = _request.Send(_host + url, "POST", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
             var result = Encoding.UTF8.GetString(data);
@@ -93,7 +93,7 @@ namespace Aki.SinglePlayer.Utils
 
         public static void PutJson(string url, string json)
         {
-            Log.Info($"Aki.SinglePlayer: Request PUT json: {_session}:{_host}{url}");
+            Log.Info($"Request PUT json: {_session}:{_host}{url}");
             _request.Send(_host + url, "PUT", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
         }
     }
