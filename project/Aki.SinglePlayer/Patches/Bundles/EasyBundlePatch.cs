@@ -40,21 +40,13 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
         private static bool PatchPrefix(IEasyBundle __instance, string key, string rootPath, AssetBundleManifest manifest, IBundleLock bundleLock)
 		{
-            var easyBundle = new EasyBundleHelper(__instance);
-            easyBundle.Key = key;
-
             var path = rootPath + key;
-            var bundle = (BundleInfo)null;
+            var dependencyKeys = manifest.GetDirectDependencies(key);
 
-            if (BundleSettings.Bundles.TryGetValue(key, out bundle))
+            if (BundleSettings.Bundles.TryGetValue(key, out BundleInfo bundle))
             {
                 path = bundle.Path;
             }
-
-            easyBundle.Path = path;
-            easyBundle.KeyWithoutExtension = Path.GetFileNameWithoutExtension(key);
-
-            var dependencyKeys = manifest.GetDirectDependencies(key);
 
             foreach (KeyValuePair<string, BundleInfo> kvp in BundleSettings.Bundles)
             {
@@ -68,9 +60,16 @@ namespace Aki.SinglePlayer.Patches.Bundles
                 break;
             }
 
-            easyBundle.DependencyKeys = dependencyKeys;
-            easyBundle.LoadState = new BindableState(ELoadState.Unloaded, null);
-            easyBundle.BundleLock = bundleLock;
+            var easyBundle = new EasyBundleHelper(__instance)
+            {
+                Key = key,
+                Path = path,
+                KeyWithoutExtension = Path.GetFileNameWithoutExtension(key),
+                DependencyKeys = dependencyKeys,
+                LoadState = new BindableState(ELoadState.Unloaded, null),
+                BundleLock = bundleLock
+            };
+
             return false;
 		}
 	}
