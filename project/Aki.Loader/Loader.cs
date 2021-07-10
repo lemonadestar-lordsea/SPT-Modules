@@ -33,13 +33,12 @@ namespace Aki.Loader
 
                     if (VFS.Exists(file))
                     {
-                        Exception ex = RunUtil.LoadAndRun(file);
-
-                        if (ex == null)
+                        try
                         {
+                            RunUtil.LoadAndRun(file);
                             Log.Info($"Aki.Loader: Successfully loaded '{file}'");
                         }
-                        else
+                        catch (Exception ex)
                         {
                             Log.Error($"Aki.Loader: Failed to load '{file}'");
                             Log.Write(ex.Message);

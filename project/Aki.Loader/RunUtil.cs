@@ -13,6 +13,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using Aki.Common.Utils;
 
 namespace Aki.Loader
 {
@@ -21,7 +22,7 @@ namespace Aki.Loader
         private static string _depDir;
         private static bool _hasHooked = false;
 
-        public static Exception LoadAndRun(string dllPath, params string[] args)
+        public static void LoadAndRun(string dllPath, params string[] args)
         {
             if (!_hasHooked)
             {
@@ -29,26 +30,29 @@ namespace Aki.Loader
                 _hasHooked = true;
             }
 
-            Exception error = LoadAssAndEntryPoint(dllPath, out var entry, out bool hasStringArray);
+            MethodInfo entry = null;
+            bool hasStringArray = false;
 
-            if (error != null)
+            try
             {
-                return error;
+                LoadAssemblyAndEntryPoint(dllPath, out entry, out hasStringArray);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to load entry point of {dllPath}", ex);
             }
 
             try
             {
                 entry.Invoke(null, hasStringArray ? new object[] { args } : new object[0]);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return e;
+                throw new Exception($"Failed to execute entry point of {dllPath}", ex);
             }
-
-            return null;
         }
 
-        internal static Exception LoadAssAndEntryPoint(string dllPath, out MethodInfo entryPoint, out bool hasStringArray)
+        private static void LoadAssemblyAndEntryPoint(string dllPath, out MethodInfo entryPoint, out bool hasStringArray)
         {
             Assembly asm;
             entryPoint = null;
@@ -58,24 +62,31 @@ namespace Aki.Loader
             {
                 asm = LoadAssembly(dllPath);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return e;
+                throw new Exception($"Failed to load assembly {dllPath}", ex);
             }
 
-            var entry = FindMainFunction(asm, out hasStringArray);
-
-            if (entry != null)
+            try
             {
-                LoadDeps(asm, new FileInfo(dllPath).DirectoryName);
-                entryPoint = entry;
-                return null;
+                entryPoint = FindMainFunction(asm, out hasStringArray);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to find entry point in {asm.FullName}", ex);
             }
 
-            return new Exception($"Failed to find entry point in {asm.FullName}");
+            try
+            {
+                LoadDependencies(asm, new FileInfo(dllPath).DirectoryName);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to load dependencies in {asm.FullName}", ex);
+            }
         }
 
-        internal static Assembly LoadAssembly(string dllPath)
+        private static Assembly LoadAssembly(string dllPath)
         {
             byte[] bytes;
             Assembly asm;
@@ -84,44 +95,45 @@ namespace Aki.Loader
             {
                 bytes = File.ReadAllBytes(dllPath);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception($"Failed to read assembly bytes from '{dllPath}'", e);
+                throw new Exception($"Failed to read assembly bytes from '{dllPath}'", ex);
             }
 
             try
             {
                 asm = Assembly.Load(bytes);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception("Failed created assembly from file bytes. Duplicate assembly?", e);
+                throw new Exception("Failed creating assembly from file. Duplicate assembly?", ex);
             }
 
             return asm;
         }
 
-        internal static Exception LoadDeps(Assembly a, string sourceFolder)
+        private static bool IsLoaded(AssemblyName name)
         {
             var domain = AppDomain.CurrentDomain;
 
-            bool IsLoaded(AssemblyName name)
+            foreach (var item in domain.GetAssemblies())
             {
-                foreach (var item in domain.GetAssemblies())
+                // TODO make this comparison better.
+                if (item.ToString() == name.ToString())
                 {
-                    // TODO make this comparison better.
-                    if (item.ToString() == name.ToString())
-                    {
-                        return true;
-                    }
+                    return true;
                 }
-                
-                return false;
             }
 
-            var refs = a.GetReferencedAssemblies();
+            return false;
+        }
 
-            foreach (var item in refs)
+        private static void LoadDependencies(Assembly a, string sourceFolder)
+        {
+            var domain = AppDomain.CurrentDomain;
+            var references = a.GetReferencedAssemblies();
+
+            foreach (var item in references)
             {
                 if (!IsLoaded(item))
                 {
@@ -132,37 +144,20 @@ namespace Aki.Loader
                         _depDir = sourceFolder;
                         created = domain.Load(item);
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
-                        return e;
+                        throw new Exception($"Failed to load dependency {item.FullName}", ex);
                     }
 
                     // Note: source folder never changes, so all deps are expected be be in the same folder as main dll.
                     // For example, if A depends on B and B depends on C then
                     // when loading A, B.dll and C.dll should be in the same folder as A.dll
-                    Exception newError = LoadDeps(created, sourceFolder);
-
-                    if (newError != null)
-                    {
-                        return newError;
-                    }
+                    LoadDependencies(created, sourceFolder);
                 }
             }
-
-            return null;
         }
 
-        private static Assembly DomainAssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            string root = _depDir;
-            string dllName = args.Name.Split(',')[0].Trim() + ".dll";
-            string path = Path.Combine(root, dllName);
-
-            Console.WriteLine($"Loading dependency '{dllName}' from '{root}'... ");
-            return LoadAssembly(path);
-        }
-
-        internal static MethodInfo FindMainFunction(Assembly a, out bool hasStringArray)
+        private static MethodInfo FindMainFunction(Assembly a, out bool hasStringArray)
         {
             foreach (var type in a.GetTypes())
             {
@@ -206,6 +201,16 @@ namespace Aki.Loader
 
             hasStringArray = false;
             return null;
+        }
+
+        private static Assembly DomainAssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            string root = _depDir;
+            string dllName = $"{args.Name.Split(',')[0].Trim()}.dll";
+            string path = Path.Combine(root, dllName);
+
+            Log.Info($"Loading dependency '{dllName}' from '{root}'... ");
+            return LoadAssembly(path);
         }
     }
 }
