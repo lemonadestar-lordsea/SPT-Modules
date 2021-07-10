@@ -13,7 +13,32 @@ namespace Aki.SinglePlayer.Utils
             _ = nameof(ClientConfig.BackendUrl);
         }
 
-        public static ISession BackEndSession => Singleton<ClientApplication>.Instance.GetClientBackEndSession();
-        public static string BackendUrl => ClientConfig.Config.BackendUrl;
+        private static ISession _backEndSession;
+        public static ISession BackEndSession
+        {
+            get
+            {
+                if (_backEndSession == null)
+                {
+                    _backEndSession = Singleton<ClientApplication>.Instance.GetClientBackEndSession();
+                }
+
+                return _backEndSession;
+            }
+        }
+
+        private static string _backendUrl;
+        public static string BackendUrl
+        {
+            get
+            {
+                if (BackEndSession != null && _backendUrl == null)
+                {
+                    _backendUrl = ClientConfig.Config.BackendUrl;
+                }
+
+                return _backendUrl;
+            }
+        }
     }
 }

@@ -45,7 +45,8 @@ namespace Aki.Loader
 
                 if (ex.InnerException != null)
                 {
-                    Log.Error(ex.InnerException);
+                    Log.Error(ex.InnerException.Message);
+                    Log.Write(ex.InnerException.StackTrace);
                 }
             }
         }
