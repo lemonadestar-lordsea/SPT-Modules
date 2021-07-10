@@ -8,6 +8,7 @@ namespace Aki.Common.Utils
 
         static Log()
         {
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(ExceptionHandler);
             _filepath = VFS.Combine(VFS.Cwd, "./user/logs/modules.log");
 
             if (VFS.Exists(_filepath))
@@ -39,6 +40,13 @@ namespace Aki.Common.Utils
         public static void Error(string text)
         {
             Formatted("ERROR", text);
+        }
+
+        private static void ExceptionHandler(object sender, UnhandledExceptionEventArgs args)
+        {
+            Exception ex = (Exception)args.ExceptionObject;
+            Write(ex.Message);
+            Write(ex.StackTrace);
         }
     }
 }
