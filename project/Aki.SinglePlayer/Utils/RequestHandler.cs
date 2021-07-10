@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Aki.Common.Utils;
+using Aki.SinglePlayer.Models;
 
 namespace Aki.SinglePlayer.Utils
 {
@@ -14,20 +15,16 @@ namespace Aki.SinglePlayer.Utils
 
         static RequestHandler()
         {
-            GetLaunchData();
             _request = new Request();
-        }
 
-        private static void GetLaunchData()
-        {
             var args = Environment.GetCommandLineArgs();
 
             foreach (var arg in args)
             {
                 if (arg.Contains("BackendUrl"))
                 {
-                    // TODO: grab from json instead
-                    _host = arg.Replace("-config={\"BackendUrl\":\"", "").Replace("\",\"Version\":\"live\"}", "");
+                    var json = arg.Replace("-config=", "");
+                    _host = Json.Deserialize<ServerConfig>(json).BackendUrl;
                 }
 
                 if (arg.Contains("-token="))
@@ -40,11 +37,6 @@ namespace Aki.SinglePlayer.Utils
                     };
                 }
             }
-        }
-
-        private static void PrepareRequest(string url)
-        {
-            Log.Info($"Aki.SinglePlayer: Request: {_session}:{_host}{url}");
         }
 
         private static void ValidateData(byte[] data)
@@ -69,7 +61,7 @@ namespace Aki.SinglePlayer.Utils
 
         public static byte[] GetData(string url)
         {
-            PrepareRequest(url);
+            Log.Info($"Aki.SinglePlayer: Request GET data: {_session}:{_host}{url}");
             
             var result = _request.Send(_host + url, "GET", null, headers: _headers);
             
@@ -79,7 +71,7 @@ namespace Aki.SinglePlayer.Utils
 
         public static string GetJson(string url)
         {
-            PrepareRequest(url);
+            Log.Info($"Aki.SinglePlayer: Request GET json: {_session}:{_host}{url}");
 
             var data = _request.Send(_host + url, "GET", headers: _headers);
             var result = Encoding.UTF8.GetString(data);
@@ -90,7 +82,7 @@ namespace Aki.SinglePlayer.Utils
 
         public static string PostJson(string url, string json)
         {
-            PrepareRequest(url);
+            Log.Info($"Aki.SinglePlayer: Request POST json: {_session}:{_host}{url}");
 
             var data = _request.Send(_host + url, "POST", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
             var result = Encoding.UTF8.GetString(data);
@@ -101,7 +93,7 @@ namespace Aki.SinglePlayer.Utils
 
         public static void PutJson(string url, string json)
         {
-            PrepareRequest(url);
+            Log.Info($"Aki.SinglePlayer: Request PUT json: {_session}:{_host}{url}");
             _request.Send(_host + url, "PUT", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
         }
     }
