@@ -14,11 +14,11 @@ namespace Aki.SinglePlayer.Utils
 
         static RequestHandler()
         {
-            _session = null;
+            GetLaunchData();
             _request = new Request();
         }
 
-        private static string GetBackendUrl()
+        private static void GetLaunchData()
         {
             var args = Environment.GetCommandLineArgs();
 
@@ -26,47 +26,25 @@ namespace Aki.SinglePlayer.Utils
             {
                 if (arg.Contains("BackendUrl"))
                 {
-                    return arg.Replace("-config={\"BackendUrl\":\"", "").Replace("\",\"Version\":\"live\"}", "");
+                    // TODO: grab from json instead
+                    _host = arg.Replace("-config={\"BackendUrl\":\"", "").Replace("\",\"Version\":\"live\"}", "");
+                }
+
+                if (arg.Contains("-token="))
+                {
+                    _session =  arg.Replace("-token=", "");
+                    _headers = new Dictionary<string, string>()
+                    {
+                        { "Cookie", $"PHPSESSID={_session}" },
+                        { "SessionId", _session }
+                    };
                 }
             }
-
-            return null;
         }
 
         private static void PrepareRequest(string url)
         {
-            Log.Info($"Aki.SinglePlayer: Request: {url}");
-
-            // set endpoint
-            _host = GetBackendUrl();
-
-            if (_host == null)
-            {
-                throw new Exception("backendurl is null");
-            }
-
-            Log.Info($"Aki.SinglePlayer: Request host: {_host}");
-
-            // set session
-            var backend = Utils.Config.BackEndSession;
-
-            if (backend == null)
-            {
-                Log.Info($"Aki.SinglePlayer: Request session not active");
-                return;
-            }
-
-            if (_session == null)
-            {
-                _session = backend.GetPhpSessionId();
-                _headers = new Dictionary<string, string>()
-                {
-                    { "Cookie", $"PHPSESSID={_session}" },
-                    { "SessionId", _session }
-                };
-
-                Log.Info($"Aki.SinglePlayer: Request session: {_session}");
-            }
+            Log.Info($"Aki.SinglePlayer: Request: {_session}:{_host}{url}");
         }
 
         private static void ValidateData(byte[] data)
