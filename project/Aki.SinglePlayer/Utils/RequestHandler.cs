@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Aki.Common.Utils;
@@ -17,12 +18,33 @@ namespace Aki.SinglePlayer.Utils
             _request = new Request();
         }
 
+        private static string GetBackendUrl()
+        {
+            var args = Environment.GetCommandLineArgs();
+
+            foreach (var arg in args)
+            {
+                if (arg.Contains("BackendUrl"))
+                {
+                    return arg.Replace("-config={\"BackendUrl\":\"", "").Replace("\",\"Version\":\"live\"}", "");
+                }
+            }
+
+            return null;
+        }
+
         private static void PrepareRequest(string url)
         {
             Log.Info($"Aki.SinglePlayer: Request: {url}");
 
             // set endpoint
-            _host = Utils.Config.BackendUrl;
+            _host = GetBackendUrl();
+
+            if (_host == null)
+            {
+                throw new Exception("backendurl is null");
+            }
+
             Log.Info($"Aki.SinglePlayer: Request host: {_host}");
 
             // set session

@@ -16,6 +16,8 @@ namespace Aki.SinglePlayer
         {
             Log.Info("Aki.SinglePlayer: Loaded");
 
+            BundleSettings.GetBundles();
+
             new EasyAssetsPatch().Apply();
             new EasyBundlePatch().Apply();
             new BundleLoadPatch().Apply();

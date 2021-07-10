@@ -1,18 +1,11 @@
 using Comfort.Common;
 using EFT;
 using ISession = GInterface106;
-using ClientConfig = GClass350;
 
 namespace Aki.SinglePlayer.Utils
 {
     public static class Config
     {
-        static Config()
-        {
-            _ = nameof(ISession.GetPhpSessionId);
-            _ = nameof(ClientConfig.BackendUrl);
-        }
-
         private static ISession _backEndSession;
         public static ISession BackEndSession
         {
@@ -27,18 +20,9 @@ namespace Aki.SinglePlayer.Utils
             }
         }
 
-        private static string _backendUrl;
-        public static string BackendUrl
+        static Config()
         {
-            get
-            {
-                if (BackEndSession != null && _backendUrl == null)
-                {
-                    _backendUrl = ClientConfig.Config.BackendUrl;
-                }
-
-                return _backendUrl;
-            }
+            _ = nameof(ISession.GetPhpSessionId);
         }
     }
 }

@@ -52,7 +52,6 @@ namespace Aki.SinglePlayer.Patches.Bots
                 then perform request to server and get only first value of resulting single element collection
             */
 
-            var session = Utils.Config.BackEndSession;
             var taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             var taskAwaiter = (Task<Profile>)null;
 
@@ -64,7 +63,7 @@ namespace Aki.SinglePlayer.Patches.Bots
                 // load from server
                 Log.Info("Aki.SinglePlayer: Loading bot profile from server");
                 var source = data.PrepareToLoadBackend(1).ToList();
-                taskAwaiter = session.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
+                taskAwaiter = Utils.Config.BackEndSession.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
             }
             else
             {
