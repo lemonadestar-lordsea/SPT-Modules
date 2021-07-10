@@ -32,7 +32,13 @@ namespace Aki.SinglePlayer.Patches.Progression
         private static bool IsTargetType(Type type)
         {
             var methods = type.GetMethods(PatcherConstants.DefaultBindingFlags);
-            return !type.IsInterface && methods.Any(x => x.Name.IndexOf("CheckFarthestFromOtherPlayers", StringComparison.OrdinalIgnoreCase) == -1);
+            
+            if (!methods.Any(x => x.Name.IndexOf("CheckFarthestFromOtherPlayers", StringComparison.OrdinalIgnoreCase) != -1))
+            {
+                return false;
+            }
+
+            return !type.IsInterface;
         }
 
         private static bool PatchPrefix(ref ISpawnPoint __result, SpawnPoints ___ginterface229_0, ESpawnCategory category, EPlayerSide side, string infiltration)
