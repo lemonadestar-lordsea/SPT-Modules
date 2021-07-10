@@ -42,7 +42,7 @@ namespace Aki.Loader
                         else
                         {
                             Log.Error($"Aki.Loader: Failed to load '{file}'! Exception below.");
-                            Log.Data(error.Message);
+                            Log.Write(error.Message);
                         }
                     }
                     else
