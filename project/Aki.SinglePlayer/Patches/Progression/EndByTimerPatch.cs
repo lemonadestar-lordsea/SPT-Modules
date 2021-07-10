@@ -19,8 +19,7 @@ namespace Aki.SinglePlayer.Patches.Progression
         {
             _stopRaidMethod = PatcherConstants.LocalGameType.BaseType
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .SingleOrDefault(IsStopRaidMethod)
-                ?? throw new InvalidOperationException("Method not found");
+                .SingleOrDefault(IsStopRaidMethod);
         }
 
         protected override MethodBase GetTargetMethod()
