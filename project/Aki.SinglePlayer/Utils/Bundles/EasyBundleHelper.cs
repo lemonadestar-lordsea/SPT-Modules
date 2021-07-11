@@ -16,13 +16,13 @@ namespace Aki.SinglePlayer.Utils.Bundles
         private FieldInfo _pathField;
         private FieldInfo _keyWithoutExtensionField;
         private PropertyInfo _bundleLockProperty;
-        private PropertyInfo _loadingJobProperty;
+        private FieldInfo _loadingJobField;
         private PropertyInfo _dependencyKeysProperty;
         private PropertyInfo _keyProperty;
         private PropertyInfo _loadStateProperty;
         private PropertyInfo _progressProperty;
-        private PropertyInfo _bundleProperty;
-        private PropertyInfo _loadingAssetOperationField;
+        private FieldInfo _bundleField;
+        private FieldInfo _loadingAssetOperationField;
         private PropertyInfo _assetsProperty;
         private PropertyInfo _sameNameAssetProperty;
         private static MethodInfo _loadingCoroutineMethod;
@@ -64,11 +64,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return (Task)_loadingJobProperty.GetValue(_instance);
+                return (Task)_loadingJobField.GetValue(_instance);
             }
             set
             {
-                _loadingJobProperty.SetValue(_instance, value);
+                _loadingJobField.SetValue(_instance, value);
             }
         }
 
@@ -125,11 +125,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return (AssetBundle)_bundleProperty.GetValue(_instance);
+                return (AssetBundle)_bundleField.GetValue(_instance);
             }
             set
             {
-                _bundleProperty.SetValue(_instance, value);
+                _bundleField.SetValue(_instance, value);
             }
         }
 
@@ -194,13 +194,13 @@ namespace Aki.SinglePlayer.Utils.Bundles
             _pathField = Type.GetField("string_1");
             _keyWithoutExtensionField = Type.GetField("string_0");
             _bundleLockProperty = Type.GetProperty($"{nameof(GInterface264).ToLower()}_0");
-            _loadingJobProperty = Type.GetProperty("task_0");
+            _loadingJobField = Type.GetField("task_0");
             _dependencyKeysProperty = Type.GetProperty("DependencyKeys");
             _keyProperty = Type.GetProperty("Key");
             _loadStateProperty = Type.GetProperty("LoadState");
             _progressProperty = Type.GetProperty("Progress");
-            _bundleProperty = Type.GetProperty("assetBundle_0");
-            _loadingAssetOperationField = Type.GetProperty("assetBundleRequest_0");
+            _bundleField = Type.GetField("assetBundle_0");
+            _loadingAssetOperationField = Type.GetField("assetBundleRequest_0");
             _assetsProperty = Type.GetProperty("Assets");
             _sameNameAssetProperty = Type.GetProperty("SameNameAsset");
         }
