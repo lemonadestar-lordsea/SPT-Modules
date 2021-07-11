@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using Comfort.Common;
 using EFT;
@@ -17,7 +16,6 @@ namespace Aki.SinglePlayer.Patches.Bots
 {
     public class GetNewBotTemplatesPatch : GenericPatch<GetNewBotTemplatesPatch>
     {
-        public static FieldInfo __field;
         private static Func<BotsPresets, BotData, Profile> _getNewProfileFunc;
 
         static GetNewBotTemplatesPatch()
@@ -55,8 +53,6 @@ namespace Aki.SinglePlayer.Patches.Bots
 
             var taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             var taskAwaiter = (Task<Profile>)null;
-
-            // try get profile from cache
             var profile = _getNewProfileFunc(__instance, data);
 
             if (profile == null)
@@ -75,7 +71,6 @@ namespace Aki.SinglePlayer.Patches.Bots
 
             // load bundles for bot profile
             var continuation = new Continuation(taskScheduler);
-
             __result = taskAwaiter.ContinueWith(continuation.LoadBundles, taskScheduler).Unwrap();
             return false;
         }
@@ -100,13 +95,13 @@ namespace Aki.SinglePlayer.Patches.Bots
             {
                 Profile = task.Result;
 
-                var loadTask = Singleton<PoolManager>.Instance
-                    .LoadBundlesAndCreatePools(PoolManager.PoolsCategory.Raid, 
-                                               PoolManager.AssemblyType.Local, 
-                                               Profile.GetAllPrefabPaths(false).ToArray(), 
-                                               JobPriority.General, 
-                                               null, 
-                                               default(CancellationToken));
+                var loadTask = Singleton<PoolManager>.Instance.LoadBundlesAndCreatePools(
+                    PoolManager.PoolsCategory.Raid, 
+                    PoolManager.AssemblyType.Local, 
+                    Profile.GetAllPrefabPaths(false).ToArray(), 
+                    JobPriority.General, 
+                    null, 
+                    default);
 
                 return loadTask.ContinueWith(GetProfile, TaskScheduler);
             }
