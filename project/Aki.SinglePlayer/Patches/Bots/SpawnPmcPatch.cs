@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using HarmonyLib;
 using EFT;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
@@ -13,15 +12,15 @@ namespace Aki.SinglePlayer.Patches.Bots
     {
         private static Type _targetInterface;
         private static Type _targetType;
-        private static AccessTools.FieldRef<object, WildSpawnType> _wildSpawnTypeField;
-        private static AccessTools.FieldRef<object, BotDifficulty> _botDifficultyField;
+        private static FieldInfo _wildSpawnTypeField;
+        private static FieldInfo _botDifficultyField;
 
         public SpawnPmcPatch() : base(prefix: nameof(PatchPrefix))
         {
             _targetInterface = Constants.EftTypes.Single(IsTargetInterface);
             _targetType = Constants.EftTypes.Single(IsTargetType);
-            _wildSpawnTypeField = AccessTools.FieldRefAccess<WildSpawnType>(_targetType, "wildSpawnType_0");
-            _botDifficultyField = AccessTools.FieldRefAccess<BotDifficulty>(_targetType, "botDifficulty_0");
+            _wildSpawnTypeField = _targetType.GetField("wildSpawnType_0");
+            _botDifficultyField = _targetType.GetField("botDifficulty_0");
         }
 
         private static bool IsTargetInterface(Type type)
@@ -49,8 +48,8 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         private static bool PatchPrefix(object __instance, ref bool __result, Profile x)
         {
-            var botType = _wildSpawnTypeField(__instance);
-            var botDifficulty = _botDifficultyField(__instance);
+            var botType = (WildSpawnType)_wildSpawnTypeField.GetValue(__instance);
+            var botDifficulty = (BotDifficulty)_botDifficultyField.GetValue(__instance);
 
             __result = x.Info.Settings.Role == botType && x.Info.Settings.BotDifficulty == botDifficulty;
             return false;
