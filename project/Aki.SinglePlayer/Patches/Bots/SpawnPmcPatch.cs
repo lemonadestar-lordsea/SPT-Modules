@@ -33,24 +33,13 @@ namespace Aki.SinglePlayer.Patches.Bots
         {
             var flags = BindingFlags.NonPublic | BindingFlags.Instance;
 
-            if (!_targetInterface.IsAssignableFrom(type))
-            {
-                return false;
-            }
-
-            if (type.GetMethod("method_1", flags) == null)
+            if (!_targetInterface.IsAssignableFrom(type) || type.GetMethod("method_1", flags) == null)
             {
                 return false;
             }
 
             var fields = type.GetFields(flags);
-            
-            if (!fields.Any(f => f.FieldType == typeof(WildSpawnType)) || !fields.Any(f => f.FieldType == typeof(BotDifficulty)))
-            {
-                return false;
-            }
-
-            return true;
+            return fields.Any(f => f.FieldType != typeof(WildSpawnType)) && fields.Any(f => f.FieldType == typeof(BotDifficulty));
         }
 
         protected override MethodBase GetTargetMethod()
@@ -64,7 +53,6 @@ namespace Aki.SinglePlayer.Patches.Bots
             var botDifficulty = _botDifficultyField(__instance);
 
             __result = x.Info.Settings.Role == botType && x.Info.Settings.BotDifficulty == botDifficulty;
-
             return false;
         }
     }
