@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using HarmonyLib;
 using UnityEngine;
 using JetBrains.Annotations;
 using Diz.Jobs;
@@ -22,7 +21,9 @@ namespace Aki.SinglePlayer.Patches.Bundles
     public class EasyAssetsPatch : GenericPatch<EasyAssetsPatch>
     {
         private static Type _easyBundleType;
-        private static string _bundlesFieldName;
+        private static FieldInfo _manifestField;
+        private static FieldInfo _bundlesField;
+        private static PropertyInfo _systemProperty;
 
         public EasyAssetsPatch() : base(prefix: nameof(PatchPrefix))
         {
@@ -35,33 +36,20 @@ namespace Aki.SinglePlayer.Patches.Bundles
         protected override MethodBase GetTargetMethod()
         {
             _easyBundleType = Constants.EftTypes.Single(type => type.IsClass && type.GetProperty("SameNameAsset") != null);
-            _bundlesFieldName = $"{_easyBundleType.Name.ToLower()}_0";
+            _manifestField = typeof(EasyAssets).GetField(nameof(EasyAssets.Manifest));
+            _bundlesField = typeof(EasyAssets).GetField($"{_easyBundleType.Name.ToLower()}_0");
+            _systemProperty = typeof(EasyAssets).GetProperty("System");
 
-            var targetType = Constants.EftTypes.Single(IsTargetType);
-            return AccessTools.GetDeclaredMethods(targetType).Single(IsTargetMethod);
-        }
-
-        private static bool IsTargetType(Type type)
-        {
-            var fields = type.GetFields();
-
-            if (fields.Length > 2)
-            {
-                return false;
-            }
-
-            if (!fields.Any(x => x.Name == "Manifest"))
-            {
-                return false;
-            }
-
-            return type.GetMethod("Create", BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly) != null;
+            return typeof(EasyAssets).GetMethods().Single(IsTargetMethod);
         }
 
         private static bool IsTargetMethod(MethodInfo mi)
         {
             var parameters = mi.GetParameters();
-            return (parameters.Length != 5 || parameters[0].Name != "bundleLock" || parameters[1].Name != "defaultKey" || parameters[4].Name != "shouldExclude") ? false : true;
+            return (parameters.Length == 5
+                && parameters[0].Name == "bundleLock" 
+                && parameters[1].Name == "defaultKey"
+                && parameters[4].Name == "shouldExclude");
         }
 
         private static bool PatchPrefix(EasyAssets __instance, [CanBeNull] IBundleLock bundleLock, string defaultKey, string rootPath,
@@ -74,9 +62,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
         private static async Task Init(EasyAssets __instance, [CanBeNull] IBundleLock bundleLock, string defaultKey, string rootPath,
                                       string platformName, [CanBeNull] Func<string, bool> shouldExclude)
         {
-            var traverse = Traverse.Create(__instance);
             var path = $"{rootPath.Replace("file:///", string.Empty).Replace("file://", string.Empty)}/{platformName}/";
-            
             var manifestLoading = AssetBundle.LoadFromFileAsync(path + platformName);
             await manifestLoading.Await();
 
@@ -84,11 +70,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
             var assetLoading = assetBundle.LoadAllAssetsAsync();
             await assetLoading.Await();
 
-            traverse.Field<AssetBundleManifest>("Manifest").Value = (AssetBundleManifest)assetLoading.allAssets[0];
-            var manifest = traverse.Field<AssetBundleManifest>("Manifest").Value;
-
             // add ModManifest
-            var result = manifest.GetAllAssetBundles().ToList<string>();
             var resourcesModbundles = new List<string>();
 
             foreach (KeyValuePair<string, BundleInfo> kvp in BundleSettings.Bundles)
@@ -96,16 +78,14 @@ namespace Aki.SinglePlayer.Patches.Bundles
                 resourcesModbundles.Add(kvp.Key);
             }
 
-            var bundleNames = result.Union(resourcesModbundles).ToList<string>().ToArray<string>();
-
-            traverse.Field(_bundlesFieldName).SetValue(Array.CreateInstance(_easyBundleType, bundleNames.Length));
+            var manifest = (AssetBundleManifest)assetLoading.allAssets[0];
+            var bundleNames = manifest.GetAllAssetBundles().ToList().Union(resourcesModbundles).ToList().ToArray<string>();
+            var bundles = (IEasyBundle[])Array.CreateInstance(_easyBundleType, bundleNames.Length);
 
             if (bundleLock == null)
             {
                 bundleLock = new BundleLock(int.MaxValue);
             }
-
-            var bundles = traverse.Field(_bundlesFieldName).GetValue<IEasyBundle[]>();
 
             for (var i = 0; i < bundleNames.Length; i++)
             {
@@ -113,8 +93,9 @@ namespace Aki.SinglePlayer.Patches.Bundles
                 await JobScheduler.Yield();
             }
 
-            traverse.Field(_bundlesFieldName).SetValue(bundles);
-            traverse.Property<DependencyGraph>("System").Value = new DependencyGraph(bundles, defaultKey, shouldExclude);
+            _manifestField.SetValue(__instance, manifest);
+            _bundlesField.SetValue(__instance, bundles);
+            _systemProperty.SetValue(__instance, new DependencyGraph(bundles, defaultKey, shouldExclude));
         }
     }
 }
