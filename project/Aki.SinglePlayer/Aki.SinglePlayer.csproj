@@ -101,7 +101,6 @@
     <Compile Include="Patches\Matchmaker\MatchmakerOfflineRaidPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSavePatch.cs" />
     <Compile Include="Patches\Quests\BeaconPatch.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\RequestHandler.cs" />
     <Compile Include="Utils\Bundles\EasyBundleHelper.cs" />
     <Compile Include="Utils\Bundles\BundleSettings.cs" />
