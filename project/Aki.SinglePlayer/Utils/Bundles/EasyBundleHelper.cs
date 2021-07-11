@@ -32,6 +32,8 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             _ = nameof(IBundleLock.IsLocked);
             _ = nameof(BindableState.Bind);
+
+            Type = Constants.EftTypes.Single(x => x.IsClass && x.GetProperty("SameNameAsset") != null);
         }
 
         public IEnumerable<string> DependencyKeys
@@ -182,11 +184,6 @@ namespace Aki.SinglePlayer.Utils.Bundles
 
         public EasyBundleHelper(object easyBundle)
         {
-            if (Type == null)
-            {
-                Type = Constants.EftTypes.Single(x => x.IsClass && x.GetProperty("SameNameAsset") != null);
-            }
-
             if (_loadingCoroutineMethod == null)
             {
                 _loadingCoroutineMethod = Type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic)
@@ -196,7 +193,7 @@ namespace Aki.SinglePlayer.Utils.Bundles
             _instance = easyBundle;
             _pathField = Type.GetField("string_1");
             _keyWithoutExtensionField = Type.GetField("string_0");
-            _bundleLockProperty = Type.GetProperty($"{(nameof(GInterface264).ToLower())}_0");
+            _bundleLockProperty = Type.GetProperty($"{nameof(GInterface264).ToLower()}_0");
             _loadingJobProperty = Type.GetProperty("task_0");
             _dependencyKeysProperty = Type.GetProperty("DependencyKeys");
             _keyProperty = Type.GetProperty("Key");
@@ -206,7 +203,7 @@ namespace Aki.SinglePlayer.Utils.Bundles
             _loadingAssetOperationField = Type.GetProperty("assetBundleRequest_0");
             _assetsProperty = Type.GetProperty("Assets");
             _sameNameAssetProperty = Type.GetProperty("SameNameAsset");
-    }
+        }
 
         public Task LoadingCoroutine()
         {
