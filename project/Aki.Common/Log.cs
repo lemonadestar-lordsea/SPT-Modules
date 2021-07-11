@@ -24,7 +24,7 @@ namespace Aki.Common
 
         private static void Formatted(string type, string text)
         {
-            Write($"[{DateTime.Now}] {type} | {text}");
+            Write($"{DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss.fff")}|{type}| {text}");
         }
 
         public static void Info(string text)
