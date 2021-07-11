@@ -1,7 +1,8 @@
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using Aki.Core.Utils;
 
 namespace Aki.Core.Patches
@@ -16,9 +17,9 @@ namespace Aki.Core.Patches
         {
             var methodName = "RunValidation";
             var flags = BindingFlags.Public | BindingFlags.Instance;
-            var type = PatcherConstants.EftTypes.Single(x => x.GetMethod(methodName, flags) != null);
 
-            return type.GetMethod(methodName, flags);
+            return Constants.EftTypes.Single(x => x.GetMethod(methodName, flags) != null)
+                .GetMethod(methodName, flags);
         }
 
         private static bool PatchPrefix(ref Task __result, ref bool ___bool_0)

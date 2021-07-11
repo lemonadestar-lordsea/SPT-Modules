@@ -2,7 +2,8 @@ using System.IO;
 using System.Reflection;
 using UnityEngine;
 using EFT.UI;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
@@ -17,14 +18,14 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         protected override MethodBase GetTargetMethod()
         {
-			return PatcherConstants.LocalGameType.BaseType.GetMethod("method_5", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+			return Constants.LocalGameType.BaseType.GetMethod("method_5", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 		}
 
 		private static void PatchPostfix()
 		{
 			if (preloader == null)
 			{
-				preloader = GameObject.FindObjectOfType<PreloaderUI>();
+				preloader = Object.FindObjectOfType<PreloaderUI>();
 			}
 
 			if (preloader != null)

@@ -2,8 +2,8 @@ using System.Reflection;
 using UnityEngine;
 using EFT.UI;
 using EFT.UI.Matchmaker;
-using Aki.Common.Utils;
-using Aki.Common.Utils.Patching;
+using Aki.Common;
+using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils;
 
@@ -17,16 +17,16 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MatchmakerOfflineRaid).GetMethod("Show", BindingFlags.NonPublic | BindingFlags.Instance);
+            return typeof(MatchmakerOfflineRaid).GetMethod(nameof(MatchmakerOfflineRaid.Show));
         }
 
         private static void PatchPostfix(UpdatableToggle ____offlineModeToggle,
-                                        UpdatableToggle ____botsEnabledToggle,
-                                        TMPDropDownBox ____aiAmountDropdown,
-                                        TMPDropDownBox ____aiDifficultyDropdown,
-                                        UpdatableToggle ____enableBosses,
-                                        UpdatableToggle ____scavWars,
-                                        UpdatableToggle ____taggedAndCursed)
+            UpdatableToggle ____botsEnabledToggle,
+            TMPDropDownBox ____aiAmountDropdown,
+            TMPDropDownBox ____aiDifficultyDropdown,
+            UpdatableToggle ____enableBosses,
+            UpdatableToggle ____scavWars,
+            UpdatableToggle ____taggedAndCursed)
         {
             // disable "no progression save" panel
             var warningPanel = GameObject.Find("Warning Panel");

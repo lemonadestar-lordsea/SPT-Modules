@@ -1,13 +1,14 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using EFT;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.Healing
 {
     public class PlayerPatch : GenericPatch<PlayerPatch>
     {
-        private static string _playerAccountId;
+        private static string _accountId;
 
         public PlayerPatch() : base(postfix: nameof(PatchPostfix))
         {
@@ -20,15 +21,15 @@ namespace Aki.SinglePlayer.Patches.Healing
 
         private static async void PatchPostfix(Player __instance, Task __result)
         {
-            if (_playerAccountId == null)
+            if (_accountId == null)
             {
-                _playerAccountId = Utils.Config.BackEndSession.Profile.AccountId;
+                _accountId = Constants.BackEndSession.Profile.AccountId;
             }
 
-			if (__instance.Profile.AccountId != _playerAccountId)
-			{
-				return;
-			}
+            if (__instance.Profile.AccountId != _accountId)
+            {
+                return;
+            }
 
             await __result;
 

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using HarmonyLib;
 using EFT;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
@@ -12,15 +12,15 @@ namespace Aki.SinglePlayer.Patches.Bots
     {
         private static Type _targetInterface;
         private static Type _targetType;
-        private static AccessTools.FieldRef<object, WildSpawnType> _wildSpawnTypeField;
-        private static AccessTools.FieldRef<object, BotDifficulty> _botDifficultyField;
+        private static FieldInfo _wildSpawnTypeField;
+        private static FieldInfo _botDifficultyField;
 
         public SpawnPmcPatch() : base(prefix: nameof(PatchPrefix))
         {
-            _targetInterface = PatcherConstants.EftTypes.Single(IsTargetInterface);
-            _targetType = PatcherConstants.EftTypes.Single(IsTargetType);
-            _wildSpawnTypeField = AccessTools.FieldRefAccess<WildSpawnType>(_targetType, "wildSpawnType_0");
-            _botDifficultyField = AccessTools.FieldRefAccess<BotDifficulty>(_targetType, "botDifficulty_0");
+            _targetInterface = Constants.EftTypes.Single(IsTargetInterface);
+            _targetType = Constants.EftTypes.Single(IsTargetType);
+            _wildSpawnTypeField = _targetType.GetField("wildSpawnType_0");
+            _botDifficultyField = _targetType.GetField("botDifficulty_0");
         }
 
         private static bool IsTargetInterface(Type type)
@@ -32,24 +32,13 @@ namespace Aki.SinglePlayer.Patches.Bots
         {
             var flags = BindingFlags.NonPublic | BindingFlags.Instance;
 
-            if (!_targetInterface.IsAssignableFrom(type))
-            {
-                return false;
-            }
-
-            if (type.GetMethod("method_1", flags) == null)
+            if (!_targetInterface.IsAssignableFrom(type) || type.GetMethod("method_1", flags) == null)
             {
                 return false;
             }
 
             var fields = type.GetFields(flags);
-            
-            if (!fields.Any(f => f.FieldType == typeof(WildSpawnType)) || !fields.Any(f => f.FieldType == typeof(BotDifficulty)))
-            {
-                return false;
-            }
-
-            return true;
+            return fields.Any(f => f.FieldType != typeof(WildSpawnType)) && fields.Any(f => f.FieldType == typeof(BotDifficulty));
         }
 
         protected override MethodBase GetTargetMethod()
@@ -59,11 +48,10 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         private static bool PatchPrefix(object __instance, ref bool __result, Profile x)
         {
-            var botType = _wildSpawnTypeField(__instance);
-            var botDifficulty = _botDifficultyField(__instance);
+            var botType = (WildSpawnType)_wildSpawnTypeField.GetValue(__instance);
+            var botDifficulty = (BotDifficulty)_botDifficultyField.GetValue(__instance);
 
             __result = x.Info.Settings.Role == botType && x.Info.Settings.BotDifficulty == botDifficulty;
-
             return false;
         }
     }

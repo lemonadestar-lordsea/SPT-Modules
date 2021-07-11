@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using UnityEngine;
 
-namespace Aki.Common.Utils
+namespace Aki.Common
 {
     public static class HttpConstants
     {
@@ -126,7 +125,6 @@ namespace Aki.Common.Utils
 			{
 				foreach (KeyValuePair<string, string> item in headers)
 				{
-                    Debug.Log($"[DEBUG] key: {item.Key}, value: {item.Value}");
 					request.Headers.Add(item.Key, item.Value);
 				}
 			}
@@ -137,8 +135,6 @@ namespace Aki.Common.Utils
 
 				request.ContentType = HttpConstants.IsValidMime(mime) ? mime : "application/octet-stream";
 				request.ContentLength = body.Length;
-
-                Debug.Log($"[DEBUG] mime: {request.ContentType}");
 
 				if (compress)
 				{

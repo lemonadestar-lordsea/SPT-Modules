@@ -1,7 +1,8 @@
 using System.Reflection;
 using System.Linq;
 using EFT;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Utils;
 
 namespace Aki.SinglePlayer.Patches.Bots
@@ -17,7 +18,8 @@ namespace Aki.SinglePlayer.Patches.Bots
             var methodName = "LoadDifficultyStringInternal";
 			var flags = BindingFlags.Public | BindingFlags.Static;
 
-			return PatcherConstants.EftTypes.Single(x => x.GetMethod(methodName, flags) != null).GetMethod(methodName, flags);
+			return Constants.EftTypes.Single(x => x.GetMethod(methodName, flags) != null)
+                .GetMethod(methodName, flags);
         }
 
         private static bool PatchPrefix(ref string __result, BotDifficulty botDifficulty, WildSpawnType role)

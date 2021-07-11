@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Aki.Common.Utils
+namespace Aki.Common
 {
     public static class Json
 	{

@@ -1,5 +1,5 @@
 using System.Reflection;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
 using MainMenuController = GClass1253;
 using IHealthController = GInterface177;
 

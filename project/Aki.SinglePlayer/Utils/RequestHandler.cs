@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Aki.Common.Utils;
+using Aki.Common;
 using Aki.SinglePlayer.Models;
 
 namespace Aki.SinglePlayer.Utils
@@ -14,6 +14,11 @@ namespace Aki.SinglePlayer.Utils
         private static Dictionary<string, string> _headers;
 
         static RequestHandler()
+        {
+            Initialize();
+        }
+
+        private static void Initialize()
         {
             _request = new Request();
 
@@ -29,7 +34,7 @@ namespace Aki.SinglePlayer.Utils
 
                 if (arg.Contains("-token="))
                 {
-                    _session =  arg.Replace("-token=", string.Empty);
+                    _session = arg.Replace("-token=", string.Empty);
                     _headers = new Dictionary<string, string>()
                     {
                         { "Cookie", $"PHPSESSID={_session}" },
@@ -59,42 +64,46 @@ namespace Aki.SinglePlayer.Utils
             Log.Info($"Request was successful");
         }
 
-        public static byte[] GetData(string url)
+        public static byte[] GetData(string path)
         {
-            Log.Info($"Request GET data: {_session}:{_host}{url}");
-            
-            var result = _request.Send(_host + url, "GET", null, headers: _headers);
+            var url = _host + path;
+
+            Log.Info($"Request GET data: {_session}:{url}");
+            var result = _request.Send(url, "GET", null, headers: _headers);
             
             ValidateData(result);
             return result;
         }
 
-        public static string GetJson(string url)
+        public static string GetJson(string path)
         {
-            Log.Info($"Request GET json: {_session}:{_host}{url}");
+            var url = _host + path;
 
-            var data = _request.Send(_host + url, "GET", headers: _headers);
+            Log.Info($"Request GET json: {_session}:{url}");
+            var data = _request.Send(url, "GET", headers: _headers);
             var result = Encoding.UTF8.GetString(data);
             
             ValidateJson(result);
             return result;
         }
 
-        public static string PostJson(string url, string json)
+        public static string PostJson(string path, string json)
         {
-            Log.Info($"Request POST json: {_session}:{_host}{url}");
+            var url = _host + path;
 
-            var data = _request.Send(_host + url, "POST", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
+            Log.Info($"Request POST json: {_session}:{url}");
+            var data = _request.Send(url, "POST", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
             var result = Encoding.UTF8.GetString(data);
             
             ValidateJson(result);
             return result;
         }
 
-        public static void PutJson(string url, string json)
+        public static void PutJson(string path, string json)
         {
-            Log.Info($"Request PUT json: {_session}:{_host}{url}");
-            _request.Send(_host + url, "PUT", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
+            var url = _host + path;
+            Log.Info($"Request PUT json: {_session}:{url}");
+            _request.Send(url, "PUT", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
         }
     }
 }

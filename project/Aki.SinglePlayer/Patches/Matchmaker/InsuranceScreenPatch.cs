@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Reflection;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
 using MainMenuController = GClass1253;
 
 namespace Aki.SinglePlayer.Patches.Matchmaker
@@ -37,11 +37,11 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
         {
             var parameters = mi.GetParameters();
             return (parameters.Length == 4
-                    && parameters[0].Name == "local"
-                    && parameters[1].Name == "weatherSettings"
-                    && parameters[2].Name == "botsSettings"
-                    && parameters[3].Name == "wavesSettings"
-                    && parameters[0].ParameterType == typeof(bool));
+                && parameters[0].Name == "local"
+                && parameters[1].Name == "weatherSettings"
+                && parameters[2].Name == "botsSettings"
+                && parameters[3].Name == "wavesSettings"
+                && parameters[0].ParameterType == typeof(bool));
         }
     }
 }

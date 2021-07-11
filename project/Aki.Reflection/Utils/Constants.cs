@@ -1,11 +1,12 @@
 using System;
 using System.Linq;
-using System.Reflection;
+using Comfort.Common;
 using EFT;
+using ISession = GInterface106;
 
-namespace Aki.Common.Utils.Patching
+namespace Aki.Reflection.Utils
 {
-    public static class PatcherConstants
+    public static class Constants
     {
         public static Type[] EftTypes { get; private set; }
         public static Type LocalGameType { get; private set; }
@@ -13,8 +14,24 @@ namespace Aki.Common.Utils.Patching
         public static Type BackendInterfaceType { get; private set; }
         public static Type SessionInterfaceType { get; private set; }
 
-        static PatcherConstants()
+        private static ISession _backEndSession;
+        public static ISession BackEndSession
         {
+            get
+            {
+                if (_backEndSession == null)
+                {
+                    _backEndSession = Singleton<ClientApplication>.Instance.GetClientBackEndSession();
+                }
+
+                return _backEndSession;
+            }
+        }
+
+        static Constants()
+        {
+            _ = nameof(ISession.GetPhpSessionId);
+
             EftTypes = typeof(AbstractGame).Assembly.GetTypes();
             LocalGameType = EftTypes.Single(x => x.Name == "LocalGame");
             ExfilPointManagerType = EftTypes.Single(x => x.GetMethod("InitAllExfiltrationPoints") != null);

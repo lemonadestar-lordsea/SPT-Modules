@@ -1,15 +1,15 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Diz.DependencyManager;
-using Aki.Common.Utils.Patching;
+using UnityEngine;
+using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils.Bundles;
-using IEasyBundle = GInterface263;                                  // Property: SameNameAsset 
-using IBundleLock = GInterface264;                                  // Property: IsLocked
-using BindableState = GClass2251<Diz.DependencyManager.ELoadState>; // Construct method parameter: initialValue
+using IEasyBundle = GInterface263;
+using IBundleLock = GInterface264;
+using BindableState = GClass2251<Diz.DependencyManager.ELoadState>;
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {
@@ -28,31 +28,18 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
         protected override MethodBase GetTargetMethod()
 		{
-            return PatcherConstants.EftTypes.Single(IsTargetType).GetConstructors()[0];
+            return EasyBundleHelper.Type.GetConstructors()[0];
         }
 
-        private static bool IsTargetType(Type type)
-        {
-            return type.IsClass && type.GetProperty("SameNameAsset") != null;
-        }
-
-        private static bool PatchPrefix(IEasyBundle __instance, string key, string rootPath, UnityEngine.AssetBundleManifest manifest, IBundleLock bundleLock)
+        private static bool PatchPrefix(object __instance, string key, string rootPath, AssetBundleManifest manifest, IBundleLock bundleLock)
 		{
-            var easyBundle = new EasyBundleHelper(__instance);
-            easyBundle.Key = key;
-
             var path = rootPath + key;
-            var bundle = (BundleInfo)null;
+            var dependencyKeys = manifest.GetDirectDependencies(key);
 
-            if (BundleSettings.Bundles.TryGetValue(key, out bundle))
+            if (BundleSettings.Bundles.TryGetValue(key, out BundleInfo bundle))
             {
                 path = bundle.Path;
             }
-
-            easyBundle.Path = path;
-            easyBundle.KeyWithoutExtension = Path.GetFileNameWithoutExtension(key);
-
-            var dependencyKeys = manifest.GetDirectDependencies(key);
 
             foreach (KeyValuePair<string, BundleInfo> kvp in BundleSettings.Bundles)
             {
@@ -66,9 +53,16 @@ namespace Aki.SinglePlayer.Patches.Bundles
                 break;
             }
 
-            easyBundle.DependencyKeys = dependencyKeys;
-            easyBundle.LoadState = new BindableState(ELoadState.Unloaded, null);
-            easyBundle.BundleLock = bundleLock;
+            var easyBundle = new EasyBundleHelper(__instance)
+            {
+                Key = key,
+                Path = path,
+                KeyWithoutExtension = Path.GetFileNameWithoutExtension(key),
+                DependencyKeys = dependencyKeys,
+                LoadState = new BindableState(ELoadState.Unloaded, null),
+                BundleLock = bundleLock
+            };
+
             return false;
 		}
 	}

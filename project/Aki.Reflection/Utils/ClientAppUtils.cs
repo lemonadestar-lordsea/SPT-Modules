@@ -1,9 +1,9 @@
 using Comfort.Common;
 using EFT;
 
-namespace Aki.SinglePlayer.Utils.Reflection
+namespace Aki.Reflection.Utils
 {
-    internal static class ClientAppUtils
+    public static class ClientAppUtils
     {
         public static ClientApplication GetClientApp()
         {

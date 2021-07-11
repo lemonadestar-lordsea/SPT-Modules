@@ -1,6 +1,6 @@
 using System.Reflection;
 using UnityEngine.Networking;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
 using Aki.Core.Utils;
 
 namespace Aki.Core.Patches

@@ -3,7 +3,8 @@ using System.Linq;
 using System.Reflection;
 using Comfort.Common;
 using EFT;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils;
 using ClientMetrics = GClass1431;
@@ -23,13 +24,13 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.EftTypes.Single(x => x.Name == "MainApplication")
-                    .GetMethod("method_44", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            return Constants.EftTypes.Single(x => x.Name == "MainApplication")
+                .GetMethod("method_44", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
         private static void PatchPrefix(ESideType ___esideType_0, Result<ExitStatus, TimeSpan, ClientMetrics> result)
         {
-            var session = Utils.Config.BackEndSession;
+            var session = Constants.BackEndSession;
 
             SaveProfileRequest request = new SaveProfileRequest
 			{

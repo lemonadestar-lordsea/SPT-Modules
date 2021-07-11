@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using Aki.Common.Utils;
+using Aki.Common;
 using Aki.SinglePlayer.Models;
 
 namespace Aki.SinglePlayer.Utils.Bundles
@@ -28,9 +28,7 @@ namespace Aki.SinglePlayer.Utils.Bundles
 
             foreach (var jObj in jArray)
             {
-                var bundle = (BundleInfo)null;
-
-                if (!Bundles.TryGetValue(jObj["key"].ToString(), out bundle))
+                if (!Bundles.TryGetValue(jObj["key"].ToString(), out BundleInfo bundle))
                 {
                     bundle = new BundleInfo(jObj["key"].ToString(),
                                             jObj["path"].ToString(),

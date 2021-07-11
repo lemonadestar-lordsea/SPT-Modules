@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using HarmonyLib;
 using EFT;
-using Aki.Common.Utils.Patching;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using BotData = GInterface17;
 
 namespace Aki.SinglePlayer.Patches.Bots
@@ -13,7 +13,7 @@ namespace Aki.SinglePlayer.Patches.Bots
     {
         private static Type _targetInterface;
         private static Type _targetType;
-        private static AccessTools.FieldRef<object, List<Profile>> _profilesField;
+        private static FieldInfo _profilesField;
 
         static RemoveUsedBotProfilePatch()
         {
@@ -22,9 +22,9 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         public RemoveUsedBotProfilePatch() : base(prefix: nameof(PatchPrefix))
         {
-            _targetInterface = PatcherConstants.EftTypes.Single(IsTargetInterface);
-            _targetType = PatcherConstants.EftTypes.Single(IsTargetType);
-            _profilesField = AccessTools.FieldRefAccess<List<Profile>>(_targetType, "list_0");
+            _targetInterface = Constants.EftTypes.Single(IsTargetInterface);
+            _targetType = Constants.EftTypes.Single(IsTargetType);
+            _profilesField = _targetType.GetField("list_0");
         }
 
         protected override MethodBase GetTargetMethod()
@@ -34,27 +34,17 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         private static bool IsTargetInterface(Type type)
         {
-            if (!type.IsInterface || type.GetProperty("StartProfilesLoaded") == null || type.GetMethod("CreateProfile") == null)
-            {
-                return false;
-            }
-            
-            return true;
+            return type.IsInterface && type.GetProperty("StartProfilesLoaded") != null && type.GetMethod("CreateProfile") != null;
         }
 
         private bool IsTargetType(Type type)
         {
-            if (!_targetInterface.IsAssignableFrom(type) || !_targetInterface.IsAssignableFrom(type.BaseType))
-            {
-                return false;
-            }
-
-            return true;
+            return _targetInterface.IsAssignableFrom(type) && _targetInterface.IsAssignableFrom(type.BaseType);
         }
 
         private static bool PatchPrefix(ref Profile __result, object __instance, BotData data)
         {
-            var profiles = _profilesField(__instance);
+            var profiles = (List<Profile>)_profilesField.GetValue(__instance);
 
             if (profiles.Count > 0)
             {

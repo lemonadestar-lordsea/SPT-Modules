@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using HarmonyLib;
 
-namespace Aki.SinglePlayer.Utils.Reflection.CodeWrapper
+namespace Aki.Reflection.CodeWrapper
 {
     /// <summary>
     /// Helper class to generate IL code for transpilers

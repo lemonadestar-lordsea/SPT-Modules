@@ -4,8 +4,9 @@ using System.Linq;
 using System.Reflection;
 using EFT;
 using EFT.Game.Spawning;
-using Aki.Common.Utils;
-using Aki.Common.Utils.Patching;
+using Aki.Common;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using SpawnPoints = GInterface229;
 
 namespace Aki.SinglePlayer.Patches.Progression
@@ -26,19 +27,14 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatcherConstants.EftTypes.First(IsTargetType).GetMethods(_flags).First(m => m.Name.Contains("SelectSpawnPoint"));
+            return Constants.EftTypes.First(IsTargetType)
+                .GetMethods(_flags).First(m => m.Name.Contains("SelectSpawnPoint"));
         }
 
         private static bool IsTargetType(Type type)
         {
-            var methods = type.GetMethods(_flags);
-            
-            if (!methods.Any(x => x.Name.IndexOf("CheckFarthestFromOtherPlayers", StringComparison.OrdinalIgnoreCase) != -1))
-            {
-                return false;
-            }
-
-            return !type.IsInterface;
+            return (type.GetMethods(_flags).Any(x => x.Name.IndexOf("CheckFarthestFromOtherPlayers", StringComparison.OrdinalIgnoreCase) != -1)
+                && type.IsClass);
         }
 
         private static bool PatchPrefix(ref ISpawnPoint __result, SpawnPoints ___ginterface229_0, ESpawnCategory category, EPlayerSide side, string infiltration)

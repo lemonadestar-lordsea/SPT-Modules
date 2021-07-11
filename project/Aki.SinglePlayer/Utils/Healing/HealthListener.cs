@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models;
 using IEffect = GInterface136;
 using IHealthController = GInterface177;
@@ -68,6 +69,13 @@ namespace Aki.SinglePlayer.Utils.Healing
 
                 return _instance;
             }
+        }
+
+        static HealthListener()
+        {
+            _ = nameof(IEffect.BodyPart);
+            _ = nameof(IHealthController.HydrationChangedEvent);
+            _ = nameof(DamageInfo.Weapon);
         }
 
         private HealthListener()
