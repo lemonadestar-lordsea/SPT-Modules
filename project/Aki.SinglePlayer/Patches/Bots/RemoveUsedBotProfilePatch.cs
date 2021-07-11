@@ -35,22 +35,12 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         private static bool IsTargetInterface(Type type)
         {
-            if (!type.IsInterface || type.GetProperty("StartProfilesLoaded") == null || type.GetMethod("CreateProfile") == null)
-            {
-                return false;
-            }
-            
-            return true;
+            return type.IsInterface && type.GetProperty("StartProfilesLoaded") != null && type.GetMethod("CreateProfile") != null;
         }
 
         private bool IsTargetType(Type type)
         {
-            if (!_targetInterface.IsAssignableFrom(type) || !_targetInterface.IsAssignableFrom(type.BaseType))
-            {
-                return false;
-            }
-
-            return true;
+            return _targetInterface.IsAssignableFrom(type) && _targetInterface.IsAssignableFrom(type.BaseType);
         }
 
         private static bool PatchPrefix(ref Profile __result, object __instance, BotData data)
