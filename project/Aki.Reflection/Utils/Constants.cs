@@ -13,6 +13,7 @@ namespace Aki.Reflection.Utils
         public static Type ExfilPointManagerType { get; private set; }
         public static Type BackendInterfaceType { get; private set; }
         public static Type SessionInterfaceType { get; private set; }
+
         private static ISession _backEndSession;
         public static ISession BackEndSession
         {

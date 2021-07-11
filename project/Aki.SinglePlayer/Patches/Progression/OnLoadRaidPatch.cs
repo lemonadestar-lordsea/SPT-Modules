@@ -25,7 +25,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 		{
 			if (preloader == null)
 			{
-				preloader = GameObject.FindObjectOfType<PreloaderUI>();
+				preloader = Object.FindObjectOfType<PreloaderUI>();
 			}
 
 			if (preloader != null)

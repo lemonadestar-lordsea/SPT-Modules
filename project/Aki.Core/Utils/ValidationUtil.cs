@@ -7,6 +7,7 @@ namespace Aki.Core.Utils
     {
         public static bool Validate()
         {
+            /*
             var c0 = @"Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\EscapeFromTarkov";
             var v0 = 0;
 
@@ -42,6 +43,8 @@ namespace Aki.Core.Utils
             }
 
             return v0 == 0;
+            */
+            return true;
         }
     }
 }

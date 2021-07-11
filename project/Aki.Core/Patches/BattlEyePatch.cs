@@ -17,9 +17,9 @@ namespace Aki.Core.Patches
         {
             var methodName = "RunValidation";
             var flags = BindingFlags.Public | BindingFlags.Instance;
-            var type = Constants.EftTypes.Single(x => x.GetMethod(methodName, flags) != null);
 
-            return type.GetMethod(methodName, flags);
+            return Constants.EftTypes.Single(x => x.GetMethod(methodName, flags) != null)
+                .GetMethod(methodName, flags);
         }
 
         private static bool PatchPrefix(ref Task __result, ref bool ___bool_0)

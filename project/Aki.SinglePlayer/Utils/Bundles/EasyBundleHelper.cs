@@ -11,8 +11,8 @@ namespace Aki.SinglePlayer.Utils.Bundles
     public class EasyBundleHelper
     {
         private object _instance;
-        private FieldInfo _pathField;
-        private FieldInfo _keyWithoutExtensionField;
+        private PropertyInfo _pathField;
+        private PropertyInfo _keyWithoutExtensionField;
         private PropertyInfo _bundleLockProperty;
         private PropertyInfo _loadingJobProperty;
         private PropertyInfo _dependencyKeysProperty;
@@ -188,8 +188,8 @@ namespace Aki.SinglePlayer.Utils.Bundles
             }
 
             _instance = easyBundle;
-            _pathField = type.GetField("string_1");
-            _keyWithoutExtensionField = type.GetField("string_0");
+            _pathField = type.GetProperty("string_1");
+            _keyWithoutExtensionField = type.GetProperty("string_0");
             _bundleLockProperty = type.GetProperty($"{nameof(GInterface264).ToLower()}_0");
             _loadingJobProperty = type.GetProperty("task_0");
             _dependencyKeysProperty = type.GetProperty("DependencyKeys");

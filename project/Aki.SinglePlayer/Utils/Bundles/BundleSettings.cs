@@ -28,9 +28,7 @@ namespace Aki.SinglePlayer.Utils.Bundles
 
             foreach (var jObj in jArray)
             {
-                var bundle = (BundleInfo)null;
-
-                if (!Bundles.TryGetValue(jObj["key"].ToString(), out bundle))
+                if (!Bundles.TryGetValue(jObj["key"].ToString(), out BundleInfo bundle))
                 {
                     bundle = new BundleInfo(jObj["key"].ToString(),
                                             jObj["path"].ToString(),

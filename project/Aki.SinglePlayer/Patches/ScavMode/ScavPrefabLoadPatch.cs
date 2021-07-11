@@ -30,7 +30,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var codes = new List<CodeInstruction>(instructions);
 
             // Search for code where backend.Session.getProfile() is called.
-            var searchCode = new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(Constants.SessionInterfaceType, "get_Profile"));
+            var searchCode = new CodeInstruction(OpCodes.Callvirt, Constants.SessionInterfaceType.GetMethod("get_Profile"));
             var searchIndex = -1;
 
             for (var i = 0; i < codes.Count; i++)

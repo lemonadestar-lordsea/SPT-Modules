@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
@@ -24,10 +23,15 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 .Single(IsTargetMethod);
         }
 
+        private static bool IsTargetMethod(MethodInfo methodInfo)
+        {
+            return methodInfo.GetParameters().Length == 3 && methodInfo.ReturnType == typeof(void);
+        }
+
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
-            var searchCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(Constants.ExfilPointManagerType, "RemoveProfileIdFromPoints", new System.Type[] { typeof(string) }));
+            var searchCode = new CodeInstruction(OpCodes.Call, Constants.ExfilPointManagerType.GetMethod("RemoveProfileIdFromPoints"));
             var searchIndex = -1;
 
             for (var i = 0; i < codes.Count; i++)
@@ -58,11 +62,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             codes.InsertRange(searchIndex, newCodes);
 
             return codes.AsEnumerable();
-        }
-
-        private static bool IsTargetMethod(MethodInfo methodInfo)
-        {
-            return methodInfo.GetParameters().Length == 3 && methodInfo.ReturnType == typeof(void);
         }
     }
 }

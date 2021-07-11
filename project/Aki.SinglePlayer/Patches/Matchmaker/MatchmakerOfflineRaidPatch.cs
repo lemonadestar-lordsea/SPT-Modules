@@ -17,16 +17,16 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MatchmakerOfflineRaid).GetMethod("Show", BindingFlags.NonPublic | BindingFlags.Instance);
+            return typeof(MatchmakerOfflineRaid).GetMethod(nameof(MatchmakerOfflineRaid.Show));
         }
 
         private static void PatchPostfix(UpdatableToggle ____offlineModeToggle,
-                                        UpdatableToggle ____botsEnabledToggle,
-                                        TMPDropDownBox ____aiAmountDropdown,
-                                        TMPDropDownBox ____aiDifficultyDropdown,
-                                        UpdatableToggle ____enableBosses,
-                                        UpdatableToggle ____scavWars,
-                                        UpdatableToggle ____taggedAndCursed)
+            UpdatableToggle ____botsEnabledToggle,
+            TMPDropDownBox ____aiAmountDropdown,
+            TMPDropDownBox ____aiDifficultyDropdown,
+            UpdatableToggle ____enableBosses,
+            UpdatableToggle ____scavWars,
+            UpdatableToggle ____taggedAndCursed)
         {
             // disable "no progression save" panel
             var warningPanel = GameObject.Find("Warning Panel");

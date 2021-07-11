@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using HarmonyLib;
 using EFT;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
@@ -14,7 +13,7 @@ namespace Aki.SinglePlayer.Patches.Bots
     {
         private static Type _targetInterface;
         private static Type _targetType;
-        private static AccessTools.FieldRef<object, List<Profile>> _profilesField;
+        private static FieldInfo _profilesField;
 
         static RemoveUsedBotProfilePatch()
         {
@@ -25,7 +24,7 @@ namespace Aki.SinglePlayer.Patches.Bots
         {
             _targetInterface = Constants.EftTypes.Single(IsTargetInterface);
             _targetType = Constants.EftTypes.Single(IsTargetType);
-            _profilesField = AccessTools.FieldRefAccess<List<Profile>>(_targetType, "list_0");
+            _profilesField = _targetType.GetField("list_0");
         }
 
         protected override MethodBase GetTargetMethod()
@@ -45,7 +44,7 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         private static bool PatchPrefix(ref Profile __result, object __instance, BotData data)
         {
-            var profiles = _profilesField(__instance);
+            var profiles = (List<Profile>)_profilesField.GetValue(__instance);
 
             if (profiles.Count > 0)
             {

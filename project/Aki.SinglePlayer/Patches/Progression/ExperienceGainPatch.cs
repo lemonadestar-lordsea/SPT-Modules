@@ -13,7 +13,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         protected override MethodBase GetTargetMethod()
         {
-           return typeof(SessionResultExperienceCount)
+            return typeof(SessionResultExperienceCount)
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
                 .FirstOrDefault(IsTargetMethod);
         }

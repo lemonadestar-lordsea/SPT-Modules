@@ -35,25 +35,28 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
         protected override MethodBase GetTargetMethod()
         {
-            _easyBundleType = Constants.EftTypes.Single(type => type.IsClass && type.GetProperty("SameNameAsset") != null);
-            _manifestField = typeof(EasyAssets).GetField(nameof(EasyAssets.Manifest));
-            _bundlesField = typeof(EasyAssets).GetField($"{_easyBundleType.Name.ToLower()}_0");
-            _systemProperty = typeof(EasyAssets).GetProperty("System");
+            var type = typeof(EasyAssets);
 
-            return typeof(EasyAssets).GetMethods().Single(IsTargetMethod);
+            _easyBundleType = Constants.EftTypes.Single(x => x.IsClass && x.GetProperty("SameNameAsset") != null);
+            _manifestField = type.GetField(nameof(EasyAssets.Manifest));
+            _bundlesField = type.GetField($"{_easyBundleType.Name.ToLower()}_0");
+            _systemProperty = type.GetProperty("System");
+
+            return typeof(EasyAssets).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                .Single(IsTargetMethod);
         }
 
         private static bool IsTargetMethod(MethodInfo mi)
         {
             var parameters = mi.GetParameters();
-            return (parameters.Length == 5
-                && parameters[0].Name == "bundleLock" 
-                && parameters[1].Name == "defaultKey"
-                && parameters[4].Name == "shouldExclude");
+            return (parameters.Length != 5
+                || parameters[0].Name != "bundleLock"
+                || parameters[1].Name != "defaultKey"
+                || parameters[4].Name != "shouldExclude") ? false : true;
         }
 
         private static bool PatchPrefix(EasyAssets __instance, [CanBeNull] IBundleLock bundleLock, string defaultKey, string rootPath,
-                                        string platformName, [CanBeNull] Func<string, bool> shouldExclude, ref Task __result)
+            string platformName, [CanBeNull] Func<string, bool> shouldExclude, ref Task __result)
         {
             __result = Init(__instance, bundleLock, defaultKey, rootPath, platformName, shouldExclude);
             return false;

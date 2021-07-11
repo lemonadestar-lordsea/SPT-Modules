@@ -1,5 +1,4 @@
 ﻿using Aki.Common;
-using System;
 
 namespace Aki.Loader
 {

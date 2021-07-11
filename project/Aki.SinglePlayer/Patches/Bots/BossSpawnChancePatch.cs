@@ -23,7 +23,9 @@ namespace Aki.SinglePlayer.Patches.Bots
         private static bool IsTargetMethod(MethodInfo mi)
         {
             var parameters = mi.GetParameters();
-            return (parameters.Length != 2 || parameters[0].Name != "wavesSettings" || parameters[1].Name != "bossLocationSpawn") ? false : true;
+            return (parameters.Length == 2
+                && parameters[0].Name == "wavesSettings"
+                && parameters[1].Name == "bossLocationSpawn");
         }
 
         private static void PrefixPatch(BossLocationSpawn[] bossLocationSpawn)
