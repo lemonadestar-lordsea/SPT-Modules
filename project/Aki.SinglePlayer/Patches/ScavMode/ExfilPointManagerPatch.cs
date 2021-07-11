@@ -31,7 +31,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
-            var searchCode = new CodeInstruction(OpCodes.Call, Constants.ExfilPointManagerType.GetMethod("RemoveProfileIdFromPoints"));
+            var searchCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(Constants.ExfilPointManagerType, "RemoveProfileIdFromPoints"));
             var searchIndex = -1;
 
             for (var i = 0; i < codes.Count; i++)
@@ -60,7 +60,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
             codes.RemoveRange(searchIndex, 23);
             codes.InsertRange(searchIndex, newCodes);
-
             return codes.AsEnumerable();
         }
     }

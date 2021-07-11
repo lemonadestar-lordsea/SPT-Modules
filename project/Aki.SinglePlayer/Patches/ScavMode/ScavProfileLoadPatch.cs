@@ -27,13 +27,13 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         private static bool IsTargetMethod(MethodInfo methodInfo)
         {
             var parameters = methodInfo.GetParameters();
-            return parameters.Length == 4
+            return (parameters.Length == 4
                 && parameters[0].Name == "location"
                 && parameters[1].Name == "timeAndWeather"
                 && parameters[2].Name == "entryPoint"
                 && parameters[3].Name == "timeHasComeScreenController"
-                && parameters[2].ParameterType != typeof(string)
-                && methodInfo.ReturnType != typeof(void))
+                && parameters[2].ParameterType == typeof(string)
+                && methodInfo.ReturnType == typeof(void));
         }
 
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
@@ -41,7 +41,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var codes = new List<CodeInstruction>(instructions);
 
             // Search for code where backend.Session.getProfile() is called.
-            var searchCode = new CodeInstruction(OpCodes.Callvirt, Constants.SessionInterfaceType.GetMethod("get_Profile"));
+            var searchCode = new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(Constants.SessionInterfaceType, "get_Profile"));
             var searchIndex = -1;
 
             for (var i = 0; i < codes.Count; i++)
@@ -85,7 +85,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
             codes.RemoveRange(searchIndex + 1, 5);
             codes.InsertRange(searchIndex + 1, newCodes);
-
             return codes.AsEnumerable();
         }
 

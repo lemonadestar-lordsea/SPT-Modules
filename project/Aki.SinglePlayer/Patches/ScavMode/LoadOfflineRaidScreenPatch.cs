@@ -22,10 +22,10 @@ namespace Aki.SinglePlayer.Patches.ScavMode
     {
         private static MethodInfo _onReadyScreenMethod;
         private static FieldInfo _menuControllerField;
-        private static FieldInfo _isLocalField;
         private static FieldInfo _weatherSettingsField;
         private static FieldInfo _botsSettingsField;
         private static FieldInfo _waveSettingsField;
+        private static FieldInfo _isLocalField;
 
         static LoadOfflineRaidScreenPatch()
         {
@@ -38,15 +38,15 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler))
         {
             var flags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
-            var mainApplicationFields = typeof(MainApplication).GetFields(flags);
-            var menuControllerFields = typeof(MenuController).GetFields(flags);
+            var mainApplicationType = typeof(MainApplication);
+            var menuControllerType = typeof(MenuController);
 
-            _onReadyScreenMethod = typeof(MenuController).GetMethod("method_40", flags);
-            _menuControllerField = mainApplicationFields.FirstOrDefault(x => x.Name == $"{nameof(GClass1253).ToLower()}_0");
-            _isLocalField = menuControllerFields.FirstOrDefault(x => x.Name == "bool_0");
-            _weatherSettingsField = menuControllerFields.FirstOrDefault(x => x.Name == $"{nameof(GStruct93).ToLower()}_0");
-            _botsSettingsField = menuControllerFields.FirstOrDefault(x => x.Name == $"{nameof(GStruct94).ToLower()}_0");
-            _waveSettingsField = menuControllerFields.FirstOrDefault(x => x.Name == $"{nameof(GStruct234).ToLower()}_0");
+            _onReadyScreenMethod = mainApplicationType.GetMethod("method_41", flags);
+            _menuControllerField = mainApplicationType.GetField($"{nameof(GClass1253).ToLower()}_0", flags);
+            _weatherSettingsField = menuControllerType.GetField($"{nameof(GStruct93).ToLower()}_0", flags);
+            _botsSettingsField = menuControllerType.GetField($"{nameof(GStruct94).ToLower()}_0", flags);
+            _waveSettingsField = menuControllerType.GetField($"{nameof(GStruct234).ToLower()}_0", flags);
+            _isLocalField = menuControllerType.GetField("bool_0", flags);
         }
 
         protected override MethodBase GetTargetMethod()
@@ -65,7 +65,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             codes[index].opcode = OpCodes.Nop;
             codes[index + 1] = callCode;
             codes.RemoveAt(index + 2);
-
             return codes.AsEnumerable();
         }
 
@@ -84,10 +83,10 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             }
 
             // set offline raid values
-            _isLocalField.SetValue(menuController, local);
             _weatherSettingsField.SetValue(menuController, weatherSettings);
             _botsSettingsField.SetValue(menuController, wavesSettings);
             _waveSettingsField.SetValue(menuController, botsSettings);
+            _isLocalField.SetValue(menuController, local);
 
             // load ready screen method
             _onReadyScreenMethod.Invoke(menuController, null);
