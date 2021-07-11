@@ -25,7 +25,7 @@ namespace Aki.Reflection.Patching
 
             if (_prefix == null && _postfix == null && _transpiler == null && _finalizer == null && _ilmanipulator == null)
             {
-                throw new Exception("At least one of the patch methods must be specified");
+                throw new Exception($"{_harmony.Id}: At least one of the patch methods must be specified");
             }
         }
 
@@ -59,7 +59,7 @@ namespace Aki.Reflection.Patching
 
             if (targetMethod == null)
             {
-                throw new InvalidOperationException("TargetMethod is null");
+                throw new InvalidOperationException($"{_harmony.Id}: TargetMethod is null");
             }
 
             try
@@ -69,7 +69,7 @@ namespace Aki.Reflection.Patching
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error in applying patch {_harmony.Id}", ex);
+                throw new Exception($"{_harmony.Id}:", ex);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Aki.Reflection.Patching
 
             if (targetMethod == null)
             {
-                throw new InvalidOperationException("TargetMethod is null");
+                throw new InvalidOperationException($"{_harmony.Id}: TargetMethod is null");
             }
 
             try
@@ -92,7 +92,7 @@ namespace Aki.Reflection.Patching
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error in removing patch {_harmony.Id}", ex);
+                throw new Exception($"{_harmony.Id}:", ex);
             }
         }
     }
