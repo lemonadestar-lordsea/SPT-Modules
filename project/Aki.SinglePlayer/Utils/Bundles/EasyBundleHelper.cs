@@ -1,10 +1,8 @@
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using HarmonyLib;
-using Aki.Common;
+using UnityEngine;
 using IBundleLock = GInterface264;
 using BindableState = GClass2251<Diz.DependencyManager.ELoadState>;
 
@@ -12,19 +10,19 @@ namespace Aki.SinglePlayer.Utils.Bundles
 {
     public class EasyBundleHelper
     {
-        private const string _pathFieldName = "string_1";
-        private const string _keyWithoutExtensionFieldName = "string_0";
-        private const string _loadingJobPropertyName = "task_0";
-        private const string _dependencyKeysPropertyName = "DependencyKeys";
-        private const string _keyPropertyName = "Key";
-        private const string _loadStatePropertyName = "LoadState";
-        private const string _progressPropertyName = "Progress";
-        private const string _bundlePropertyName = "assetBundle_0";
-        private const string _loadingAssetOperationFieldName = "assetBundleRequest_0";
-        private const string _assetsPropertyName = "Assets";
-        private const string _sameNameAssetPropertyName = "SameNameAsset";
         private object _instance;
-        private Traverse _trav;
+        private FieldInfo _pathField;
+        private FieldInfo _keyWithoutExtensionField;
+        private PropertyInfo _bundleLockProperty;
+        private PropertyInfo _loadingJobProperty;
+        private PropertyInfo _dependencyKeysProperty;
+        private PropertyInfo _keyProperty;
+        private PropertyInfo _loadStateProperty;
+        private PropertyInfo _progressProperty;
+        private PropertyInfo _bundleProperty;
+        private PropertyInfo _loadingAssetOperationField;
+        private PropertyInfo _assetsProperty;
+        private PropertyInfo _sameNameAssetProperty;
         private static MethodInfo _loadingCoroutineMethod;
 
         static EasyBundleHelper()
@@ -37,12 +35,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return _trav.Property<IEnumerable<string>>(_dependencyKeysPropertyName).Value;
+                return (IEnumerable<string>)_dependencyKeysProperty.GetValue(_instance);
             }
-
             set
             {
-                _trav.Property<IEnumerable<string>>(_dependencyKeysPropertyName).Value = value;
+                _dependencyKeysProperty.SetValue(_instance, value);
             }
         }
 
@@ -50,12 +47,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return _trav.Field<IBundleLock>($"{nameof(GInterface264).ToLower()}_0").Value;
+                return (IBundleLock)_bundleLockProperty.GetValue(_instance);
             }
-
             set
             {
-                _trav.Field<IBundleLock>($"{nameof(GInterface264).ToLower()}_0").Value = value;
+                _bundleLockProperty.SetValue(_instance, value);
             }
         }
 
@@ -63,12 +59,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return _trav.Field<Task>(_loadingJobPropertyName).Value;
+                return (Task)_loadingJobProperty.GetValue(_instance);
             }
-
             set
             {
-                _trav.Field<Task>(_loadingJobPropertyName).Value = value;
+                _loadingJobProperty.SetValue(_instance, value);
             }
         }
 
@@ -76,12 +71,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return _trav.Field<string>(_pathFieldName).Value;
+                return (string)_pathField.GetValue(_instance);
             }
-
             set
             {
-                _trav.Field<string>(_pathFieldName).Value = value;
+                _pathField.SetValue(_instance, value);
             }
         }
 
@@ -89,12 +83,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return _trav.Property<string>(_keyPropertyName).Value;
+                return (string)_keyProperty.GetValue(_instance);
             }
-
             set
             {
-                _trav.Property<string>(_keyPropertyName).Value = value;
+                _keyProperty.SetValue(_instance, value);
             }
         }
 
@@ -102,12 +95,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return _trav.Property<BindableState>(_loadStatePropertyName).Value;
+                return (BindableState)_loadStateProperty.GetValue(_instance);
             }
-
             set
             {
-                _trav.Property<BindableState>(_loadStatePropertyName).Value = value;
+                _loadStateProperty.SetValue(_instance, value);
             }
         }
 
@@ -115,12 +107,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return _trav.Property<float>(_progressPropertyName).Value;
+                return (float)_progressProperty.GetValue(_instance);
             }
-
             set
             {
-                _trav.Property<float>(_progressPropertyName).Value = value;
+                _progressProperty.SetValue(_instance, value);
             }
         }
 
@@ -129,12 +120,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return _trav.Field<AssetBundle>(_bundlePropertyName).Value;
+                return (AssetBundle)_bundleProperty.GetValue(_instance);
             }
-
             set
             {
-                _trav.Field<AssetBundle>(_bundlePropertyName).Value = value;
+                _bundleProperty.SetValue(_instance, value);
             }
         }
 
@@ -142,12 +132,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return _trav.Field<AssetBundleRequest>(_loadingAssetOperationFieldName).Value;
+                return (AssetBundleRequest)_loadingAssetOperationField.GetValue(_instance);
             }
-
             set
             {
-                _trav.Field<AssetBundleRequest>(_loadingAssetOperationFieldName).Value = value;
+                _loadingAssetOperationField.SetValue(_instance, value);
             }
         }
 
@@ -156,12 +145,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return _trav.Property<UnityEngine.Object[]>(_assetsPropertyName).Value;
+                return (UnityEngine.Object[])_assetsProperty.GetValue(_instance);
             }
-
             set
             {
-                _trav.Property<UnityEngine.Object[]>(_assetsPropertyName).Value = value;
+                _assetsProperty.SetValue(_instance, value);
             }
         }
 
@@ -169,12 +157,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return _trav.Property<UnityEngine.Object>(_sameNameAssetPropertyName).Value;
+                return (UnityEngine.Object)_sameNameAssetProperty.GetValue(_instance);
             }
-
             set
             {
-                _trav.Property<UnityEngine.Object>(_sameNameAssetPropertyName).Value = value;
+                _sameNameAssetProperty.SetValue(_instance, value);
             }
         }
 
@@ -182,26 +169,38 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return _trav.Field<string>(_keyWithoutExtensionFieldName).Value;
+                return (string)_keyWithoutExtensionField.GetValue(_instance);
             }
-
             set
             {
-                _trav.Field<string>(_keyWithoutExtensionFieldName).Value = value;
+                _keyWithoutExtensionField.SetValue(_instance, value);
             }
         }
 
         public EasyBundleHelper(object easyBundle)
         {
-            _instance = easyBundle;
-            _trav = Traverse.Create(easyBundle);
+            var type = easyBundle.GetType();
 
             if (_loadingCoroutineMethod == null)
             {
-                _loadingCoroutineMethod = easyBundle.GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic)
-                                                    .Single(x => x.GetParameters().Length == 0 && x.ReturnType == typeof(Task));
+                _loadingCoroutineMethod = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Single(x => x.GetParameters().Length == 0 && x.ReturnType == typeof(Task));
             }
-        }
+
+            _instance = easyBundle;
+            _pathField = type.GetField("string_1");
+            _keyWithoutExtensionField = type.GetField("string_0");
+            _bundleLockProperty = type.GetProperty($"{nameof(GInterface264).ToLower()}_0");
+            _loadingJobProperty = type.GetProperty("task_0");
+            _dependencyKeysProperty = type.GetProperty("DependencyKeys");
+            _keyProperty = type.GetProperty("Key");
+            _loadStateProperty = type.GetProperty("LoadState");
+            _progressProperty = type.GetProperty("Progress");
+            _bundleProperty = type.GetProperty("assetBundle_0");
+            _loadingAssetOperationField = type.GetProperty("assetBundleRequest_0");
+            _assetsProperty = type.GetProperty("Assets");
+            _sameNameAssetProperty = type.GetProperty("SameNameAsset");
+    }
 
         public Task LoadingCoroutine()
         {
