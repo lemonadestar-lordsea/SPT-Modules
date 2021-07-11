@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
+using Aki.Reflection.Utils;
 using IBundleLock = GInterface264;
 using BindableState = GClass2251<Diz.DependencyManager.ELoadState>;
 
@@ -11,8 +13,8 @@ namespace Aki.SinglePlayer.Utils.Bundles
     public class EasyBundleHelper
     {
         private object _instance;
-        private PropertyInfo _pathField;
-        private PropertyInfo _keyWithoutExtensionField;
+        private FieldInfo _pathField;
+        private FieldInfo _keyWithoutExtensionField;
         private PropertyInfo _bundleLockProperty;
         private PropertyInfo _loadingJobProperty;
         private PropertyInfo _dependencyKeysProperty;
@@ -24,6 +26,7 @@ namespace Aki.SinglePlayer.Utils.Bundles
         private PropertyInfo _assetsProperty;
         private PropertyInfo _sameNameAssetProperty;
         private static MethodInfo _loadingCoroutineMethod;
+        public static Type Type;
 
         static EasyBundleHelper()
         {
@@ -141,7 +144,7 @@ namespace Aki.SinglePlayer.Utils.Bundles
         }
 
 
-        public Object[] Assets
+        public UnityEngine.Object[] Assets
         {
             get
             {
@@ -179,27 +182,30 @@ namespace Aki.SinglePlayer.Utils.Bundles
 
         public EasyBundleHelper(object easyBundle)
         {
-            var type = easyBundle.GetType();
+            if (Type == null)
+            {
+                Type = Constants.EftTypes.Single(x => x.IsClass && x.GetProperty("SameNameAsset") != null);
+            }
 
             if (_loadingCoroutineMethod == null)
             {
-                _loadingCoroutineMethod = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic)
+                _loadingCoroutineMethod = Type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic)
                     .Single(x => x.GetParameters().Length == 0 && x.ReturnType == typeof(Task));
             }
 
             _instance = easyBundle;
-            _pathField = type.GetProperty("string_1");
-            _keyWithoutExtensionField = type.GetProperty("string_0");
-            _bundleLockProperty = type.GetProperty($"{nameof(GInterface264).ToLower()}_0");
-            _loadingJobProperty = type.GetProperty("task_0");
-            _dependencyKeysProperty = type.GetProperty("DependencyKeys");
-            _keyProperty = type.GetProperty("Key");
-            _loadStateProperty = type.GetProperty("LoadState");
-            _progressProperty = type.GetProperty("Progress");
-            _bundleProperty = type.GetProperty("assetBundle_0");
-            _loadingAssetOperationField = type.GetProperty("assetBundleRequest_0");
-            _assetsProperty = type.GetProperty("Assets");
-            _sameNameAssetProperty = type.GetProperty("SameNameAsset");
+            _pathField = Type.GetField("string_1");
+            _keyWithoutExtensionField = Type.GetField("string_0");
+            _bundleLockProperty = Type.GetProperty($"{(nameof(GInterface264).ToLower())}_0");
+            _loadingJobProperty = Type.GetProperty("task_0");
+            _dependencyKeysProperty = Type.GetProperty("DependencyKeys");
+            _keyProperty = Type.GetProperty("Key");
+            _loadStateProperty = Type.GetProperty("LoadState");
+            _progressProperty = Type.GetProperty("Progress");
+            _bundleProperty = Type.GetProperty("assetBundle_0");
+            _loadingAssetOperationField = Type.GetProperty("assetBundleRequest_0");
+            _assetsProperty = Type.GetProperty("Assets");
+            _sameNameAssetProperty = Type.GetProperty("SameNameAsset");
     }
 
         public Task LoadingCoroutine()

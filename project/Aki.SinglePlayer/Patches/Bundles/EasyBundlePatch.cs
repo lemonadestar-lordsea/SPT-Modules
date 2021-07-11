@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,7 +5,6 @@ using System.Reflection;
 using Diz.DependencyManager;
 using UnityEngine;
 using Aki.Reflection.Patching;
-using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils.Bundles;
 using IEasyBundle = GInterface263;
@@ -30,15 +28,10 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
         protected override MethodBase GetTargetMethod()
 		{
-            return Constants.EftTypes.Single(IsTargetType).GetConstructors()[0];
+            return EasyBundleHelper.Type.GetConstructors()[0];
         }
 
-        private static bool IsTargetType(Type type)
-        {
-            return type.IsClass && type.GetProperty("SameNameAsset") != null;
-        }
-
-        private static bool PatchPrefix(IEasyBundle __instance, string key, string rootPath, AssetBundleManifest manifest, IBundleLock bundleLock)
+        private static bool PatchPrefix(object __instance, string key, string rootPath, AssetBundleManifest manifest, IBundleLock bundleLock)
 		{
             var path = rootPath + key;
             var dependencyKeys = manifest.GetDirectDependencies(key);

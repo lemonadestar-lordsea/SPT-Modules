@@ -24,6 +24,18 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 .FirstOrDefault(IsTargetMethod);
         }
 
+        private static bool IsTargetMethod(MethodInfo methodInfo)
+        {
+            var parameters = methodInfo.GetParameters();
+            return parameters.Length == 4
+                && parameters[0].Name == "location"
+                && parameters[1].Name == "timeAndWeather"
+                && parameters[2].Name == "entryPoint"
+                && parameters[3].Name == "timeHasComeScreenController"
+                && parameters[2].ParameterType != typeof(string)
+                && methodInfo.ReturnType != typeof(void))
+        }
+
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
@@ -77,29 +89,10 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             return codes.AsEnumerable();
         }
 
-        private static bool IsTargetMethod(MethodInfo methodInfo)
-        {
-            var parameters = methodInfo.GetParameters();
-
-            if (parameters.Length != 4
-            || parameters[0].Name != "location"
-            || parameters[1].Name != "timeAndWeather"
-            || parameters[2].Name != "entryPoint"
-            || parameters[3].Name != "timeHasComeScreenController"
-            || parameters[2].ParameterType != typeof(string)
-            || methodInfo.ReturnType != typeof(void))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         private static bool IsTargetNestedType(System.Type nestedType)
         {
             return nestedType.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
                 .Count(x => x.GetParameters().Length == 1 && x.GetParameters()[0].ParameterType == typeof(IResult)) > 0 && nestedType.GetField("savageProfile") != null;
         }
-
     }
 }

@@ -33,6 +33,14 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                     .Single(IsTargetMethod);
         }
 
+        private static bool IsTargetMethod(MethodInfo methodInfo)
+        {
+            return methodInfo.IsVirtual
+                && methodInfo.GetParameters().Length == 0
+                && methodInfo.ReturnType == typeof(void)
+                && methodInfo.GetMethodBody().LocalVariables.Count > 0;
+        }
+
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
@@ -105,14 +113,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             codes.InsertRange(searchIndex, newCodes);
 
             return codes.AsEnumerable();
-        }
-
-        private static bool IsTargetMethod(MethodInfo methodInfo)
-        {
-            return methodInfo.IsVirtual
-                && methodInfo.GetParameters().Length == 0
-                && methodInfo.ReturnType == typeof(void)
-                && methodInfo.GetMethodBody().LocalVariables.Count > 0;
         }
     }
 }

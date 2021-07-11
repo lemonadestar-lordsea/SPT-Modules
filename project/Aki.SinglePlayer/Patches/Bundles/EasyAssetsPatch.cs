@@ -37,7 +37,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
         {
             var type = typeof(EasyAssets);
 
-            _easyBundleType = Constants.EftTypes.Single(x => x.IsClass && x.GetProperty("SameNameAsset") != null);
+            _easyBundleType = EasyBundleHelper.Type;
             _manifestField = type.GetField(nameof(EasyAssets.Manifest));
             _bundlesField = type.GetField($"{_easyBundleType.Name.ToLower()}_0");
             _systemProperty = type.GetProperty("System");
