@@ -20,7 +20,6 @@ namespace Aki.SinglePlayer.Patches.Bundles
 {
     public class EasyAssetsPatch : GenericPatch<EasyAssetsPatch>
     {
-        private static Type _easyBundleType;
         private static FieldInfo _manifestField;
         private static FieldInfo _bundlesField;
         private static PropertyInfo _systemProperty;
@@ -35,11 +34,11 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
         protected override MethodBase GetTargetMethod()
         {
+            var flags = BindingFlags.Instance | BindingFlags.NonPublic;
             var type = typeof(EasyAssets);
 
-            _easyBundleType = EasyBundleHelper.Type;
             _manifestField = type.GetField(nameof(EasyAssets.Manifest));
-            _bundlesField = type.GetField($"{_easyBundleType.Name.ToLower()}_0");
+            _bundlesField = type.GetField($"{EasyBundleHelper.Type.Name.ToLower()}_0", flags);
             _systemProperty = type.GetProperty("System");
 
             return typeof(EasyAssets).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
@@ -82,8 +81,8 @@ namespace Aki.SinglePlayer.Patches.Bundles
             }
 
             var manifest = (AssetBundleManifest)assetLoading.allAssets[0];
-            var bundleNames = manifest.GetAllAssetBundles().ToList().Union(resourcesModbundles).ToList().ToArray<string>();
-            var bundles = (IEasyBundle[])Array.CreateInstance(_easyBundleType, bundleNames.Length);
+            var bundleNames = manifest.GetAllAssetBundles().Union(resourcesModbundles).ToArray();
+            var bundles = (IEasyBundle[])Array.CreateInstance(EasyBundleHelper.Type, bundleNames.Length);
 
             if (bundleLock == null)
             {
@@ -92,7 +91,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
             for (var i = 0; i < bundleNames.Length; i++)
             {
-                bundles[i] = (IEasyBundle)Activator.CreateInstance(_easyBundleType, new object[] { bundleNames[i], path, manifest, bundleLock });
+                bundles[i] = (IEasyBundle)Activator.CreateInstance(EasyBundleHelper.Type, new object[] { bundleNames[i], path, manifest, bundleLock });
                 await JobScheduler.Yield();
             }
 

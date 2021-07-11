@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
+using Aki.Common;
 using Aki.Reflection.Utils;
 using IBundleLock = GInterface264;
 using BindableState = GClass2251<Diz.DependencyManager.ELoadState>;
@@ -15,7 +16,7 @@ namespace Aki.SinglePlayer.Utils.Bundles
         private object _instance;
         private FieldInfo _pathField;
         private FieldInfo _keyWithoutExtensionField;
-        private PropertyInfo _bundleLockProperty;
+        private FieldInfo _bundleLockField;
         private FieldInfo _loadingJobField;
         private PropertyInfo _dependencyKeysProperty;
         private PropertyInfo _keyProperty;
@@ -52,11 +53,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             get
             {
-                return (IBundleLock)_bundleLockProperty.GetValue(_instance);
+                return (IBundleLock)_bundleLockField.GetValue(_instance);
             }
             set
             {
-                _bundleLockProperty.SetValue(_instance, value);
+                _bundleLockField.SetValue(_instance, value);
             }
         }
 
@@ -184,6 +185,8 @@ namespace Aki.SinglePlayer.Utils.Bundles
 
         public EasyBundleHelper(object easyBundle)
         {
+            var flags = BindingFlags.Instance | BindingFlags.NonPublic;
+
             if (_loadingCoroutineMethod == null)
             {
                 _loadingCoroutineMethod = Type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic)
@@ -191,15 +194,15 @@ namespace Aki.SinglePlayer.Utils.Bundles
             }
 
             _instance = easyBundle;
-            _pathField = Type.GetField("string_1");
-            _keyWithoutExtensionField = Type.GetField("string_0");
-            _bundleLockProperty = Type.GetProperty($"{nameof(GInterface264).ToLower()}_0");
-            _loadingJobField = Type.GetField("task_0");
+            _pathField = Type.GetField("string_1", flags);
+            _keyWithoutExtensionField = Type.GetField("string_0", flags);
+            _bundleLockField = Type.GetField($"{nameof(GInterface264).ToLower()}_0", flags);
+            _loadingJobField = Type.GetField("task_0", flags);
             _dependencyKeysProperty = Type.GetProperty("DependencyKeys");
             _keyProperty = Type.GetProperty("Key");
             _loadStateProperty = Type.GetProperty("LoadState");
             _progressProperty = Type.GetProperty("Progress");
-            _bundleField = Type.GetField("assetBundle_0");
+            _bundleField = Type.GetField("assetBundle_0", flags);
             _loadingAssetOperationField = Type.GetField("assetBundleRequest_0");
             _assetsProperty = Type.GetProperty("Assets");
             _sameNameAssetProperty = Type.GetProperty("SameNameAsset");
