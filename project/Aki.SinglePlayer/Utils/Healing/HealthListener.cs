@@ -71,6 +71,13 @@ namespace Aki.SinglePlayer.Utils.Healing
             }
         }
 
+        static HealthListener()
+        {
+            _ = nameof(IEffect.BodyPart);
+            _ = nameof(IHealthController.HydrationChangedEvent);
+            _ = nameof(DamageInfo.Weapon);
+        }
+
         private HealthListener()
         {
             if (CurrentHealth == null)
