@@ -61,7 +61,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(BuildingInsideVisualStudio)' == 'true'">
     <PostBuildEvent>if "$(ConfigurationName)" == "Release" (powershell.exe -ExecutionPolicy Unrestricted -File $(SolutionDir)\Aki.Build\build.ps1 -VSBuilt) else (echo NOTICE: Build with Release configuration to run build script)</PostBuildEvent>
   </PropertyGroup>
 </Project>
