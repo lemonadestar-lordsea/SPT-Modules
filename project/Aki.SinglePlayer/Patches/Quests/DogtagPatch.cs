@@ -2,15 +2,17 @@ using System;
 using System.Reflection;
 using EFT;
 using EFT.InventoryLogic;
+using Aki.Common;
 using Aki.Reflection.Patching;
 using Equipment = GClass1757;
 using DamageInfo = GStruct241;
 
 namespace Aki.SinglePlayer.Patches.Quests
 {
-    class DogtagPatch : GenericPatch<DogtagPatch>
+    public class DogtagPatch : GenericPatch<DogtagPatch>
     {
-        private static Func<Player, Equipment> _getEquipmentProperty;
+        private static BindingFlags _flags;
+        private static PropertyInfo _getEquipmentProperty;
 
         static DogtagPatch()
         {
@@ -20,14 +22,13 @@ namespace Aki.SinglePlayer.Patches.Quests
 
         public DogtagPatch() : base(postfix: nameof(PatchPostfix))
         {
-            _getEquipmentProperty = typeof(Player)
-                .GetProperty("Equipment", BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetGetMethod(true).CreateDelegate(typeof(Func<Player, Equipment>)) as Func<Player, Equipment>;
+            _flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            _getEquipmentProperty = typeof(Player).GetProperty("Equipment", _flags);
         }
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(Player).GetMethod("OnBeenKilledByAggressor", BindingFlags.NonPublic | BindingFlags.Instance);
+            return typeof(Player).GetMethod("OnBeenKilledByAggressor", _flags);
         }
 
         private static void PatchPostfix(Player __instance, Player aggressor, DamageInfo damageInfo)
@@ -37,10 +38,24 @@ namespace Aki.SinglePlayer.Patches.Quests
                 return;
             }
 
-            var equipment = _getEquipmentProperty(__instance);
+            var equipment = (Equipment)_getEquipmentProperty.GetValue(__instance);
             var dogtagSlot = equipment.GetSlot(EquipmentSlot.Dogtag);
             var dogtagItem = dogtagSlot.ContainedItem;
+            
+            if (dogtagItem == null)
+            {
+                Log.Error("DogtagPatch error > DogTag slot item is null somehow.");
+                return;
+            }
+
             var itemComponent = dogtagItem.GetItemComponent<DogtagComponent>();
+
+            if (itemComponent == null)
+            {
+                Log.Error("DogtagPatch error > DogTagComponent on dog tag slot is null. Something went horrifically wrong!");
+                return;
+            }
+
             var victimProfileInfo = __instance.Profile.Info;
 
             itemComponent.AccountId = __instance.Profile.AccountId;

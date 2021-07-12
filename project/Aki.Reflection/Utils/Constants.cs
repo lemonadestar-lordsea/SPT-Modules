@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using Comfort.Common;
 using EFT;
 using ISession = GInterface106;
@@ -8,6 +9,7 @@ namespace Aki.Reflection.Utils
 {
     public static class Constants
     {
+        public static BindingFlags PrivateFlags { get; private set; }
         public static Type[] EftTypes { get; private set; }
         public static Type LocalGameType { get; private set; }
         public static Type ExfilPointManagerType { get; private set; }
@@ -32,6 +34,7 @@ namespace Aki.Reflection.Utils
         {
             _ = nameof(ISession.GetPhpSessionId);
 
+            PrivateFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
             EftTypes = typeof(AbstractGame).Assembly.GetTypes();
             LocalGameType = EftTypes.Single(x => x.Name == "LocalGame");
             ExfilPointManagerType = EftTypes.Single(x => x.GetMethod("InitAllExfiltrationPoints") != null);

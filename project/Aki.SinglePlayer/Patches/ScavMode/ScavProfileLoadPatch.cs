@@ -20,8 +20,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MainApplication).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .FirstOrDefault(IsTargetMethod);
+            return typeof(MainApplication).GetMethods(Constants.PrivateFlags).FirstOrDefault(IsTargetMethod);
         }
 
         private static bool IsTargetMethod(MethodInfo methodInfo)
@@ -90,7 +89,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         private static bool IsTargetNestedType(System.Type nestedType)
         {
-            return nestedType.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+            return nestedType.GetMethods(Constants.PrivateFlags)
                 .Count(x => x.GetParameters().Length == 1 && x.GetParameters()[0].ParameterType == typeof(IResult)) > 0 && nestedType.GetField("savageProfile") != null;
         }
     }

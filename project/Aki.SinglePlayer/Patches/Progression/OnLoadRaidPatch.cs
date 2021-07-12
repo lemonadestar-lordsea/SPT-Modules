@@ -18,7 +18,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         protected override MethodBase GetTargetMethod()
         {
-			return Constants.LocalGameType.BaseType.GetMethod("method_5", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+			return Constants.LocalGameType.BaseType.GetMethod("method_5", Constants.PrivateFlags);
 		}
 
 		private static void PatchPostfix()

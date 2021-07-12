@@ -10,6 +10,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 {
     public class EndByTimerPatch : GenericPatch<EndByTimerPatch>
     {
+        private static Type _localGameBaseType;
         private static PropertyInfo _profileIdProperty;
         private static MethodInfo _stopRaidMethod;
 
@@ -19,20 +20,14 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         public EndByTimerPatch() : base(prefix: nameof(PrefixPatch))
         {
-            var flags = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
-
-            _profileIdProperty = Constants.LocalGameType.BaseType
-                .GetProperty("ProfileId", flags);
-
-            _stopRaidMethod = Constants.LocalGameType.BaseType
-                .GetMethods(flags).SingleOrDefault(IsStopRaidMethod);
+            _localGameBaseType = Constants.LocalGameType.BaseType;
+            _profileIdProperty = _localGameBaseType.GetProperty("ProfileId", Constants.PrivateFlags);
+            _stopRaidMethod = _localGameBaseType.GetMethods(Constants.PrivateFlags).SingleOrDefault(IsStopRaidMethod);
         }
 
         protected override MethodBase GetTargetMethod()
         {
-            return Constants.LocalGameType.BaseType
-                .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .Single(x => x.Name.EndsWith("StopGame"));
+            return _localGameBaseType.GetMethods(Constants.PrivateFlags).Single(x => x.Name.EndsWith("StopGame"));
         }
 
         private static bool IsStopRaidMethod(MethodInfo mi)

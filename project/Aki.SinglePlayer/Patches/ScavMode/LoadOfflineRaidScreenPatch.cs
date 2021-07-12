@@ -37,22 +37,21 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler))
         {
-            var flags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
             var menuControllerType = typeof(MenuController);
 
-            _onReadyScreenMethod = menuControllerType.GetMethod("method_40", flags);
-            _weatherSettingsField = menuControllerType.GetField($"{nameof(GStruct93).ToLower()}_0", flags);
-            _botsSettingsField = menuControllerType.GetField($"{nameof(GStruct94).ToLower()}_0", flags);
-            _waveSettingsField = menuControllerType.GetField($"{nameof(GStruct234).ToLower()}_0", flags);
-            _isLocalField = menuControllerType.GetField("bool_0", flags);
-            _menuControllerField = typeof(MainApplication).GetField($"{nameof(GClass1253).ToLower()}_0", flags);
+            _onReadyScreenMethod = menuControllerType.GetMethod("method_40", Constants.PrivateFlags);
+            _weatherSettingsField = menuControllerType.GetField($"{nameof(GStruct93).ToLower()}_0", Constants.PrivateFlags);
+            _botsSettingsField = menuControllerType.GetField($"{nameof(GStruct94).ToLower()}_0", Constants.PrivateFlags);
+            _waveSettingsField = menuControllerType.GetField($"{nameof(GStruct234).ToLower()}_0", Constants.PrivateFlags);
+            _isLocalField = menuControllerType.GetField("bool_0", Constants.PrivateFlags);
+            _menuControllerField = typeof(MainApplication).GetField($"{nameof(GClass1253).ToLower()}_0", Constants.PrivateFlags);
         }
 
         protected override MethodBase GetTargetMethod()
         {
             return typeof(MenuController).GetNestedTypes(BindingFlags.NonPublic)
                 .Single(x => x.Name == "Class848")
-                .GetMethod("method_2", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                .GetMethod("method_2", Constants.PrivateFlags);
         }
 
         private static IEnumerable<CodeInstruction> PatchTranspiler(IEnumerable<CodeInstruction> instructions)

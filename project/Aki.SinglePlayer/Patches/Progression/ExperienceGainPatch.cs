@@ -1,5 +1,6 @@
 using EFT.UI.SessionEnd;
 using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using System.Linq;
 using System.Reflection;
 
@@ -13,9 +14,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(SessionResultExperienceCount)
-                .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .FirstOrDefault(IsTargetMethod);
+            return typeof(SessionResultExperienceCount).GetMethods(Constants.PrivateFlags).FirstOrDefault(IsTargetMethod);
         }
 
         private static bool IsTargetMethod(MethodInfo mi)

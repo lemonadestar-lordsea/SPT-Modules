@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -14,9 +13,41 @@ using JobPriority = GClass2232;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
+    public struct BundleLoader
+    {
+        Profile Profile;
+        TaskScheduler TaskScheduler { get; }
+
+        public BundleLoader(TaskScheduler taskScheduler)
+        {
+            Profile = null;
+            TaskScheduler = taskScheduler;
+        }
+
+        public Task<Profile> LoadBundles(Task<Profile> task)
+        {
+            Profile = task.Result;
+
+            var loadTask = Singleton<PoolManager>.Instance.LoadBundlesAndCreatePools(
+                PoolManager.PoolsCategory.Raid,
+                PoolManager.AssemblyType.Local,
+                Profile.GetAllPrefabPaths(false).ToArray(),
+                JobPriority.General,
+                null,
+                default);
+
+            return loadTask.ContinueWith(GetProfile, TaskScheduler);
+        }
+
+        private Profile GetProfile(Task task)
+        {
+            return Profile;
+        }
+    }
+
     public class GetNewBotTemplatesPatch : GenericPatch<GetNewBotTemplatesPatch>
     {
-        private static Func<BotsPresets, BotData, Profile> _getNewProfileFunc;
+        private static MethodInfo _getNewProfileMethod;
 
         static GetNewBotTemplatesPatch()
         {
@@ -28,9 +59,8 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         public GetNewBotTemplatesPatch() : base(prefix: nameof(PatchPrefix))
         {
-            _getNewProfileFunc = typeof(BotsPresets)
-                .GetMethod(nameof(BotsPresets.GetNewProfile), BindingFlags.NonPublic | BindingFlags.Instance)
-                .CreateDelegate(typeof(Func<BotsPresets, BotData, Profile>)) as Func<BotsPresets, BotData, Profile>;
+            _getNewProfileMethod = typeof(BotsPresets)
+                .GetMethod(nameof(BotsPresets.GetNewProfile), BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
         protected override MethodBase GetTargetMethod()
@@ -53,7 +83,7 @@ namespace Aki.SinglePlayer.Patches.Bots
 
             var taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             var taskAwaiter = (Task<Profile>)null;
-            var profile = _getNewProfileFunc(__instance, data);
+            var profile = (Profile)_getNewProfileMethod.Invoke(__instance, new object[] { data });
 
             if (profile == null)
             {
@@ -70,7 +100,7 @@ namespace Aki.SinglePlayer.Patches.Bots
             }
 
             // load bundles for bot profile
-            var continuation = new Continuation(taskScheduler);
+            var continuation = new BundleLoader(taskScheduler);
             __result = taskAwaiter.ContinueWith(continuation.LoadBundles, taskScheduler).Unwrap();
             return false;
         }
@@ -78,38 +108,6 @@ namespace Aki.SinglePlayer.Patches.Bots
         private static Profile GetFirstResult(Task<Profile[]> task)
         {
             return task.Result[0];
-        }
-
-        private struct Continuation
-        {
-            Profile Profile;
-            TaskScheduler TaskScheduler { get; }
-
-            public Continuation(TaskScheduler taskScheduler)
-            {
-                Profile = null;
-                TaskScheduler = taskScheduler;
-            }
-
-            public Task<Profile> LoadBundles(Task<Profile> task)
-            {
-                Profile = task.Result;
-
-                var loadTask = Singleton<PoolManager>.Instance.LoadBundlesAndCreatePools(
-                    PoolManager.PoolsCategory.Raid, 
-                    PoolManager.AssemblyType.Local, 
-                    Profile.GetAllPrefabPaths(false).ToArray(), 
-                    JobPriority.General, 
-                    null, 
-                    default);
-
-                return loadTask.ContinueWith(GetProfile, TaskScheduler);
-            }
-
-            private Profile GetProfile(Task task)
-            {
-                return Profile;
-            }
         }
     }
 }

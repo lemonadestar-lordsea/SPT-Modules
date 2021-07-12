@@ -25,7 +25,7 @@ namespace Aki.SinglePlayer.Patches.Progression
         protected override MethodBase GetTargetMethod()
         {
             return Constants.EftTypes.Single(x => x.Name == "MainApplication")
-                .GetMethod("method_44", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                .GetMethod("method_44", Constants.PrivateFlags);
         }
 
         private static void PatchPrefix(ESideType ___esideType_0, Result<ExitStatus, TimeSpan, ClientMetrics> result)

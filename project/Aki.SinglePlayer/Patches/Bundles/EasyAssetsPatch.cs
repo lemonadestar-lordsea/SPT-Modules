@@ -41,8 +41,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
             _bundlesField = type.GetField($"{EasyBundleHelper.Type.Name.ToLower()}_0", flags);
             _systemProperty = type.GetProperty("System");
 
-            return typeof(EasyAssets).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .Single(IsTargetMethod);
+            return typeof(EasyAssets).GetMethods(Constants.PrivateFlags).Single(IsTargetMethod);
         }
 
         private static bool IsTargetMethod(MethodInfo mi)
@@ -54,14 +53,14 @@ namespace Aki.SinglePlayer.Patches.Bundles
                 || parameters[4].Name != "shouldExclude") ? false : true;
         }
 
-        private static bool PatchPrefix(EasyAssets __instance, [CanBeNull] IBundleLock bundleLock, string defaultKey, string rootPath,
-            string platformName, [CanBeNull] Func<string, bool> shouldExclude, ref Task __result)
+        private static bool PatchPrefix(ref Task __result, EasyAssets __instance, [CanBeNull] IBundleLock bundleLock, string defaultKey, string rootPath,
+            string platformName, [CanBeNull] Func<string, bool> shouldExclude)
         {
             __result = Init(__instance, bundleLock, defaultKey, rootPath, platformName, shouldExclude);
             return false;
         }
 
-        private static async Task Init(EasyAssets __instance, [CanBeNull] IBundleLock bundleLock, string defaultKey, string rootPath,
+        private static async Task Init(EasyAssets instance, [CanBeNull] IBundleLock bundleLock, string defaultKey, string rootPath,
                                       string platformName, [CanBeNull] Func<string, bool> shouldExclude)
         {
             var path = $"{rootPath.Replace("file:///", string.Empty).Replace("file://", string.Empty)}/{platformName}/";
@@ -95,9 +94,9 @@ namespace Aki.SinglePlayer.Patches.Bundles
                 await JobScheduler.Yield();
             }
 
-            _manifestField.SetValue(__instance, manifest);
-            _bundlesField.SetValue(__instance, bundles);
-            _systemProperty.SetValue(__instance, new DependencyGraph(bundles, defaultKey, shouldExclude));
+            _manifestField.SetValue(instance, manifest);
+            _bundlesField.SetValue(instance, bundles);
+            _systemProperty.SetValue(instance, new DependencyGraph(bundles, defaultKey, shouldExclude));
         }
     }
 }
