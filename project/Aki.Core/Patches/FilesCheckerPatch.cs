@@ -28,7 +28,7 @@ namespace Aki.Core.Patches
         protected override MethodBase GetTargetMethod()
         {
             return typeof(ICheckResult).Assembly.GetTypes().Single(x => x.Name == "ConsistencyController")
-                .GetMethods(BindingFlags.Instance | BindingFlags.Public).Single(x => x.Name == "EnsureConsistency" && x.ReturnType == typeof(Task<ICheckResult>));
+                .GetMethods().Single(x => x.Name == "EnsureConsistency" && x.ReturnType == typeof(Task<ICheckResult>));
         }
 
         private static bool PatchPrefix(ref object __result)
