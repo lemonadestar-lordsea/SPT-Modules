@@ -10,6 +10,7 @@ namespace Aki.SinglePlayer.Patches.Bots
 {
     public class SpawnPmcPatch : GenericPatch<SpawnPmcPatch>
     {
+        private static BindingFlags _flags;
         private static Type _targetInterface;
         private static Type _targetType;
         private static FieldInfo _wildSpawnTypeField;
@@ -17,10 +18,11 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         public SpawnPmcPatch() : base(prefix: nameof(PatchPrefix))
         {
+            _flags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
             _targetInterface = Constants.EftTypes.Single(IsTargetInterface);
             _targetType = Constants.EftTypes.Single(IsTargetType);
-            _wildSpawnTypeField = _targetType.GetField("wildSpawnType_0");
-            _botDifficultyField = _targetType.GetField("botDifficulty_0");
+            _wildSpawnTypeField = _targetType.GetField("wildSpawnType_0", _flags);
+            _botDifficultyField = _targetType.GetField("botDifficulty_0", _flags);
         }
 
         private static bool IsTargetInterface(Type type)
@@ -30,20 +32,18 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         private bool IsTargetType(Type type)
         {
-            var flags = BindingFlags.NonPublic | BindingFlags.Instance;
-
-            if (!_targetInterface.IsAssignableFrom(type) || type.GetMethod("method_1", flags) == null)
+            if (!_targetInterface.IsAssignableFrom(type) || type.GetMethod("method_1", _flags) == null)
             {
                 return false;
             }
 
-            var fields = type.GetFields(flags);
+            var fields = type.GetFields(_flags);
             return fields.Any(f => f.FieldType != typeof(WildSpawnType)) && fields.Any(f => f.FieldType == typeof(BotDifficulty));
         }
 
         protected override MethodBase GetTargetMethod()
         {
-            return _targetType.GetMethod("method_1", BindingFlags.NonPublic | BindingFlags.Instance);
+            return _targetType.GetMethod("method_1", _flags);
         }
 
         private static bool PatchPrefix(object __instance, ref bool __result, Profile x)
