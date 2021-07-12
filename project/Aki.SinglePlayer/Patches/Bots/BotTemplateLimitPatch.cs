@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Utils;
 using WaveInfo = GClass984;
 using BotsPresets = GClass379;
@@ -22,7 +23,7 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(BotsPresets).GetMethod("method_1", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            return typeof(BotsPresets).GetMethod("method_1", Constants.PrivateFlags);
         }
 
         private static void PatchPostfix(List<WaveInfo> __result, List<WaveInfo> wavesProfiles, List<WaveInfo> delayed)

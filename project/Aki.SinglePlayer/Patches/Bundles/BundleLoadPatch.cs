@@ -36,9 +36,9 @@ namespace Aki.SinglePlayer.Patches.Bundles
             return false;
         }
 
-        private static async Task LoadBundleFromServer(object __instance)
+        private static async Task LoadBundleFromServer(object instance)
         {
-            var easyBundle = new EasyBundleHelper(__instance);
+            var easyBundle = new EasyBundleHelper(instance);
             var path = easyBundle.Path;
             var bundleKey = Regex.Split(path, "bundle/", RegexOptions.IgnoreCase)[1];
             var cachePath = BundleSettings.CachePath;

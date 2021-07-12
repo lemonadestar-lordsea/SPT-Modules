@@ -19,7 +19,7 @@ namespace Aki.SinglePlayer.Patches.Healing
             return typeof(Player).GetMethod("Init", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
-        private static async void PatchPostfix(Player __instance, Task __result)
+        private static async void PatchPostfix(Task __result, Player __instance)
         {
             if (_accountId == null)
             {

@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Reflection;
 using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using MainMenuController = GClass1253;
 
 namespace Aki.SinglePlayer.Patches.Matchmaker
@@ -18,9 +19,7 @@ namespace Aki.SinglePlayer.Patches.Matchmaker
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MainMenuController)
-                .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                .FirstOrDefault(IsTargetMethod);
+            return typeof(MainMenuController).GetMethods(Constants.PrivateFlags).FirstOrDefault(IsTargetMethod);
         }
 
         private static void PrefixPatch(ref bool local)

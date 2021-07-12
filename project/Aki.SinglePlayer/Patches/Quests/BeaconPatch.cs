@@ -3,6 +3,7 @@ using System.Reflection;
 using EFT;
 using EFT.InventoryLogic;
 using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.Quests
 {
@@ -14,7 +15,7 @@ namespace Aki.SinglePlayer.Patches.Quests
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(Player).GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly).Single(IsTargetMethod);
+            return typeof(Player).GetMethods(Constants.PrivateFlags).Single(IsTargetMethod);
         }
 
         private bool IsTargetMethod(MethodInfo method)
