@@ -45,7 +45,7 @@ namespace Aki.SinglePlayer.Patches.Progression
             return methodBody.LocalVariables.Any(x => x.LocalType == typeof(Vector3));
         }
 
-        public static void PatchPostfix(Player.FirearmController __instance, AmmoInfo ammo)
+        private static void PatchPostfix(Player.FirearmController __instance, AmmoInfo ammo)
         {
             if (!DurabilityConfig.Enabled)
             {

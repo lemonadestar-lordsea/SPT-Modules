@@ -46,7 +46,7 @@ namespace Aki.SinglePlayer.Patches.Progression
             return prepareShotMethod.GetMethodBody().LocalVariables.Any(x => x.LocalType == typeof(Weapon.EMalfunctionState));
         }
 
-        public static void PatchPostfix(object __instance, Weapon ___weapon_0, FirearmsAnimator ___firearmsAnimator_0, FirearmController ___firearmController_0)
+        private static void PatchPostfix(object __instance, Weapon ___weapon_0, FirearmsAnimator ___firearmsAnimator_0, FirearmController ___firearmController_0)
         {
             if (!DurabilityConfig.Enabled || ___weapon_0.MalfunctionState != Weapon.EMalfunctionState.Jam)
             {
