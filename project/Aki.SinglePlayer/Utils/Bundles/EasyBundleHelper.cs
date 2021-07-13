@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Aki.Common;
 using Aki.Reflection.Utils;
-using IBundleLock = GInterface264;
-using BindableState = GClass2251<Diz.DependencyManager.ELoadState>;
+using IBundleLock = GInterface254;
+using BindableState = GClass2206<Diz.DependencyManager.ELoadState>;
 
 namespace Aki.SinglePlayer.Utils.Bundles
 {
@@ -35,6 +35,8 @@ namespace Aki.SinglePlayer.Utils.Bundles
             _ = nameof(BindableState.Bind);
 
             Type = Constants.EftTypes.Single(x => x.IsClass && x.GetProperty("SameNameAsset") != null);
+            _loadingCoroutineMethod = Type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Single(x => x.GetParameters().Length == 0 && x.ReturnType == typeof(Task));
         }
 
         public IEnumerable<string> DependencyKeys
@@ -187,16 +189,10 @@ namespace Aki.SinglePlayer.Utils.Bundles
         {
             var flags = BindingFlags.Instance | BindingFlags.NonPublic;
 
-            if (_loadingCoroutineMethod == null)
-            {
-                _loadingCoroutineMethod = Type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic)
-                    .Single(x => x.GetParameters().Length == 0 && x.ReturnType == typeof(Task));
-            }
-
             _instance = easyBundle;
             _pathField = Type.GetField("string_1", flags);
             _keyWithoutExtensionField = Type.GetField("string_0", flags);
-            _bundleLockField = Type.GetField($"{nameof(GInterface264).ToLower()}_0", flags);
+            _bundleLockField = Type.GetField($"{nameof(GInterface254).ToLower()}_0", flags);
             _loadingJobField = Type.GetField("task_0", flags);
             _dependencyKeysProperty = Type.GetProperty("DependencyKeys");
             _keyProperty = Type.GetProperty("Key");
