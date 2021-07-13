@@ -73,6 +73,8 @@
     <Compile Include="Models\PlayerHealth.cs" />
     <Compile Include="Models\SaveProfileRequest.cs" />
     <Compile Include="Models\ServerConfig.cs" />
+    <Compile Include="Patches\Progression\SingleModeJamPatch.cs" />
+    <Compile Include="Patches\Progression\WeaponDurabilityPatch.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Patches\Bots\BossSpawnChancePatch.cs" />
     <Compile Include="Patches\Bots\BotTemplateLimitPatch.cs" />
@@ -100,6 +102,7 @@
     <Compile Include="Patches\Matchmaker\MatchmakerOfflineRaidPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSavePatch.cs" />
     <Compile Include="Patches\Quests\BeaconPatch.cs" />
+    <Compile Include="Utils\Progression\DurabilityConfig.cs" />
     <Compile Include="Utils\RequestHandler.cs" />
     <Compile Include="Utils\Bundles\EasyBundleHelper.cs" />
     <Compile Include="Utils\Bundles\BundleSettings.cs" />

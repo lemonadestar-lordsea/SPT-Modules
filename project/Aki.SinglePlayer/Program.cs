@@ -25,6 +25,8 @@ namespace Aki.SinglePlayer
             new OfflineSpawnPointPatch().Apply();
             new ExperienceGainPatch().Apply();
             new OnLoadRaidPatch().Apply();
+            new WeaponDurabilityPatch().Apply();
+            new SingleModeJamPatch().Apply();
             new MainMenuControllerPatch().Apply();
             new PlayerPatch().Apply();
             new MatchmakerOfflineRaidPatch().Apply();
