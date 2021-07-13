@@ -3,7 +3,7 @@ using Aki.SinglePlayer.Utils.Bundles;
 using Aki.SinglePlayer.Patches.Bots;
 using Aki.SinglePlayer.Patches.Bundles;
 using Aki.SinglePlayer.Patches.Healing;
-using Aki.SinglePlayer.Patches.Matchmaker;
+using Aki.SinglePlayer.Patches.MainMenu;
 using Aki.SinglePlayer.Patches.Progression;
 using Aki.SinglePlayer.Patches.Quests;
 using Aki.SinglePlayer.Patches.ScavMode;
@@ -31,6 +31,7 @@ namespace Aki.SinglePlayer
             new PlayerPatch().Apply();
             new MatchmakerOfflineRaidPatch().Apply();
             new SelectLocationScreenPatch().Apply();
+            new FieldOfViewPatch().Apply();
             new InsuranceScreenPatch().Apply();
             new BotTemplateLimitPatch().Apply();
             new GetNewBotTemplatesPatch().Apply();

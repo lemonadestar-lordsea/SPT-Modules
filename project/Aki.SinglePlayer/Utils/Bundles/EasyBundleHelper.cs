@@ -50,8 +50,7 @@ namespace Aki.SinglePlayer.Utils.Bundles
             _loadingAssetOperationField = Type.GetField("assetBundleRequest_0");
             _assetsProperty = Type.GetProperty("Assets");
             _sameNameAssetProperty = Type.GetProperty("SameNameAsset");
-            _loadingCoroutineMethod = Type.GetMethods(_flags)
-                    .Single(x => x.GetParameters().Length == 0 && x.ReturnType == typeof(Task));
+            _loadingCoroutineMethod = Type.GetMethods(_flags).Single(x => x.GetParameters().Length == 0 && x.ReturnType == typeof(Task));
         }
 
         public IEnumerable<string> DependencyKeys
