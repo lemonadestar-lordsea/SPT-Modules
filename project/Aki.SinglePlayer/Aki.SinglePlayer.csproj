@@ -73,6 +73,7 @@
     <Compile Include="Models\PlayerHealth.cs" />
     <Compile Include="Models\SaveProfileRequest.cs" />
     <Compile Include="Models\ServerConfig.cs" />
+    <Compile Include="Patches\MainMenu\FieldOfViewPatch.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Patches\Bots\BossSpawnChancePatch.cs" />
     <Compile Include="Patches\Bots\BotTemplateLimitPatch.cs" />
@@ -85,8 +86,8 @@
     <Compile Include="Patches\Bundles\BundleLoadPatch.cs" />
     <Compile Include="Patches\Bundles\EasyBundlePatch.cs" />
     <Compile Include="Patches\Healing\PlayerPatch.cs" />
-    <Compile Include="Patches\Matchmaker\InsuranceScreenPatch.cs" />
-    <Compile Include="Patches\Matchmaker\SelectLocationScreenPatch.cs" />
+    <Compile Include="Patches\MainMenu\InsuranceScreenPatch.cs" />
+    <Compile Include="Patches\MainMenu\SelectLocationScreenPatch.cs" />
     <Compile Include="Patches\Progression\ExperienceGainPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSpawnPointPatch.cs" />
     <Compile Include="Patches\Progression\EndByTimerPatch.cs" />
@@ -98,7 +99,7 @@
     <Compile Include="Patches\Healing\MainMenuControllerPatch.cs" />
     <Compile Include="Patches\Quests\DogtagPatch.cs" />
     <Compile Include="Patches\Progression\OnLoadRaidPatch.cs" />
-    <Compile Include="Patches\Matchmaker\MatchmakerOfflineRaidPatch.cs" />
+    <Compile Include="Patches\MainMenu\MatchmakerOfflineRaidPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSavePatch.cs" />
     <Compile Include="Patches\Quests\BeaconPatch.cs" />
     <Compile Include="Utils\RequestHandler.cs" />
