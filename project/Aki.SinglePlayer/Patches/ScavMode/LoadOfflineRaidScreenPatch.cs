@@ -39,7 +39,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         {
             var menuControllerType = typeof(MenuController);
 
-            _onReadyScreenMethod = menuControllerType.GetMethod("method_40", Constants.PrivateFlags);
+            _onReadyScreenMethod = menuControllerType.GetMethod("method_38", Constants.PrivateFlags);
             _weatherSettingsField = menuControllerType.GetField($"{nameof(GStruct92).ToLower()}_0", Constants.PrivateFlags);
             _botsSettingsField = menuControllerType.GetField($"{nameof(GStruct93).ToLower()}_0", Constants.PrivateFlags);
             _waveSettingsField = menuControllerType.GetField($"{nameof(GStruct233).ToLower()}_0", Constants.PrivateFlags);
