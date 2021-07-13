@@ -90,7 +90,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         private static bool IsTargetNestedType(System.Type nestedType)
         {
             return nestedType.GetMethods(Constants.PrivateFlags)
-                .Count(x => x.GetParameters().Length == 1 && x.GetParameters()[0].ParameterType == typeof(IResult)) > 0 && nestedType.GetField("savageProfile") != null;
+                .Count(x => x.GetParameters().Length == 1 && x.GetParameters()[0].ParameterType == typeof(string)) > 0 && nestedType.GetField("savageProfile") != null;
         }
     }
 }

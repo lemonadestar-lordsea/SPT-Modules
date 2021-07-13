@@ -5,7 +5,7 @@ using System.Reflection;
 using EFT;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
-using BotData = GInterface17;
+using BotData = GInterface16;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {

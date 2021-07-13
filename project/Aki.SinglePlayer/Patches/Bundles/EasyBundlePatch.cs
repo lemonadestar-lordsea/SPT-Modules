@@ -7,9 +7,9 @@ using UnityEngine;
 using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils.Bundles;
-using IEasyBundle = GInterface263;
-using IBundleLock = GInterface264;
-using BindableState = GClass2251<Diz.DependencyManager.ELoadState>;
+using IEasyBundle = GInterface253;
+using IBundleLock = GInterface254;
+using BindableState = GClass2206<Diz.DependencyManager.ELoadState>;
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {

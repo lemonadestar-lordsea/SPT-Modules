@@ -4,8 +4,8 @@ using System.Reflection;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Utils;
-using WaveInfo = GClass984;
-using BotsPresets = GClass379;
+using WaveInfo = GClass956;
+using BotsPresets = GClass363;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {

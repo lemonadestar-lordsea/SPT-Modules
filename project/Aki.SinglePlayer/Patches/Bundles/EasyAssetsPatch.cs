@@ -11,10 +11,10 @@ using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils.Bundles;
-using IEasyBundle = GInterface263;
-using IBundleLock = GInterface264;
-using BundleLock = GClass2265;
-using DependencyGraph = GClass2266<GInterface263>;
+using IEasyBundle = GInterface253;
+using IBundleLock = GInterface254;
+using BundleLock = GClass2220;
+using DependencyGraph = GClass2221<GInterface253>;
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {

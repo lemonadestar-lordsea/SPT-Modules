@@ -2,7 +2,7 @@ using System.Linq;
 using System.Reflection;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
-using MainMenuController = GClass1253;
+using MainMenuController = GClass1224;
 
 namespace Aki.SinglePlayer.Patches.Matchmaker
 {

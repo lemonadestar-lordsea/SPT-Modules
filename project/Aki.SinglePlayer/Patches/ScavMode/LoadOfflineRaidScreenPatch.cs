@@ -9,10 +9,10 @@ using EFT.UI.Matchmaker;
 using EFT.UI.Screens;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
-using MenuController = GClass1253;
-using WeatherSettings = GStruct93;
-using BotsSettings = GStruct234;
-using WavesSettings = GStruct94;
+using MenuController = GClass1224;
+using WeatherSettings = GStruct92;
+using BotsSettings = GStruct233;
+using WavesSettings = GStruct93;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
@@ -40,17 +40,17 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var menuControllerType = typeof(MenuController);
 
             _onReadyScreenMethod = menuControllerType.GetMethod("method_40", Constants.PrivateFlags);
-            _weatherSettingsField = menuControllerType.GetField($"{nameof(GStruct93).ToLower()}_0", Constants.PrivateFlags);
-            _botsSettingsField = menuControllerType.GetField($"{nameof(GStruct94).ToLower()}_0", Constants.PrivateFlags);
-            _waveSettingsField = menuControllerType.GetField($"{nameof(GStruct234).ToLower()}_0", Constants.PrivateFlags);
+            _weatherSettingsField = menuControllerType.GetField($"{nameof(GStruct92).ToLower()}_0", Constants.PrivateFlags);
+            _botsSettingsField = menuControllerType.GetField($"{nameof(GStruct93).ToLower()}_0", Constants.PrivateFlags);
+            _waveSettingsField = menuControllerType.GetField($"{nameof(GStruct233).ToLower()}_0", Constants.PrivateFlags);
             _isLocalField = menuControllerType.GetField("bool_0", Constants.PrivateFlags);
-            _menuControllerField = typeof(MainApplication).GetField($"{nameof(GClass1253).ToLower()}_0", Constants.PrivateFlags);
+            _menuControllerField = typeof(MainApplication).GetField($"{nameof(GClass1224).ToLower()}_0", Constants.PrivateFlags);
         }
 
         protected override MethodBase GetTargetMethod()
         {
             return typeof(MenuController).GetNestedTypes(BindingFlags.NonPublic)
-                .Single(x => x.Name == "Class848")
+                .Single(x => x.Name == "Class815")
                 .GetMethod("method_2", Constants.PrivateFlags);
         }
 
@@ -93,12 +93,12 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         private static void LoadOfflineRaidScreenForScav()
         {
             var menuController = (object)GetMenuController();
-            var gclass = new MatchmakerOfflineRaid.GClass2112();
+            var gclass = new MatchmakerOfflineRaid.GClass2066();
 
             gclass.OnShowNextScreen += LoadOfflineRaidNextScreen;
 
             // ready method
-            gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, "method_61");
+            gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, "method_56");
             gclass.ShowScreen(EScreenState.Queued);
         }
     }
