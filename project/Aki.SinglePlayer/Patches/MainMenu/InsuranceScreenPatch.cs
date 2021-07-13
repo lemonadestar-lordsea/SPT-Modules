@@ -4,7 +4,7 @@ using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using MainMenuController = GClass1253;
 
-namespace Aki.SinglePlayer.Patches.Matchmaker
+namespace Aki.SinglePlayer.Patches.MainMenu
 {
     class InsuranceScreenPatch : GenericPatch<InsuranceScreenPatch>
     {

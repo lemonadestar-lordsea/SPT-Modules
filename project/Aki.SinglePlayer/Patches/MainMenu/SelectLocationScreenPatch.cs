@@ -4,7 +4,7 @@ using EFT.UI.Matchmaker;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 
-namespace Aki.SinglePlayer.Patches.Matchmaker
+namespace Aki.SinglePlayer.Patches.MainMenu
 {
     public class SelectLocationScreenPatch : GenericPatch<SelectLocationScreenPatch>
     {

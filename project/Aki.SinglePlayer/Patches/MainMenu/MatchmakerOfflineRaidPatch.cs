@@ -7,7 +7,7 @@ using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils;
 
-namespace Aki.SinglePlayer.Patches.Matchmaker
+namespace Aki.SinglePlayer.Patches.MainMenu
 {
     public class MatchmakerOfflineRaidPatch : GenericPatch<MatchmakerOfflineRaidPatch>
     {
