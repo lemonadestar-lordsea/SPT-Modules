@@ -17,7 +17,7 @@ namespace Aki.SinglePlayer.Patches.Healing
             return typeof(Player).GetMethod("Init", Constants.PrivateFlags);
         }
 
-        private static async void PatchPostfix(Task __result)
+        private static async void PatchPostfix(Task __result Player __instance)
         {
             await __result;
 
