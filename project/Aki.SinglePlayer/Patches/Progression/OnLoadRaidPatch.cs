@@ -9,11 +9,11 @@ namespace Aki.SinglePlayer.Patches.Progression
 {
 	public class OnLoadRaidPatch : GenericPatch<OnLoadRaidPatch>
 	{
-		private static PreloaderUI preloader;
+		private static PreloaderUI _preloader;
 
 		public OnLoadRaidPatch() : base(postfix: nameof(PatchPostfix))
 		{
-			preloader = null;
+			_preloader = null;
         }
 
         protected override MethodBase GetTargetMethod()
@@ -23,15 +23,15 @@ namespace Aki.SinglePlayer.Patches.Progression
 
 		private static void PatchPostfix()
 		{
-			if (preloader == null)
+			if (_preloader == null)
 			{
-				preloader = Object.FindObjectOfType<PreloaderUI>();
+				_preloader = Object.FindObjectOfType<PreloaderUI>();
 			}
 
-			if (preloader != null)
+			if (_preloader != null)
 			{
 				var raidID = Path.GetRandomFileName().Replace(".", string.Empty).Substring(0, 4).ToUpper();
-				preloader.SetSessionId(raidID);
+				_preloader.SetSessionId(raidID);
 			}
 		}
 	}

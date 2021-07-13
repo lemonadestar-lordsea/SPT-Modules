@@ -1,5 +1,6 @@
 using System.Reflection;
 using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using MainMenuController = GClass1253;
 using IHealthController = GInterface177;
 
@@ -19,7 +20,7 @@ namespace Aki.SinglePlayer.Patches.Healing
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MainMenuController).GetMethod("method_1", BindingFlags.NonPublic | BindingFlags.Instance);
+            return typeof(MainMenuController).GetMethod("method_1", Constants.PrivateFlags);
         }
 
         private static void PatchPostfix(MainMenuController __instance)

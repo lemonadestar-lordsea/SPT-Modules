@@ -33,10 +33,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             _ = nameof(WeatherSettings.IsRandomWeather);
             _ = nameof(BotsSettings.IsScavWars);
             _ = nameof(WavesSettings.IsBosses);
-        }
 
-        public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler))
-        {
             var menuControllerType = typeof(MenuController);
 
             _onReadyScreenMethod = menuControllerType.GetMethod("method_40", Constants.PrivateFlags);
@@ -45,6 +42,10 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             _waveSettingsField = menuControllerType.GetField($"{nameof(GStruct234).ToLower()}_0", Constants.PrivateFlags);
             _isLocalField = menuControllerType.GetField("bool_0", Constants.PrivateFlags);
             _menuControllerField = typeof(MainApplication).GetField($"{nameof(GClass1253).ToLower()}_0", Constants.PrivateFlags);
+        }
+
+        public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler))
+        {
         }
 
         protected override MethodBase GetTargetMethod()
