@@ -15,15 +15,15 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 {
     public class ScavExfilPatch : GenericPatch<ScavExfilPatch>
     {
-        private static Type _profileType;
         private static Type _profileInfoType;
-        private static Type _fenceTraderInfoType;
+        
+        static ScavExfilPatch()
+        {
+            _profileInfoType = Constants.EftTypes.Single(x => x.GetMethod("GetExperience") != null);
+        }
 
         public ScavExfilPatch() : base(transpiler: nameof(PatchTranspile))
         {
-            _profileType = Constants.EftTypes.Single(x => x.GetMethod("AddToCarriedQuestItems") != null);
-            _profileInfoType = Constants.EftTypes.Single(x => x.GetMethod("GetExperience") != null);
-            _fenceTraderInfoType = Constants.EftTypes.Single(x => x.GetMethod("NewExfiltrationPrice") != null);
         }
 
         protected override MethodBase GetTargetMethod()
@@ -85,7 +85,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 new Code(OpCodes.Ldarg_0),
                 new Code(OpCodes.Call, Constants.LocalGameType.BaseType, "get_Profile_0"),
                 new Code(OpCodes.Ldfld, typeof(Profile), "Id"),
-                new Code(OpCodes.Callvirt, Constants.ExfilPointManagerType, "ScavExfiltrationClaim", new System.Type[]{ typeof(Vector3), typeof(string), typeof(int) }),
+                new Code(OpCodes.Callvirt, Constants.ExfilPointManagerType, "ScavExfiltrationClaim", new System.Type[]{ typeof(Vector3), typeof(string) }),
                 new Code(OpCodes.Call, Constants.ExfilPointManagerType, "get_Instance"),
                 new Code(OpCodes.Call, Constants.ExfilPointManagerType, "get_Instance"),
                 new Code(OpCodes.Ldarg_0),
@@ -101,7 +101,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 new Code(OpCodes.Ldarg_0),
                 new Code(OpCodes.Call, Constants.LocalGameType.BaseType, "get_Profile_0"),
                 new Code(OpCodes.Callvirt, Constants.ExfilPointManagerType, "EligiblePoints", new System.Type[]{ typeof(Profile) }),
-                new CodeWithLabel(OpCodes.Stloc_2, brLabel)
+                new CodeWithLabel(OpCodes.Stloc_0, brLabel)
             });
 
             codes.RemoveRange(searchIndex, 5);
