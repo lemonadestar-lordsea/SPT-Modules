@@ -43,7 +43,6 @@ namespace Aki.SinglePlayer
             new ScavPrefabLoadPatch().Apply();
             new ScavProfileLoadPatch().Apply();
             new ScavExfilPatch().Apply();
-            new ExfilPointManagerPatch().Apply();
             new EndByTimerPatch().Apply();
         }
     }

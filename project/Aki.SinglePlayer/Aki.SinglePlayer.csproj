@@ -90,7 +90,6 @@
     <Compile Include="Patches\Progression\ExperienceGainPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSpawnPointPatch.cs" />
     <Compile Include="Patches\Progression\EndByTimerPatch.cs" />
-    <Compile Include="Patches\ScavMode\ExfilPointManagerPatch.cs" />
     <Compile Include="Patches\ScavMode\LoadOfflineRaidScreenPatch.cs" />
     <Compile Include="Patches\ScavMode\ScavExfilPatch.cs" />
     <Compile Include="Patches\ScavMode\ScavPrefabLoadPatch.cs" />

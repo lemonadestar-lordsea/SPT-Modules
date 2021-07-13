@@ -9,7 +9,6 @@ namespace Aki.Core
 		{
             Log.Info("Loading: Aki.Core");
 
-            new FilesCheckerPatch().Apply();
             new BattlEyePatch().Apply();
             new SslCertificatePatch().Apply();
             new UnityWebRequestPatch().Apply();
