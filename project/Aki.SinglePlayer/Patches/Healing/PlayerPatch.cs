@@ -12,7 +12,7 @@ namespace Aki.SinglePlayer.Patches.Healing
         {
         }
 
-        protected override MethodBase GetTargetMethod(Profile ___profile_0)
+        protected override MethodBase GetTargetMethod()
         {
             return typeof(Player).GetMethod("Init", Constants.PrivateFlags);
         }
