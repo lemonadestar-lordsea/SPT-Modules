@@ -25,7 +25,7 @@ namespace Aki.Reflection.Patching
 
             if (_prefix == null && _postfix == null && _transpiler == null && _finalizer == null && _ilmanipulator == null)
             {
-                Log.Error($"{_harmony.Id}: At least one of the patch methods must be specified");
+                throw new Exception($"{_harmony.Id}: At least one of the patch methods must be specified");
             }
         }
 
@@ -59,19 +59,17 @@ namespace Aki.Reflection.Patching
 
             if (targetMethod == null)
             {
-                Log.Error($"{_harmony.Id}: TargetMethod is null");
+                throw new InvalidOperationException($"{_harmony.Id}: TargetMethod is null");
             }
 
             try
             {
                 _harmony.Patch(targetMethod, _prefix, _postfix, _transpiler, _finalizer, _ilmanipulator);
-                Log.Info($"{_harmony.Id}: Applied successfully");
+                Log.Info($"Applied patch {_harmony.Id}");
             }
             catch (Exception ex)
             {
-                Log.Error($"{_harmony.Id} Failed to apply");
-                Log.Write(ex.Message);
-                Log.Write(ex.StackTrace);
+                throw new Exception($"{_harmony.Id}:", ex);
             }
         }
 
@@ -84,19 +82,17 @@ namespace Aki.Reflection.Patching
 
             if (targetMethod == null)
             {
-                Log.Error($"{_harmony.Id}: TargetMethod is null");
+                throw new InvalidOperationException($"{_harmony.Id}: TargetMethod is null");
             }
 
             try
             {
                 _harmony.Unpatch(targetMethod, HarmonyPatchType.All, _harmony.Id);
-                Log.Info($"{_harmony.Id}: Removed successfully");
+                Log.Info($"Removed patch {_harmony.Id}");
             }
             catch (Exception ex)
             {
-                Log.Error($"{_harmony.Id}: Failed to remove");
-                Log.Write(ex.Message);
-                Log.Write(ex.StackTrace);
+                throw new Exception($"{_harmony.Id}:", ex);
             }
         }
     }
