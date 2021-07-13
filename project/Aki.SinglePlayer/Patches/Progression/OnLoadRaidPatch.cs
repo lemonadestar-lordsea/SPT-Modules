@@ -31,9 +31,9 @@ namespace Aki.SinglePlayer.Patches.Progression
 
 		private static void SetRaidID()
 		{
-			if (preloader == null)
+			if (_preloader == null)
 			{
-				preloader = UnityEngine.Object.FindObjectOfType<PreloaderUI>();
+				_preloader = UnityEngine.Object.FindObjectOfType<PreloaderUI>();
 			}
 
 			if (_preloader != null)

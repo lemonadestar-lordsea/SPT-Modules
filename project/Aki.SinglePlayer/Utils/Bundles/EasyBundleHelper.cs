@@ -40,7 +40,7 @@ namespace Aki.SinglePlayer.Utils.Bundles
 
             _pathField = Type.GetField("string_1", _flags);
             _keyWithoutExtensionField = Type.GetField("string_0", _flags);
-            _bundleLockField = Type.GetField($"{nameof(GInterface264).ToLower()}_0", _flags);
+            _bundleLockField = Type.GetField($"{nameof(GInterface254).ToLower()}_0", _flags);
             _loadingJobField = Type.GetField("task_0", _flags);
             _dependencyKeysProperty = Type.GetProperty("DependencyKeys");
             _keyProperty = Type.GetProperty("Key");
