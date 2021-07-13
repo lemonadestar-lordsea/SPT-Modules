@@ -19,14 +19,15 @@ namespace Aki.SinglePlayer.Patches.Bots
         static RemoveUsedBotProfilePatch()
         {
             _ = nameof(BotData.ChooseProfile);
-        }
 
-        public RemoveUsedBotProfilePatch() : base(prefix: nameof(PatchPrefix))
-        {
             _flags = BindingFlags.Instance | BindingFlags.NonPublic;
             _targetInterface = Constants.EftTypes.Single(IsTargetInterface);
             _targetType = Constants.EftTypes.Single(IsTargetType);
             _profilesField = _targetType.GetField("list_0", _flags);
+        }
+
+        public RemoveUsedBotProfilePatch() : base(prefix: nameof(PatchPrefix))
+        {
         }
 
         protected override MethodBase GetTargetMethod()
@@ -39,7 +40,7 @@ namespace Aki.SinglePlayer.Patches.Bots
             return type.IsInterface && type.GetProperty("StartProfilesLoaded") != null && type.GetMethod("CreateProfile") != null;
         }
 
-        private bool IsTargetType(Type type)
+        private static bool IsTargetType(Type type)
         {
             return _targetInterface.IsAssignableFrom(type) && _targetInterface.IsAssignableFrom(type.BaseType);
         }

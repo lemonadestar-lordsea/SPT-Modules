@@ -16,13 +16,13 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         static EndByTimerPatch()
         {
+            _localGameBaseType = Constants.LocalGameType.BaseType;
+            _profileIdProperty = _localGameBaseType.GetProperty("ProfileId", Constants.PrivateFlags);
+            _stopRaidMethod = _localGameBaseType.GetMethods(Constants.PrivateFlags).SingleOrDefault(IsStopRaidMethod);
         }
 
         public EndByTimerPatch() : base(prefix: nameof(PrefixPatch))
         {
-            _localGameBaseType = Constants.LocalGameType.BaseType;
-            _profileIdProperty = _localGameBaseType.GetProperty("ProfileId", Constants.PrivateFlags);
-            _stopRaidMethod = _localGameBaseType.GetMethods(Constants.PrivateFlags).SingleOrDefault(IsStopRaidMethod);
         }
 
         protected override MethodBase GetTargetMethod()

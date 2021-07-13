@@ -8,29 +8,17 @@ namespace Aki.SinglePlayer.Patches.Healing
 {
     public class PlayerPatch : GenericPatch<PlayerPatch>
     {
-        private static string _accountId;
-
         public PlayerPatch() : base(postfix: nameof(PatchPostfix))
         {
         }
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(Player).GetMethod("Init", BindingFlags.NonPublic | BindingFlags.Instance);
+            return typeof(Player).GetMethod("Init", Constants.PrivateFlags);
         }
 
         private static async void PatchPostfix(Task __result, Player __instance)
         {
-            if (_accountId == null)
-            {
-                _accountId = Constants.BackEndSession.Profile.AccountId;
-            }
-
-            if (__instance.Profile.AccountId != _accountId)
-            {
-                return;
-            }
-
             await __result;
 
             var listener = Utils.Healing.HealthListener.Instance;
