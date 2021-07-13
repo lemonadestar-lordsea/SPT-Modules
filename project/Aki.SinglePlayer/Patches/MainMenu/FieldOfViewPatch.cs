@@ -10,7 +10,7 @@ namespace Aki.SinglePlayer.Patches.MainMenu
     public class FieldOfViewPatch : GenericPatch<FieldOfViewPatch>
     {
         private const int _min = 10;
-        private const int _max = 210;
+        private const int _max = 360;
         private const string _propertyName = "FieldOfViewNotches";
         private static string[] _notches;
 
@@ -38,7 +38,14 @@ namespace Aki.SinglePlayer.Patches.MainMenu
 
         private static bool IsTargetType(Type type)
         {
-            return type.GetProperties().Single(x => x.Name == _propertyName) != null;
+            var properties = type.GetProperties();
+
+            if (properties == null)
+            {
+                return false;
+            }
+
+            return properties.Any(x => x.Name == _propertyName);
         }
 
         private static bool PatchPrefix(ref object __result)
