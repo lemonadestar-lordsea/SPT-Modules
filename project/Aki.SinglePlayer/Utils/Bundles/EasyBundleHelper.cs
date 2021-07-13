@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
-using Aki.Common;
 using Aki.Reflection.Utils;
 using IBundleLock = GInterface264;
 using BindableState = GClass2251<Diz.DependencyManager.ELoadState>;
@@ -14,18 +13,18 @@ namespace Aki.SinglePlayer.Utils.Bundles
     public class EasyBundleHelper
     {
         private object _instance;
-        private FieldInfo _pathField;
-        private FieldInfo _keyWithoutExtensionField;
-        private FieldInfo _bundleLockField;
-        private FieldInfo _loadingJobField;
-        private PropertyInfo _dependencyKeysProperty;
-        private PropertyInfo _keyProperty;
-        private PropertyInfo _loadStateProperty;
-        private PropertyInfo _progressProperty;
-        private FieldInfo _bundleField;
-        private FieldInfo _loadingAssetOperationField;
-        private PropertyInfo _assetsProperty;
-        private PropertyInfo _sameNameAssetProperty;
+        private static FieldInfo _pathField;
+        private static FieldInfo _keyWithoutExtensionField;
+        private static FieldInfo _bundleLockField;
+        private static FieldInfo _loadingJobField;
+        private static PropertyInfo _dependencyKeysProperty;
+        private static PropertyInfo _keyProperty;
+        private static PropertyInfo _loadStateProperty;
+        private static PropertyInfo _progressProperty;
+        private static FieldInfo _bundleField;
+        private static FieldInfo _loadingAssetOperationField;
+        private static PropertyInfo _assetsProperty;
+        private static PropertyInfo _sameNameAssetProperty;
         private static MethodInfo _loadingCoroutineMethod;
         private static BindingFlags _flags;
         public static Type Type;
@@ -36,7 +35,21 @@ namespace Aki.SinglePlayer.Utils.Bundles
             _ = nameof(BindableState.Bind);
 
             _flags = BindingFlags.Instance | BindingFlags.NonPublic;
+
             Type = Constants.EftTypes.Single(x => x.IsClass && x.GetProperty("SameNameAsset") != null);
+
+            _pathField = Type.GetField("string_1", _flags);
+            _keyWithoutExtensionField = Type.GetField("string_0", _flags);
+            _bundleLockField = Type.GetField($"{nameof(GInterface264).ToLower()}_0", _flags);
+            _loadingJobField = Type.GetField("task_0", _flags);
+            _dependencyKeysProperty = Type.GetProperty("DependencyKeys");
+            _keyProperty = Type.GetProperty("Key");
+            _loadStateProperty = Type.GetProperty("LoadState");
+            _progressProperty = Type.GetProperty("Progress");
+            _bundleField = Type.GetField("assetBundle_0", _flags);
+            _loadingAssetOperationField = Type.GetField("assetBundleRequest_0");
+            _assetsProperty = Type.GetProperty("Assets");
+            _sameNameAssetProperty = Type.GetProperty("SameNameAsset");
             _loadingCoroutineMethod = Type.GetMethods(_flags)
                     .Single(x => x.GetParameters().Length == 0 && x.ReturnType == typeof(Task));
         }
@@ -190,18 +203,6 @@ namespace Aki.SinglePlayer.Utils.Bundles
         public EasyBundleHelper(object easyBundle)
         {
             _instance = easyBundle;
-            _pathField = Type.GetField("string_1", _flags);
-            _keyWithoutExtensionField = Type.GetField("string_0", _flags);
-            _bundleLockField = Type.GetField($"{nameof(GInterface264).ToLower()}_0", _flags);
-            _loadingJobField = Type.GetField("task_0", _flags);
-            _dependencyKeysProperty = Type.GetProperty("DependencyKeys");
-            _keyProperty = Type.GetProperty("Key");
-            _loadStateProperty = Type.GetProperty("LoadState");
-            _progressProperty = Type.GetProperty("Progress");
-            _bundleField = Type.GetField("assetBundle_0", _flags);
-            _loadingAssetOperationField = Type.GetField("assetBundleRequest_0");
-            _assetsProperty = Type.GetProperty("Assets");
-            _sameNameAssetProperty = Type.GetProperty("SameNameAsset");
         }
 
         public Task LoadingCoroutine()

@@ -18,12 +18,13 @@ namespace Aki.SinglePlayer.Patches.Quests
         {
             _ = nameof(Equipment.GetSlot);
             _ = nameof(DamageInfo.Weapon);
+
+            _flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            _getEquipmentProperty = typeof(Player).GetProperty("Equipment", _flags);
         }
 
         public DogtagPatch() : base(postfix: nameof(PatchPostfix))
         {
-            _flags = BindingFlags.Instance | BindingFlags.NonPublic;
-            _getEquipmentProperty = typeof(Player).GetProperty("Equipment", _flags);
         }
 
         protected override MethodBase GetTargetMethod()

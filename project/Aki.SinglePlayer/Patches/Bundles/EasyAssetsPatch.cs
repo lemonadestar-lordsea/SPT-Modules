@@ -24,6 +24,15 @@ namespace Aki.SinglePlayer.Patches.Bundles
         private static FieldInfo _bundlesField;
         private static PropertyInfo _systemProperty;
 
+        static EasyAssetsPatch()
+        {
+            var type = typeof(EasyAssets);
+
+            _manifestField = type.GetField(nameof(EasyAssets.Manifest));
+            _bundlesField = type.GetField($"{EasyBundleHelper.Type.Name.ToLower()}_0", Constants.PrivateFlags);
+            _systemProperty = type.GetProperty("System");
+        }
+
         public EasyAssetsPatch() : base(prefix: nameof(PatchPrefix))
         {
             _ = nameof(IEasyBundle.SameNameAsset);
@@ -34,13 +43,6 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
         protected override MethodBase GetTargetMethod()
         {
-            var flags = BindingFlags.Instance | BindingFlags.NonPublic;
-            var type = typeof(EasyAssets);
-
-            _manifestField = type.GetField(nameof(EasyAssets.Manifest));
-            _bundlesField = type.GetField($"{EasyBundleHelper.Type.Name.ToLower()}_0", flags);
-            _systemProperty = type.GetProperty("System");
-
             return typeof(EasyAssets).GetMethods(Constants.PrivateFlags).Single(IsTargetMethod);
         }
 

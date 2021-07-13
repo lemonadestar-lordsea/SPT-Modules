@@ -19,11 +19,15 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         private static Type _profileInfoType;
         private static Type _fenceTraderInfoType;
 
-        public ScavExfilPatch() : base(transpiler: nameof(PatchTranspile))
+        static ScavExfilPatch()
         {
             _profileType = Constants.EftTypes.Single(x => x.GetMethod("AddToCarriedQuestItems") != null);
             _profileInfoType = Constants.EftTypes.Single(x => x.GetMethod("GetExperience") != null);
             _fenceTraderInfoType = Constants.EftTypes.Single(x => x.GetMethod("NewExfiltrationPrice") != null);
+        }
+
+        public ScavExfilPatch() : base(transpiler: nameof(PatchTranspile))
+        {
         }
 
         protected override MethodBase GetTargetMethod()
