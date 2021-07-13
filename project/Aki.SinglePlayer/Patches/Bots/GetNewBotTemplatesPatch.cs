@@ -60,7 +60,7 @@ namespace Aki.SinglePlayer.Patches.Bots
         public GetNewBotTemplatesPatch() : base(prefix: nameof(PatchPrefix))
         {
             _getNewProfileMethod = typeof(BotsPresets)
-                .GetMethod(nameof(BotsPresets.GetNewProfile), BindingFlags.NonPublic | BindingFlags.Instance);
+                .GetMethod(nameof(BotsPresets.GetNewProfile), Constants.PrivateFlags);
         }
 
         protected override MethodBase GetTargetMethod()
