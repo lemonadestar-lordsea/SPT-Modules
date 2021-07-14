@@ -7,6 +7,7 @@ using Aki.SinglePlayer.Patches.MainMenu;
 using Aki.SinglePlayer.Patches.Progression;
 using Aki.SinglePlayer.Patches.Quests;
 using Aki.SinglePlayer.Patches.ScavMode;
+using Aki.Singleplayer.Patches.Dev;
 
 namespace Aki.SinglePlayer
 {
@@ -46,6 +47,7 @@ namespace Aki.SinglePlayer
             new ScavExfilPatch().Apply();
             new ExfilPointManagerPatch().Apply();
             new EndByTimerPatch().Apply();
+            new CoordinatesPatch().Apply();
         }
     }
 }
