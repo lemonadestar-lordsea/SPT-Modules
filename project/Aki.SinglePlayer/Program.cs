@@ -47,7 +47,7 @@ namespace Aki.SinglePlayer
             new ScavExfilPatch().Apply();
             new ExfilPointManagerPatch().Apply();
             new EndByTimerPatch().Apply();
-            new CoordinatesPatch().Apply();
+            //new CoordinatesPatch().Apply();
         }
     }
 }
