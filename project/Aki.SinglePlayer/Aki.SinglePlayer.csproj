@@ -65,6 +65,14 @@
       <HintPath>..\Shared\References\UnityEngine.UIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>..\Shared\References\Unity.TextMeshPro.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>..\Shared\References\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\BodyPartHealth.cs" />
@@ -102,6 +110,7 @@
     <Compile Include="Patches\MainMenu\MatchmakerOfflineRaidPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSavePatch.cs" />
     <Compile Include="Patches\Quests\BeaconPatch.cs" />
+    <Compile Include="Patches\Dev\CoordinatesPatch.cs" />
     <Compile Include="Utils\RequestHandler.cs" />
     <Compile Include="Utils\Bundles\EasyBundleHelper.cs" />
     <Compile Include="Utils\Bundles\BundleSettings.cs" />
