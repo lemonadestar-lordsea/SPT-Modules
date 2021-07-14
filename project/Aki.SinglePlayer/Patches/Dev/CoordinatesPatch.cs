@@ -39,7 +39,9 @@ namespace Aki.Singleplayer.Patches.Dev
                     Log.Info(_alphaLabel.text);
                 }
 
-                Log.Info($"Here is the character position: [{playerOwner.transform.position.x},{playerOwner.transform.position.y},{playerOwner.transform.position.z},{playerOwner.transform.rotation}]");
+                var position = playerOwner.transform.position;
+                var rotation = playerOwner.transform.rotation.eulerAngles;
+                Log.Info($"Character position: [{position.x},{position.y},{position.z}] | Rotation: [{rotation.x},{rotation.y},{rotation.z}]");
             }
         }
 
