@@ -7,6 +7,7 @@ using Aki.SinglePlayer.Patches.MainMenu;
 using Aki.SinglePlayer.Patches.Progression;
 using Aki.SinglePlayer.Patches.Quests;
 using Aki.SinglePlayer.Patches.ScavMode;
+using Aki.Singleplayer.Patches.Dev;
 
 namespace Aki.SinglePlayer
 {
@@ -29,7 +30,7 @@ namespace Aki.SinglePlayer
             new PlayerPatch().Apply();
             new MatchmakerOfflineRaidPatch().Apply();
             new SelectLocationScreenPatch().Apply();
-            new FieldOfViewPatch().Apply();
+            // new FieldOfViewPatch().Apply();
             new InsuranceScreenPatch().Apply();
             new BotTemplateLimitPatch().Apply();
             new GetNewBotTemplatesPatch().Apply();
@@ -46,6 +47,7 @@ namespace Aki.SinglePlayer
             new ScavExfilPatch().Apply();
             new ExfilPointManagerPatch().Apply();
             new EndByTimerPatch().Apply();
+            //new CoordinatesPatch().Apply();
         }
     }
 }
