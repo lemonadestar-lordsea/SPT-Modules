@@ -38,13 +38,12 @@ namespace Aki.SinglePlayer.Patches.Progression
         {
             var spawnPoints = ___ginterface229_0.ToList();
             var unfilteredSpawnPoints = spawnPoints.ToList();
-            var infils = spawnPoints.Select(sp => sp.Infiltration).Distinct();
 
-            spawnPoints = spawnPoints.Where(sp =>  sp != null && sp.Infiltration != null && (string.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();
+            spawnPoints = spawnPoints.Where(sp => sp?.Infiltration != null && (string.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();
             spawnPoints = spawnPoints.Where(sp => sp.Categories.Contain(category)).ToList();
             spawnPoints = spawnPoints.Where(sp => sp.Sides.Contain(side)).ToList();
 
-            __result = (spawnPoints.Count != 0) ? GetFallBackSpawnPoint(unfilteredSpawnPoints, category, side, infiltration) : spawnPoints.RandomElement();
+            __result = spawnPoints.Count == 0 ? GetFallBackSpawnPoint(unfilteredSpawnPoints, category, side, infiltration) : spawnPoints.RandomElement();
             Log.Info($"PatchPrefix SelectSpawnPoint: {__result.Id}");
             return false;
         }

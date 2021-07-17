@@ -17,12 +17,15 @@ namespace Aki.SinglePlayer.Patches.Healing
             return typeof(Player).GetMethod("Init", Constants.PrivateFlags);
         }
 
-        private static async void PatchPostfix(Task __result, Player __instance)
+        private static async void PatchPostfix(Task __result, Player __instance, Profile profile)
         {
             await __result;
 
-            var listener = Utils.Healing.HealthListener.Instance;
-            listener.Init(__instance.HealthController, true);
+            if (profile != null && profile.Id.StartsWith("pmc"))
+            {
+                var listener = Utils.Healing.HealthListener.Instance;
+                listener.Init(__instance.HealthController, true);
+            }
         }
     }
 }
