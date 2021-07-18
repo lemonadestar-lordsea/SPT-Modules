@@ -48,6 +48,7 @@ namespace Aki.SinglePlayer
             new ExfilPointManagerPatch().Apply();
             new EndByTimerPatch().Apply();
             //new CoordinatesPatch().Apply();
+            new VersionLabelPatch().Apply();
         }
     }
 }
