@@ -20,19 +20,16 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MainApplication).GetMethods(Constants.PrivateFlags).FirstOrDefault(IsTargetMethod);
-        }
-
-        private static bool IsTargetMethod(MethodInfo methodInfo)
-        {
-            var parameters = methodInfo.GetParameters();
-            return (parameters.Length == 4
-                && parameters[0].Name == "location"
-                && parameters[1].Name == "timeAndWeather"
-                && parameters[2].Name == "entryPoint"
-                && parameters[3].Name == "timeHasComeScreenController"
-                && parameters[2].ParameterType == typeof(string)
-                && methodInfo.ReturnType == typeof(void));
+            return typeof(MainApplication)
+                .GetNestedTypes(Constants.PrivateFlags)
+                .Single(x =>
+                    x.GetField("entryPoint") != null
+                    && x.GetField("timeAndWeather") != null
+                    && x.GetField("timeHasComeScreenController") != null
+                    && x.GetField("location") != null
+                    && x.Name.Contains("Struct"))
+                .GetMethods(Constants.PrivateFlags)
+                .FirstOrDefault(x => x.Name == "MoveNext");
         }
 
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
@@ -68,10 +65,10 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var brLabel = generator.DefineLabel();
             var newCodes = CodeGenerator.GenerateInstructions(new List<Code>()
             {
-                new Code(OpCodes.Ldarg_0),
+                new Code(OpCodes.Ldloc_1),
                 new Code(OpCodes.Ldfld, typeof(ClientApplication), "_backEnd"),
                 new Code(OpCodes.Callvirt, Constants.BackendInterfaceType, "get_Session"),
-                new Code(OpCodes.Ldarg_0),
+                new Code(OpCodes.Ldloc_1),
                 new Code(OpCodes.Ldfld, typeof(MainApplication), "esideType_0"),
                 new Code(OpCodes.Ldc_I4_0),
                 new Code(OpCodes.Ceq),

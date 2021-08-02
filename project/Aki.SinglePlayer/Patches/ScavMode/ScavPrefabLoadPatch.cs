@@ -19,9 +19,17 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MainApplication).GetNestedTypes(Constants.PrivateFlags)
-                .Single(x => x.GetField("entryPoint") != null && x.GetField("timeAndWeather") != null && x.Name.Contains("Struct"))
-                .GetMethods(Constants.PrivateFlags).FirstOrDefault(x => x.Name == "MoveNext");
+            return typeof(MainApplication)
+                .GetNestedTypes(Constants.PrivateFlags)
+                .Single(x => 
+                    x.GetField("entryPoint") != null 
+                    && x.GetField("timeAndWeather") != null
+                    && x.GetField("location") != null
+                    && x.GetField("mainApplication_0") != null
+                    && x.GetField("timeHasComeScreenController") == null
+                    && x.Name.Contains("Struct"))
+                .GetMethods(Constants.PrivateFlags)
+                .FirstOrDefault(x => x.Name == "MoveNext");
         }
 
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
