@@ -39,7 +39,7 @@ namespace Aki.SinglePlayer
             new CoreDifficultyPatch().Apply();
             new BotDifficultyPatch().Apply();
             new BossSpawnChancePatch().Apply();
-            new BeaconPatch().Apply();
+            //new BeaconPatch().Apply();
             new DogtagPatch().Apply();
             new LoadOfflineRaidScreenPatch().Apply();
             new ScavPrefabLoadPatch().Apply();
