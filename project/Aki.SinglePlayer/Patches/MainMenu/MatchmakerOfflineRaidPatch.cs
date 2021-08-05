@@ -3,15 +3,14 @@ using UnityEngine;
 using EFT.UI;
 using EFT.UI.Matchmaker;
 using Aki.Common;
-using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils;
 
 namespace Aki.SinglePlayer.Patches.MainMenu
 {
-    public class MatchmakerOfflineRaidPatch : GenericPatch<MatchmakerOfflineRaidPatch>
+    public class MatchmakerOfflineRaidPatch : Patch
     {
-        public MatchmakerOfflineRaidPatch() : base(postfix: nameof(PatchPostfix))
+        public MatchmakerOfflineRaidPatch() : base(T: typeof(MatchmakerOfflineRaidPatch), postfix: nameof(PatchPostfix))
         {
         }
 

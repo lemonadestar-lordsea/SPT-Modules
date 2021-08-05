@@ -5,20 +5,19 @@ using System.Reflection;
 using EFT;
 using EFT.Game.Spawning;
 using Aki.Common;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using SpawnPoints = GInterface229;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    public class OfflineSpawnPointPatch : GenericPatch<OfflineSpawnPointPatch>
+    public class OfflineSpawnPointPatch : Patch
     {
         static OfflineSpawnPointPatch()
         {
             _ = nameof(SpawnPoints.CreateSpawnPoint);
         }
 
-        public OfflineSpawnPointPatch() : base(prefix: nameof(PatchPrefix))
+        public OfflineSpawnPointPatch() : base(T: typeof(OfflineSpawnPointPatch), prefix: nameof(PatchPrefix))
         {
         }
 

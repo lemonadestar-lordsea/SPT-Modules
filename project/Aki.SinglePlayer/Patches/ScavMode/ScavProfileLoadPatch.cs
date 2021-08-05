@@ -7,14 +7,13 @@ using Comfort.Common;
 using EFT;
 using Aki.Common;
 using Aki.Reflection.CodeWrapper;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
-    public class ScavProfileLoadPatch : GenericPatch<ScavProfileLoadPatch>
+    public class ScavProfileLoadPatch : Patch
     {
-        public ScavProfileLoadPatch() : base(transpiler: nameof(PatchTranspile))
+        public ScavProfileLoadPatch() : base(T: typeof(ScavProfileLoadPatch), transpiler: nameof(PatchTranspile))
         {
         }
 

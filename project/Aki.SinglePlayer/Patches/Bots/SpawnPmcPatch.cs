@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using EFT;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
-    public class SpawnPmcPatch : GenericPatch<SpawnPmcPatch>
+    public class SpawnPmcPatch : Patch
     {
         private static Type _targetInterface;
         private static Type _targetType;
@@ -23,7 +22,7 @@ namespace Aki.SinglePlayer.Patches.Bots
             _botDifficultyField = _targetType.GetField("botDifficulty_0", Constants.PrivateFlags);
         }
 
-        public SpawnPmcPatch() : base(prefix: nameof(PatchPrefix))
+        public SpawnPmcPatch() : base(T: typeof(SpawnPmcPatch), prefix: nameof(PatchPrefix))
         {
         }
 

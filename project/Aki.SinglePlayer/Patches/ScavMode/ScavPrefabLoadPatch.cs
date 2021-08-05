@@ -6,14 +6,13 @@ using HarmonyLib;
 using EFT;
 using Aki.Common;
 using Aki.Reflection.CodeWrapper;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
-    public class ScavPrefabLoadPatch : GenericPatch<ScavPrefabLoadPatch>
+    public class ScavPrefabLoadPatch : Patch
     {
-        public ScavPrefabLoadPatch() : base(transpiler: nameof(PatchTranspile))
+        public ScavPrefabLoadPatch() : base(T: typeof(ScavPrefabLoadPatch), transpiler: nameof(PatchTranspile))
         {
         }
 

@@ -8,12 +8,11 @@ using UnityEngine;
 using EFT;
 using Aki.Common;
 using Aki.Reflection.CodeWrapper;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
-    public class ScavExfilPatch : GenericPatch<ScavExfilPatch>
+    public class ScavExfilPatch : Patch
     {
         private static Type _profileType;
         private static Type _profileInfoType;
@@ -26,7 +25,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             _fenceTraderInfoType = Constants.EftTypes.Single(x => x.GetMethod("NewExfiltrationPrice") != null);
         }
 
-        public ScavExfilPatch() : base(transpiler: nameof(PatchTranspile))
+        public ScavExfilPatch() : base(T: typeof(ScavExfilPatch), transpiler: nameof(PatchTranspile))
         {
         }
 

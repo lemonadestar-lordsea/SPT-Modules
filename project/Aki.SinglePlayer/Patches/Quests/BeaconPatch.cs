@@ -2,14 +2,13 @@ using System.Linq;
 using System.Reflection;
 using EFT;
 using EFT.InventoryLogic;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.Quests
 {
-    public class BeaconPatch : GenericPatch<BeaconPatch>
+    public class BeaconPatch : Patch
     {
-        public BeaconPatch() : base(prefix: nameof(PatchPrefix))
+        public BeaconPatch() : base(T: typeof(BeaconPatch), prefix: nameof(PatchPrefix))
         {
         }
 

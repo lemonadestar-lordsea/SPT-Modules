@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using Comfort.Common;
 using EFT;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils;
@@ -11,14 +10,14 @@ using ClientMetrics = GClass1431;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    public class OfflineSaveProfilePatch : GenericPatch<OfflineSaveProfilePatch>
+    public class OfflineSaveProfilePatch : Patch
     {
         static OfflineSaveProfilePatch()
         {
             _ = nameof(ClientMetrics.Metrics);
         }
 
-        public OfflineSaveProfilePatch() : base(prefix: nameof(PatchPrefix))
+        public OfflineSaveProfilePatch() : base(T: typeof(OfflineSaveProfilePatch), prefix: nameof(PatchPrefix))
         {
         }
 

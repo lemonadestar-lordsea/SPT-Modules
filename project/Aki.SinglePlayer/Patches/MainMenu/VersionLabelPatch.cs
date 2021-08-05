@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
 using Aki.Common;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Utils;
 using EFT.UI;
@@ -9,11 +8,11 @@ using HarmonyLib;
 
 namespace Aki.SinglePlayer.Patches.MainMenu
 {
-    public class VersionLabelPatch : GenericPatch<VersionLabelPatch>
+    public class VersionLabelPatch : Patch
     {
         private static string _versionLabel;
 
-        public VersionLabelPatch() : base(postfix: nameof(PatchPostfix))
+        public VersionLabelPatch() : base(T: typeof(VersionLabelPatch), postfix: nameof(PatchPostfix))
         {
         }
 

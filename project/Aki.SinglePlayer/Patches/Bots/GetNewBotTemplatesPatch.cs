@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Comfort.Common;
 using EFT;
 using Aki.Common;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using BotData = GInterface17;
 using BotsPresets = GClass379;
@@ -45,7 +44,7 @@ namespace Aki.SinglePlayer.Patches.Bots
         }
     }
 
-    public class GetNewBotTemplatesPatch : GenericPatch<GetNewBotTemplatesPatch>
+    public class GetNewBotTemplatesPatch : Patch
     {
         private static MethodInfo _getNewProfileMethod;
 
@@ -57,7 +56,7 @@ namespace Aki.SinglePlayer.Patches.Bots
             _ = nameof(JobPriority.General);
         }
 
-        public GetNewBotTemplatesPatch() : base(prefix: nameof(PatchPrefix))
+        public GetNewBotTemplatesPatch() : base(T: typeof(GetNewBotTemplatesPatch), prefix: nameof(PatchPrefix))
         {
             _getNewProfileMethod = typeof(BotsPresets)
                 .GetMethod(nameof(BotsPresets.GetNewProfile), Constants.PrivateFlags);

@@ -1,15 +1,14 @@
 using System.Linq;
 using System.Reflection;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
-    public class BossSpawnChancePatch : GenericPatch<BossSpawnChancePatch>
+    public class BossSpawnChancePatch : Patch
     {
         private static float[] _bossSpawnPercent;
 
-        public BossSpawnChancePatch() : base(prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
+        public BossSpawnChancePatch() : base(T: typeof(BossSpawnChancePatch), prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
         {
         }
 

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using EFT;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using BotData = GInterface17;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
-    public class RemoveUsedBotProfilePatch : GenericPatch<RemoveUsedBotProfilePatch>
+    public class RemoveUsedBotProfilePatch : Patch
     {
         private static BindingFlags _flags;
         private static Type _targetInterface;
@@ -26,7 +25,7 @@ namespace Aki.SinglePlayer.Patches.Bots
             _profilesField = _targetType.GetField("list_0", _flags);
         }
 
-        public RemoveUsedBotProfilePatch() : base(prefix: nameof(PatchPrefix))
+        public RemoveUsedBotProfilePatch() : base(T: typeof(RemoveUsedBotProfilePatch), prefix: nameof(PatchPrefix))
         {
         }
 

@@ -1,12 +1,11 @@
 using System.Reflection;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using MainMenuController = GClass1253;
 using IHealthController = GInterface177;
 
 namespace Aki.SinglePlayer.Patches.Healing
 {
-    public class MainMenuControllerPatch : GenericPatch<MainMenuControllerPatch>
+    public class MainMenuControllerPatch : Patch
     {
         static MainMenuControllerPatch()
         {
@@ -14,7 +13,7 @@ namespace Aki.SinglePlayer.Patches.Healing
             _ = nameof(MainMenuController.HealthController);
         }
 
-        public MainMenuControllerPatch() : base(postfix: nameof(PatchPostfix))
+        public MainMenuControllerPatch() : base(T: typeof(MainMenuControllerPatch), postfix: nameof(PatchPostfix))
         {
         }
 

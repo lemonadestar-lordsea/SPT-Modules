@@ -2,13 +2,12 @@ using System;
 using System.Linq;
 using System.Reflection;
 using EFT;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Utils;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    public class EndByTimerPatch : GenericPatch<EndByTimerPatch>
+    public class EndByTimerPatch : Patch
     {
         private static Type _localGameBaseType;
         private static PropertyInfo _profileIdProperty;
@@ -21,7 +20,7 @@ namespace Aki.SinglePlayer.Patches.Progression
             _stopRaidMethod = _localGameBaseType.GetMethods(Constants.PrivateFlags).SingleOrDefault(IsStopRaidMethod);
         }
 
-        public EndByTimerPatch() : base(prefix: nameof(PrefixPatch))
+        public EndByTimerPatch() : base(T: typeof(EndByTimerPatch), prefix: nameof(PrefixPatch))
         {
         }
 

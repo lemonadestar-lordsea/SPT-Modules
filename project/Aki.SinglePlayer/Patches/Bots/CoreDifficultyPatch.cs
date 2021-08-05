@@ -1,14 +1,13 @@
 using System.Reflection;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Utils;
 using System.Linq;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
-	public class CoreDifficultyPatch : GenericPatch<CoreDifficultyPatch>
+	public class CoreDifficultyPatch : Patch
 	{
-		public CoreDifficultyPatch() : base(prefix: nameof(PatchPrefix))
+		public CoreDifficultyPatch() : base(T: typeof(CoreDifficultyPatch), prefix: nameof(PatchPrefix))
 		{
         }
 

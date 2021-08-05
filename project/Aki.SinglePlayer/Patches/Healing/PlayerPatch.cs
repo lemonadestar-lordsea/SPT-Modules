@@ -1,14 +1,13 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using EFT;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.Healing
 {
-    public class PlayerPatch : GenericPatch<PlayerPatch>
+    public class PlayerPatch : Patch
     {
-        public PlayerPatch() : base(postfix: nameof(PatchPostfix))
+        public PlayerPatch() : base(T: typeof(PlayerPatch), postfix: nameof(PatchPostfix))
         {
         }
 

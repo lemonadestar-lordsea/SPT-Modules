@@ -3,13 +3,12 @@ using System.Reflection;
 using EFT;
 using EFT.InventoryLogic;
 using Aki.Common;
-using Aki.Reflection.Patching;
 using Equipment = GClass1757;
 using DamageInfo = GStruct241;
 
 namespace Aki.SinglePlayer.Patches.Quests
 {
-    public class DogtagPatch : GenericPatch<DogtagPatch>
+    public class DogtagPatch : Patch
     {
         private static BindingFlags _flags;
         private static PropertyInfo _getEquipmentProperty;
@@ -23,7 +22,7 @@ namespace Aki.SinglePlayer.Patches.Quests
             _getEquipmentProperty = typeof(Player).GetProperty("Equipment", _flags);
         }
 
-        public DogtagPatch() : base(postfix: nameof(PatchPostfix))
+        public DogtagPatch() : base(T: typeof(DogtagPatch), postfix: nameof(PatchPostfix))
         {
         }
 
