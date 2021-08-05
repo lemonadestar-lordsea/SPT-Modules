@@ -1,5 +1,4 @@
 ﻿using Aki.SinglePlayer.Patches.Bots;
-using Aki.SinglePlayer.Patches.Bundles;
 using Aki.SinglePlayer.Patches.Healing;
 using Aki.SinglePlayer.Patches.MainMenu;
 using Aki.SinglePlayer.Patches.Progression;
@@ -10,11 +9,11 @@ namespace Aki.SinglePlayer.Patches
 {
     public class PatchManager
     {
-        private PatchList Patches { get; }
+        private readonly PatchList _patches;
 
         public PatchManager()
         {
-            Patches = new PatchList
+            _patches = new PatchList
             {
                 new OfflineSaveProfilePatch(),
                 new OfflineSpawnPointPatch(),
@@ -24,7 +23,7 @@ namespace Aki.SinglePlayer.Patches
                 new PlayerPatch(),
                 new MatchmakerOfflineRaidPatch(),
                 new SelectLocationScreenPatch(),
-                // new FieldOfViewPatch(),
+                //new FieldOfViewPatch(),
                 new InsuranceScreenPatch(),
                 new BotTemplateLimitPatch(),
                 new GetNewBotTemplatesPatch(),
@@ -48,7 +47,7 @@ namespace Aki.SinglePlayer.Patches
 
         public void RunPatches()
         {
-            Patches.EnableAll();
+            _patches.EnableAll();
         }
     }
 }
