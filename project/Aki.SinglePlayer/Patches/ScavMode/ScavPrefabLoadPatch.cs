@@ -1,12 +1,12 @@
-using System.Linq;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Reflection.Emit;
-using HarmonyLib;
-using EFT;
 using Aki.Common;
 using Aki.Reflection.CodeWrapper;
 using Aki.Reflection.Utils;
+using EFT;
+using HarmonyLib;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 using Patch = Aki.Reflection.Patching.Patch;
 
 namespace Aki.SinglePlayer.Patches.ScavMode

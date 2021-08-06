@@ -1,12 +1,12 @@
-using System;
-using System.Linq;
-using System.Reflection;
 using Aki.Reflection.Patching;
-using Comfort.Common;
-using EFT;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils;
+using Comfort.Common;
+using EFT;
+using System;
+using System.Linq;
+using System.Reflection;
 using ClientMetrics = GClass1431;
 
 namespace Aki.SinglePlayer.Patches.Progression

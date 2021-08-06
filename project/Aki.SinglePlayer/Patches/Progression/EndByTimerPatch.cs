@@ -1,10 +1,10 @@
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
+using Aki.SinglePlayer.Utils;
+using EFT;
 using System;
 using System.Linq;
 using System.Reflection;
-using Aki.Reflection.Patching;
-using EFT;
-using Aki.Reflection.Utils;
-using Aki.SinglePlayer.Utils;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {

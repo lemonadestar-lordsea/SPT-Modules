@@ -1,7 +1,7 @@
-using System.Linq;
-using System.Reflection;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
+using System.Linq;
+using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {

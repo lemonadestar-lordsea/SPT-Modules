@@ -1,8 +1,8 @@
-using EFT.UI.SessionEnd;
+using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
+using EFT.UI.SessionEnd;
 using System.Linq;
 using System.Reflection;
-using Aki.Reflection.Patching;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {

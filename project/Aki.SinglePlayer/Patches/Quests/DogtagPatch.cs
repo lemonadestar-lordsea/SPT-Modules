@@ -1,11 +1,11 @@
-using System;
-using System.Reflection;
-using EFT;
-using EFT.InventoryLogic;
 using Aki.Common;
 using Aki.Reflection.Patching;
-using Equipment = GClass1757;
+using EFT;
+using EFT.InventoryLogic;
+using System;
+using System.Reflection;
 using DamageInfo = GStruct241;
+using Equipment = GClass1757;
 
 namespace Aki.SinglePlayer.Patches.Quests
 {

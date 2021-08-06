@@ -1,8 +1,8 @@
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
+using EFT;
 using System.Reflection;
 using System.Threading.Tasks;
-using Aki.Reflection.Patching;
-using EFT;
-using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.Healing
 {

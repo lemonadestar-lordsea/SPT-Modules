@@ -1,13 +1,13 @@
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
+using EFT.UI;
 using System.IO;
 using System.Reflection;
-using Aki.Reflection.Patching;
 using UnityEngine;
-using EFT.UI;
-using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-	public class OnLoadRaidPatch : Patch
+    public class OnLoadRaidPatch : Patch
 	{
 		private static PreloaderUI _preloader;
 

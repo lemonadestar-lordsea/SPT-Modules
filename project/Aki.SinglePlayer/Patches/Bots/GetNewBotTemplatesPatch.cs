@@ -1,15 +1,15 @@
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Comfort.Common;
-using EFT;
 using Aki.Common;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
+using Comfort.Common;
+using EFT;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using BotData = GInterface17;
 using BotsPresets = GClass379;
-using PoolManager = GClass1230;
 using JobPriority = GClass2232;
+using PoolManager = GClass1230;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
