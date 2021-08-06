@@ -1,24 +1,24 @@
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
+using Aki.SinglePlayer.Models;
+using Aki.SinglePlayer.Utils.Bundles;
+using Diz.Jobs;
+using Diz.Resources;
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
-using JetBrains.Annotations;
-using Diz.Jobs;
-using Diz.Resources;
-using Aki.Reflection.Patching;
-using Aki.Reflection.Utils;
-using Aki.SinglePlayer.Models;
-using Aki.SinglePlayer.Utils.Bundles;
-using IEasyBundle = GInterface263;
-using IBundleLock = GInterface264;
 using BundleLock = GClass2265;
 using DependencyGraph = GClass2266<GInterface263>;
+using IBundleLock = GInterface264;
+using IEasyBundle = GInterface263;
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {
-    public class EasyAssetsPatch : GenericPatch<EasyAssetsPatch>
+    public class EasyAssetsPatch : Patch
     {
         private static FieldInfo _manifestField;
         private static FieldInfo _bundlesField;
@@ -33,7 +33,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
             _systemProperty = type.GetProperty("System");
         }
 
-        public EasyAssetsPatch() : base(prefix: nameof(PatchPrefix))
+        public EasyAssetsPatch() : base(T: typeof(EasyAssetsPatch), prefix: nameof(PatchPrefix))
         {
             _ = nameof(IEasyBundle.SameNameAsset);
             _ = nameof(IBundleLock.IsLocked);

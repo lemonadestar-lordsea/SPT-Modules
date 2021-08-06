@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Reflection;
+using Aki.Reflection.Patching;
 using EFT;
 using EFT.InventoryLogic;
 using Aki.Reflection.Utils;

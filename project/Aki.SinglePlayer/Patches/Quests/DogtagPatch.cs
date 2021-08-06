@@ -3,6 +3,7 @@ using System.Reflection;
 using EFT;
 using EFT.InventoryLogic;
 using Aki.Common;
+using Aki.Reflection.Patching;
 using Equipment = GClass1757;
 using DamageInfo = GStruct241;
 

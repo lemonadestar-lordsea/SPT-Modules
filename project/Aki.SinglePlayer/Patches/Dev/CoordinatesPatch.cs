@@ -4,8 +4,8 @@ using UnityEngine;
 using TMPro;
 using EFT;
 using Aki.Common;
+using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
-using Aki.SinglePlayer.Patches;
 
 namespace Aki.Singleplayer.Patches.Dev
 {

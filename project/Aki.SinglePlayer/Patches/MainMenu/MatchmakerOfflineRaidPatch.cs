@@ -3,6 +3,7 @@ using UnityEngine;
 using EFT.UI;
 using EFT.UI.Matchmaker;
 using Aki.Common;
+using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils;
 

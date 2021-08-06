@@ -1,10 +1,11 @@
-﻿using System.Linq;
-using System.Reflection;
-using Aki.Common;
+﻿using Aki.Common;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Utils;
 using EFT.UI;
 using HarmonyLib;
+using System.Linq;
+using System.Reflection;
+using Patch = Aki.Reflection.Patching.Patch;
 
 namespace Aki.SinglePlayer.Patches.MainMenu
 {

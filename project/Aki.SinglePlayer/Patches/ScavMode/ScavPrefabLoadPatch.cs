@@ -7,6 +7,7 @@ using EFT;
 using Aki.Common;
 using Aki.Reflection.CodeWrapper;
 using Aki.Reflection.Utils;
+using Patch = Aki.Reflection.Patching.Patch;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Comfort.Common;
 using EFT;
 using Aki.Common;
+using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using BotData = GInterface17;
 using BotsPresets = GClass379;

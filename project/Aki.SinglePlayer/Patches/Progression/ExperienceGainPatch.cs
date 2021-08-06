@@ -2,6 +2,7 @@ using EFT.UI.SessionEnd;
 using Aki.Reflection.Utils;
 using System.Linq;
 using System.Reflection;
+using Aki.Reflection.Patching;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {

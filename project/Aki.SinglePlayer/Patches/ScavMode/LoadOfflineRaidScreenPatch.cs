@@ -11,6 +11,7 @@ using Aki.Reflection.Utils;
 using MenuController = GClass1253;
 using WeatherSettings = GStruct93;
 using BotsSettings = GStruct234;
+using Patch = Aki.Reflection.Patching.Patch;
 using WavesSettings = GStruct94;
 
 namespace Aki.SinglePlayer.Patches.ScavMode

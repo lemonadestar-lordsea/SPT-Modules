@@ -1,5 +1,6 @@
 using System.IO;
 using System.Reflection;
+using Aki.Reflection.Patching;
 using UnityEngine;
 using EFT.UI;
 using Aki.Reflection.Utils;
