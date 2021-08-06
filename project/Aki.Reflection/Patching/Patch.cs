@@ -1,9 +1,9 @@
-﻿using Aki.Common;
-using HarmonyLib;
-using System;
+﻿using System;
 using System.Reflection;
+using Aki.Common;
+using HarmonyLib;
 
-namespace Aki.SinglePlayer.Patches
+namespace Aki.Reflection.Patching
 {
     public abstract class Patch
     {

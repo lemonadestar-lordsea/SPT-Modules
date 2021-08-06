@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Aki.SinglePlayer.Patches
+namespace Aki.Reflection.Patching
 {
     public class PatchList : IEnumerable<Patch>
     {
