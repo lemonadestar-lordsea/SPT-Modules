@@ -19,9 +19,9 @@ namespace Aki.Core.Patches
         }
     }
 
-    public class FilesCheckerPatch : GenericPatch<FilesCheckerPatch>
+    public class FilesCheckerPatch : Patch
     {
-        public FilesCheckerPatch() : base(prefix: nameof(PatchPrefix))
+        public FilesCheckerPatch() : base(T: typeof(FilesCheckerPatch), prefix: nameof(PatchPrefix))
         {
         }
 

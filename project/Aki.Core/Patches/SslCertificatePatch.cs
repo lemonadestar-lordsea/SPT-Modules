@@ -7,9 +7,9 @@ using Aki.Core.Utils;
 
 namespace Aki.Core.Patches
 {
-	public class SslCertificatePatch : GenericPatch<SslCertificatePatch>
+	public class SslCertificatePatch : Patch
 	{
-		public SslCertificatePatch() : base(prefix: nameof(PatchPrefix))
+		public SslCertificatePatch() : base(T: typeof(SslCertificatePatch), prefix: nameof(PatchPrefix))
 		{
 		}
 

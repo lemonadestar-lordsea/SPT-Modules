@@ -1,15 +1,15 @@
+using Aki.Core.Utils;
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Aki.Reflection.Patching;
-using Aki.Reflection.Utils;
-using Aki.Core.Utils;
 
 namespace Aki.Core.Patches
 {
-    public class BattlEyePatch : GenericPatch<BattlEyePatch>
+    public class BattlEyePatch : Patch
     {
-        public BattlEyePatch() : base(prefix: nameof(PatchPrefix))
+        public BattlEyePatch() : base(T: typeof(BattlEyePatch), prefix: nameof(PatchPrefix))
         {
         }
 
