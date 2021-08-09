@@ -1,14 +1,14 @@
-using EFT.UI.SessionEnd;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
+using EFT.UI.SessionEnd;
 using System.Linq;
 using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    public class ExperienceGainPatch : GenericPatch<ExperienceGainPatch>
+    public class ExperienceGainPatch : Patch
     {
-        public ExperienceGainPatch() : base(prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
+        public ExperienceGainPatch() : base(T: typeof(ExperienceGainPatch), prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
         {
         }
 

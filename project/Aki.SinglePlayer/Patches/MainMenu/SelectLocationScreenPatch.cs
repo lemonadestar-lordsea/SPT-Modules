@@ -1,14 +1,14 @@
-using System.Reflection;
-using EFT.UI;
-using EFT.UI.Matchmaker;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
+using EFT.UI;
+using EFT.UI.Matchmaker;
+using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.MainMenu
 {
-    public class SelectLocationScreenPatch : GenericPatch<SelectLocationScreenPatch>
+    public class SelectLocationScreenPatch : Patch
     {
-        public SelectLocationScreenPatch() : base(postfix: nameof(PatchPostfix))
+        public SelectLocationScreenPatch() : base(T: typeof(SelectLocationScreenPatch), postfix: nameof(PatchPostfix))
         {
         }
 

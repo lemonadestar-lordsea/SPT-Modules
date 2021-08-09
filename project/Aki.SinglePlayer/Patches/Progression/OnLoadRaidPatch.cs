@@ -1,17 +1,17 @@
+using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
+using EFT.UI;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
-using EFT.UI;
-using Aki.Reflection.Patching;
-using Aki.Reflection.Utils;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-	public class OnLoadRaidPatch : GenericPatch<OnLoadRaidPatch>
+    public class OnLoadRaidPatch : Patch
 	{
 		private static PreloaderUI _preloader;
 
-		public OnLoadRaidPatch() : base(postfix: nameof(PatchPostfix))
+		public OnLoadRaidPatch() : base(T: typeof(OnLoadRaidPatch), postfix: nameof(PatchPostfix))
 		{
 			_preloader = null;
         }

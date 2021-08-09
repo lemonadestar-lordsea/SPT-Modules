@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Utils;
-using WaveInfo = GClass984;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using BotsPresets = GClass379;
+using WaveInfo = GClass984;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
-    public class BotTemplateLimitPatch : GenericPatch<BotTemplateLimitPatch>
+    public class BotTemplateLimitPatch : Patch
     {
         static BotTemplateLimitPatch()
         {
@@ -17,7 +17,7 @@ namespace Aki.SinglePlayer.Patches.Bots
             _ = nameof(WaveInfo.Difficulty);
         }
 
-        public BotTemplateLimitPatch() : base(postfix: nameof(PatchPostfix))
+        public BotTemplateLimitPatch() : base(T: typeof(BotTemplateLimitPatch), postfix: nameof(PatchPostfix))
         {
         }
 

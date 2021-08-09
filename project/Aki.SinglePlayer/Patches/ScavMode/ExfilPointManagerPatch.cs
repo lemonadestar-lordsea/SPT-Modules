@@ -1,18 +1,18 @@
-using System.Linq;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Reflection.Emit;
-using HarmonyLib;
 using Aki.Common;
 using Aki.Reflection.CodeWrapper;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
+using HarmonyLib;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
+using Patch = Aki.Reflection.Patching.Patch;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
-    public class ExfilPointManagerPatch : GenericPatch<ExfilPointManagerPatch>
+    public class ExfilPointManagerPatch : Patch
     {
-        public ExfilPointManagerPatch() : base(transpiler: nameof(PatchTranspile))
+        public ExfilPointManagerPatch() : base(T: typeof(ExfilPointManagerPatch), transpiler: nameof(PatchTranspile))
         {
         }
 

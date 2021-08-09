@@ -1,24 +1,24 @@
-﻿using System;
+﻿using Aki.Reflection.Utils;
+using EFT;
+using EFT.UI.Matchmaker;
+using EFT.UI.Screens;
+using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using HarmonyLib;
-using EFT;
-using EFT.UI.Matchmaker;
-using EFT.UI.Screens;
-using Aki.Reflection.Patching;
-using Aki.Reflection.Utils;
-using MenuController = GClass1253;
-using WeatherSettings = GStruct93;
 using BotsSettings = GStruct234;
+using MenuController = GClass1253;
+using Patch = Aki.Reflection.Patching.Patch;
 using WavesSettings = GStruct94;
+using WeatherSettings = GStruct93;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
     using OfflineRaidAction = Action<bool, WeatherSettings, BotsSettings, WavesSettings>;
 
-    public class LoadOfflineRaidScreenPatch : GenericPatch<LoadOfflineRaidScreenPatch>
+    public class LoadOfflineRaidScreenPatch : Patch
     {
         private static MethodInfo _onReadyScreenMethod;
         private static FieldInfo _weatherSettingsField;
@@ -44,7 +44,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             _menuControllerField = typeof(MainApplication).GetField($"{nameof(GClass1253).ToLower()}_0", Constants.PrivateFlags);
         }
 
-        public LoadOfflineRaidScreenPatch() : base(transpiler: nameof(PatchTranspiler))
+        public LoadOfflineRaidScreenPatch() : base(T: typeof(LoadOfflineRaidScreenPatch), transpiler: nameof(PatchTranspiler))
         {
         }
 

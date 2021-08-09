@@ -1,19 +1,19 @@
+using Aki.Reflection.Patching;
+using Aki.SinglePlayer.Models;
+using Aki.SinglePlayer.Utils.Bundles;
+using Diz.DependencyManager;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Diz.DependencyManager;
 using UnityEngine;
-using Aki.Reflection.Patching;
-using Aki.SinglePlayer.Models;
-using Aki.SinglePlayer.Utils.Bundles;
-using IEasyBundle = GInterface263;
-using IBundleLock = GInterface264;
 using BindableState = GClass2251<Diz.DependencyManager.ELoadState>;
+using IBundleLock = GInterface264;
+using IEasyBundle = GInterface263;
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {
-	public class EasyBundlePatch : GenericPatch<EasyBundlePatch>
+    public class EasyBundlePatch : Patch
 	{
         static EasyBundlePatch()
         {
@@ -22,7 +22,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
             _ = nameof(BindableState.Bind);
         }
 
-        public EasyBundlePatch() : base(prefix: nameof(PatchPrefix))
+        public EasyBundlePatch() : base(T: typeof(EasyBundlePatch), prefix: nameof(PatchPrefix))
         {
         }
 

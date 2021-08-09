@@ -39,7 +39,8 @@
     <Compile Include="CodeWrapper\Code.cs" />
     <Compile Include="CodeWrapper\CodeGenerator.cs" />
     <Compile Include="CodeWrapper\CodeWithLabel.cs" />
-    <Compile Include="Patching\GenericPatch.cs" />
+    <Compile Include="Patching\Patch.cs" />
+    <Compile Include="Patching\PatchList.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\ClientAppUtils.cs" />
     <Compile Include="Utils\HookObject.cs" />

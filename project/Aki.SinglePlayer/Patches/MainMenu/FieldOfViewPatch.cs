@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Aki.Reflection.Patching;
+using EFT;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using EFT;
-using Aki.Reflection.Patching;
 
 namespace Aki.SinglePlayer.Patches.MainMenu
 {
-    public class FieldOfViewPatch : GenericPatch<FieldOfViewPatch>
+    public class FieldOfViewPatch : Patch
     {
         private const int _min = 10;
         private const int _max = 360;
@@ -26,7 +26,7 @@ namespace Aki.SinglePlayer.Patches.MainMenu
             _notches = notches.ToArray();
         }
 
-        public FieldOfViewPatch() : base(prefix: nameof(PatchPrefix))
+        public FieldOfViewPatch() : base(T: typeof(FieldOfViewPatch), prefix: nameof(PatchPrefix))
         {
         }
 

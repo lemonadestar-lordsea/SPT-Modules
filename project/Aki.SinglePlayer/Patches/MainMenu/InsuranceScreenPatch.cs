@@ -1,19 +1,19 @@
-using System.Linq;
-using System.Reflection;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
+using System.Linq;
+using System.Reflection;
 using MainMenuController = GClass1253;
 
 namespace Aki.SinglePlayer.Patches.MainMenu
 {
-    class InsuranceScreenPatch : GenericPatch<InsuranceScreenPatch>
+    class InsuranceScreenPatch : Patch
     {
         static InsuranceScreenPatch()
         {
             _ = nameof(MainMenuController.InventoryController);
         }
 
-        public InsuranceScreenPatch() : base(prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
+        public InsuranceScreenPatch() : base(T: typeof(InsuranceScreenPatch),prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
         {
         }
 

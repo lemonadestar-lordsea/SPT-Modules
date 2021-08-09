@@ -1,17 +1,17 @@
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 using Aki.Common;
 using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Utils;
 using Aki.SinglePlayer.Utils.Bundles;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {
-    public class BundleLoadPatch : GenericPatch<BundleLoadPatch>
+    public class BundleLoadPatch : Patch
     {
-        public BundleLoadPatch() : base(prefix: nameof(PatchPrefix))
+        public BundleLoadPatch() : base(T: typeof(BundleLoadPatch), prefix: nameof(PatchPrefix))
         {
         }
 
