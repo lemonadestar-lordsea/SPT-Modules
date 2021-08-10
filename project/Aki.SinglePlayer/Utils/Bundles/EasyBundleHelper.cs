@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Aki.Reflection.Utils;
 using IBundleLock = GInterface264;
-using BindableState = GClass2251<Diz.DependencyManager.ELoadState>;
+using BindableState = GClass2265<Diz.DependencyManager.ELoadState>;
 
 namespace Aki.SinglePlayer.Utils.Bundles
 {

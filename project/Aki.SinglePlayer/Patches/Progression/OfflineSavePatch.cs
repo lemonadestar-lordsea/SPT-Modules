@@ -7,7 +7,7 @@ using EFT;
 using System;
 using System.Linq;
 using System.Reflection;
-using ClientMetrics = GClass1431;
+using ClientMetrics = GClass1442;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
