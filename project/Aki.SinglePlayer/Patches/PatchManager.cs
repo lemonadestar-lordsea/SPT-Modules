@@ -5,6 +5,7 @@ using Aki.SinglePlayer.Patches.MainMenu;
 using Aki.SinglePlayer.Patches.Progression;
 using Aki.SinglePlayer.Patches.Quests;
 using Aki.SinglePlayer.Patches.ScavMode;
+using Aki.SinglePlayer.Patches.Bundles;
 
 namespace Aki.SinglePlayer.Patches
 {
@@ -16,6 +17,9 @@ namespace Aki.SinglePlayer.Patches
         {
             _patches = new PatchList
             {
+                new EasyAssetsPatch(),
+                new EasyBundlePatch(),
+                new BundleLoadPatch(),
                 new OfflineSaveProfilePatch(),
                 new OfflineSpawnPointPatch(),
                 new ExperienceGainPatch(),
