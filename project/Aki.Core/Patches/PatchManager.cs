@@ -14,7 +14,7 @@ namespace Aki.Core.Patches
                 new BattlEyePatch(),
                 new SslCertificatePatch(),
                 new UnityWebRequestPatch()
-        };
+            };
         }
 
         public void RunPatches()

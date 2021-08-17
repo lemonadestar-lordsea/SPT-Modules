@@ -47,7 +47,7 @@ namespace Aki.SinglePlayer.Patches
                 new EndByTimerPatch(),
                 //new CoordinatesPatch(),
                 new VersionLabelPatch(),
-        };
+            };
         }
 
         public void RunPatches()
