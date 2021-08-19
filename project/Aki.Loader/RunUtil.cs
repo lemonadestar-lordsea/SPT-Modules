@@ -31,10 +31,9 @@ namespace Aki.Loader
                 _hasHooked = true;
             }
 
-            LoadAssemblyAndEntryPoint(dllPath, out MethodInfo entry, out bool hasStringArray);
-
             try
             {
+                LoadAssemblyAndEntryPoint(dllPath, out MethodInfo entry, out bool hasStringArray);
                 entry.Invoke(null, hasStringArray ? new object[] { args } : Array.Empty<object>());
             }
             catch (Exception ex)
@@ -90,6 +89,11 @@ namespace Aki.Loader
         {
             byte[] bytes;
             Assembly asm;
+
+            if (!WinApi.CheckSignature(dllPath))
+            {
+                throw new Exception($"Failed signature check from '{dllPath}'");
+            }
 
             try
             {
