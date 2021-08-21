@@ -13,6 +13,7 @@ using MenuController = GClass1262;
 using Patch = Aki.Reflection.Patching.Patch;
 using WavesSettings = GStruct95;
 using WeatherSettings = GStruct94;
+// DON'T FORGET TO UPDATE REFERENCES IN CONSTRUCTOR
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
@@ -20,12 +21,12 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
     public class LoadOfflineRaidScreenPatch : Patch
     {
-        private static MethodInfo _onReadyScreenMethod;
-        private static FieldInfo _weatherSettingsField;
-        private static FieldInfo _botsSettingsField;
-        private static FieldInfo _waveSettingsField;
-        private static FieldInfo _isLocalField;
-        private static FieldInfo _menuControllerField;
+        private static readonly MethodInfo _onReadyScreenMethod;
+        private static readonly FieldInfo _weatherSettingsField;
+        private static readonly FieldInfo _botsSettingsField;
+        private static readonly FieldInfo _waveSettingsField;
+        private static readonly FieldInfo _isLocalField;
+        private static readonly FieldInfo _menuControllerField;
 
         static LoadOfflineRaidScreenPatch()
         {
@@ -39,7 +40,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             _onReadyScreenMethod = menuControllerType.GetMethod("method_40", Constants.PrivateFlags);
             _weatherSettingsField = menuControllerType.GetField($"{nameof(GStruct94).ToLower()}_0", Constants.PrivateFlags);
             _botsSettingsField = menuControllerType.GetField($"{nameof(GStruct95).ToLower()}_0", Constants.PrivateFlags);
-            _waveSettingsField = menuControllerType.GetField($"{nameof(GStruct237).ToLower()}_0", Constants.PrivateFlags);
+            _waveSettingsField = menuControllerType.GetField($"{nameof(GStruct238).ToLower()}_0", Constants.PrivateFlags);
             _isLocalField = menuControllerType.GetField("bool_0", Constants.PrivateFlags);
             _menuControllerField = typeof(MainApplication).GetField($"{nameof(GClass1262).ToLower()}_0", Constants.PrivateFlags);
         }
@@ -51,7 +52,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         protected override MethodBase GetTargetMethod()
         {
             return typeof(MenuController).GetNestedTypes(BindingFlags.NonPublic)
-                .Single(x => x.Name == "Class848")
+                .Single(x => x.IsNested && x.GetField("selectLocationScreenController", BindingFlags.Public | BindingFlags.Instance) != null)
                 .GetMethod("method_2", Constants.PrivateFlags);
         }
 
