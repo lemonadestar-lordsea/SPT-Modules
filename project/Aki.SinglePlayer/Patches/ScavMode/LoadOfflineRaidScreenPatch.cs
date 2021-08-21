@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using BotsSettings = GStruct237;
+using BotsSettings = GStruct238;
 using MenuController = GClass1262;
 using Patch = Aki.Reflection.Patching.Patch;
 using WavesSettings = GStruct95;
