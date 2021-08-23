@@ -5,7 +5,7 @@ using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models;
 using IEffect = GInterface136;
 using IHealthController = GInterface177;
-using DamageInfo = GStruct244;
+using DamageInfo = GStruct245;
 
 namespace Aki.SinglePlayer.Utils.Healing
 {

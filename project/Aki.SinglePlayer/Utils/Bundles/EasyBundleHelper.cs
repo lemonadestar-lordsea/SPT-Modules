@@ -36,7 +36,7 @@ namespace Aki.SinglePlayer.Utils.Bundles
 
             _flags = BindingFlags.Instance | BindingFlags.NonPublic;
 
-            Type = Constants.EftTypes.Single(x => x.IsClass && x.GetProperty("SameNameAsset") != null);
+            Type = Constants.EftTypes.Single(x => x.GetMethod("set_SameNameAsset", BindingFlags.Instance | BindingFlags.NonPublic) != null);
 
             _pathField = Type.GetField("string_1", _flags);
             _keyWithoutExtensionField = Type.GetField("string_0", _flags);
