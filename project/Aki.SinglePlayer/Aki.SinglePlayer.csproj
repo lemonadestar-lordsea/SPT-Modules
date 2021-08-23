@@ -87,7 +87,6 @@
     <Compile Include="Models\PlayerHealth.cs" />
     <Compile Include="Models\SaveProfileRequest.cs" />
     <Compile Include="Models\ServerConfig.cs" />
-    <Compile Include="Patches\MainMenu\FieldOfViewPatch.cs" />
     <Compile Include="Patches\MainMenu\VersionLabelPatch.cs" />
     <Compile Include="Patches\PatchManager.cs" />
     <Compile Include="Program.cs" />

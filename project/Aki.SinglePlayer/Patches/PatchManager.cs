@@ -28,7 +28,6 @@ namespace Aki.SinglePlayer.Patches
                 new PlayerPatch(),
                 new MatchmakerOfflineRaidPatch(),
                 new SelectLocationScreenPatch(),
-                //new FieldOfViewPatch(),
                 new InsuranceScreenPatch(),
                 new BotTemplateLimitPatch(),
                 new GetNewBotTemplatesPatch(),
