@@ -58,7 +58,14 @@ namespace Aki.Reflection.Patching
                 return null;
             }
 
-            return new HarmonyMethod(T.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly));
+            var patchMethod = T.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+
+            if (patchMethod == null)
+            {
+                throw new ArgumentNullException(nameof(methodName), $"Could not find patch method \"{methodName}\". Make sure it's a private static method!");
+            }
+
+            return new HarmonyMethod(patchMethod);
         }
 
         /// <summary>
