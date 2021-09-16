@@ -1,11 +1,12 @@
 ﻿using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Patches.Bots;
+using Aki.SinglePlayer.Patches.Bundles;
 using Aki.SinglePlayer.Patches.Healing;
 using Aki.SinglePlayer.Patches.MainMenu;
+using Aki.SinglePlayer.Patches.Network;
 using Aki.SinglePlayer.Patches.Progression;
 using Aki.SinglePlayer.Patches.Quests;
 using Aki.SinglePlayer.Patches.ScavMode;
-using Aki.SinglePlayer.Patches.Bundles;
 
 namespace Aki.SinglePlayer.Patches
 {
@@ -46,6 +47,7 @@ namespace Aki.SinglePlayer.Patches
                 new EndByTimerPatch(),
                 //new CoordinatesPatch(),
                 new VersionLabelPatch(),
+                new UnityWebRequestCertificatePatch()
             };
         }
 
