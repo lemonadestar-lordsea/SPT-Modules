@@ -1,7 +1,9 @@
+using Aki.Common;
 using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils.Bundles;
 using Diz.DependencyManager;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,7 +24,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
             _ = nameof(BindableState.Bind);
         }
 
-        public EasyBundlePatch() : base(T: typeof(EasyBundlePatch), prefix: nameof(PatchPrefix))
+        public EasyBundlePatch() : base(T: typeof(EasyBundlePatch), prefix: nameof(PatchPrefix), postfix: nameof(PatchPostfix))
         {
         }
 
@@ -31,7 +33,12 @@ namespace Aki.SinglePlayer.Patches.Bundles
             return EasyBundleHelper.Type.GetConstructors()[0];
         }
 
-        private static bool PatchPrefix(object __instance, string key, string rootPath, AssetBundleManifest manifest, IBundleLock bundleLock)
+        private static bool PatchPrefix()
+        {
+            return false;
+        }
+
+        private static void PatchPostfix(object __instance, string key, string rootPath, AssetBundleManifest manifest, IBundleLock bundleLock)
 		{
             var path = rootPath + key;
             var dependencyKeys = manifest.GetDirectDependencies(key);
@@ -49,21 +56,27 @@ namespace Aki.SinglePlayer.Patches.Bundles
                 }
 
                 var result = dependencyKeys == null ? new List<string>() : dependencyKeys.ToList();
-                dependencyKeys = result.Union(kvp.Value.DependencyKeys).ToList().ToArray<string>();
+                dependencyKeys = result.Union(kvp.Value.DependencyKeys).ToArray();
                 break;
             }
 
-            var easyBundle = new EasyBundleHelper(__instance)
+            try
             {
-                Key = key,
-                Path = path,
-                KeyWithoutExtension = Path.GetFileNameWithoutExtension(key),
-                DependencyKeys = dependencyKeys,
-                LoadState = new BindableState(ELoadState.Unloaded, null),
-                BundleLock = bundleLock
-            };
-
-            return false;
-		}
+                _ = new EasyBundleHelper(__instance)
+                {
+                    Key = key,
+                    Path = path,
+                    KeyWithoutExtension = Path.GetFileNameWithoutExtension(key),
+                    DependencyKeys = dependencyKeys,
+                    LoadState = new BindableState(ELoadState.Unloaded, null),
+                    BundleLock = bundleLock
+                };
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"EasyBundlePatch encountered an error. Custom bundles will not be loaded!\n{ex.Message}\n{ex.StackTrace}");
+                Debug.LogException(ex);
+            }
+        }
 	}
 }
