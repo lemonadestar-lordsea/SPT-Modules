@@ -1,9 +1,7 @@
-using Aki.Common;
 using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils.Bundles;
 using Diz.DependencyManager;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -60,23 +58,15 @@ namespace Aki.SinglePlayer.Patches.Bundles
                 break;
             }
 
-            try
+            _ = new EasyBundleHelper(__instance)
             {
-                _ = new EasyBundleHelper(__instance)
-                {
-                    Key = key,
-                    Path = path,
-                    KeyWithoutExtension = Path.GetFileNameWithoutExtension(key),
-                    DependencyKeys = dependencyKeys,
-                    LoadState = new BindableState(ELoadState.Unloaded, null),
-                    BundleLock = bundleLock
-                };
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"EasyBundlePatch encountered an error. Custom bundles will not be loaded!\n{ex.Message}\n{ex.StackTrace}");
-                Debug.LogException(ex);
-            }
+                Key = key,
+                Path = path,
+                KeyWithoutExtension = Path.GetFileNameWithoutExtension(key),
+                DependencyKeys = dependencyKeys,
+                LoadState = new BindableState(ELoadState.Unloaded, null),
+                BundleLock = bundleLock
+            };
         }
 	}
 }

@@ -1,12 +1,12 @@
+using Aki.Reflection.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
-using Aki.Reflection.Utils;
-using IBundleLock = GInterface264;
 using BindableState = GClass2265<Diz.DependencyManager.ELoadState>;
+using IBundleLock = GInterface264;
 
 namespace Aki.SinglePlayer.Utils.Bundles
 {
@@ -40,7 +40,7 @@ namespace Aki.SinglePlayer.Utils.Bundles
 
             _pathField = Type.GetField("string_1", _flags);
             _keyWithoutExtensionField = Type.GetField("string_0", _flags);
-            _bundleLockField = Type.GetField($"{nameof(GInterface264).ToLower()}_0", _flags);
+            _bundleLockField = Type.GetField($"{nameof(GInterface264).ToLowerInvariant()}_0", _flags);
             _loadingJobField = Type.GetField("task_0", _flags);
             _dependencyKeysProperty = Type.GetProperty("DependencyKeys");
             _keyProperty = Type.GetProperty("Key");

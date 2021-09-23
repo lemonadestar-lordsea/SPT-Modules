@@ -38,11 +38,11 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var menuControllerType = typeof(MenuController);
 
             _onReadyScreenMethod = menuControllerType.GetMethod("method_40", Constants.PrivateFlags);
-            _weatherSettingsField = menuControllerType.GetField($"{nameof(GStruct94).ToLower()}_0", Constants.PrivateFlags);
-            _botsSettingsField = menuControllerType.GetField($"{nameof(GStruct95).ToLower()}_0", Constants.PrivateFlags);
-            _waveSettingsField = menuControllerType.GetField($"{nameof(GStruct238).ToLower()}_0", Constants.PrivateFlags);
+            _weatherSettingsField = menuControllerType.GetField($"{nameof(GStruct94).ToLowerInvariant()}_0", Constants.PrivateFlags);
+            _botsSettingsField = menuControllerType.GetField($"{nameof(GStruct95).ToLowerInvariant()}_0", Constants.PrivateFlags);
+            _waveSettingsField = menuControllerType.GetField($"{nameof(GStruct238).ToLowerInvariant()}_0", Constants.PrivateFlags);
             _isLocalField = menuControllerType.GetField("bool_0", Constants.PrivateFlags);
-            _menuControllerField = typeof(MainApplication).GetField($"{nameof(GClass1262).ToLower()}_0", Constants.PrivateFlags);
+            _menuControllerField = typeof(MainApplication).GetField($"{nameof(GClass1262).ToLowerInvariant()}_0", Constants.PrivateFlags);
         }
 
         public LoadOfflineRaidScreenPatch() : base(T: typeof(LoadOfflineRaidScreenPatch), transpiler: nameof(PatchTranspiler))

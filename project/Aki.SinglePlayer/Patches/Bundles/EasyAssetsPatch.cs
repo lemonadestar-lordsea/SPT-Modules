@@ -29,7 +29,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
             var type = typeof(EasyAssets);
 
             _manifestField = type.GetField(nameof(EasyAssets.Manifest));
-            _bundlesField = type.GetField($"{EasyBundleHelper.Type.Name.ToLower()}_0", Constants.PrivateFlags);
+            _bundlesField = type.GetField($"{EasyBundleHelper.Type.Name.ToLowerInvariant()}_0", Constants.PrivateFlags);
             _systemProperty = type.GetProperty("System");
         }
 
