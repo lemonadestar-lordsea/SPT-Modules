@@ -12,7 +12,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
 using BundleLock = GClass2478;
-using DependencyGraph = GClass2479<GInterface274>;
+using DependencyGraph = GClass2479<GInterface271>;
 using IBundleLock = GInterface272;
 using IEasyBundle = GInterface271;
 
