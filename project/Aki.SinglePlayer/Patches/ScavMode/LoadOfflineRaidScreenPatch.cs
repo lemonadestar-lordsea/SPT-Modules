@@ -8,11 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using BotsSettings = GStruct238;
-using MenuController = GClass1262;
+using BotsSettings = GStruct232;
+using MenuController = GClass1454;
 using Patch = Aki.Reflection.Patching.Patch;
-using WavesSettings = GStruct95;
-using WeatherSettings = GStruct94;
+using WavesSettings = GStruct92;
+using WeatherSettings = GStruct91;
 // DON'T FORGET TO UPDATE REFERENCES IN CONSTRUCTOR
 
 namespace Aki.SinglePlayer.Patches.ScavMode
@@ -38,11 +38,11 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var menuControllerType = typeof(MenuController);
 
             _onReadyScreenMethod = menuControllerType.GetMethod("method_40", Constants.PrivateFlags);
-            _weatherSettingsField = menuControllerType.GetField($"{nameof(GStruct94).ToLowerInvariant()}_0", Constants.PrivateFlags);
-            _botsSettingsField = menuControllerType.GetField($"{nameof(GStruct95).ToLowerInvariant()}_0", Constants.PrivateFlags);
-            _waveSettingsField = menuControllerType.GetField($"{nameof(GStruct238).ToLowerInvariant()}_0", Constants.PrivateFlags);
+            _weatherSettingsField = menuControllerType.GetField($"{nameof(GStruct91).ToLowerInvariant()}_0", Constants.PrivateFlags);
+            _botsSettingsField = menuControllerType.GetField($"{nameof(GStruct92).ToLowerInvariant()}_0", Constants.PrivateFlags);
+            _waveSettingsField = menuControllerType.GetField($"{nameof(GStruct232).ToLowerInvariant()}_0", Constants.PrivateFlags);
             _isLocalField = menuControllerType.GetField("bool_0", Constants.PrivateFlags);
-            _menuControllerField = typeof(MainApplication).GetField($"{nameof(GClass1262).ToLowerInvariant()}_0", Constants.PrivateFlags);
+            _menuControllerField = typeof(MainApplication).GetField($"{nameof(GClass1454).ToLowerInvariant()}_0", Constants.PrivateFlags);
         }
 
         public LoadOfflineRaidScreenPatch() : base(T: typeof(LoadOfflineRaidScreenPatch), transpiler: nameof(PatchTranspiler))
@@ -95,7 +95,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         private static void LoadOfflineRaidScreenForScav()
         {
             var menuController = (object)GetMenuController();
-            var gclass = new MatchmakerOfflineRaid.GClass2122();
+            var gclass = new MatchmakerOfflineRaid.GClass2325();
 
             gclass.OnShowNextScreen += LoadOfflineRaidNextScreen;
 

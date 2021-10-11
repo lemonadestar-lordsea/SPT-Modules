@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using SpawnPoints = GInterface229;
+using SpawnPoints = GInterface239;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {

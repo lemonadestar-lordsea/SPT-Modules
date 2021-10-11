@@ -5,8 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
-using BindableState = GClass2265<Diz.DependencyManager.ELoadState>;
-using IBundleLock = GInterface264;
+using BindableState = GClass2464<Diz.DependencyManager.ELoadState>;
+using IBundleLock = GInterface272;
 
 namespace Aki.SinglePlayer.Utils.Bundles
 {
