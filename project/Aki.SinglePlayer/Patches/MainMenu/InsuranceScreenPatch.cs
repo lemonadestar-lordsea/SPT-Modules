@@ -2,7 +2,7 @@ using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using System.Linq;
 using System.Reflection;
-using MainMenuController = GClass1454;
+using MainMenuController = GClass1453;
 
 namespace Aki.SinglePlayer.Patches.MainMenu
 {

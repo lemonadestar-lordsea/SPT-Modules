@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using BindableState = GClass2464<Diz.DependencyManager.ELoadState>;
+using BindableState = GClass2463<Diz.DependencyManager.ELoadState>;
 using IBundleLock = GInterface272;
 using IEasyBundle = GInterface271;
 

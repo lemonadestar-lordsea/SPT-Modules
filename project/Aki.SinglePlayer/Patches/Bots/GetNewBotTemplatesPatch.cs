@@ -7,9 +7,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using BotData = GInterface18;
-using BotsPresets = GClass565;
-using JobPriority = GClass2446;
-using PoolManager = GClass1435;
+using BotsPresets = GClass564;
+using JobPriority = GClass2445;
+using PoolManager = GClass1434;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {

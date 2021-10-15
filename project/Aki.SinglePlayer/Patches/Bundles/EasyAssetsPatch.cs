@@ -11,8 +11,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
-using BundleLock = GClass2478;
-using DependencyGraph = GClass2479<GInterface271>;
+using BundleLock = GClass2477;
+using DependencyGraph = GClass2478<GInterface271>;
 using IBundleLock = GInterface272;
 using IEasyBundle = GInterface271;
 

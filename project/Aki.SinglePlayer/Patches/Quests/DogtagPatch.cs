@@ -5,7 +5,7 @@ using EFT.InventoryLogic;
 using System;
 using System.Reflection;
 using DamageInfo = GStruct240;
-using Equipment = GClass1975;
+using Equipment = GClass1974;
 
 namespace Aki.SinglePlayer.Patches.Quests
 {
