@@ -6,10 +6,10 @@ using EFT;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using BotData = GInterface17;
-using BotsPresets = GClass379;
-using JobPriority = GClass2246;
-using PoolManager = GClass1239;
+using BotData = GInterface18;
+using BotsPresets = GClass564;
+using JobPriority = GClass2445;
+using PoolManager = GClass1434;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {

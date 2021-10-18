@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BotData = GInterface17;
+using BotData = GInterface18;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {

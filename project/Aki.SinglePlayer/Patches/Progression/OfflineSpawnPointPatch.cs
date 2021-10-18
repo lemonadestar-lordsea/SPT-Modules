@@ -1,17 +1,17 @@
 using Aki.Common;
-using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using EFT;
 using EFT.Game.Spawning;
+using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using SpawnPoints = GInterface229;
+using SpawnPoints = GInterface239;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    public class OfflineSpawnPointPatch : Patch
+    public class OfflineSpawnPointPatch : Reflection.Patching.Patch
     {
         static OfflineSpawnPointPatch()
         {
@@ -34,9 +34,11 @@ namespace Aki.SinglePlayer.Patches.Progression
                 && type.IsClass);
         }
 
-        private static bool PatchPrefix(ref ISpawnPoint __result, SpawnPoints ___ginterface229_0, ESpawnCategory category, EPlayerSide side, string infiltration)
+        private static bool PatchPrefix(ref ISpawnPoint __result, object __instance, ESpawnCategory category, EPlayerSide side, string infiltration)
         {
-            var spawnPoints = ___ginterface229_0.ToList();
+            var ginterface239_0 = Traverse.Create(__instance).Field<GInterface239>("ginterface239_0").Value;
+
+            var spawnPoints = ginterface239_0.ToList();
             var unfilteredSpawnPoints = spawnPoints.ToList();
 
             spawnPoints = spawnPoints.Where(sp => sp?.Infiltration != null && (string.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();
