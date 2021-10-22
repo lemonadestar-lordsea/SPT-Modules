@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using SpawnPoints = GInterface239;
+using SpawnPoints = GInterface240;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
@@ -36,9 +36,9 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         private static bool PatchPrefix(ref ISpawnPoint __result, object __instance, ESpawnCategory category, EPlayerSide side, string infiltration)
         {
-            var ginterface239_0 = Traverse.Create(__instance).Field<GInterface239>("ginterface239_0").Value;
+            var ginterface240_0 = Traverse.Create(__instance).Field<SpawnPoints>("ginterface240_0").Value;
 
-            var spawnPoints = ginterface239_0.ToList();
+            var spawnPoints = ginterface240_0.ToList();
             var unfilteredSpawnPoints = spawnPoints.ToList();
 
             spawnPoints = spawnPoints.Where(sp => sp?.Infiltration != null && (string.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();
