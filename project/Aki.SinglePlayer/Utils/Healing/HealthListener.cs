@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models;
-using IEffect = GInterface146;
-using IHealthController = GInterface187;
-using DamageInfo = GStruct240;
+using IEffect = GInterface147;
+using IHealthController = GInterface188;
+using DamageInfo = GStruct241;
 
 namespace Aki.SinglePlayer.Utils.Healing
 {

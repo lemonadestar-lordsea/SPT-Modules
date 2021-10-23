@@ -7,9 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using BindableState = GClass2463<Diz.DependencyManager.ELoadState>;
-using IBundleLock = GInterface272;
-using IEasyBundle = GInterface271;
+using BindableState = GClass2483<Diz.DependencyManager.ELoadState>;
+using IBundleLock = GInterface273;
+using IEasyBundle = GInterface272;
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {
