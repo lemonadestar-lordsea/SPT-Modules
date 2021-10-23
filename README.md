@@ -11,7 +11,7 @@ Aki.SinglePlayer   | Simulating online game offline
 
 ## Requirements
 
-- Escape From Tarkov 0.12.11.2.14742
+- Escape From Tarkov 0.12.11.6.14949
 - Visual Studio Build Tools (.NET desktop workload)
 - .NET Framework 3.5
 - .NET Framework 4.7.2
