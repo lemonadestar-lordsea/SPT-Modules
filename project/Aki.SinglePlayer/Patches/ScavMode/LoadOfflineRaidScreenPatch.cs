@@ -35,20 +35,8 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var menuControllerType = typeof(MainMenuController);
 
             _onReadyScreenMethod = menuControllerType.GetMethod("method_40", Constants.PrivateFlags);
-            //_weatherSettingsField = menuControllerType.GetField($"{nameof(WeatherSettings).ToLowerInvariant()}_0", Constants.PrivateFlags);
-            //_botsSettingsField = menuControllerType.GetField($"{nameof(WavesSettings).ToLowerInvariant()}_0", Constants.PrivateFlags);
-            //_waveSettingsField = menuControllerType.GetField($"{nameof(BotsSettings).ToLowerInvariant()}_0", Constants.PrivateFlags);
             _isLocalField = menuControllerType.GetField("bool_0", Constants.PrivateFlags);
-            //_menuControllerField = typeof(MainApplication).GetField($"{nameof(MainMenuController).ToLowerInvariant()}_0", Constants.PrivateFlags);
-
-            foreach (var field in typeof(MainApplication).GetFields(Constants.PrivateFlags))
-            {
-                if (field.FieldType == typeof(MainMenuController))
-                {
-                    _menuControllerField = field;
-                    break;
-                }
-            }
+            _menuControllerField = Array.Find(typeof(MainApplication).GetFields(Constants.PrivateFlags), x => x.FieldType == typeof(MainMenuController));
 
             foreach (var field in menuControllerType.GetFields(Constants.PrivateFlags))
             {
