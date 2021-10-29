@@ -1,3 +1,4 @@
+using Aki.Common;
 using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils.Bundles;
@@ -7,9 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using BindableState = GClass2483<Diz.DependencyManager.ELoadState>;
-using IBundleLock = GInterface273;
-using IEasyBundle = GInterface272;
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {
@@ -19,7 +17,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
         {
             _ = nameof(IEasyBundle.SameNameAsset);
             _ = nameof(IBundleLock.IsLocked);
-            _ = nameof(BindableState.Bind);
+            _ = nameof(BindableState<ELoadState>.Bind);
         }
 
         public EasyBundlePatch() : base(T: typeof(EasyBundlePatch), prefix: nameof(PatchPrefix), postfix: nameof(PatchPostfix))
@@ -64,7 +62,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
                 Path = path,
                 KeyWithoutExtension = Path.GetFileNameWithoutExtension(key),
                 DependencyKeys = dependencyKeys,
-                LoadState = new BindableState(ELoadState.Unloaded, null),
+                LoadState = new BindableState<ELoadState>(ELoadState.Unloaded, null),
                 BundleLock = bundleLock
             };
         }

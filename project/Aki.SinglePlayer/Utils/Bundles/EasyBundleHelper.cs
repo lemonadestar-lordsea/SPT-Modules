@@ -1,3 +1,4 @@
+using Aki.Common;
 using Aki.Reflection.Utils;
 using System;
 using System.Collections.Generic;
@@ -5,8 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
-using BindableState = GClass2483<Diz.DependencyManager.ELoadState>;
-using IBundleLock = GInterface273;
+using BindableState = BindableState<Diz.DependencyManager.ELoadState>;
 
 namespace Aki.SinglePlayer.Utils.Bundles
 {
@@ -36,11 +36,10 @@ namespace Aki.SinglePlayer.Utils.Bundles
 
             _flags = BindingFlags.Instance | BindingFlags.NonPublic;
 
-            Type = Constants.EftTypes.Single(x => x.GetMethod("set_SameNameAsset", BindingFlags.Instance | BindingFlags.NonPublic) != null);
-
+            Type = Constants.EftTypes.Single(x => x.GetMethod("set_SameNameAsset", _flags) != null);
             _pathField = Type.GetField("string_1", _flags);
             _keyWithoutExtensionField = Type.GetField("string_0", _flags);
-            _bundleLockField = Type.GetField($"{nameof(GInterface273).ToLowerInvariant()}_0", _flags);
+            _bundleLockField = Type.GetFields(_flags).FirstOrDefault(x => x.FieldType == typeof(IBundleLock));
             _loadingJobField = Type.GetField("task_0", _flags);
             _dependencyKeysProperty = Type.GetProperty("DependencyKeys");
             _keyProperty = Type.GetProperty("Key");

@@ -6,10 +6,6 @@ using EFT;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using BotData = GInterface18;
-using BotsPresets = GClass564;
-using JobPriority = GClass2465;
-using PoolManager = GClass1442;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
@@ -51,7 +47,7 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         static GetNewBotTemplatesPatch()
         {
-            _ = nameof(BotData.PrepareToLoadBackend);
+            _ = nameof(IBotData.PrepareToLoadBackend);
             _ = nameof(BotsPresets.GetNewProfile);
             _ = nameof(PoolManager.LoadBundlesAndCreatePools);
             _ = nameof(JobPriority.General);
@@ -68,7 +64,7 @@ namespace Aki.SinglePlayer.Patches.Bots
             return typeof(BotsPresets).GetMethod(nameof(BotsPresets.CreateProfile), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         }
 
-        private static bool PatchPrefix(ref Task<Profile> __result, BotsPresets __instance, BotData data)
+        private static bool PatchPrefix(ref Task<Profile> __result, BotsPresets __instance, IBotData data)
         {
             /*
                 in short when client wants new bot and GetNewProfile() return null (if not more available templates or they don't satisfied by Role and Difficulty condition)

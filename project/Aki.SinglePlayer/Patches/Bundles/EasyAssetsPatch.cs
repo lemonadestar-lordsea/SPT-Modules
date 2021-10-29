@@ -11,10 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
-using BundleLock = GClass2497;
-using DependencyGraph = GClass2498<GInterface272>;
-using IBundleLock = GInterface273;
-using IEasyBundle = GInterface272;
+using DependencyGraph = DependencyGraph<IEasyBundle>;
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {
