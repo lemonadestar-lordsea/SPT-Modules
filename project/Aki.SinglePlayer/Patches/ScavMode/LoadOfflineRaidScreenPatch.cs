@@ -114,7 +114,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         private static void LoadOfflineRaidScreenForScav()
         {
             var menuController = (object)GetMenuController();
-            var gclass = new MatchmakerOfflineRaid.GClass2342();
+            var gclass = new MatchmakerOfflineRaid.GClass2344();
 
             gclass.OnShowNextScreen += LoadOfflineRaidNextScreen;
 
