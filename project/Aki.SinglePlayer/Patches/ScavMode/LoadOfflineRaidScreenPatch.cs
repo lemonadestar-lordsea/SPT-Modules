@@ -57,11 +57,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                     _botsSettingsField = field;
                 }
             }
-
-            Log.Info($"_menuControllerField is null {_menuControllerField == null}");
-            Log.Info($"_weatherSettingsField is null {_weatherSettingsField == null}");
-            Log.Info($"_waveSettingsField is null { _waveSettingsField == null}");
-            Log.Info($"_botsSettingsField is null { _botsSettingsField == null}");
         }
 
         public LoadOfflineRaidScreenPatch() : base(T: typeof(LoadOfflineRaidScreenPatch), transpiler: nameof(PatchTranspiler))
