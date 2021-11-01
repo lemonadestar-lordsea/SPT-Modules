@@ -38,6 +38,11 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             _isLocalField = menuControllerType.GetField("bool_0", Constants.PrivateFlags);
             _menuControllerField = typeof(MainApplication).GetFields(Constants.PrivateFlags).FirstOrDefault(x => x.FieldType == typeof(MainMenuController));
 
+            if (_menuControllerField == null)
+            {
+                Log.Error("LoadOfflineRaidScreenPatch() menuControllerField is null and could not be found in MainApplication class");
+            }
+
             foreach (var field in menuControllerType.GetFields(Constants.PrivateFlags))
             {
                 if (field.FieldType == typeof(WeatherSettings))
