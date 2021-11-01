@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using Comfort.Common;
 using EFT;
-using ISession = GInterface111;
 
 namespace Aki.Reflection.Utils
 {

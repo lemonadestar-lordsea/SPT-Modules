@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BotData = GInterface18;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
@@ -18,7 +17,7 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         static RemoveUsedBotProfilePatch()
         {
-            _ = nameof(BotData.ChooseProfile);
+            _ = nameof(IBotData.ChooseProfile);
 
             _flags = BindingFlags.Instance | BindingFlags.NonPublic;
             _targetInterface = Constants.EftTypes.Single(IsTargetInterface);
@@ -45,7 +44,7 @@ namespace Aki.SinglePlayer.Patches.Bots
             return _targetInterface.IsAssignableFrom(type) && _targetInterface.IsAssignableFrom(type.BaseType);
         }
 
-        private static bool PatchPrefix(ref Profile __result, object __instance, BotData data)
+        private static bool PatchPrefix(ref Profile __result, object __instance, IBotData data)
         {
             var profiles = (List<Profile>)_profilesField.GetValue(__instance);
 
