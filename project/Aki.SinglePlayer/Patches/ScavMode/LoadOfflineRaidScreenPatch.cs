@@ -36,7 +36,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
             _onReadyScreenMethod = menuControllerType.GetMethod("method_40", Constants.PrivateFlags);
             _isLocalField = menuControllerType.GetField("bool_0", Constants.PrivateFlags);
-            _menuControllerField = Array.Find(typeof(MainApplication).GetFields(Constants.PrivateFlags), x => x.FieldType == typeof(MainMenuController));
+            _menuControllerField = typeof(MainApplication).GetFields(Constants.PrivateFlags).FirstOrDefault(x => x.FieldType == typeof(MainMenuController));
 
             foreach (var field in menuControllerType.GetFields(Constants.PrivateFlags))
             {
