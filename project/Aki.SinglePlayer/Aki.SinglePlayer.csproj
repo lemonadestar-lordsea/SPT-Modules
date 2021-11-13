@@ -31,12 +31,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\Shared\Keys\Aki.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\Shared\References\Assembly-CSharp.dll</HintPath>
@@ -51,6 +45,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="Unity.ScriptableBuildPipeline">
+      <HintPath>..\Shared\References\Unity.ScriptableBuildPipeline.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\Shared\References\UnityEngine.dll</HintPath>
       <Private>False</Private>
@@ -61,6 +59,10 @@
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\Shared\References\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>..\Shared\References\UnityEngine.InputLegacyModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
@@ -83,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Models\BodyPartHealth.cs" />
     <Compile Include="Models\BundleInfo.cs" />
+    <Compile Include="Models\BundleItem.cs" />
     <Compile Include="Models\EBodyPartEffect.cs" />
     <Compile Include="Models\PlayerHealth.cs" />
     <Compile Include="Models\SaveProfileRequest.cs" />

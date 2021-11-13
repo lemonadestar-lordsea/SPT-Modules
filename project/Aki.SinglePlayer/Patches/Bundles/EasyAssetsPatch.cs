@@ -5,12 +5,15 @@ using Aki.SinglePlayer.Utils.Bundles;
 using Diz.Jobs;
 using Diz.Resources;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Build.Pipeline;
 using DependencyGraph = DependencyGraph<IEasyBundle>;
 
 namespace Aki.SinglePlayer.Patches.Bundles
@@ -59,27 +62,67 @@ namespace Aki.SinglePlayer.Patches.Bundles
             return false;
         }
 
-        private static async Task Init(EasyAssets instance, [CanBeNull] IBundleLock bundleLock, string defaultKey, string rootPath,
-                                      string platformName, [CanBeNull] Func<string, bool> shouldExclude)
+        public static string GetPairKey(KeyValuePair<string, BundleItem> x)
         {
-            var path = $"{rootPath.Replace("file:///", string.Empty).Replace("file://", string.Empty)}/{platformName}/";
-            var manifestLoading = AssetBundle.LoadFromFileAsync(path + platformName);
+            return x.Key;
+        }
+
+        public static BundleDetails GetPairValue(KeyValuePair<string, BundleItem> x)
+        {
+            return new BundleDetails
+            {
+                FileName = x.Value.FileName,
+                Crc = x.Value.Crc,
+                Dependencies = x.Value.Dependencies
+            };
+        }
+
+        private static async Task<CompatibilityAssetBundleManifest> GetManifestBundle(string filepath)
+        {
+            var manifestLoading = AssetBundle.LoadFromFileAsync(filepath);
             await manifestLoading.Await();
 
             var assetBundle = manifestLoading.assetBundle;
             var assetLoading = assetBundle.LoadAllAssetsAsync();
             await assetLoading.Await();
 
-            // add ModManifest
-            var resourcesModbundles = new List<string>();
+            return (CompatibilityAssetBundleManifest)assetLoading.allAssets[0];
+        }
+
+        private static async Task<CompatibilityAssetBundleManifest> GetManifestJson(string filepath)
+        {
+            var text = string.Empty;
+
+            using (var reader = File.OpenText($"{filepath}.json"))
+            {
+                text = await reader.ReadToEndAsync();
+            }
+
+            var data = JsonConvert.DeserializeObject<Dictionary<string, BundleItem>>(text).ToDictionary(GetPairKey, GetPairValue);
+            var manifest = ScriptableObject.CreateInstance<CompatibilityAssetBundleManifest>();
+            manifest.SetResults(data);
+
+            return manifest;
+        }
+
+        private static async Task Init(EasyAssets instance, [CanBeNull] IBundleLock bundleLock, string defaultKey, string rootPath,
+                                      string platformName, [CanBeNull] Func<string, bool> shouldExclude)
+        {
+            // platform manifest
+            var path = $"{rootPath.Replace("file:///", string.Empty).Replace("file://", string.Empty)}/{platformName}/";
+            var filepath = path + platformName;
+            var manifest = (File.Exists(filepath)) ? await GetManifestBundle(filepath) : await GetManifestJson(filepath);
+
+            // mod bundles
+            var modbundles = new List<string>();
 
             foreach (KeyValuePair<string, BundleInfo> kvp in BundleSettings.Bundles)
             {
-                resourcesModbundles.Add(kvp.Key);
+                modbundles.Add(kvp.Key);
             }
-
-            var manifest = (AssetBundleManifest)assetLoading.allAssets[0];
-            var bundleNames = manifest.GetAllAssetBundles().Union(resourcesModbundles).ToArray();
+            
+            // load bundles
+            var bundleNames = manifest.GetAllAssetBundles().Union(modbundles).ToArray();
             var bundles = (IEasyBundle[])Array.CreateInstance(EasyBundleHelper.Type, bundleNames.Length);
 
             if (bundleLock == null)

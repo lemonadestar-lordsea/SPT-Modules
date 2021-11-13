@@ -1,11 +1,12 @@
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using Comfort.Common;
+using EFT;
 using Aki.Common;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
-using Comfort.Common;
-using EFT;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
@@ -30,7 +31,7 @@ namespace Aki.SinglePlayer.Patches.Bots
                 Profile.GetAllPrefabPaths(false).ToArray(),
                 JobPriority.General,
                 null,
-                default);
+                default(CancellationToken));
 
             return loadTask.ContinueWith(GetProfile, TaskScheduler);
         }
@@ -61,7 +62,16 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(BotsPresets).GetMethod(nameof(BotsPresets.CreateProfile), BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            return typeof(BotsPresets).GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+                .Single(x => IsTargetMethod(x));
+        }
+
+        private bool IsTargetMethod(MethodInfo mi)
+        {
+            var parameters = mi.GetParameters();
+            return (parameters.Length == 2
+                && parameters[0].Name == "data"
+                && parameters[1].Name == "cancellationToken");
         }
 
         private static bool PatchPrefix(ref Task<Profile> __result, BotsPresets __instance, IBotData data)

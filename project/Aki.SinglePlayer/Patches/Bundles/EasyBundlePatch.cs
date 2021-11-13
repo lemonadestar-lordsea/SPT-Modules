@@ -1,4 +1,3 @@
-using Aki.Common;
 using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils.Bundles;
@@ -7,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using UnityEngine;
+using UnityEngine.Build.Pipeline;
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {
@@ -34,7 +33,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
             return false;
         }
 
-        private static void PatchPostfix(object __instance, string key, string rootPath, AssetBundleManifest manifest, IBundleLock bundleLock)
+        private static void PatchPostfix(object __instance, string key, string rootPath, CompatibilityAssetBundleManifest manifest, IBundleLock bundleLock)
 		{
             var path = rootPath + key;
             var dependencyKeys = manifest.GetDirectDependencies(key);
