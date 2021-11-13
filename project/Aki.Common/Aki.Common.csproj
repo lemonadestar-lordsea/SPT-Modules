@@ -34,9 +34,6 @@
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\Shared\Keys\Aki.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="bsg.componentace.compression.libs.zlib">
       <HintPath>..\Shared\References\bsg.componentace.compression.libs.zlib.dll</HintPath>

@@ -20,29 +20,29 @@ namespace Aki.Singleplayer.Patches.Dev
 
         private static void PrefixPatch(object __instance)
         {
-            if (Input.GetKeyDown(KeyCode.LeftControl))
-            {
-                if (_alphaLabel == null)
-                {
-                    _alphaLabel = GameObject.Find("AlphaLabel").GetComponent<TextMeshProUGUI>();
-                    _alphaLabel.color = Color.green;
-                    _alphaLabel.fontSize = 22;
-                    _alphaLabel.font = Resources.Load<TMP_FontAsset>("Fonts & Materials/ARIAL SDF");
-                }
+            //if (Input.GetKeyDown(KeyCode.LeftControl))
+            //{
+            //    if (_alphaLabel == null)
+            //    {
+            //        _alphaLabel = GameObject.Find("AlphaLabel").GetComponent<TextMeshProUGUI>();
+            //        _alphaLabel.color = Color.green;
+            //        _alphaLabel.fontSize = 22;
+            //        _alphaLabel.font = Resources.Load<TMP_FontAsset>("Fonts & Materials/ARIAL SDF");
+            //    }
 
-                var playerOwner = (GamePlayerOwner)_playerProperty.GetValue(__instance);
-                var aiming = LookingRaycast(playerOwner.Player);
+            //    var playerOwner = (GamePlayerOwner)_playerProperty.GetValue(__instance);
+            //    var aiming = LookingRaycast(playerOwner.Player);
 
-                if (_alphaLabel != null)
-                {
-                    _alphaLabel.text = $"Looking at: [{aiming.x}, {aiming.y}, {aiming.z}]";
-                    Log.Info(_alphaLabel.text);
-                }
+            //    if (_alphaLabel != null)
+            //    {
+            //        _alphaLabel.text = $"Looking at: [{aiming.x}, {aiming.y}, {aiming.z}]";
+            //        Log.Info(_alphaLabel.text);
+            //    }
 
-                var position = playerOwner.transform.position;
-                var rotation = playerOwner.transform.rotation.eulerAngles;
-                Log.Info($"Character position: [{position.x},{position.y},{position.z}] | Rotation: [{rotation.x},{rotation.y},{rotation.z}]");
-            }
+            //    var position = playerOwner.transform.position;
+            //    var rotation = playerOwner.transform.rotation.eulerAngles;
+            //    Log.Info($"Character position: [{position.x},{position.y},{position.z}] | Rotation: [{rotation.x},{rotation.y},{rotation.z}]");
+            //}
         }
 
         protected override MethodBase GetTargetMethod()
