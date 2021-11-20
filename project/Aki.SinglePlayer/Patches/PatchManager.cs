@@ -47,6 +47,7 @@ namespace Aki.SinglePlayer.Patches
                 new EndByTimerPatch(),
                 //new CoordinatesPatch(),
                 new VersionLabelPatch(),
+                new WebSocketPatch(),
                 new TinnitusFixPatch()
             };
         }
