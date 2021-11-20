@@ -2,6 +2,7 @@
 using Aki.SinglePlayer.Patches.Bots;
 using Aki.SinglePlayer.Patches.Bundles;
 using Aki.SinglePlayer.Patches.Healing;
+using Aki.SinglePlayer.Patches.Https;
 using Aki.SinglePlayer.Patches.MainMenu;
 using Aki.SinglePlayer.Patches.Progression;
 using Aki.SinglePlayer.Patches.Quests;
@@ -47,6 +48,7 @@ namespace Aki.SinglePlayer.Patches
                 new EndByTimerPatch(),
                 //new CoordinatesPatch(),
                 new VersionLabelPatch(),
+                new WebSocketPatch(),
                 new TinnitusFixPatch()
             };
         }
