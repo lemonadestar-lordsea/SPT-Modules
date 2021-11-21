@@ -90,11 +90,6 @@ namespace Aki.Loader
             byte[] bytes;
             Assembly asm;
 
-            if (!WinApi.CheckSignature(dllPath))
-            {
-                throw new Exception($"Failed signature check from '{dllPath}'");
-            }
-
             try
             {
                 bytes = File.ReadAllBytes(dllPath);
