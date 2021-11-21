@@ -22,8 +22,7 @@ namespace Aki.Core.Utils
                     new FileInfo(v2.Replace(v3.Name, @"BattlEye\BEService_x64.dll")),
                     new FileInfo(v2.Replace(v3.Name, @"ConsistencyInfo")),
                     new FileInfo(v2.Replace(v3.Name, @"Uninstall.exe")),
-                    new FileInfo(v2.Replace(v3.Name, @"UnityCrashHandler64.exe")),
-                    new FileInfo(v2.Replace(v3.Name, @"WinPixEventRuntime.dll"))
+                    new FileInfo(v2.Replace(v3.Name, @"UnityCrashHandler64.exe"))
                 };
 
                 v0 = v4.Length - 1;
