@@ -1,3 +1,4 @@
+using Aki.Common;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models;
@@ -49,7 +50,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
         private static bool IsTargetMethod(MethodInfo mi)
         {
             var parameters = mi.GetParameters();
-            return (parameters.Length != 5
+            return (parameters.Length != 6
                 || parameters[0].Name != "bundleLock"
                 || parameters[1].Name != "defaultKey"
                 || parameters[4].Name != "shouldExclude") ? false : true;
