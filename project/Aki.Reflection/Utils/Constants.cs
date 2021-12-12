@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using Comfort.Common;
 using EFT;
+using FilesChecker;
 
 namespace Aki.Reflection.Utils
 {
@@ -10,6 +11,7 @@ namespace Aki.Reflection.Utils
     {
         public static BindingFlags PrivateFlags { get; private set; }
         public static Type[] EftTypes { get; private set; }
+        public static Type[] FilesCheckerTypes { get; private set; }
         public static Type LocalGameType { get; private set; }
         public static Type ExfilPointManagerType { get; private set; }
         public static Type BackendInterfaceType { get; private set; }
@@ -35,6 +37,7 @@ namespace Aki.Reflection.Utils
 
             PrivateFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
             EftTypes = typeof(AbstractGame).Assembly.GetTypes();
+            FilesCheckerTypes = typeof(ICheckResult).Assembly.GetTypes();
             LocalGameType = EftTypes.Single(x => x.Name == "LocalGame");
             ExfilPointManagerType = EftTypes.Single(x => x.GetMethod("InitAllExfiltrationPoints") != null);
             BackendInterfaceType = EftTypes.Single(x => x.GetMethods().Select(y => y.Name).Contains("CreateClientSession") && x.IsInterface);

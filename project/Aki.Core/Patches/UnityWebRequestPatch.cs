@@ -1,18 +1,10 @@
 using System.Reflection;
 using UnityEngine.Networking;
 using Aki.Reflection.Patching;
-using Aki.Core.Utils;
+using Aki.Core.Models;
 
 namespace Aki.Core.Patches
 {
-    public class FakeCertificateHandler : CertificateHandler
-    {
-        protected override bool ValidateCertificate(byte[] certificateData)
-        {
-            return ValidationUtil.Validate();
-        }
-    }
-
     public class UnityWebRequestPatch : Patch
     {
         private static CertificateHandler _certificateHandler = new FakeCertificateHandler();
