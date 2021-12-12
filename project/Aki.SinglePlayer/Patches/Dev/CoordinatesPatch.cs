@@ -11,7 +11,7 @@ namespace Aki.Singleplayer.Patches.Dev
 {
     public class CoordinatesPatch : Patch
     {
-        private static TextMeshProUGUI _alphaLabel;
+        // private static TextMeshProUGUI _alphaLabel;
         private static PropertyInfo _playerProperty;
 
         public CoordinatesPatch() : base(T: typeof(CoordinatesPatch), prefix: nameof(PrefixPatch))
