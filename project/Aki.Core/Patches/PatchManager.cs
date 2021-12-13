@@ -10,7 +10,8 @@ namespace Aki.Core.Patches
         {
             _patches = new PatchList
             {
-                new FilesCheckerPatch(),
+                new ConsistencySinglePatch(),
+                new ConsistencyMultiPatch(),
                 new BattlEyePatch(),
                 new SslCertificatePatch(),
                 new UnityWebRequestPatch()

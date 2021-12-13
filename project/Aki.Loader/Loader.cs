@@ -21,35 +21,48 @@ namespace Aki.Loader
             }
         }
 
+        public static void LoadAssembly(string filepath)
+        {
+            try
+            {
+                RunUtil.LoadAndRun(filepath);
+                Log.Info($"Aki.Loader: Successfully loaded '{filepath}'");
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Aki.Loader: Failed to load '{filepath}'");
+                Log.Write(ex.Message);
+                Log.Write(ex.StackTrace);
+            }
+        }
+
+        public static void LoadRepository(string repository)
+        {
+            var files = new List<string>();
+            var dirs = VFS.GetDirectories(repository);
+
+            foreach (var dir in dirs)
+            {
+                var file = VFS.Combine(dir, "./module.dll");
+
+                if (VFS.Exists(file))
+                {
+                    Log.Info($"Aki.Loader: Found module.dll in '{dir}'");
+                    files.Add(file);
+                }
+            }
+
+            foreach (var filepath in files)
+            {
+                LoadAssembly(filepath);
+            }
+        }
+
         public static void LoadAllAssemblies()
         {
             foreach (var repository in _repositories)
             {
-                var dirs = VFS.GetDirectories(repository);
-
-                foreach (var dir in dirs)
-                {
-                    var file = VFS.Combine(dir, "./module.dll");
-
-                    if (VFS.Exists(file))
-                    {
-                        try
-                        {
-                            RunUtil.LoadAndRun(file);
-                            Log.Info($"Aki.Loader: Successfully loaded '{file}'");
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Error($"Aki.Loader: Failed to load '{file}'");
-                            Log.Write(ex.Message);
-                            Log.Write(ex.StackTrace);
-                        }
-                    }
-                    else
-                    {
-                        Log.Error($"Aki.Loader: Failed to find module.dll in '{dir}'");
-                    }
-                }
+                LoadRepository(repository);
             }
         }
     }

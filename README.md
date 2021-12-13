@@ -7,13 +7,13 @@ Client-side modifications to alter Escape From Tarkov's behaviour
 Aki.Loader         | Loads custom assemblies into the game
 Aki.Common         | Common utilities used across projects
 Aki.Core           | Required patches to start the game
+Aki.Reflection     | Reflection utilities used across the project
 Aki.SinglePlayer   | Simulating online game offline
 
 ## Requirements
 
-- Escape From Tarkov 0.12.11.7.15390
+- Escape From Tarkov 0.12.12.0.16029
 - Visual Studio Build Tools (.NET desktop workload)
-- .NET Framework 3.5
 - .NET Framework 4.7.2
 - VSCodium
 
@@ -25,7 +25,7 @@ Aki.SinglePlayer   | Simulating online game offline
 
 ## Authors
 
-- InNoHurryToCode
+- Senko-san
 - Craink
 - PoloYolo
 - Ginja

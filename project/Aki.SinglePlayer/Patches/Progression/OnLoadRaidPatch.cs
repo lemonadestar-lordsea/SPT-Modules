@@ -30,7 +30,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 
 			if (_preloader != null)
 			{
-				var raidID = Path.GetRandomFileName().Replace(".", string.Empty).Substring(0, 4).ToUpperInvariant();
+				var raidID = Path.GetRandomFileName().Replace(".", string.Empty).Substring(0, 6).ToUpperInvariant();
 				_preloader.SetSessionId(raidID);
 			}
 		}

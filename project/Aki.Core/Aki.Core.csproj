@@ -69,7 +69,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Patches\FilesCheckerPatch.cs" />
+    <Compile Include="Models\FakeCertificateHandler.cs" />
+    <Compile Include="Models\FakeFileCheckerResult.cs" />
+    <Compile Include="Patches\ConsistencyMultiPatch.cs" />
+    <Compile Include="Patches\ConsistencySinglePatch.cs" />
     <Compile Include="Patches\PatchManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Patches\BattlEyePatch.cs" />
