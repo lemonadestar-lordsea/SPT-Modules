@@ -57,9 +57,9 @@ namespace Aki.SinglePlayer.Patches.Bundles
         }
 
         private static bool PatchPrefix(ref Task __result, EasyAssets __instance, [CanBeNull] IBundleLock bundleLock, string defaultKey, string rootPath,
-            string platformName, [CanBeNull] Func<string, bool> shouldExclude)
+            string platformName, [CanBeNull] Func<string, bool> shouldExclude, [CanBeNull] Func<string, Task> bundleCheck)
         {
-            __result = Init(__instance, bundleLock, defaultKey, rootPath, platformName, shouldExclude);
+            __result = Init(__instance, bundleLock, defaultKey, rootPath, platformName, shouldExclude, bundleCheck);
             return false;
         }
 
@@ -107,7 +107,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
         }
 
         private static async Task Init(EasyAssets instance, [CanBeNull] IBundleLock bundleLock, string defaultKey, string rootPath,
-                                      string platformName, [CanBeNull] Func<string, bool> shouldExclude)
+                                      string platformName, [CanBeNull] Func<string, bool> shouldExclude, Func<string, Task> bundleCheck)
         {
             // platform manifest
             var path = $"{rootPath.Replace("file:///", string.Empty).Replace("file://", string.Empty)}/{platformName}/";
@@ -133,7 +133,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
             for (var i = 0; i < bundleNames.Length; i++)
             {
-                bundles[i] = (IEasyBundle)Activator.CreateInstance(EasyBundleHelper.Type, new object[] { bundleNames[i], path, manifest, bundleLock });
+                bundles[i] = (IEasyBundle)Activator.CreateInstance(EasyBundleHelper.Type, new object[] { bundleNames[i], path, manifest, bundleLock, bundleCheck });
                 await JobScheduler.Yield();
             }
 
