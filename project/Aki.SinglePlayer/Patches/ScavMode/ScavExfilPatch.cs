@@ -26,10 +26,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             _fenceTraderInfoType = Constants.EftTypes.Single(x => x.GetMethod("NewExfiltrationPrice") != null);
         }
 
-        public ScavExfilPatch() : base(T: typeof(ScavExfilPatch), transpiler: nameof(PatchTranspile))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return Constants.LocalGameType.BaseType
@@ -45,6 +41,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 && methodInfo.GetMethodBody().LocalVariables.Count > 0);
         }
 
+        [PatchTranspiler]
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);

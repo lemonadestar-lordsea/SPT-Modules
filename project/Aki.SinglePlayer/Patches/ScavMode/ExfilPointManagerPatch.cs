@@ -12,10 +12,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 {
     public class ExfilPointManagerPatch : ModulePatch
     {
-        public ExfilPointManagerPatch() : base(T: typeof(ExfilPointManagerPatch), transpiler: nameof(PatchTranspile))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return Constants.ExfilPointManagerType
@@ -28,6 +24,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             return methodInfo.GetParameters().Length == 3 && methodInfo.ReturnType == typeof(void);
         }
 
+        [PatchTranspiler]
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);

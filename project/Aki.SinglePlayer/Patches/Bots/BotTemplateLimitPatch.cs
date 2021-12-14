@@ -15,15 +15,12 @@ namespace Aki.SinglePlayer.Patches.Bots
             _ = nameof(WaveInfo.Difficulty);
         }
 
-        public BotTemplateLimitPatch() : base(T: typeof(BotTemplateLimitPatch), postfix: nameof(PatchPostfix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return typeof(BotsPresets).GetMethod("method_1", Constants.PrivateFlags);
         }
 
+        [PatchPostfix]
         private static void PatchPostfix(List<WaveInfo> __result, List<WaveInfo> wavesProfiles, List<WaveInfo> delayed)
         {
             /*

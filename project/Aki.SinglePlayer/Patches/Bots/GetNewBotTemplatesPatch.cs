@@ -21,7 +21,7 @@ namespace Aki.SinglePlayer.Patches.Bots
             _ = nameof(JobPriority.General);
         }
 
-        public GetNewBotTemplatesPatch() : base(T: typeof(GetNewBotTemplatesPatch), prefix: nameof(PatchPrefix))
+        public GetNewBotTemplatesPatch()
         {
             _getNewProfileMethod = typeof(BotsPresets)
                 .GetMethod(nameof(BotsPresets.GetNewProfile), Constants.PrivateFlags);
@@ -41,6 +41,7 @@ namespace Aki.SinglePlayer.Patches.Bots
                 && parameters[1].Name == "cancellationToken");
         }
 
+        [PatchPrefix]
         private static bool PatchPrefix(ref Task<Profile> __result, BotsPresets __instance, IBotData data)
         {
             /*

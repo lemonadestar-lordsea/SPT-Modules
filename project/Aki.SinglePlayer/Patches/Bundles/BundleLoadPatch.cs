@@ -11,10 +11,6 @@ namespace Aki.SinglePlayer.Patches.Bundles
 {
     public class BundleLoadPatch : ModulePatch
     {
-        public BundleLoadPatch() : base(T: typeof(BundleLoadPatch), prefix: nameof(PatchPrefix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return EasyBundleHelper.Type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic).Single(IsTargetMethod);
@@ -25,6 +21,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
             return method.GetParameters().Length == 0 && method.ReturnType == typeof(Task);
         }
 
+        [PatchPrefix]
         private static bool PatchPrefix(object __instance, string ___string_1, ref Task __result)
         {
             if (___string_1.IndexOf("http") == -1)

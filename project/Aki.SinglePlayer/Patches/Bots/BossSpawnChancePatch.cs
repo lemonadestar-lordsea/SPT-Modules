@@ -9,10 +9,6 @@ namespace Aki.SinglePlayer.Patches.Bots
     {
         private static float[] _bossSpawnPercent;
 
-        public BossSpawnChancePatch() : base(T: typeof(BossSpawnChancePatch), prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return Constants.LocalGameType.BaseType
@@ -28,12 +24,14 @@ namespace Aki.SinglePlayer.Patches.Bots
                 && parameters[1].Name == "bossLocationSpawn");
         }
 
-        private static void PrefixPatch(BossLocationSpawn[] bossLocationSpawn)
+        [PatchPrefix]
+        private static void PatchPrefix(BossLocationSpawn[] bossLocationSpawn)
         {
             _bossSpawnPercent = bossLocationSpawn.Select(s => s.BossChance).ToArray();
         }
 
-        private static void PostfixPatch(ref BossLocationSpawn[] __result)
+        [PatchPostfix]
+        private static void PatchPostfix(ref BossLocationSpawn[] __result)
         {
             if (__result.Length != _bossSpawnPercent.Length)
             {

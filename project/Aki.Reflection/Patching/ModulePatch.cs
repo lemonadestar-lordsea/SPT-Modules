@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Aki.Common;
 using HarmonyLib;
@@ -7,33 +8,36 @@ namespace Aki.Reflection.Patching
 {
     public abstract class ModulePatch
     {
-        private Harmony _harmony;
-        private HarmonyMethod _prefix;
-        private HarmonyMethod _postfix;
-        private HarmonyMethod _transpiler;
-        private HarmonyMethod _finalizer;
-        private HarmonyMethod _ilmanipulator;
+        private readonly Harmony _harmony;
+        private readonly List<HarmonyMethod> _prefixList;
+        private readonly List<HarmonyMethod> _postfixList;
+        private readonly List<HarmonyMethod> _transpilerList;
+        private readonly List<HarmonyMethod> _finalizerList;
+        private readonly List<HarmonyMethod> _ilmanipulatorList;
+
+        // required?
+        protected ModulePatch() : this(null)
+        {
+        }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="T">Type</param>
         /// <param name="name">Name</param>
-        /// <param name="prefix">Prefix</param>
-        /// <param name="postfix">Postfix</param>
-        /// <param name="transpiler">Transpiler</param>
-        /// <param name="finalizer">Finalizer</param>
-        /// <param name="ilmanipulator">IL Manipulator</param>
-        public ModulePatch(Type T, string name = null, string prefix = null, string postfix = null, string transpiler = null, string finalizer = null, string ilmanipulator = null)
+        protected ModulePatch(string name = null)
         {
-            _harmony = new Harmony(name ?? T.Name);
-            _prefix = GetPatchMethod(T, prefix);
-            _postfix = GetPatchMethod(T, postfix);
-            _transpiler = GetPatchMethod(T, transpiler);
-            _finalizer = GetPatchMethod(T, finalizer);
-            _ilmanipulator = GetPatchMethod(T, ilmanipulator);
+            _harmony = new Harmony(name ?? GetType().Name);
+            _prefixList = GetPatchMethods(typeof(PatchPrefixAttribute));
+            _postfixList = GetPatchMethods(typeof(PatchPostfixAttribute));
+            _transpilerList = GetPatchMethods(typeof(PatchTranspilerAttribute));
+            _finalizerList = GetPatchMethods(typeof(PatchFinalizerAttribute));
+            _ilmanipulatorList = GetPatchMethods(typeof(PatchILManipulatorAttribute));
 
-            if (_prefix == null && _postfix == null && _transpiler == null && _finalizer == null && _ilmanipulator == null)
+            if (_prefixList.Count == 0
+				&& _postfixList.Count == 0
+				&& _transpilerList.Count == 0
+				&& _finalizerList.Count == 0
+				&& _ilmanipulatorList.Count == 0)
             {
                 throw new Exception($"{_harmony.Id}: At least one of the patch methods must be specified");
             }
@@ -48,24 +52,22 @@ namespace Aki.Reflection.Patching
         /// <summary>
         /// Get HarmonyMethod from string
         /// </summary>
-        /// <param name="T">Type</param>
-        /// <param name="methodName">Method name</param>
+        /// <param name="attributeType">Attribute type</param>
         /// <returns>Method</returns>
-        private HarmonyMethod GetPatchMethod(Type T, string methodName)
+        private List<HarmonyMethod> GetPatchMethods(Type attributeType)
         {
-            if (string.IsNullOrWhiteSpace(methodName))
-            {
-                return null;
-            }
+	        var T = GetType();
+	        var methods = new List<HarmonyMethod>();
 
-            var patchMethod = T.GetMethod(methodName, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+	        foreach (var method in T.GetMethods(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.DeclaredOnly))
+	        {
+		        if (method.GetCustomAttribute(attributeType) != null)
+		        {
+			        methods.Add(new HarmonyMethod(method));
+                }
+	        }
 
-            if (patchMethod == null)
-            {
-                throw new ArgumentNullException(nameof(methodName), $"Could not find patch method \"{methodName}\". Make sure it's a private static method!");
-            }
-
-            return new HarmonyMethod(patchMethod);
+            return methods;
         }
 
         /// <summary>
@@ -73,16 +75,40 @@ namespace Aki.Reflection.Patching
         /// </summary>
         public void Enable()
         {
-            var targetMethod = GetTargetMethod();
+            var target = GetTargetMethod();
 
-            if (targetMethod == null)
+            if (target == null)
             {
                 throw new InvalidOperationException($"{_harmony.Id}: TargetMethod is null");
             }
 
             try
             {
-                _harmony.Patch(targetMethod, _prefix, _postfix, _transpiler, _finalizer, _ilmanipulator);
+                foreach (var prefix in _prefixList)
+                {
+                    _harmony.Patch(target, prefix: prefix);
+                }
+
+                foreach (var postfix in _postfixList)
+                {
+		            _harmony.Patch(target, postfix: postfix);
+                }
+
+	            foreach (var transpiler in _transpilerList)
+                {
+		            _harmony.Patch(target, transpiler: transpiler);
+                }
+
+	            foreach (var finalizer in _finalizerList)
+                {
+		            _harmony.Patch(target, finalizer: finalizer);
+                }
+
+	            foreach (var ilmanipulator in _ilmanipulatorList)
+                {
+		            _harmony.Patch(target, ilmanipulator: ilmanipulator);
+                }
+                
                 Log.Info($"Enabled patch {_harmony.Id}");
             }
             catch (Exception ex)
@@ -96,16 +122,16 @@ namespace Aki.Reflection.Patching
         /// </summary>
         public void Disable()
         {
-            var targetMethod = GetTargetMethod();
+            var target = GetTargetMethod();
 
-            if (targetMethod == null)
+            if (target == null)
             {
                 throw new InvalidOperationException($"{_harmony.Id}: TargetMethod is null");
             }
 
             try
             {
-                _harmony.Unpatch(targetMethod, HarmonyPatchType.All, _harmony.Id);
+                _harmony.Unpatch(target, HarmonyPatchType.All, _harmony.Id);
                 Log.Info($"Disabled patch {_harmony.Id}");
             }
             catch (Exception ex)

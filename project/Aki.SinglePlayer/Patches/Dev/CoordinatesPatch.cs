@@ -13,11 +13,8 @@ namespace Aki.Singleplayer.Patches.Dev
         // private static TextMeshProUGUI _alphaLabel;
         private static PropertyInfo _playerProperty;
 
-        public CoordinatesPatch() : base(T: typeof(CoordinatesPatch), prefix: nameof(PrefixPatch))
-        {
-        }
-
-        private static void PrefixPatch(object __instance)
+        [PatchPrefix]
+        private static void PatchPrefix(object __instance)
         {
             //if (Input.GetKeyDown(KeyCode.LeftControl))
             //{

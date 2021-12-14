@@ -10,10 +10,6 @@ namespace Aki.SinglePlayer.Patches.RaidFix
 {
     public class TinnitusFixPatch : ModulePatch
     {
-        public TinnitusFixPatch() : base(T: typeof(TinnitusFixPatch), transpiler: nameof(PatchTranspile))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return typeof(Player).GetMethod("OnHealthEffectAdded", BindingFlags.Instance | BindingFlags.Public);
@@ -23,6 +19,7 @@ namespace Aki.SinglePlayer.Patches.RaidFix
         /// Fixes the problem of the tinnitus sound effect being played on the player if any AI on the map get the contusion effect applied to them
         /// The patch adds an extra condition to the check before playing the sound effect, making sure the sound is only played if contusion occurred on the player
         /// </summary>
+        [PatchTranspiler]
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);

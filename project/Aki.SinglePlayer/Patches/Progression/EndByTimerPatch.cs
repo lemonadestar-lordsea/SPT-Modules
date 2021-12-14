@@ -21,10 +21,6 @@ namespace Aki.SinglePlayer.Patches.Progression
             _stopRaidMethod = _localGameBaseType.GetMethods(Constants.PrivateFlags).SingleOrDefault(IsStopRaidMethod);
         }
 
-        public EndByTimerPatch() : base(T: typeof(EndByTimerPatch), prefix: nameof(PrefixPatch))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return _localGameBaseType.GetMethods(Constants.PrivateFlags).Single(x => x.Name.EndsWith("StopGame"));
@@ -44,6 +40,7 @@ namespace Aki.SinglePlayer.Patches.Progression
                 && parameters[3].ParameterType == typeof(float));
         }
 
+        [PatchPrefix]
         private static bool PrefixPatch(object __instance)
         {
             var profileId = _profileIdProperty.GetValue(__instance) as string;

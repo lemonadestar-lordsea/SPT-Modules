@@ -8,10 +8,6 @@ namespace Aki.SinglePlayer.Patches.Bots
 {
     public class CoreDifficultyPatch : ModulePatch
 	{
-		public CoreDifficultyPatch() : base(T: typeof(CoreDifficultyPatch), prefix: nameof(PatchPrefix))
-		{
-        }
-
         protected override MethodBase GetTargetMethod()
         {
 			var methodName = "LoadCoreByString";
@@ -21,6 +17,7 @@ namespace Aki.SinglePlayer.Patches.Bots
 				.GetMethod(methodName, flags);
 		}
 
+		[PatchPrefix]
 		private static bool PatchPrefix(ref string __result)
 		{
             __result = RequestHandler.GetJson("/singleplayer/settings/bot/difficulty/core/core");

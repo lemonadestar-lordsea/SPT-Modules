@@ -23,10 +23,6 @@ namespace Aki.SinglePlayer.Patches.Bots
             _botDifficultyField = _targetType.GetField("botDifficulty_0", Constants.PrivateFlags);
         }
 
-        public SpawnPmcPatch() : base(T: typeof(SpawnPmcPatch), prefix: nameof(PatchPrefix))
-        {
-        }
-
         private static bool IsTargetInterface(Type type)
         {
             return type.IsInterface && type.GetMethod("ChooseProfile", new[] { typeof(List<Profile>), typeof(bool) }) != null;
@@ -48,6 +44,7 @@ namespace Aki.SinglePlayer.Patches.Bots
             return _targetType.GetMethod("method_1", Constants.PrivateFlags);
         }
 
+        [PatchPrefix]
         private static bool PatchPrefix(ref bool __result, object __instance, Profile x)
         {
             var botType = (WildSpawnType)_wildSpawnTypeField.GetValue(__instance);

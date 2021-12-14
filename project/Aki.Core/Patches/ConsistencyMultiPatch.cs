@@ -10,16 +10,13 @@ namespace Aki.Core.Patches
 {
     public class ConsistencyMultiPatch : ModulePatch
     {
-        public ConsistencyMultiPatch() : base(T: typeof(ConsistencyMultiPatch), prefix: nameof(PatchPrefix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return Constants.FilesCheckerTypes.Single(x => x.Name == "ConsistencyController")
                 .GetMethods().Single(x => x.Name == "EnsureConsistency" && x.ReturnType == typeof(Task<ICheckResult>));
         }
 
+        [PatchPrefix]
         private static bool PatchPrefix(ref object __result)
         {
             __result = Task.FromResult<ICheckResult>(new FakeFileCheckerResult());

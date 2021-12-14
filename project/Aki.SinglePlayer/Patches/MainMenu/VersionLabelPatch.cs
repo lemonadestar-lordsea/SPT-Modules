@@ -13,10 +13,6 @@ namespace Aki.SinglePlayer.Patches.MainMenu
     {
         private static string _versionLabel;
 
-        public VersionLabelPatch() : base(T: typeof(VersionLabelPatch), postfix: nameof(PatchPostfix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return Constants.EftTypes
@@ -24,6 +20,7 @@ namespace Aki.SinglePlayer.Patches.MainMenu
                 .GetMethod("Create", BindingFlags.Public | BindingFlags.Static);
         }
 
+        [PatchPostfix]
         private static void PatchPostfix(object __result)
         {
             if (string.IsNullOrEmpty(_versionLabel))

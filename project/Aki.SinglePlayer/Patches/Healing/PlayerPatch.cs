@@ -8,15 +8,12 @@ namespace Aki.SinglePlayer.Patches.Healing
 {
     public class PlayerPatch : ModulePatch
     {
-        public PlayerPatch() : base(T: typeof(PlayerPatch), postfix: nameof(PatchPostfix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return typeof(Player).GetMethod("Init", Constants.PrivateFlags);
         }
 
+        [PatchPostfix]
         private static async void PatchPostfix(Task __result, Player __instance, Profile profile)
         {
             await __result;

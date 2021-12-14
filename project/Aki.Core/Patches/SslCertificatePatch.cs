@@ -9,16 +9,13 @@ namespace Aki.Core.Patches
 {
 	public class SslCertificatePatch : ModulePatch
 	{
-		public SslCertificatePatch() : base(T: typeof(SslCertificatePatch), prefix: nameof(PatchPrefix))
-		{
-		}
-
 		protected override MethodBase GetTargetMethod()
 		{
 			return Constants.EftTypes.Single(x => x.BaseType == typeof(CertificateHandler))
 				.GetMethod("ValidateCertificate", Constants.PrivateFlags);
 		}
 
+		[PatchPrefix]
 		private static bool PatchPrefix(ref bool __result)
 		{
 			__result = ValidationUtil.Validate();

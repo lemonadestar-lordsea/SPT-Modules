@@ -11,7 +11,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 	{
 		private static PreloaderUI _preloader;
 
-		public OnLoadRaidPatch() : base(T: typeof(OnLoadRaidPatch), postfix: nameof(PatchPostfix))
+		public OnLoadRaidPatch()
 		{
 			_preloader = null;
         }
@@ -21,6 +21,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 			return Constants.LocalGameType.BaseType.GetMethod("method_5", Constants.PrivateFlags);
 		}
 
+		[PatchPostfix]
 		private static void PatchPostfix()
 		{
 			if (_preloader == null)

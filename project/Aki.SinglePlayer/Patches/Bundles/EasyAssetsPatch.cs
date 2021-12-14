@@ -34,7 +34,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
             _systemProperty = type.GetProperty("System");
         }
 
-        public EasyAssetsPatch() : base(T: typeof(EasyAssetsPatch), prefix: nameof(PatchPrefix))
+        public EasyAssetsPatch()
         {
             _ = nameof(IEasyBundle.SameNameAsset);
             _ = nameof(IBundleLock.IsLocked);
@@ -56,6 +56,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
                 || parameters[4].Name != "shouldExclude") ? false : true;
         }
 
+        [PatchPrefix]
         private static bool PatchPrefix(ref Task __result, EasyAssets __instance, [CanBeNull] IBundleLock bundleLock, string defaultKey, string rootPath,
             string platformName, [CanBeNull] Func<string, bool> shouldExclude, [CanBeNull] Func<string, Task> bundleCheck)
         {

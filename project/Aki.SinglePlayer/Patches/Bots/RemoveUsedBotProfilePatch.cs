@@ -25,10 +25,6 @@ namespace Aki.SinglePlayer.Patches.Bots
             _profilesField = _targetType.GetField("list_0", _flags);
         }
 
-        public RemoveUsedBotProfilePatch() : base(T: typeof(RemoveUsedBotProfilePatch), prefix: nameof(PatchPrefix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return _targetType.GetMethod("GetNewProfile", _flags);
@@ -44,6 +40,7 @@ namespace Aki.SinglePlayer.Patches.Bots
             return _targetInterface.IsAssignableFrom(type) && _targetInterface.IsAssignableFrom(type.BaseType);
         }
 
+        [PatchPrefix]
         private static bool PatchPrefix(ref Profile __result, object __instance, IBotData data)
         {
             var profiles = (List<Profile>)_profilesField.GetValue(__instance);

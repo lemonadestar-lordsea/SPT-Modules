@@ -11,14 +11,6 @@ namespace Aki.SinglePlayer.Patches.Https
     /// </summary>
     public class WebSocketPatch : ModulePatch
     {
-        static WebSocketPatch()
-        {
-        }
-
-        public WebSocketPatch() : base(T: typeof(WebSocketPatch), postfix: nameof(PatchPostfix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             var targetInterface = Constants.EftTypes.Single(x => x == typeof(IConnectionHandler) && x.IsInterface); // used to be GInterface138
@@ -26,6 +18,7 @@ namespace Aki.SinglePlayer.Patches.Https
             return typeThatMatches.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Single(x => x.ReturnType == typeof(Uri)); // protected Uri method_0()
         }
 
+        [PatchPostfix]
         private static Uri PatchPostfix(Uri __instance)
         {
             return new Uri(__instance.ToString().Replace("wss:", "ws:"));

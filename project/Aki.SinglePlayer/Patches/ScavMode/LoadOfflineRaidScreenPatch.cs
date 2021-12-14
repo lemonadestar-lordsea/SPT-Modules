@@ -64,10 +64,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             }
         }
 
-        public LoadOfflineRaidScreenPatch() : base(T: typeof(LoadOfflineRaidScreenPatch), transpiler: nameof(PatchTranspiler))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return typeof(MainMenuController).GetNestedTypes(BindingFlags.NonPublic)
@@ -75,6 +71,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 .GetMethod("method_2", Constants.PrivateFlags);
         }
 
+        [PatchTranspiler]
         private static IEnumerable<CodeInstruction> PatchTranspiler(IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);

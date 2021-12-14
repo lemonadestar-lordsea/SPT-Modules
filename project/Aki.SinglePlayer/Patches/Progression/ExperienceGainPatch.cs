@@ -8,10 +8,6 @@ namespace Aki.SinglePlayer.Patches.Progression
 {
     public class ExperienceGainPatch : ModulePatch
     {
-        public ExperienceGainPatch() : base(T: typeof(ExperienceGainPatch), prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return typeof(SessionResultExperienceCount).GetMethods(Constants.PrivateFlags).FirstOrDefault(IsTargetMethod);
@@ -27,12 +23,14 @@ namespace Aki.SinglePlayer.Patches.Progression
                 && parameters[1].ParameterType == typeof(bool));
         }
 
-        private static void PrefixPatch(ref bool isLocal)
+        [PatchPrefix]
+        private static void PatchPrefix(ref bool isLocal)
         {
             isLocal = false;
         }
 
-        private static void PostfixPatch(ref bool isLocal)
+        [PatchPostfix]
+        private static void PatchPostfix(ref bool isLocal)
         {
             isLocal = true;
         }

@@ -27,16 +27,13 @@ namespace Aki.SinglePlayer.Patches.Progression
             _defaultJsonConverters = Traverse.Create(converterClass).Field<JsonConverter[]>("Converters").Value;
         }
 
-        public OfflineSaveProfilePatch() : base(T: typeof(OfflineSaveProfilePatch), prefix: nameof(PatchPrefix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return Constants.EftTypes.Single(x => x.Name == "MainApplication")
                 .GetMethod("method_44", Constants.PrivateFlags);
         }
 
+        [PatchPrefix]
         private static void PatchPrefix(ESideType ___esideType_0, Result<ExitStatus, TimeSpan, ClientMetrics> result)
         {
             var session = Constants.BackEndSession;

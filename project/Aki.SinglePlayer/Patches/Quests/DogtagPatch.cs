@@ -21,15 +21,12 @@ namespace Aki.SinglePlayer.Patches.Quests
             _getEquipmentProperty = typeof(Player).GetProperty("Equipment", _flags);
         }
 
-        public DogtagPatch() : base(T: typeof(DogtagPatch), postfix: nameof(PatchPostfix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return typeof(Player).GetMethod("OnBeenKilledByAggressor", _flags);
         }
 
+        [PatchPostfix]
         private static void PatchPostfix(Player __instance, Player aggressor, DamageInfo damageInfo)
         {
             if (__instance.Profile.Info.Side == EPlayerSide.Savage)

@@ -9,15 +9,12 @@ namespace Aki.Core.Patches
     {
         private static CertificateHandler _certificateHandler = new FakeCertificateHandler();
 
-        public UnityWebRequestPatch() : base(T: typeof(UnityWebRequestPatch), postfix: nameof(PatchPostfix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return typeof(UnityWebRequestTexture).GetMethod(nameof(UnityWebRequestTexture.GetTexture), new[] { typeof(string) });
         }
 
+        [PatchPostfix]
         private static void PatchPostfix(UnityWebRequest __result)
         {
             __result.certificateHandler = _certificateHandler;

@@ -11,15 +11,12 @@ namespace Aki.SinglePlayer.Patches.MainMenu
 {
     public class MatchmakerOfflineRaidPatch : ModulePatch
     {
-        public MatchmakerOfflineRaidPatch() : base(T: typeof(MatchmakerOfflineRaidPatch), postfix: nameof(PatchPostfix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return typeof(MatchmakerOfflineRaid).GetMethod(nameof(MatchmakerOfflineRaid.Show));
         }
 
+        [PatchPostfix]
         private static void PatchPostfix(UpdatableToggle ____offlineModeToggle,
             UpdatableToggle ____botsEnabledToggle,
             TMPDropDownBox ____aiAmountDropdown,

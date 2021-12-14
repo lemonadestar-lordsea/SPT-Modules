@@ -14,10 +14,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 {
     public class ScavProfileLoadPatch : ModulePatch
     {
-        public ScavProfileLoadPatch() : base(T: typeof(ScavProfileLoadPatch), transpiler: nameof(PatchTranspile))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return typeof(MainApplication)
@@ -32,6 +28,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 .FirstOrDefault(x => x.Name == "MoveNext");
         }
 
+        [PatchTranspiler]
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);

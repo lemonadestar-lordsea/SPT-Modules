@@ -39,6 +39,7 @@
     <Compile Include="CodeWrapper\Code.cs" />
     <Compile Include="CodeWrapper\CodeGenerator.cs" />
     <Compile Include="CodeWrapper\CodeWithLabel.cs" />
+    <Compile Include="Patching\Attributes.cs" />
     <Compile Include="Patching\ModulePatch.cs" />
     <Compile Include="Patching\PatchList.cs" />
     <Compile Include="Utils\Constants.cs" />

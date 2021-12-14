@@ -19,20 +19,18 @@ namespace Aki.SinglePlayer.Patches.Bundles
             _ = nameof(BindableState<ELoadState>.Bind);
         }
 
-        public EasyBundlePatch() : base(T: typeof(EasyBundlePatch), prefix: nameof(PatchPrefix), postfix: nameof(PatchPostfix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
 		{
             return EasyBundleHelper.Type.GetConstructors()[0];
         }
 
+        [PatchPrefix]
         private static bool PatchPrefix()
         {
             return false;
         }
 
+        [PatchPostfix]
         private static void PatchPostfix(object __instance, string key, string rootPath, CompatibilityAssetBundleManifest manifest, IBundleLock bundleLock)
 		{
             var path = rootPath + key;

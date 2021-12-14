@@ -18,10 +18,6 @@ namespace Aki.SinglePlayer.Patches.Progression
             _ = nameof(ISpawnPoints.CreateSpawnPoint);
         }
 
-        public OfflineSpawnPointPatch() : base(T: typeof(OfflineSpawnPointPatch), prefix: nameof(PatchPrefix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return Constants.EftTypes.First(IsTargetType)
@@ -34,6 +30,7 @@ namespace Aki.SinglePlayer.Patches.Progression
                 && type.IsClass);
         }
 
+        [PatchPrefix]
         private static bool PatchPrefix(ref ISpawnPoint __result, object __instance, ESpawnCategory category, EPlayerSide side, string infiltration)
         {
             var ginterface240_0 = Traverse.Create(__instance).Field<ISpawnPoints>("ginterface240_0").Value;

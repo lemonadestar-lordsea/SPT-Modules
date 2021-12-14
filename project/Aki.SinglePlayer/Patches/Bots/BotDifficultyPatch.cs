@@ -9,10 +9,6 @@ namespace Aki.SinglePlayer.Patches.Bots
 {
     public class BotDifficultyPatch : ModulePatch
     {
-        public BotDifficultyPatch() : base(T: typeof(BotDifficultyPatch), prefix: nameof(PatchPrefix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             var methodName = "LoadDifficultyStringInternal";
@@ -22,6 +18,7 @@ namespace Aki.SinglePlayer.Patches.Bots
                 .GetMethod(methodName, flags);
         }
 
+        [PatchPrefix]
         private static bool PatchPrefix(ref string __result, BotDifficulty botDifficulty, WildSpawnType role)
         {
             __result = RequestHandler.GetJson($"/singleplayer/settings/bot/difficulty/{role}/{botDifficulty}");
