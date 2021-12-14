@@ -91,6 +91,7 @@
     <Compile Include="Models\PlayerHealth.cs" />
     <Compile Include="Models\SaveProfileRequest.cs" />
     <Compile Include="Models\ServerConfig.cs" />
+    <Compile Include="Models\VersionResponse.cs" />
     <Compile Include="Patches\Https\WebSocketPatch.cs" />
     <Compile Include="Patches\MainMenu\VersionLabelPatch.cs" />
     <Compile Include="PatchManager.cs" />
