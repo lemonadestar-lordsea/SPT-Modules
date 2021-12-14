@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Healing
 {
-    public class MainMenuControllerPatch : Patch
+    public class MainMenuControllerPatch : ModulePatch
     {
         static MainMenuControllerPatch()
         {
@@ -12,15 +12,12 @@ namespace Aki.SinglePlayer.Patches.Healing
             _ = nameof(MainMenuController.HealthController);
         }
 
-        public MainMenuControllerPatch() : base(T: typeof(MainMenuControllerPatch), postfix: nameof(PatchPostfix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MainMenuController).GetMethod("method_1", Constants.PrivateFlags);
+            return typeof(MainMenuController).GetMethod("method_1", PatchConstants.PrivateFlags);
         }
 
+        [PatchPostfix]
         private static void PatchPostfix(MainMenuController __instance)
         {
             var healthController = __instance.HealthController;

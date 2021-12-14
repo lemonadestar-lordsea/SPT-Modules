@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30517.126
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1738
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Common", "Aki.Common\Aki.Common.csproj", "{7584F43A-5937-417E-ABF4-C5F680F300FB}"
 EndProject
@@ -14,6 +14,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Reflection", "Aki.Reflection\Aki.Reflection.csproj", "{AEE7B6F5-B07D-4E3E-B509-C098ADB8A50F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Build", "Aki.Build\Aki.Build.csproj", "{31DE3EC4-DA4D-4356-8F5A-3657835862A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Bundles", "Aki.Bundles\Aki.Bundles.csproj", "{6AD307B7-A744-4802-9D1E-D4BA2D808D29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Debugging", "Aki.Debugging\Aki.Debugging.csproj", "{D6737DC4-D139-4D0B-917F-49B38C411ECC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aki.Custom", "Aki.Custom\Aki.Custom.csproj", "{77A88325-1E24-4DC0-B94F-722BADFC30F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +51,18 @@ Global
 		{31DE3EC4-DA4D-4356-8F5A-3657835862A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31DE3EC4-DA4D-4356-8F5A-3657835862A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31DE3EC4-DA4D-4356-8F5A-3657835862A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AD307B7-A744-4802-9D1E-D4BA2D808D29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AD307B7-A744-4802-9D1E-D4BA2D808D29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AD307B7-A744-4802-9D1E-D4BA2D808D29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AD307B7-A744-4802-9D1E-D4BA2D808D29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6737DC4-D139-4D0B-917F-49B38C411ECC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6737DC4-D139-4D0B-917F-49B38C411ECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6737DC4-D139-4D0B-917F-49B38C411ECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6737DC4-D139-4D0B-917F-49B38C411ECC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77A88325-1E24-4DC0-B94F-722BADFC30F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77A88325-1E24-4DC0-B94F-722BADFC30F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77A88325-1E24-4DC0-B94F-722BADFC30F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77A88325-1E24-4DC0-B94F-722BADFC30F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

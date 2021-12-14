@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="FilesChecker">
       <HintPath>..\Shared\References\FilesChecker.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="UnityEngine">
@@ -73,7 +74,7 @@
     <Compile Include="Models\FakeFileCheckerResult.cs" />
     <Compile Include="Patches\ConsistencyMultiPatch.cs" />
     <Compile Include="Patches\ConsistencySinglePatch.cs" />
-    <Compile Include="Patches\PatchManager.cs" />
+    <Compile Include="Patches\WebSocketPatch.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Patches\BattlEyePatch.cs" />
     <Compile Include="Patches\SslCertificatePatch.cs" />

@@ -1,24 +1,20 @@
-using Aki.Common;
+using Aki.Common.Utils;
 using Aki.Reflection.CodeWrapper;
+using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using Patch = Aki.Reflection.Patching.Patch;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
-    public class ExfilPointManagerPatch : Patch
+    public class ExfilPointManagerPatch : ModulePatch
     {
-        public ExfilPointManagerPatch() : base(T: typeof(ExfilPointManagerPatch), transpiler: nameof(PatchTranspile))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
-            return Constants.ExfilPointManagerType
+            return PatchConstants.ExfilPointManagerType
                 .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.CreateInstance)
                 .Single(IsTargetMethod);
         }
@@ -28,10 +24,11 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             return methodInfo.GetParameters().Length == 3 && methodInfo.ReturnType == typeof(void);
         }
 
+        [PatchTranspiler]
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
-            var searchCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(Constants.ExfilPointManagerType, "RemoveProfileIdFromPoints"));
+            var searchCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(PatchConstants.ExfilPointManagerType, "RemoveProfileIdFromPoints"));
             var searchIndex = -1;
 
             for (var i = 0; i < codes.Count; i++)
@@ -55,7 +52,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var newCodes = CodeGenerator.GenerateInstructions(new List<Code>()
             {
                 new Code(OpCodes.Ldarg_0),
-                new Code(OpCodes.Call, Constants.ExfilPointManagerType, "get_ScavExfiltrationPoints")
+                new Code(OpCodes.Call, PatchConstants.ExfilPointManagerType, "get_ScavExfiltrationPoints")
             });
 
             codes.RemoveRange(searchIndex, 23);

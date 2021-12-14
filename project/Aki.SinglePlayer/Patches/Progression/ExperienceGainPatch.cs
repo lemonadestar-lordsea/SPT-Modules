@@ -6,15 +6,11 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    public class ExperienceGainPatch : Patch
+    public class ExperienceGainPatch : ModulePatch
     {
-        public ExperienceGainPatch() : base(T: typeof(ExperienceGainPatch), prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(SessionResultExperienceCount).GetMethods(Constants.PrivateFlags).FirstOrDefault(IsTargetMethod);
+            return typeof(SessionResultExperienceCount).GetMethods(PatchConstants.PrivateFlags).FirstOrDefault(IsTargetMethod);
         }
 
         private static bool IsTargetMethod(MethodInfo mi)
@@ -27,12 +23,14 @@ namespace Aki.SinglePlayer.Patches.Progression
                 && parameters[1].ParameterType == typeof(bool));
         }
 
-        private static void PrefixPatch(ref bool isLocal)
+        [PatchPrefix]
+        private static void PatchPrefix(ref bool isLocal)
         {
             isLocal = false;
         }
 
-        private static void PostfixPatch(ref bool isLocal)
+        [PatchPostfix]
+        private static void PatchPostfix(ref bool isLocal)
         {
             isLocal = true;
         }

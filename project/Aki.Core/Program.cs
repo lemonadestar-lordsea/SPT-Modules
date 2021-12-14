@@ -1,4 +1,4 @@
-using Aki.Common;
+using Aki.Common.Utils;
 using Aki.Core.Patches;
 
 namespace Aki.Core
@@ -9,8 +9,12 @@ namespace Aki.Core
 		{
             Log.Info("Loading: Aki.Core");
 
-			var patcher = new PatchManager();
-            patcher.RunPatches();
-		}
+            new ConsistencySinglePatch().Enable();
+            new ConsistencyMultiPatch().Enable();
+            new BattlEyePatch().Enable();
+            new SslCertificatePatch().Enable();
+            new UnityWebRequestPatch().Enable();
+            new WebSocketPatch().Enable();
+        }
 	}
 }

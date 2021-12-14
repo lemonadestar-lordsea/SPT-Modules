@@ -39,6 +39,10 @@
     <None Include="Build.ps1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Aki.Bundles\Aki.Bundles.csproj">
+      <Project>{6ad307b7-a744-4802-9d1e-d4ba2d808d29}</Project>
+      <Name>Aki.Bundles</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Aki.Common\Aki.Common.csproj">
       <Project>{7584f43a-5937-417e-abf4-c5f680f300fb}</Project>
       <Name>Aki.Common</Name>

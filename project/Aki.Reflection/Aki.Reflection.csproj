@@ -39,9 +39,9 @@
     <Compile Include="CodeWrapper\Code.cs" />
     <Compile Include="CodeWrapper\CodeGenerator.cs" />
     <Compile Include="CodeWrapper\CodeWithLabel.cs" />
-    <Compile Include="Patching\Patch.cs" />
-    <Compile Include="Patching\PatchList.cs" />
-    <Compile Include="Utils\Constants.cs" />
+    <Compile Include="Patching\Attributes.cs" />
+    <Compile Include="Patching\ModulePatch.cs" />
+    <Compile Include="Utils\PatchConstants.cs" />
     <Compile Include="Utils\ClientAppUtils.cs" />
     <Compile Include="Utils\HookObject.cs" />
   </ItemGroup>
@@ -74,16 +74,16 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HarmonyX">
-      <Version>2.5.4</Version>
+      <Version>2.6.1</Version>
     </PackageReference>
     <PackageReference Include="Mono.Cecil">
       <Version>0.11.4</Version>
     </PackageReference>
     <PackageReference Include="MonoMod.RuntimeDetour">
-      <Version>21.8.19.1</Version>
+      <Version>21.12.11.1</Version>
     </PackageReference>
     <PackageReference Include="MonoMod.Utils">
-      <Version>21.8.19.1</Version>
+      <Version>21.12.11.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

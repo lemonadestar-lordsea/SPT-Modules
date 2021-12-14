@@ -1,4 +1,5 @@
-using Aki.Common;
+using Aki.Common.Utils;
+using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using EFT;
 using EFT.Game.Spawning;
@@ -10,29 +11,26 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    public class OfflineSpawnPointPatch : Reflection.Patching.Patch
+    public class OfflineSpawnPointPatch : ModulePatch
     {
         static OfflineSpawnPointPatch()
         {
             _ = nameof(ISpawnPoints.CreateSpawnPoint);
         }
 
-        public OfflineSpawnPointPatch() : base(T: typeof(OfflineSpawnPointPatch), prefix: nameof(PatchPrefix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
-            return Constants.EftTypes.First(IsTargetType)
-                .GetMethods(Constants.PrivateFlags).First(m => m.Name.Contains("SelectSpawnPoint"));
+            return PatchConstants.EftTypes.First(IsTargetType)
+                .GetMethods(PatchConstants.PrivateFlags).First(m => m.Name.Contains("SelectSpawnPoint"));
         }
 
         private static bool IsTargetType(Type type)
         {
-            return (type.GetMethods(Constants.PrivateFlags).Any(x => x.Name.IndexOf("CheckFarthestFromOtherPlayers", StringComparison.OrdinalIgnoreCase) != -1)
+            return (type.GetMethods(PatchConstants.PrivateFlags).Any(x => x.Name.IndexOf("CheckFarthestFromOtherPlayers", StringComparison.OrdinalIgnoreCase) != -1)
                 && type.IsClass);
         }
 
+        [PatchPrefix]
         private static bool PatchPrefix(ref ISpawnPoint __result, object __instance, ESpawnCategory category, EPlayerSide side, string infiltration)
         {
             var ginterface240_0 = Traverse.Create(__instance).Field<ISpawnPoints>("ginterface240_0").Value;

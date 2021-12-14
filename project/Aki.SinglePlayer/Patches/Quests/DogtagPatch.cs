@@ -1,4 +1,4 @@
-using Aki.Common;
+using Aki.Common.Utils;
 using Aki.Reflection.Patching;
 using EFT;
 using EFT.InventoryLogic;
@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Quests
 {
-    public class DogtagPatch : Patch
+    public class DogtagPatch : ModulePatch
     {
         private static BindingFlags _flags;
         private static PropertyInfo _getEquipmentProperty;
@@ -21,15 +21,12 @@ namespace Aki.SinglePlayer.Patches.Quests
             _getEquipmentProperty = typeof(Player).GetProperty("Equipment", _flags);
         }
 
-        public DogtagPatch() : base(T: typeof(DogtagPatch), postfix: nameof(PatchPostfix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return typeof(Player).GetMethod("OnBeenKilledByAggressor", _flags);
         }
 
+        [PatchPostfix]
         private static void PatchPostfix(Player __instance, Player aggressor, DamageInfo damageInfo)
         {
             if (__instance.Profile.Info.Side == EPlayerSide.Savage)

@@ -1,5 +1,6 @@
-using Aki.Common;
+using Aki.Common.Utils;
 using Aki.Reflection.CodeWrapper;
+using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using EFT;
 using HarmonyLib;
@@ -9,11 +10,10 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using UnityEngine;
-using Patch = Aki.Reflection.Patching.Patch;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
-    public class ScavExfilPatch : Patch
+    public class ScavExfilPatch : ModulePatch
     {
         private static Type _profileType;
         private static Type _profileInfoType;
@@ -21,18 +21,14 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         static ScavExfilPatch()
         {
-            _profileType = Constants.EftTypes.Single(x => x.GetMethod("AddToCarriedQuestItems") != null);
-            _profileInfoType = Constants.EftTypes.Single(x => x.GetMethod("GetExperience") != null);
-            _fenceTraderInfoType = Constants.EftTypes.Single(x => x.GetMethod("NewExfiltrationPrice") != null);
-        }
-
-        public ScavExfilPatch() : base(T: typeof(ScavExfilPatch), transpiler: nameof(PatchTranspile))
-        {
+            _profileType = PatchConstants.EftTypes.Single(x => x.GetMethod("AddToCarriedQuestItems") != null);
+            _profileInfoType = PatchConstants.EftTypes.Single(x => x.GetMethod("GetExperience") != null);
+            _fenceTraderInfoType = PatchConstants.EftTypes.Single(x => x.GetMethod("NewExfiltrationPrice") != null);
         }
 
         protected override MethodBase GetTargetMethod()
         {
-            return Constants.LocalGameType.BaseType
+            return PatchConstants.LocalGameType.BaseType
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.CreateInstance)
                 .Single(IsTargetMethod);
         }
@@ -45,10 +41,11 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 && methodInfo.GetMethodBody().LocalVariables.Count > 0);
         }
 
+        [PatchTranspiler]
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
-            var searchCode = new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(Constants.ExfilPointManagerType, "EligiblePoints", new System.Type[] { typeof(Profile) }));
+            var searchCode = new CodeInstruction(OpCodes.Callvirt, AccessTools.Method(PatchConstants.ExfilPointManagerType, "EligiblePoints", new System.Type[] { typeof(Profile) }));
             var searchIndex = -1;
 
             for (var i = 0; i < codes.Count; i++)
@@ -74,41 +71,41 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var newCodes = CodeGenerator.GenerateInstructions(new List<Code>()
             {
                 new Code(OpCodes.Ldarg_0),
-                new Code(OpCodes.Call, Constants.LocalGameType.BaseType, "get_Profile_0"),
+                new Code(OpCodes.Call, PatchConstants.LocalGameType.BaseType, "get_Profile_0"),
                 new Code(OpCodes.Ldfld, typeof(Profile), "Info"),
                 new Code(OpCodes.Ldfld, _profileInfoType, "Side"),
                 new Code(OpCodes.Ldc_I4_4),
                 new Code(OpCodes.Ceq),
                 new Code(OpCodes.Brfalse, brFalseLabel),
-                new Code(OpCodes.Call, Constants.ExfilPointManagerType, "get_Instance"),
+                new Code(OpCodes.Call, PatchConstants.ExfilPointManagerType, "get_Instance"),
                 new Code(OpCodes.Ldarg_0),
-                new Code(OpCodes.Ldfld, Constants.LocalGameType.BaseType, "gparam_0"),
+                new Code(OpCodes.Ldfld, PatchConstants.LocalGameType.BaseType, "gparam_0"),
                 new Code(OpCodes.Box, typeof(PlayerOwner)),
                 new Code(OpCodes.Callvirt, typeof(PlayerOwner), "get_Player"),
                 new Code(OpCodes.Callvirt, typeof(Player), "get_Position"),
                 new Code(OpCodes.Ldarg_0),
-                new Code(OpCodes.Call, Constants.LocalGameType.BaseType, "get_Profile_0"),
+                new Code(OpCodes.Call, PatchConstants.LocalGameType.BaseType, "get_Profile_0"),
                 new Code(OpCodes.Ldfld, typeof(Profile), "Id"),
                 new Code(OpCodes.Ldarg_0),
-                new Code(OpCodes.Call, Constants.LocalGameType.BaseType, "get_Profile_0"),
+                new Code(OpCodes.Call, PatchConstants.LocalGameType.BaseType, "get_Profile_0"),
                 new Code(OpCodes.Call, _profileType, "get_FenceInfo"),
                 new Code(OpCodes.Call, _fenceTraderInfoType, "get_AvailableExitsCount"),
-                new Code(OpCodes.Callvirt, Constants.ExfilPointManagerType, "ScavExfiltrationClaim", new System.Type[]{ typeof(Vector3), typeof(string), typeof(int) }),
-                new Code(OpCodes.Call, Constants.ExfilPointManagerType, "get_Instance"),
-                new Code(OpCodes.Call, Constants.ExfilPointManagerType, "get_Instance"),
+                new Code(OpCodes.Callvirt, PatchConstants.ExfilPointManagerType, "ScavExfiltrationClaim", new System.Type[]{ typeof(Vector3), typeof(string), typeof(int) }),
+                new Code(OpCodes.Call, PatchConstants.ExfilPointManagerType, "get_Instance"),
+                new Code(OpCodes.Call, PatchConstants.ExfilPointManagerType, "get_Instance"),
                 new Code(OpCodes.Ldarg_0),
-                new Code(OpCodes.Call, Constants.LocalGameType.BaseType, "get_Profile_0"),
+                new Code(OpCodes.Call, PatchConstants.LocalGameType.BaseType, "get_Profile_0"),
                 new Code(OpCodes.Ldfld, typeof(Profile), "Id"),
-                new Code(OpCodes.Callvirt, Constants.ExfilPointManagerType, "GetScavExfiltrationMask"),
+                new Code(OpCodes.Callvirt, PatchConstants.ExfilPointManagerType, "GetScavExfiltrationMask"),
                 new Code(OpCodes.Ldarg_0),
-                new Code(OpCodes.Call, Constants.LocalGameType.BaseType, "get_Profile_0"),
+                new Code(OpCodes.Call, PatchConstants.LocalGameType.BaseType, "get_Profile_0"),
                 new Code(OpCodes.Ldfld, typeof(Profile), "Id"),
-                new Code(OpCodes.Callvirt, Constants.ExfilPointManagerType, "ScavExfiltrationClaim", new System.Type[]{ typeof(int), typeof(string) }),
+                new Code(OpCodes.Callvirt, PatchConstants.ExfilPointManagerType, "ScavExfiltrationClaim", new System.Type[]{ typeof(int), typeof(string) }),
                 new Code(OpCodes.Br, brLabel),
-                new CodeWithLabel(OpCodes.Call, brFalseLabel, Constants.ExfilPointManagerType, "get_Instance"),
+                new CodeWithLabel(OpCodes.Call, brFalseLabel, PatchConstants.ExfilPointManagerType, "get_Instance"),
                 new Code(OpCodes.Ldarg_0),
-                new Code(OpCodes.Call, Constants.LocalGameType.BaseType, "get_Profile_0"),
-                new Code(OpCodes.Callvirt, Constants.ExfilPointManagerType, "EligiblePoints", new System.Type[]{ typeof(Profile) }),
+                new Code(OpCodes.Call, PatchConstants.LocalGameType.BaseType, "get_Profile_0"),
+                new Code(OpCodes.Callvirt, PatchConstants.ExfilPointManagerType, "EligiblePoints", new System.Type[]{ typeof(Profile) }),
                 new CodeWithLabel(OpCodes.Stloc_2, brLabel)
             });
 

@@ -8,18 +8,15 @@ using FilesChecker;
 
 namespace Aki.Core.Patches
 {
-    public class ConsistencySinglePatch : Patch
+    public class ConsistencySinglePatch : ModulePatch
     {
-        public ConsistencySinglePatch() : base(T: typeof(ConsistencySinglePatch), prefix: nameof(PatchPrefix))
-        {
-        }
-
         protected override MethodBase GetTargetMethod()
         {
-            return Constants.FilesCheckerTypes.Single(x => x.Name == "ConsistencyController")
+            return PatchConstants.FilesCheckerTypes.Single(x => x.Name == "ConsistencyController")
                 .GetMethods().Single(x => x.Name == "EnsureConsistencySingle" && x.ReturnType == typeof(Task<ICheckResult>));
         }
 
+        [PatchPrefix]
         private static bool PatchPrefix(ref object __result)
         {
             __result = Task.FromResult<ICheckResult>(new FakeFileCheckerResult());

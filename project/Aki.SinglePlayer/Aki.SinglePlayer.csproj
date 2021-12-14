@@ -45,72 +45,33 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="Unity.ScriptableBuildPipeline">
-      <HintPath>..\Shared\References\Unity.ScriptableBuildPipeline.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\Shared\References\UnityEngine.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>..\Shared\References\UnityEngine.AssetBundleModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\Shared\References\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>..\Shared\References\UnityEngine.InputLegacyModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\Shared\References\UnityEngine.UI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\Shared\References\UnityEngine.UIModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\Shared\References\Unity.TextMeshPro.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\Shared\References\UnityEngine.PhysicsModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\BodyPartHealth.cs" />
-    <Compile Include="Models\BundleInfo.cs" />
-    <Compile Include="Models\BundleItem.cs" />
-    <Compile Include="Models\EBodyPartEffect.cs" />
-    <Compile Include="Models\PlayerHealth.cs" />
-    <Compile Include="Models\SaveProfileRequest.cs" />
-    <Compile Include="Models\ServerConfig.cs" />
-    <Compile Include="Patches\Https\WebSocketPatch.cs" />
-    <Compile Include="Patches\MainMenu\VersionLabelPatch.cs" />
-    <Compile Include="Patches\PatchManager.cs" />
+    <Compile Include="Models\Healing\BodyPartHealth.cs" />
+    <Compile Include="Models\RaidFix\BundleLoader.cs" />
+    <Compile Include="Models\Healing\EBodyPartEffect.cs" />
+    <Compile Include="Models\Healing\PlayerHealth.cs" />
+    <Compile Include="Models\Progression\SaveProfileRequest.cs" />
+    <Compile Include="Patches\Quests\EndByTimerPatch.cs" />
+    <Compile Include="Patches\Quests\SpawnPmcPatch.cs" />
     <Compile Include="Patches\RaidFix\TinnitusFixPatch.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Patches\Bots\BossSpawnChancePatch.cs" />
-    <Compile Include="Patches\Bots\BotTemplateLimitPatch.cs" />
-    <Compile Include="Patches\Bots\GetNewBotTemplatesPatch.cs" />
-    <Compile Include="Patches\Bots\BotDifficultyPatch.cs" />
-    <Compile Include="Patches\Bots\CoreDifficultyPatch.cs" />
-    <Compile Include="Patches\Bots\RemoveUsedBotProfilePatch.cs" />
-    <Compile Include="Patches\Bots\SpawnPmcPatch.cs" />
-    <Compile Include="Patches\Bundles\EasyAssetsPatch.cs" />
-    <Compile Include="Patches\Bundles\BundleLoadPatch.cs" />
-    <Compile Include="Patches\Bundles\EasyBundlePatch.cs" />
+    <Compile Include="Patches\RaidFix\BotTemplateLimitPatch.cs" />
+    <Compile Include="Patches\RaidFix\GetNewBotTemplatesPatch.cs" />
+    <Compile Include="Patches\RaidFix\RemoveUsedBotProfilePatch.cs" />
     <Compile Include="Patches\Healing\PlayerPatch.cs" />
     <Compile Include="Patches\MainMenu\InsuranceScreenPatch.cs" />
     <Compile Include="Patches\MainMenu\SelectLocationScreenPatch.cs" />
     <Compile Include="Patches\Progression\ExperienceGainPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSpawnPointPatch.cs" />
-    <Compile Include="Patches\Progression\EndByTimerPatch.cs" />
     <Compile Include="Patches\ScavMode\ExfilPointManagerPatch.cs" />
     <Compile Include="Patches\ScavMode\LoadOfflineRaidScreenPatch.cs" />
     <Compile Include="Patches\ScavMode\ScavExfilPatch.cs" />
@@ -118,16 +79,9 @@
     <Compile Include="Patches\ScavMode\ScavProfileLoadPatch.cs" />
     <Compile Include="Patches\Healing\MainMenuControllerPatch.cs" />
     <Compile Include="Patches\Quests\DogtagPatch.cs" />
-    <Compile Include="Patches\Progression\OnLoadRaidPatch.cs" />
-    <Compile Include="Patches\MainMenu\MatchmakerOfflineRaidPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSavePatch.cs" />
-    <Compile Include="Patches\Quests\BeaconPatch.cs" />
-    <Compile Include="Patches\Dev\CoordinatesPatch.cs" />
-    <Compile Include="Utils\RequestHandler.cs" />
-    <Compile Include="Utils\Bundles\EasyBundleHelper.cs" />
-    <Compile Include="Utils\Bundles\BundleSettings.cs" />
     <Compile Include="Utils\Healing\HealthListener.cs" />
-    <Compile Include="Models\DefaultRaidSettings.cs" />
+    <Compile Include="Utils\Progression\NotesJsonConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aki.Common\Aki.Common.csproj">
@@ -143,16 +97,16 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HarmonyX">
-      <Version>2.5.4</Version>
+      <Version>2.6.1</Version>
     </PackageReference>
     <PackageReference Include="Mono.Cecil">
       <Version>0.11.4</Version>
     </PackageReference>
     <PackageReference Include="MonoMod.RuntimeDetour">
-      <Version>21.8.19.1</Version>
+      <Version>21.12.11.1</Version>
     </PackageReference>
     <PackageReference Include="MonoMod.Utils">
-      <Version>21.8.19.1</Version>
+      <Version>21.12.11.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
