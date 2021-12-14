@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Aki.Common.Http;
 using Aki.Reflection.Utils;
-using Aki.SinglePlayer.Models;
+using Aki.SinglePlayer.Models.Healing;
 
 namespace Aki.SinglePlayer.Utils.Healing
 {

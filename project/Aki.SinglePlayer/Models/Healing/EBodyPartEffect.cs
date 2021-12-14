@@ -1,4 +1,4 @@
-﻿namespace Aki.SinglePlayer.Models
+﻿namespace Aki.SinglePlayer.Models.Healing
 {
     public enum EBodyPartEffect
     {

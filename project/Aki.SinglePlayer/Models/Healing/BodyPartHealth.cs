@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Aki.SinglePlayer.Models
+namespace Aki.SinglePlayer.Models.Healing
 {
     public class BodyPartHealth
     {

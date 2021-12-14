@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Aki.SinglePlayer.Models.Healing;
+using Newtonsoft.Json;
 using EFT;
 
-namespace Aki.SinglePlayer.Models
+namespace Aki.SinglePlayer.Models.Progression
 {
     public class SaveProfileRequest
 	{

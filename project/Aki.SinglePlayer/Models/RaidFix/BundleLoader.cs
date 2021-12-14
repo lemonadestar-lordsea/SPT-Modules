@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Comfort.Common;
 using EFT;
 
-namespace Aki.SinglePlayer.Models
+namespace Aki.SinglePlayer.Models.RaidFix
 {
     public struct BundleLoader
     {

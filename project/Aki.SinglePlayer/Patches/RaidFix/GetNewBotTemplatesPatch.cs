@@ -5,9 +5,9 @@ using EFT;
 using Aki.Common.Utils;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
-using Aki.SinglePlayer.Models;
+using Aki.SinglePlayer.Models.RaidFix;
 
-namespace Aki.SinglePlayer.Patches.Bots
+namespace Aki.SinglePlayer.Patches.RaidFix
 {
     public class GetNewBotTemplatesPatch : ModulePatch
     {

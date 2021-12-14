@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Aki.SinglePlayer.Patches.Bots
+namespace Aki.SinglePlayer.Patches.RaidFix
 {
     public class BotTemplateLimitPatch : ModulePatch
     {

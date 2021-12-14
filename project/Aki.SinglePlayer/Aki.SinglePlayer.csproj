@@ -53,29 +53,21 @@
       <HintPath>..\Shared\References\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\Shared\References\UnityEngine.UI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\Shared\References\UnityEngine.UIModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\BodyPartHealth.cs" />
-    <Compile Include="Models\BundleLoader.cs" />
-    <Compile Include="Models\EBodyPartEffect.cs" />
-    <Compile Include="Models\PlayerHealth.cs" />
-    <Compile Include="Models\SaveProfileRequest.cs" />
+    <Compile Include="Models\Healing\BodyPartHealth.cs" />
+    <Compile Include="Models\RaidFix\BundleLoader.cs" />
+    <Compile Include="Models\Healing\EBodyPartEffect.cs" />
+    <Compile Include="Models\Healing\PlayerHealth.cs" />
+    <Compile Include="Models\Progression\SaveProfileRequest.cs" />
     <Compile Include="Patches\Quests\EndByTimerPatch.cs" />
     <Compile Include="Patches\Quests\SpawnPmcPatch.cs" />
     <Compile Include="PatchManager.cs" />
     <Compile Include="Patches\RaidFix\TinnitusFixPatch.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Patches\Bots\BotTemplateLimitPatch.cs" />
-    <Compile Include="Patches\Bots\GetNewBotTemplatesPatch.cs" />
-    <Compile Include="Patches\Bots\RemoveUsedBotProfilePatch.cs" />
+    <Compile Include="Patches\RaidFix\BotTemplateLimitPatch.cs" />
+    <Compile Include="Patches\RaidFix\GetNewBotTemplatesPatch.cs" />
+    <Compile Include="Patches\RaidFix\RemoveUsedBotProfilePatch.cs" />
     <Compile Include="Patches\Healing\PlayerPatch.cs" />
     <Compile Include="Patches\MainMenu\InsuranceScreenPatch.cs" />
     <Compile Include="Patches\MainMenu\SelectLocationScreenPatch.cs" />
