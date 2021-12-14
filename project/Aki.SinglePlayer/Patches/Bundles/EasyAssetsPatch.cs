@@ -114,16 +114,8 @@ namespace Aki.SinglePlayer.Patches.Bundles
             var filepath = path + platformName;
             var manifest = (File.Exists(filepath)) ? await GetManifestBundle(filepath) : await GetManifestJson(filepath);
 
-            // mod bundles
-            var modbundles = new List<string>();
-
-            foreach (KeyValuePair<string, BundleInfo> kvp in BundleSettings.Bundles)
-            {
-                modbundles.Add(kvp.Key);
-            }
-            
             // load bundles
-            var bundleNames = manifest.GetAllAssetBundles().Union(modbundles).ToArray();
+            var bundleNames = manifest.GetAllAssetBundles().Union(BundleSettings.Bundles.Keys).ToArray();
             var bundles = (IEasyBundle[])Array.CreateInstance(EasyBundleHelper.Type, bundleNames.Length);
 
             if (bundleLock == null)
