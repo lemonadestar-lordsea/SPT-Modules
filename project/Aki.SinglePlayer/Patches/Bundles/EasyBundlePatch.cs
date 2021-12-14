@@ -25,13 +25,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
         }
 
         [PatchPrefix]
-        private static bool PatchPrefix()
-        {
-            return false;
-        }
-
-        [PatchPostfix]
-        private static void PatchPostfix(object __instance, string key, string rootPath, CompatibilityAssetBundleManifest manifest, IBundleLock bundleLock)
+        private static bool PatchPrefix(object __instance, string key, string rootPath, CompatibilityAssetBundleManifest manifest, IBundleLock bundleLock)
 		{
             var path = rootPath + key;
             var dependencyKeys = manifest.GetDirectDependencies(key);
@@ -62,6 +56,8 @@ namespace Aki.SinglePlayer.Patches.Bundles
                 LoadState = new BindableState<ELoadState>(ELoadState.Unloaded, null),
                 BundleLock = bundleLock
             };
+
+            return false;
         }
 	}
 }
