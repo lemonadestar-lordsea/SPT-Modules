@@ -1,47 +1,14 @@
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
-using Comfort.Common;
 using EFT;
 using Aki.Common;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
+using Aki.SinglePlayer.Models;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
-    public struct BundleLoader
-    {
-        Profile Profile;
-        TaskScheduler TaskScheduler { get; }
-
-        public BundleLoader(TaskScheduler taskScheduler)
-        {
-            Profile = null;
-            TaskScheduler = taskScheduler;
-        }
-
-        public Task<Profile> LoadBundles(Task<Profile> task)
-        {
-            Profile = task.Result;
-
-            var loadTask = Singleton<PoolManager>.Instance.LoadBundlesAndCreatePools(
-                PoolManager.PoolsCategory.Raid,
-                PoolManager.AssemblyType.Local,
-                Profile.GetAllPrefabPaths(false).ToArray(),
-                JobPriority.General,
-                null,
-                default(CancellationToken));
-
-            return loadTask.ContinueWith(GetProfile, TaskScheduler);
-        }
-
-        private Profile GetProfile(Task task)
-        {
-            return Profile;
-        }
-    }
-
     public class GetNewBotTemplatesPatch : ModulePatch
     {
         private static MethodInfo _getNewProfileMethod;

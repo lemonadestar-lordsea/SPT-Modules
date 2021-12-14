@@ -2,12 +2,12 @@ using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils;
+using Aki.SinglePlayer.Utils.Progression;
 using Comfort.Common;
 using EFT;
 using HarmonyLib;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -49,34 +49,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 				IsPlayerScav = (___esideType_0 == ESideType.Savage)
 			};
 
-			RequestHandler.PutJson("/raid/profile/save", request.ToJson(_defaultJsonConverters.AddItem(new NotesCustomJsonConverter()).ToArray()));
-        }
-
-        private class NotesCustomJsonConverter : JsonConverter
-        {
-            private static Type _targetType;
-
-            public NotesCustomJsonConverter()
-            {
-                _targetType = typeof(AbstractGame).Assembly.GetTypes().First(t =>
-                    t.GetProperty("TransactionInProcess", BindingFlags.Instance | BindingFlags.Public) != null);
-            }
-
-            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-            {
-                var valueToSerialize = Traverse.Create(_targetType).Field<List<object>>("Notes").Value;
-                serializer.Serialize(writer, $"{{\"Notes\":{JsonConvert.SerializeObject(valueToSerialize)}}}");
-            }
-
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override bool CanConvert(Type objectType)
-            {
-                return objectType == _targetType;
-            }
+			RequestHandler.PutJson("/raid/profile/save", request.ToJson(_defaultJsonConverters.AddItem(new NotesJsonConverter()).ToArray()));
         }
     }
 }

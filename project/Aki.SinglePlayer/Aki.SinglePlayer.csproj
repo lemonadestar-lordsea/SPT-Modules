@@ -86,6 +86,7 @@
     <Compile Include="Models\BodyPartHealth.cs" />
     <Compile Include="Models\BundleInfo.cs" />
     <Compile Include="Models\BundleItem.cs" />
+    <Compile Include="Models\BundleLoader.cs" />
     <Compile Include="Models\EBodyPartEffect.cs" />
     <Compile Include="Models\PlayerHealth.cs" />
     <Compile Include="Models\SaveProfileRequest.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Utils\Bundles\EasyBundleHelper.cs" />
     <Compile Include="Utils\Bundles\BundleSettings.cs" />
     <Compile Include="Utils\Healing\HealthListener.cs" />
+    <Compile Include="Utils\Progression\NotesJsonConverter.cs" />
     <Compile Include="Models\DefaultRaidSettings.cs" />
   </ItemGroup>
   <ItemGroup>
