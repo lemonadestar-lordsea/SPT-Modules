@@ -20,8 +20,8 @@ namespace Aki.SinglePlayer.Patches.Bots
             _ = nameof(IBotData.ChooseProfile);
 
             _flags = BindingFlags.Instance | BindingFlags.NonPublic;
-            _targetInterface = Constants.EftTypes.Single(IsTargetInterface);
-            _targetType = Constants.EftTypes.Single(IsTargetType);
+            _targetInterface = PatchConstants.EftTypes.Single(IsTargetInterface);
+            _targetType = PatchConstants.EftTypes.Single(IsTargetType);
             _profilesField = _targetType.GetField("list_0", _flags);
         }
 

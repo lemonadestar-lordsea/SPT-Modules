@@ -10,7 +10,7 @@ namespace Aki.SinglePlayer.Patches.MainMenu
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MatchMakerSelectionLocationScreen).GetMethod("Awake", Constants.PrivateFlags);
+            return typeof(MatchMakerSelectionLocationScreen).GetMethod("Awake", PatchConstants.PrivateFlags);
         }
 
         [PatchPostfix]

@@ -16,7 +16,7 @@ namespace Aki.SinglePlayer.Patches.MainMenu
 
         protected override MethodBase GetTargetMethod()
         {
-            return Constants.EftTypes
+            return PatchConstants.EftTypes
                 .Single(x => x.GetField("Taxonomy", BindingFlags.Public | BindingFlags.Instance) != null)
                 .GetMethod("Create", BindingFlags.Public | BindingFlags.Static);
         }

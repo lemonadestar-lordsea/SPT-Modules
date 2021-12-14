@@ -17,10 +17,10 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         static SpawnPmcPatch()
         {
-            _targetInterface = Constants.EftTypes.Single(IsTargetInterface);
-            _targetType = Constants.EftTypes.Single(IsTargetType);
-            _wildSpawnTypeField = _targetType.GetField("wildSpawnType_0", Constants.PrivateFlags);
-            _botDifficultyField = _targetType.GetField("botDifficulty_0", Constants.PrivateFlags);
+            _targetInterface = PatchConstants.EftTypes.Single(IsTargetInterface);
+            _targetType = PatchConstants.EftTypes.Single(IsTargetType);
+            _wildSpawnTypeField = _targetType.GetField("wildSpawnType_0", PatchConstants.PrivateFlags);
+            _botDifficultyField = _targetType.GetField("botDifficulty_0", PatchConstants.PrivateFlags);
         }
 
         private static bool IsTargetInterface(Type type)
@@ -30,18 +30,18 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         private static bool IsTargetType(Type type)
         {
-            if (!_targetInterface.IsAssignableFrom(type) || type.GetMethod("method_1", Constants.PrivateFlags) == null)
+            if (!_targetInterface.IsAssignableFrom(type) || type.GetMethod("method_1", PatchConstants.PrivateFlags) == null)
             {
                 return false;
             }
 
-            var fields = type.GetFields(Constants.PrivateFlags);
+            var fields = type.GetFields(PatchConstants.PrivateFlags);
             return fields.Any(f => f.FieldType != typeof(WildSpawnType)) && fields.Any(f => f.FieldType == typeof(BotDifficulty));
         }
 
         protected override MethodBase GetTargetMethod()
         {
-            return _targetType.GetMethod("method_1", Constants.PrivateFlags);
+            return _targetType.GetMethod("method_1", PatchConstants.PrivateFlags);
         }
 
         [PatchPrefix]

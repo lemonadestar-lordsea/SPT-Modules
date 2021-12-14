@@ -34,16 +34,16 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
             var menuControllerType = typeof(MainMenuController);
 
-            _onReadyScreenMethod = menuControllerType.GetMethod("method_40", Constants.PrivateFlags);
-            _isLocalField = menuControllerType.GetField("bool_0", Constants.PrivateFlags);
-            _menuControllerField = typeof(MainApplication).GetFields(Constants.PrivateFlags).FirstOrDefault(x => x.FieldType == typeof(MainMenuController));
+            _onReadyScreenMethod = menuControllerType.GetMethod("method_40", PatchConstants.PrivateFlags);
+            _isLocalField = menuControllerType.GetField("bool_0", PatchConstants.PrivateFlags);
+            _menuControllerField = typeof(MainApplication).GetFields(PatchConstants.PrivateFlags).FirstOrDefault(x => x.FieldType == typeof(MainMenuController));
 
             if (_menuControllerField == null)
             {
                 Log.Error("LoadOfflineRaidScreenPatch() menuControllerField is null and could not be found in MainApplication class");
             }
 
-            foreach (var field in menuControllerType.GetFields(Constants.PrivateFlags))
+            foreach (var field in menuControllerType.GetFields(PatchConstants.PrivateFlags))
             {
                 if (field.FieldType == typeof(WeatherSettings))
                 {
@@ -68,7 +68,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         {
             return typeof(MainMenuController).GetNestedTypes(BindingFlags.NonPublic)
                 .Single(x => x.IsNested && x.GetField("selectLocationScreenController", BindingFlags.Public | BindingFlags.Instance) != null)
-                .GetMethod("method_2", Constants.PrivateFlags);
+                .GetMethod("method_2", PatchConstants.PrivateFlags);
         }
 
         [PatchTranspiler]

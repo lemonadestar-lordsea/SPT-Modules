@@ -12,7 +12,7 @@ namespace Aki.Core.Patches
     {
         protected override MethodBase GetTargetMethod()
         {
-            return Constants.FilesCheckerTypes.Single(x => x.Name == "ConsistencyController")
+            return PatchConstants.FilesCheckerTypes.Single(x => x.Name == "ConsistencyController")
                 .GetMethods().Single(x => x.Name == "EnsureConsistencySingle" && x.ReturnType == typeof(Task<ICheckResult>));
         }
 

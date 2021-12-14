@@ -42,7 +42,7 @@
     <Compile Include="Patching\Attributes.cs" />
     <Compile Include="Patching\ModulePatch.cs" />
     <Compile Include="Patching\PatchList.cs" />
-    <Compile Include="Utils\Constants.cs" />
+    <Compile Include="Utils\PatchConstants.cs" />
     <Compile Include="Utils\ClientAppUtils.cs" />
     <Compile Include="Utils\HookObject.cs" />
   </ItemGroup>

@@ -17,7 +17,7 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(BotsPresets).GetMethod("method_1", Constants.PrivateFlags);
+            return typeof(BotsPresets).GetMethod("method_1", PatchConstants.PrivateFlags);
         }
 
         [PatchPostfix]

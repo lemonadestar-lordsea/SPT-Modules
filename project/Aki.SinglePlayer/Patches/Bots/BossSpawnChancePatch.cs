@@ -11,7 +11,7 @@ namespace Aki.SinglePlayer.Patches.Bots
 
         protected override MethodBase GetTargetMethod()
         {
-            return Constants.LocalGameType.BaseType
+            return PatchConstants.LocalGameType.BaseType
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.DeclaredOnly)
                 .SingleOrDefault(m => IsTargetMethod(m));
         }

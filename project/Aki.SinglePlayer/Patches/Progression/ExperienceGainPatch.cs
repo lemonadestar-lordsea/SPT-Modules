@@ -10,7 +10,7 @@ namespace Aki.SinglePlayer.Patches.Progression
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(SessionResultExperienceCount).GetMethods(Constants.PrivateFlags).FirstOrDefault(IsTargetMethod);
+            return typeof(SessionResultExperienceCount).GetMethods(PatchConstants.PrivateFlags).FirstOrDefault(IsTargetMethod);
         }
 
         private static bool IsTargetMethod(MethodInfo mi)

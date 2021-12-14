@@ -24,7 +24,7 @@ namespace Aki.SinglePlayer.Patches.Bots
         public GetNewBotTemplatesPatch()
         {
             _getNewProfileMethod = typeof(BotsPresets)
-                .GetMethod(nameof(BotsPresets.GetNewProfile), Constants.PrivateFlags);
+                .GetMethod(nameof(BotsPresets.GetNewProfile), PatchConstants.PrivateFlags);
         }
 
         protected override MethodBase GetTargetMethod()
@@ -64,7 +64,7 @@ namespace Aki.SinglePlayer.Patches.Bots
                 // load from server
                 Log.Info("Loading bot profile from server");
                 var source = data.PrepareToLoadBackend(1).ToList();
-                taskAwaiter = Constants.BackEndSession.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
+                taskAwaiter = PatchConstants.BackEndSession.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
             }
             else
             {

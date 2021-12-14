@@ -34,7 +34,7 @@ namespace Aki.SinglePlayer.Utils.Bundles
             _ = nameof(IBundleLock.IsLocked);
             _ = nameof(BindableState.Bind);
 
-            Type = Constants.EftTypes.Single(x => x.GetMethod("set_SameNameAsset", _flags) != null);
+            Type = PatchConstants.EftTypes.Single(x => x.GetMethod("set_SameNameAsset", _flags) != null);
             _pathField = Type.GetField("string_1", _flags);
             _keyWithoutExtensionField = Type.GetField("string_0", _flags);
             _bundleLockField = Type.GetFields(_flags).FirstOrDefault(x => x.FieldType == typeof(IBundleLock));

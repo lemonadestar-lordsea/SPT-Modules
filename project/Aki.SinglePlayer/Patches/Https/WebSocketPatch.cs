@@ -13,8 +13,8 @@ namespace Aki.SinglePlayer.Patches.Https
     {
         protected override MethodBase GetTargetMethod()
         {
-            var targetInterface = Constants.EftTypes.Single(x => x == typeof(IConnectionHandler) && x.IsInterface); // used to be GInterface138
-            var typeThatMatches = Constants.EftTypes.Single(x => targetInterface.IsAssignableFrom(x) && x.IsAbstract && !x.IsInterface); // Was Class1403
+            var targetInterface = PatchConstants.EftTypes.Single(x => x == typeof(IConnectionHandler) && x.IsInterface); // used to be GInterface138
+            var typeThatMatches = PatchConstants.EftTypes.Single(x => targetInterface.IsAssignableFrom(x) && x.IsAbstract && !x.IsInterface); // Was Class1403
             return typeThatMatches.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Single(x => x.ReturnType == typeof(Uri)); // protected Uri method_0()
         }
 

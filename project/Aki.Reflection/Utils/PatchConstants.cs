@@ -7,7 +7,7 @@ using FilesChecker;
 
 namespace Aki.Reflection.Utils
 {
-    public static class Constants
+    public static class PatchConstants
     {
         public static BindingFlags PrivateFlags { get; private set; }
         public static Type[] EftTypes { get; private set; }
@@ -31,7 +31,7 @@ namespace Aki.Reflection.Utils
             }
         }
 
-        static Constants()
+        static PatchConstants()
         {
             _ = nameof(ISession.GetPhpSessionId);
 

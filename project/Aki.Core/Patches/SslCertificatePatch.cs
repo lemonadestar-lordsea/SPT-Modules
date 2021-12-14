@@ -11,8 +11,8 @@ namespace Aki.Core.Patches
 	{
 		protected override MethodBase GetTargetMethod()
 		{
-			return Constants.EftTypes.Single(x => x.BaseType == typeof(CertificateHandler))
-				.GetMethod("ValidateCertificate", Constants.PrivateFlags);
+			return PatchConstants.EftTypes.Single(x => x.BaseType == typeof(CertificateHandler))
+				.GetMethod("ValidateCertificate", PatchConstants.PrivateFlags);
 		}
 
 		[PatchPrefix]

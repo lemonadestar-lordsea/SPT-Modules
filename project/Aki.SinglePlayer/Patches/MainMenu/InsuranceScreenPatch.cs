@@ -14,7 +14,7 @@ namespace Aki.SinglePlayer.Patches.MainMenu
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MainMenuController).GetMethods(Constants.PrivateFlags).FirstOrDefault(IsTargetMethod);
+            return typeof(MainMenuController).GetMethods(PatchConstants.PrivateFlags).FirstOrDefault(IsTargetMethod);
         }
 
         [PatchPrefix]

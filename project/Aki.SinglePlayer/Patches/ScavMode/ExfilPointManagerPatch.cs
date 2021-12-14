@@ -14,7 +14,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
     {
         protected override MethodBase GetTargetMethod()
         {
-            return Constants.ExfilPointManagerType
+            return PatchConstants.ExfilPointManagerType
                 .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.CreateInstance)
                 .Single(IsTargetMethod);
         }
@@ -28,7 +28,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
-            var searchCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(Constants.ExfilPointManagerType, "RemoveProfileIdFromPoints"));
+            var searchCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(PatchConstants.ExfilPointManagerType, "RemoveProfileIdFromPoints"));
             var searchIndex = -1;
 
             for (var i = 0; i < codes.Count; i++)
@@ -52,7 +52,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var newCodes = CodeGenerator.GenerateInstructions(new List<Code>()
             {
                 new Code(OpCodes.Ldarg_0),
-                new Code(OpCodes.Call, Constants.ExfilPointManagerType, "get_ScavExfiltrationPoints")
+                new Code(OpCodes.Call, PatchConstants.ExfilPointManagerType, "get_ScavExfiltrationPoints")
             });
 
             codes.RemoveRange(searchIndex, 23);

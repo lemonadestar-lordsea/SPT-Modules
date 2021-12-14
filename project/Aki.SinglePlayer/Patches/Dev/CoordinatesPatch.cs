@@ -43,9 +43,9 @@ namespace Aki.Singleplayer.Patches.Dev
 
         protected override MethodBase GetTargetMethod()
         {
-            var localGameBaseType = Constants.LocalGameType.BaseType;
+            var localGameBaseType = PatchConstants.LocalGameType.BaseType;
             _playerProperty = localGameBaseType.GetProperty("PlayerOwner", BindingFlags.Public | BindingFlags.Instance);
-            return localGameBaseType.GetMethod("Update", Constants.PrivateFlags);
+            return localGameBaseType.GetMethod("Update", PatchConstants.PrivateFlags);
         }
 
         public static Vector3 LookingRaycast(Player player)

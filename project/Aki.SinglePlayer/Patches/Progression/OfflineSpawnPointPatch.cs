@@ -20,13 +20,13 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         protected override MethodBase GetTargetMethod()
         {
-            return Constants.EftTypes.First(IsTargetType)
-                .GetMethods(Constants.PrivateFlags).First(m => m.Name.Contains("SelectSpawnPoint"));
+            return PatchConstants.EftTypes.First(IsTargetType)
+                .GetMethods(PatchConstants.PrivateFlags).First(m => m.Name.Contains("SelectSpawnPoint"));
         }
 
         private static bool IsTargetType(Type type)
         {
-            return (type.GetMethods(Constants.PrivateFlags).Any(x => x.Name.IndexOf("CheckFarthestFromOtherPlayers", StringComparison.OrdinalIgnoreCase) != -1)
+            return (type.GetMethods(PatchConstants.PrivateFlags).Any(x => x.Name.IndexOf("CheckFarthestFromOtherPlayers", StringComparison.OrdinalIgnoreCase) != -1)
                 && type.IsClass);
         }
 

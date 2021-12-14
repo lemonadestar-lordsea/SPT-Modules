@@ -13,7 +13,7 @@ namespace Aki.SinglePlayer.Patches.Bots
 			var methodName = "LoadCoreByString";
 			var flags = BindingFlags.Public | BindingFlags.Static;
 
-			return Constants.EftTypes.Single(x => x.GetMethod(methodName, flags) != null)
+			return PatchConstants.EftTypes.Single(x => x.GetMethod(methodName, flags) != null)
 				.GetMethod(methodName, flags);
 		}
 

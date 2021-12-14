@@ -10,7 +10,7 @@ namespace Aki.SinglePlayer.Patches.Healing
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(Player).GetMethod("Init", Constants.PrivateFlags);
+            return typeof(Player).GetMethod("Init", PatchConstants.PrivateFlags);
         }
 
         [PatchPostfix]
