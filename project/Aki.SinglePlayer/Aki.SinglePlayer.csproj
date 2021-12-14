@@ -121,7 +121,6 @@
     <Compile Include="Patches\Progression\OnLoadRaidPatch.cs" />
     <Compile Include="Patches\MainMenu\MatchmakerOfflineRaidPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSavePatch.cs" />
-    <Compile Include="Patches\Quests\BeaconPatch.cs" />
     <Compile Include="Patches\Dev\CoordinatesPatch.cs" />
     <Compile Include="Utils\RequestHandler.cs" />
     <Compile Include="Utils\Bundles\EasyBundleHelper.cs" />
