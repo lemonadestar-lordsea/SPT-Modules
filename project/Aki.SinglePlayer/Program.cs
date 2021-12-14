@@ -1,5 +1,4 @@
 using Aki.Common.Utils;
-using Aki.Singleplayer.Patches.Dev;
 
 namespace Aki.SinglePlayer
 {
@@ -9,7 +8,6 @@ namespace Aki.SinglePlayer
         {
             Log.Info("Loading: Aki.SinglePlayer");
             PatchManager.Patches.EnableAll();
-            PatchManager.Patches.Disable<CoordinatesPatch>();
         }
     }
 }

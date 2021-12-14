@@ -1,6 +1,5 @@
 ﻿using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Patches.Bots;
-using Aki.Singleplayer.Patches.Dev;
 using Aki.SinglePlayer.Patches.Healing;
 using Aki.SinglePlayer.Patches.Https;
 using Aki.SinglePlayer.Patches.MainMenu;
@@ -42,7 +41,6 @@ namespace Aki.SinglePlayer
                 new ScavExfilPatch(),
                 new ExfilPointManagerPatch(),
                 new EndByTimerPatch(),
-                new CoordinatesPatch(),
                 new VersionLabelPatch(),
                 new WebSocketPatch(),
                 new TinnitusFixPatch()

@@ -53,24 +53,12 @@
       <HintPath>..\Shared\References\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>..\Shared\References\UnityEngine.InputLegacyModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>..\Shared\References\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
       <HintPath>..\Shared\References\UnityEngine.UIModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\Shared\References\Unity.TextMeshPro.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\Shared\References\UnityEngine.PhysicsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -110,7 +98,6 @@
     <Compile Include="Patches\Progression\OnLoadRaidPatch.cs" />
     <Compile Include="Patches\MainMenu\MatchmakerOfflineRaidPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSavePatch.cs" />
-    <Compile Include="Patches\Dev\CoordinatesPatch.cs" />
     <Compile Include="Utils\Healing\HealthListener.cs" />
     <Compile Include="Utils\Progression\NotesJsonConverter.cs" />
     <Compile Include="Models\DefaultRaidSettings.cs" />
