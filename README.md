@@ -6,9 +6,13 @@ Client-side modifications to alter Escape From Tarkov's behaviour
 ------------------ | --------------------------------------------
 Aki.Loader         | Loads custom assemblies into the game
 Aki.Common         | Common utilities used across projects
-Aki.Core           | Required patches to start the game
 Aki.Reflection     | Reflection utilities used across the project
+Aki.Core           | Required patches to start the game
+Aki.Bundles        | External bundle loader
 Aki.SinglePlayer   | Simulating online game offline
+Aki.Custom         | SPT-AKI enhancements to EFT
+Aki.Debugging      | Debug utilities
+Aki.Build          | Build script
 
 ## Requirements
 
