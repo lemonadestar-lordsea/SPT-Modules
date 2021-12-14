@@ -1,4 +1,4 @@
-﻿namespace Aki.SinglePlayer.Models
+﻿namespace Aki.Bundles.Models
 {
     public class BundleInfo
     {

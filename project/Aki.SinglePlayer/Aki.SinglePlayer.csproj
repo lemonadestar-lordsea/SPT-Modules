@@ -45,16 +45,8 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="Unity.ScriptableBuildPipeline">
-      <HintPath>..\Shared\References\Unity.ScriptableBuildPipeline.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\Shared\References\UnityEngine.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>..\Shared\References\UnityEngine.AssetBundleModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
@@ -84,8 +76,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\BodyPartHealth.cs" />
-    <Compile Include="Models\BundleInfo.cs" />
-    <Compile Include="Models\BundleItem.cs" />
     <Compile Include="Models\BundleLoader.cs" />
     <Compile Include="Models\EBodyPartEffect.cs" />
     <Compile Include="Models\PlayerHealth.cs" />
@@ -104,9 +94,6 @@
     <Compile Include="Patches\Bots\CoreDifficultyPatch.cs" />
     <Compile Include="Patches\Bots\RemoveUsedBotProfilePatch.cs" />
     <Compile Include="Patches\Bots\SpawnPmcPatch.cs" />
-    <Compile Include="Patches\Bundles\EasyAssetsPatch.cs" />
-    <Compile Include="Patches\Bundles\BundleLoadPatch.cs" />
-    <Compile Include="Patches\Bundles\EasyBundlePatch.cs" />
     <Compile Include="Patches\Healing\PlayerPatch.cs" />
     <Compile Include="Patches\MainMenu\InsuranceScreenPatch.cs" />
     <Compile Include="Patches\MainMenu\SelectLocationScreenPatch.cs" />
@@ -124,8 +111,6 @@
     <Compile Include="Patches\MainMenu\MatchmakerOfflineRaidPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSavePatch.cs" />
     <Compile Include="Patches\Dev\CoordinatesPatch.cs" />
-    <Compile Include="Utils\Bundles\EasyBundleHelper.cs" />
-    <Compile Include="Utils\Bundles\BundleSettings.cs" />
     <Compile Include="Utils\Healing\HealthListener.cs" />
     <Compile Include="Utils\Progression\NotesJsonConverter.cs" />
     <Compile Include="Models\DefaultRaidSettings.cs" />

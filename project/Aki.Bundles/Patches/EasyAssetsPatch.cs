@@ -1,23 +1,23 @@
-using Aki.Common.Utils;
+﻿using Aki.Bundles.Models;
+using Aki.Bundles.Utils;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
-using Aki.SinglePlayer.Models;
-using Aki.SinglePlayer.Utils.Bundles;
 using Diz.Jobs;
 using Diz.Resources;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
+using UnityEngine;
+using UnityEngine.Build.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.Build.Pipeline;
+
 using DependencyGraph = DependencyGraph<IEasyBundle>;
 
-namespace Aki.SinglePlayer.Patches.Bundles
+namespace Aki.Bundles.Patches
 {
     public class EasyAssetsPatch : ModulePatch
     {

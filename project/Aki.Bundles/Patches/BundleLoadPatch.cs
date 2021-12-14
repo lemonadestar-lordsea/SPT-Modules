@@ -1,13 +1,13 @@
+﻿using Aki.Bundles.Utils;
 using Aki.Common.Http;
 using Aki.Common.Utils;
 using Aki.Reflection.Patching;
-using Aki.SinglePlayer.Utils.Bundles;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Aki.SinglePlayer.Patches.Bundles
+namespace Aki.Bundles.Patches
 {
     public class BundleLoadPatch : ModulePatch
     {
@@ -44,7 +44,7 @@ namespace Aki.SinglePlayer.Patches.Bundles
             if (path.Contains("http"))
             {
                 var data = RequestHandler.GetData(path);
-                
+
                 if (data != null)
                 {
                     VFS.WriteFile(filepath, data);

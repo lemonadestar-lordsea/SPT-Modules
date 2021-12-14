@@ -1,17 +1,17 @@
+﻿using Aki.Bundles.Models;
+using Aki.Bundles.Utils;
 using Aki.Reflection.Patching;
-using Aki.SinglePlayer.Models;
-using Aki.SinglePlayer.Utils.Bundles;
 using Diz.DependencyManager;
+using UnityEngine.Build.Pipeline;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using UnityEngine.Build.Pipeline;
 
-namespace Aki.SinglePlayer.Patches.Bundles
+namespace Aki.Bundles.Patches
 {
     public class EasyBundlePatch : ModulePatch
-	{
+    {
         static EasyBundlePatch()
         {
             _ = nameof(IEasyBundle.SameNameAsset);
@@ -20,13 +20,13 @@ namespace Aki.SinglePlayer.Patches.Bundles
         }
 
         protected override MethodBase GetTargetMethod()
-		{
+        {
             return EasyBundleHelper.Type.GetConstructors()[0];
         }
 
         [PatchPrefix]
         private static bool PatchPrefix(object __instance, string key, string rootPath, CompatibilityAssetBundleManifest manifest, IBundleLock bundleLock)
-		{
+        {
             var path = rootPath + key;
             var dependencyKeys = manifest.GetDirectDependencies(key);
 
@@ -59,5 +59,5 @@ namespace Aki.SinglePlayer.Patches.Bundles
 
             return false;
         }
-	}
+    }
 }

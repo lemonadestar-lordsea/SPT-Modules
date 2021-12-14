@@ -1,6 +1,5 @@
 ﻿using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Patches.Bots;
-using Aki.SinglePlayer.Patches.Bundles;
 using Aki.Singleplayer.Patches.Dev;
 using Aki.SinglePlayer.Patches.Healing;
 using Aki.SinglePlayer.Patches.Https;
@@ -20,9 +19,6 @@ namespace Aki.SinglePlayer
         {
             Patches = new PatchList
             {
-                new EasyAssetsPatch(),
-                new EasyBundlePatch(),
-                new BundleLoadPatch(),
                 new OfflineSaveProfilePatch(),
                 new OfflineSpawnPointPatch(),
                 new ExperienceGainPatch(),

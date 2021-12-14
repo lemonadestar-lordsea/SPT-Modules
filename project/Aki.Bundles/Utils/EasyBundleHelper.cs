@@ -1,4 +1,4 @@
-using Aki.Common.Utils;
+﻿using Aki.Common.Utils;
 using Aki.Reflection.Utils;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using BindableState = BindableState<Diz.DependencyManager.ELoadState>;
 
-namespace Aki.SinglePlayer.Utils.Bundles
+namespace Aki.Bundles.Utils
 {
     public class EasyBundleHelper
     {

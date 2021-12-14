@@ -1,10 +1,10 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using Aki.Bundles.Models;
 using Aki.Common.Http;
 using Aki.Common.Utils;
-using Aki.SinglePlayer.Models;
 
-namespace Aki.SinglePlayer.Utils.Bundles
+namespace Aki.Bundles.Utils
 {
     public class BundleSettings
     {
