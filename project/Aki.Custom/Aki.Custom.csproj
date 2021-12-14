@@ -57,7 +57,6 @@
     <Compile Include="Patches\OfflineRaidMenuPatch.cs" />
     <Compile Include="Patches\SessionIdPatch.cs" />
     <Compile Include="Patches\VersionLabelPatch.cs" />
-    <Compile Include="PatchManager.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>

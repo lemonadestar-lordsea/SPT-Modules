@@ -1,4 +1,5 @@
 ﻿using Aki.Common.Utils;
+using Aki.Custom.Patches;
 
 namespace Aki.Custom
 {
@@ -7,7 +8,13 @@ namespace Aki.Custom
         static void Main(string[] args)
         {
             Log.Info("Loading: Aki.Custom");
-            PatchManager.Patches.EnableAll();
+
+            new BossSpawnChancePatch().Enable();
+            new BotDifficultyPatch().Enable();
+            new CoreDifficultyPatch().Enable();
+            new OfflineRaidMenuPatch().Enable();
+            new SessionIdPatch().Enable();
+            new VersionLabelPatch().Enable();
         }
     }
 }

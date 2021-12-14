@@ -1,4 +1,5 @@
 ﻿using Aki.Common.Utils;
+using Aki.Debugging.Patches;
 
 namespace Aki.Debugging
 {
@@ -7,7 +8,7 @@ namespace Aki.Debugging
         static void Main(string[] args)
         {
             Log.Info("Loading: Aki.Debugging");
-            // PatchManager.Patches.EnableAll();
+            new CoordinatesPatch().Enable();
         }
     }
 }

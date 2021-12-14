@@ -59,7 +59,6 @@
     <Compile Include="Patches\BundleLoadPatch.cs" />
     <Compile Include="Patches\EasyAssetsPatch.cs" />
     <Compile Include="Patches\EasyBundlePatch.cs" />
-    <Compile Include="PatchManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Utils\BundleSettings.cs" />
     <Compile Include="Utils\EasyBundleHelper.cs" />
