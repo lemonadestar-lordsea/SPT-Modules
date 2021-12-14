@@ -97,16 +97,16 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HarmonyX">
-      <Version>2.5.4</Version>
+      <Version>2.6.1</Version>
     </PackageReference>
     <PackageReference Include="Mono.Cecil">
       <Version>0.11.4</Version>
     </PackageReference>
     <PackageReference Include="MonoMod.RuntimeDetour">
-      <Version>21.8.19.1</Version>
+      <Version>21.12.11.1</Version>
     </PackageReference>
     <PackageReference Include="MonoMod.Utils">
-      <Version>21.8.19.1</Version>
+      <Version>21.12.11.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
