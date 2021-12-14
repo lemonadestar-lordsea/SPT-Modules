@@ -1,6 +1,7 @@
 ﻿using Aki.Reflection.Patching;
 using Aki.SinglePlayer.Patches.Bots;
 using Aki.SinglePlayer.Patches.Bundles;
+using Aki.Singleplayer.Patches.Dev;
 using Aki.SinglePlayer.Patches.Healing;
 using Aki.SinglePlayer.Patches.Https;
 using Aki.SinglePlayer.Patches.MainMenu;
@@ -9,15 +10,15 @@ using Aki.SinglePlayer.Patches.Quests;
 using Aki.SinglePlayer.Patches.RaidFix;
 using Aki.SinglePlayer.Patches.ScavMode;
 
-namespace Aki.SinglePlayer.Patches
+namespace Aki.SinglePlayer
 {
-    public class PatchManager
+    public static class PatchManager
     {
-        private readonly PatchList _patches;
+        public static readonly PatchList Patches;
 
-        public PatchManager()
+        static PatchManager()
         {
-            _patches = new PatchList
+            Patches = new PatchList
             {
                 new EasyAssetsPatch(),
                 new EasyBundlePatch(),
@@ -38,7 +39,7 @@ namespace Aki.SinglePlayer.Patches
                 new CoreDifficultyPatch(),
                 new BotDifficultyPatch(),
                 new BossSpawnChancePatch(),
-                //new BeaconPatch(),
+                new BeaconPatch(),
                 new DogtagPatch(),
                 new LoadOfflineRaidScreenPatch(),
                 new ScavPrefabLoadPatch(),
@@ -46,16 +47,11 @@ namespace Aki.SinglePlayer.Patches
                 new ScavExfilPatch(),
                 new ExfilPointManagerPatch(),
                 new EndByTimerPatch(),
-                //new CoordinatesPatch(),
+                new CoordinatesPatch(),
                 new VersionLabelPatch(),
                 new WebSocketPatch(),
                 new TinnitusFixPatch()
             };
-        }
-
-        public void RunPatches()
-        {
-            _patches.EnableAll();
         }
     }
 }

@@ -124,6 +124,18 @@ namespace Aki.Reflection.Patching
         }
 
         /// <summary>
+        /// Remove patch from list
+        /// </summary>
+        /// <param name="patch">Patch</param>
+        public void Remove(ModulePatch patch)
+        {
+            if (Contains(patch.GetType()))
+            {
+                _list.Remove(patch);
+            }
+        }
+
+        /// <summary>
         /// Remove all patches from list
         /// </summary>
         public void Clear()
@@ -137,12 +149,16 @@ namespace Aki.Reflection.Patching
         /// <typeparam name="T">Type</typeparam>
         public void Enable<T>() where T : ModulePatch
         {
-            ModulePatch patch = Get<T>();
+            Get<T>().Enable();
+        }
 
-            if (patch != null)
-            {
-                patch.Enable();
-            }
+        /// <summary>
+        /// Enable patch
+        /// </summary>
+        /// <param name="patch">Patch</param>
+        public void Enable(ModulePatch patch)
+        {
+            patch.Enable();
         }
 
         /// <summary>
@@ -152,7 +168,7 @@ namespace Aki.Reflection.Patching
         {
             foreach (ModulePatch patch in _list)
             {
-                patch.Enable();
+                Enable(patch);
             }
         }
 
@@ -162,12 +178,16 @@ namespace Aki.Reflection.Patching
         /// <typeparam name="T">Type</typeparam>
         public void Disable<T>() where T : ModulePatch
         {
-            ModulePatch patch = Get<T>();
+            Get<T>().Disable();
+        }
 
-            if (patch != null)
-            {
-                patch.Disable();
-            }
+        /// <summary>
+        /// Disable patch
+        /// </summary>
+        /// <param name="patch">Patch</param>
+        public void Disable(ModulePatch patch)
+        {
+            patch.Disable();
         }
 
         /// <summary>
@@ -177,7 +197,7 @@ namespace Aki.Reflection.Patching
         {
             foreach (ModulePatch patch in _list)
             {
-                patch.Disable();
+                Disable(patch);
             }
         }
     }

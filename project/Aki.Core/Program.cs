@@ -1,5 +1,4 @@
 using Aki.Common;
-using Aki.Core.Patches;
 
 namespace Aki.Core
 {
@@ -8,9 +7,7 @@ namespace Aki.Core
 		static void Main(string[] args)
 		{
             Log.Info("Loading: Aki.Core");
-
-			var patcher = new PatchManager();
-            patcher.RunPatches();
+			PatchManager.Patches.EnableAll();
 		}
 	}
 }

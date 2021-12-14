@@ -1,5 +1,7 @@
 using Aki.Common;
 using Aki.SinglePlayer.Patches;
+using Aki.Singleplayer.Patches.Dev;
+using Aki.SinglePlayer.Patches.Quests;
 using Aki.SinglePlayer.Utils.Bundles;
 
 namespace Aki.SinglePlayer
@@ -11,9 +13,10 @@ namespace Aki.SinglePlayer
             Log.Info("Loading: Aki.SinglePlayer");
 
             BundleSettings.GetBundles();
-
-            var patcher = new PatchManager();
-            patcher.RunPatches();
+            
+            PatchManager.Patches.EnableAll();
+            PatchManager.Patches.Disable<BeaconPatch>();
+            PatchManager.Patches.Disable<CoordinatesPatch>();
         }
     }
 }

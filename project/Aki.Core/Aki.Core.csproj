@@ -73,7 +73,7 @@
     <Compile Include="Models\FakeFileCheckerResult.cs" />
     <Compile Include="Patches\ConsistencyMultiPatch.cs" />
     <Compile Include="Patches\ConsistencySinglePatch.cs" />
-    <Compile Include="Patches\PatchManager.cs" />
+    <Compile Include="PatchManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Patches\BattlEyePatch.cs" />
     <Compile Include="Patches\SslCertificatePatch.cs" />
