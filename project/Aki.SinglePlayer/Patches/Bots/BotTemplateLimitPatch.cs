@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
-    public class BotTemplateLimitPatch : Patch
+    public class BotTemplateLimitPatch : ModulePatch
     {
         static BotTemplateLimitPatch()
         {

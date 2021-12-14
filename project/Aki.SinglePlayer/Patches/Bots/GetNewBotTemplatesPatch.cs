@@ -42,7 +42,7 @@ namespace Aki.SinglePlayer.Patches.Bots
         }
     }
 
-    public class GetNewBotTemplatesPatch : Patch
+    public class GetNewBotTemplatesPatch : ModulePatch
     {
         private static MethodInfo _getNewProfileMethod;
 

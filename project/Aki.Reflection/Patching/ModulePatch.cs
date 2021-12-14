@@ -5,7 +5,7 @@ using HarmonyLib;
 
 namespace Aki.Reflection.Patching
 {
-    public abstract class Patch
+    public abstract class ModulePatch
     {
         private Harmony _harmony;
         private HarmonyMethod _prefix;
@@ -24,7 +24,7 @@ namespace Aki.Reflection.Patching
         /// <param name="transpiler">Transpiler</param>
         /// <param name="finalizer">Finalizer</param>
         /// <param name="ilmanipulator">IL Manipulator</param>
-        public Patch(Type T, string name = null, string prefix = null, string postfix = null, string transpiler = null, string finalizer = null, string ilmanipulator = null)
+        public ModulePatch(Type T, string name = null, string prefix = null, string postfix = null, string transpiler = null, string finalizer = null, string ilmanipulator = null)
         {
             _harmony = new Harmony(name ?? T.Name);
             _prefix = GetPatchMethod(T, prefix);

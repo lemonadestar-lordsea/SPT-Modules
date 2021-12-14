@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    public class ExperienceGainPatch : Patch
+    public class ExperienceGainPatch : ModulePatch
     {
         public ExperienceGainPatch() : base(T: typeof(ExperienceGainPatch), prefix: nameof(PrefixPatch), postfix: nameof(PostfixPatch))
         {

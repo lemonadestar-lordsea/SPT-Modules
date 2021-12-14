@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Healing
 {
-    public class MainMenuControllerPatch : Patch
+    public class MainMenuControllerPatch : ModulePatch
     {
         static MainMenuControllerPatch()
         {

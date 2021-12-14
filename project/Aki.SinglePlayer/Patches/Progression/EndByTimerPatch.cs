@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    public class EndByTimerPatch : Patch
+    public class EndByTimerPatch : ModulePatch
     {
         private static Type _localGameBaseType;
         private static PropertyInfo _profileIdProperty;

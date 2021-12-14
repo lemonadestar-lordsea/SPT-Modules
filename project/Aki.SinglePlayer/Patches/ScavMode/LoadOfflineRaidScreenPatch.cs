@@ -1,4 +1,5 @@
-﻿using Aki.Reflection.Utils;
+﻿using Aki.Reflection.Patching;
+using Aki.Reflection.Utils;
 using EFT;
 using EFT.UI.Matchmaker;
 using EFT.UI.Screens;
@@ -8,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using Patch = Aki.Reflection.Patching.Patch;
 using OfflineRaidAction = System.Action<bool, WeatherSettings, BotsSettings, WavesSettings>;
 using Aki.Common;
 
@@ -16,7 +16,7 @@ using Aki.Common;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
-    public class LoadOfflineRaidScreenPatch : Patch
+    public class LoadOfflineRaidScreenPatch : ModulePatch
     {
         private static readonly MethodInfo _onReadyScreenMethod;
         private static readonly FieldInfo _weatherSettingsField;

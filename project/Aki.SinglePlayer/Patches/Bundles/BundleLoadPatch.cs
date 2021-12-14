@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {
-    public class BundleLoadPatch : Patch
+    public class BundleLoadPatch : ModulePatch
     {
         public BundleLoadPatch() : base(T: typeof(BundleLoadPatch), prefix: nameof(PatchPrefix))
         {

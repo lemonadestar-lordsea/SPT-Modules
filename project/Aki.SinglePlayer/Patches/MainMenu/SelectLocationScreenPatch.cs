@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.MainMenu
 {
-    public class SelectLocationScreenPatch : Patch
+    public class SelectLocationScreenPatch : ModulePatch
     {
         public SelectLocationScreenPatch() : base(T: typeof(SelectLocationScreenPatch), postfix: nameof(PatchPostfix))
         {

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Aki.Singleplayer.Patches.Dev
 {
-    public class CoordinatesPatch : Patch
+    public class CoordinatesPatch : ModulePatch
     {
         // private static TextMeshProUGUI _alphaLabel;
         private static PropertyInfo _playerProperty;

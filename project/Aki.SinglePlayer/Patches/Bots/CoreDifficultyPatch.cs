@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
-    public class CoreDifficultyPatch : Patch
+    public class CoreDifficultyPatch : ModulePatch
 	{
 		public CoreDifficultyPatch() : base(T: typeof(CoreDifficultyPatch), prefix: nameof(PatchPrefix))
 		{

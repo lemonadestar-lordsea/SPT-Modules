@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Aki.SinglePlayer.Patches.MainMenu
 {
-    public class MatchmakerOfflineRaidPatch : Patch
+    public class MatchmakerOfflineRaidPatch : ModulePatch
     {
         public MatchmakerOfflineRaidPatch() : base(T: typeof(MatchmakerOfflineRaidPatch), postfix: nameof(PatchPostfix))
         {

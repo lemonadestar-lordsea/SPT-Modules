@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
-    public class RemoveUsedBotProfilePatch : Patch
+    public class RemoveUsedBotProfilePatch : ModulePatch
     {
         private static BindingFlags _flags;
         private static Type _targetInterface;

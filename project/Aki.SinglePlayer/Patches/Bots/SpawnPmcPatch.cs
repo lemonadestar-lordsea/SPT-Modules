@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
-    public class SpawnPmcPatch : Patch
+    public class SpawnPmcPatch : ModulePatch
     {
         private static Type _targetInterface;
         private static Type _targetType;

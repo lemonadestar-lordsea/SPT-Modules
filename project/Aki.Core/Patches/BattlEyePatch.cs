@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Aki.Core.Patches
 {
-    public class BattlEyePatch : Patch
+    public class BattlEyePatch : ModulePatch
     {
         public BattlEyePatch() : base(T: typeof(BattlEyePatch), prefix: nameof(PatchPrefix))
         {

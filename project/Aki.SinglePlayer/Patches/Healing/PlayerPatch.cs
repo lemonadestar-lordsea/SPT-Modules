@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aki.SinglePlayer.Patches.Healing
 {
-    public class PlayerPatch : Patch
+    public class PlayerPatch : ModulePatch
     {
         public PlayerPatch() : base(T: typeof(PlayerPatch), postfix: nameof(PatchPostfix))
         {

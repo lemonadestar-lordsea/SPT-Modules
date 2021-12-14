@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Quests
 {
-    public class BeaconPatch : Patch
+    public class BeaconPatch : ModulePatch
     {
         public BeaconPatch() : base(T: typeof(BeaconPatch), prefix: nameof(PatchPrefix))
         {

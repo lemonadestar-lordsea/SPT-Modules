@@ -19,7 +19,7 @@ using DependencyGraph = DependencyGraph<IEasyBundle>;
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {
-    public class EasyAssetsPatch : Patch
+    public class EasyAssetsPatch : ModulePatch
     {
         private static FieldInfo _manifestField;
         private static FieldInfo _bundlesField;

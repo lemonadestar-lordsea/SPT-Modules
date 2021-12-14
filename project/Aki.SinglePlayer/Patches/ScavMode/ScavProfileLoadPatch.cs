@@ -1,5 +1,6 @@
 using Aki.Common;
 using Aki.Reflection.CodeWrapper;
+using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Comfort.Common;
 using EFT;
@@ -8,11 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using Patch = Aki.Reflection.Patching.Patch;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
-    public class ScavProfileLoadPatch : Patch
+    public class ScavProfileLoadPatch : ModulePatch
     {
         public ScavProfileLoadPatch() : base(T: typeof(ScavProfileLoadPatch), transpiler: nameof(PatchTranspile))
         {

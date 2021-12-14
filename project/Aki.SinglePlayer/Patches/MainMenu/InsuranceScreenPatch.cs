@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.MainMenu
 {
-    class InsuranceScreenPatch : Patch
+    class InsuranceScreenPatch : ModulePatch
     {
         static InsuranceScreenPatch()
         {

@@ -1,4 +1,5 @@
 using Aki.Common;
+using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using EFT;
 using EFT.Game.Spawning;
@@ -10,7 +11,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    public class OfflineSpawnPointPatch : Reflection.Patching.Patch
+    public class OfflineSpawnPointPatch : ModulePatch
     {
         static OfflineSpawnPointPatch()
         {

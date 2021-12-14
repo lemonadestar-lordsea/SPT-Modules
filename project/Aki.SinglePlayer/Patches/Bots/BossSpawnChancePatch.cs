@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Bots
 {
-    public class BossSpawnChancePatch : Patch
+    public class BossSpawnChancePatch : ModulePatch
     {
         private static float[] _bossSpawnPercent;
 

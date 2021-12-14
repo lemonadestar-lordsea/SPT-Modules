@@ -8,7 +8,7 @@ using FilesChecker;
 
 namespace Aki.Core.Patches
 {
-    public class ConsistencySinglePatch : Patch
+    public class ConsistencySinglePatch : ModulePatch
     {
         public ConsistencySinglePatch() : base(T: typeof(ConsistencySinglePatch), prefix: nameof(PatchPrefix))
         {

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Aki.Reflection.Patching
 {
-    public class PatchList : IEnumerable<Patch>
+    public class PatchList : IEnumerable<ModulePatch>
     {
-        private readonly List<Patch> _list;
+        private readonly List<ModulePatch> _list;
 
         /// <summary>
         /// Amount of items in list
@@ -18,14 +18,14 @@ namespace Aki.Reflection.Patching
 
         public PatchList()
         {
-            _list = new List<Patch>();
+            _list = new List<ModulePatch>();
         }
 
         /// <summary>
         /// Enumerator
         /// </summary>
         /// <returns>Enumerator</returns>
-        public IEnumerator<Patch> GetEnumerator()
+        public IEnumerator<ModulePatch> GetEnumerator()
         {
             return _list.GetEnumerator();
         }
@@ -44,9 +44,9 @@ namespace Aki.Reflection.Patching
         /// </summary>
         /// <param name="type">Type</param>
         /// <returns>Patch</returns>
-        private Patch Get(Type type)
+        private ModulePatch Get(Type type)
         {
-            foreach (Patch item in _list)
+            foreach (ModulePatch item in _list)
             {
                 if (item.GetType() == type)
                 {
@@ -62,7 +62,7 @@ namespace Aki.Reflection.Patching
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
         /// <returns>Patch</returns>
-        public Patch Get<T>() where T : Patch
+        public ModulePatch Get<T>() where T : ModulePatch
         {
             return Get(typeof(T));
         }
@@ -72,7 +72,7 @@ namespace Aki.Reflection.Patching
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
         /// <returns>If the patch is in the list</returns>
-        public bool Contains<T>() where T : Patch
+        public bool Contains<T>() where T : ModulePatch
         {
             return (Get(typeof(T)) != null);
         }
@@ -91,7 +91,7 @@ namespace Aki.Reflection.Patching
         /// Add patch to list
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
-        public void Add<T>() where T : Patch, new()
+        public void Add<T>() where T : ModulePatch, new()
         {
             if (!Contains<T>())
             {
@@ -103,7 +103,7 @@ namespace Aki.Reflection.Patching
         /// Add patch to list
         /// </summary>
         /// <param name="patch">Patch</param>
-        public void Add(Patch patch)
+        public void Add(ModulePatch patch)
         {
             if (!Contains(patch.GetType()))
             {
@@ -115,7 +115,7 @@ namespace Aki.Reflection.Patching
         /// Remove patch from list
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
-        public void Remove<T>() where T : Patch
+        public void Remove<T>() where T : ModulePatch
         {
             if (Contains<T>())
             {
@@ -135,9 +135,9 @@ namespace Aki.Reflection.Patching
         /// Enable patch
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
-        public void Enable<T>() where T : Patch
+        public void Enable<T>() where T : ModulePatch
         {
-            Patch patch = Get<T>();
+            ModulePatch patch = Get<T>();
 
             if (patch != null)
             {
@@ -150,7 +150,7 @@ namespace Aki.Reflection.Patching
         /// </summary>
         public void EnableAll()
         {
-            foreach (Patch patch in _list)
+            foreach (ModulePatch patch in _list)
             {
                 patch.Enable();
             }
@@ -160,9 +160,9 @@ namespace Aki.Reflection.Patching
         /// Disable patch
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
-        public void Disable<T>() where T : Patch
+        public void Disable<T>() where T : ModulePatch
         {
-            Patch patch = Get<T>();
+            ModulePatch patch = Get<T>();
 
             if (patch != null)
             {
@@ -175,7 +175,7 @@ namespace Aki.Reflection.Patching
         /// </summary>
         public void DisableAll()
         {
-            foreach (Patch patch in _list)
+            foreach (ModulePatch patch in _list)
             {
                 patch.Disable();
             }

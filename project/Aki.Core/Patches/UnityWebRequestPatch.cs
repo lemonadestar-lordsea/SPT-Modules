@@ -5,7 +5,7 @@ using Aki.Core.Models;
 
 namespace Aki.Core.Patches
 {
-    public class UnityWebRequestPatch : Patch
+    public class UnityWebRequestPatch : ModulePatch
     {
         private static CertificateHandler _certificateHandler = new FakeCertificateHandler();
 

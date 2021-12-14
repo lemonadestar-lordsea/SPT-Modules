@@ -10,7 +10,7 @@ using UnityEngine.Build.Pipeline;
 
 namespace Aki.SinglePlayer.Patches.Bundles
 {
-    public class EasyBundlePatch : Patch
+    public class EasyBundlePatch : ModulePatch
 	{
         static EasyBundlePatch()
         {

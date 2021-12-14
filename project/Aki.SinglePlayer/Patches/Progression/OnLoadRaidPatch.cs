@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    public class OnLoadRaidPatch : Patch
+    public class OnLoadRaidPatch : ModulePatch
 	{
 		private static PreloaderUI _preloader;
 

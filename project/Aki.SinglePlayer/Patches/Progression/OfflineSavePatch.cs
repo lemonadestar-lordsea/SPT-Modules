@@ -1,3 +1,4 @@
+using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models;
 using Aki.SinglePlayer.Utils;
@@ -9,11 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Patch = Aki.Reflection.Patching.Patch;
 
 namespace Aki.SinglePlayer.Patches.Progression
 {
-    public class OfflineSaveProfilePatch : Patch
+    public class OfflineSaveProfilePatch : ModulePatch
     {
         private static readonly JsonConverter[] _defaultJsonConverters;
 

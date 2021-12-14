@@ -9,7 +9,7 @@ namespace Aki.SinglePlayer.Patches.Https
     /// <summary>
     /// Goal: change the websocket system to use WS instead of WSS to ensure notifications show up in client and dont throw exceptions about missing certs
     /// </summary>
-    public class WebSocketPatch : Patch
+    public class WebSocketPatch : ModulePatch
     {
         static WebSocketPatch()
         {

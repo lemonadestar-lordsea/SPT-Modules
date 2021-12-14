@@ -1,14 +1,14 @@
 ﻿using Aki.Common;
+using Aki.Reflection.Patching;
 using EFT;
 using HarmonyLib;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
-using Patch = Aki.Reflection.Patching.Patch;
 
 namespace Aki.SinglePlayer.Patches.RaidFix
 {
-    public class TinnitusFixPatch : Patch
+    public class TinnitusFixPatch : ModulePatch
     {
         public TinnitusFixPatch() : base(T: typeof(TinnitusFixPatch), transpiler: nameof(PatchTranspile))
         {

@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Aki.SinglePlayer.Patches.Quests
 {
-    public class DogtagPatch : Patch
+    public class DogtagPatch : ModulePatch
     {
         private static BindingFlags _flags;
         private static PropertyInfo _getEquipmentProperty;
