@@ -12,29 +12,27 @@ namespace Aki.SinglePlayer.Utils.Bundles
 {
     public class EasyBundleHelper
     {
-        private object _instance;
-        private static FieldInfo _pathField;
-        private static FieldInfo _keyWithoutExtensionField;
-        private static FieldInfo _bundleLockField;
-        private static FieldInfo _loadingJobField;
-        private static PropertyInfo _dependencyKeysProperty;
-        private static PropertyInfo _keyProperty;
-        private static PropertyInfo _loadStateProperty;
-        private static PropertyInfo _progressProperty;
-        private static FieldInfo _bundleField;
-        private static FieldInfo _loadingAssetOperationField;
-        private static PropertyInfo _assetsProperty;
-        private static PropertyInfo _sameNameAssetProperty;
-        private static MethodInfo _loadingCoroutineMethod;
-        private static BindingFlags _flags;
-        public static Type Type;
+        private const BindingFlags _flags = BindingFlags.Instance | BindingFlags.NonPublic;
+        private static readonly FieldInfo _pathField;
+        private static readonly FieldInfo _keyWithoutExtensionField;
+        private static readonly FieldInfo _bundleLockField;
+        private static readonly FieldInfo _loadingJobField;
+        private static readonly PropertyInfo _dependencyKeysProperty;
+        private static readonly PropertyInfo _keyProperty;
+        private static readonly PropertyInfo _loadStateProperty;
+        private static readonly PropertyInfo _progressProperty;
+        private static readonly FieldInfo _bundleField;
+        private static readonly FieldInfo _loadingAssetOperationField;
+        private static readonly PropertyInfo _assetsProperty;
+        private static readonly PropertyInfo _sameNameAssetProperty;
+        private static readonly MethodInfo _loadingCoroutineMethod;
+        private readonly object _instance;
+        public static readonly Type Type;
 
         static EasyBundleHelper()
         {
             _ = nameof(IBundleLock.IsLocked);
             _ = nameof(BindableState.Bind);
-
-            _flags = BindingFlags.Instance | BindingFlags.NonPublic;
 
             Type = Constants.EftTypes.Single(x => x.GetMethod("set_SameNameAsset", _flags) != null);
             _pathField = Type.GetField("string_1", _flags);
@@ -50,6 +48,11 @@ namespace Aki.SinglePlayer.Utils.Bundles
             _assetsProperty = Type.GetProperty("Assets");
             _sameNameAssetProperty = Type.GetProperty("SameNameAsset");
             _loadingCoroutineMethod = Type.GetMethods(_flags).Single(x => x.GetParameters().Length == 0 && x.ReturnType == typeof(Task));
+        }
+
+        public EasyBundleHelper(object easyBundle)
+        {
+            _instance = easyBundle;
         }
 
         public IEnumerable<string> DependencyKeys
@@ -196,11 +199,6 @@ namespace Aki.SinglePlayer.Utils.Bundles
             {
                 _keyWithoutExtensionField.SetValue(_instance, value);
             }
-        }
-
-        public EasyBundleHelper(object easyBundle)
-        {
-            _instance = easyBundle;
         }
 
         public Task LoadingCoroutine()
