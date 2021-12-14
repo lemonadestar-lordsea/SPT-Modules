@@ -5,7 +5,7 @@ using EFT;
 using System.Linq;
 using System.Reflection;
 
-namespace Aki.SinglePlayer.Patches.Bots
+namespace Aki.Custom.Patches
 {
     public class BotDifficultyPatch : ModulePatch
     {

@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Aki.SinglePlayer.Patches.Progression
+namespace Aki.SinglePlayer.Patches.Quests
 {
     public class EndByTimerPatch : ModulePatch
     {

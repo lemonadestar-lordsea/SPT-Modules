@@ -5,13 +5,13 @@ using System.IO;
 using System.Reflection;
 using UnityEngine;
 
-namespace Aki.SinglePlayer.Patches.Progression
+namespace Aki.Custom.Patches
 {
-    public class OnLoadRaidPatch : ModulePatch
+    public class SessionIdPatch : ModulePatch
 	{
 		private static PreloaderUI _preloader;
 
-		public OnLoadRaidPatch()
+		static SessionIdPatch()
 		{
 			_preloader = null;
         }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Aki.SinglePlayer.Patches.Bots
+namespace Aki.SinglePlayer.Patches.Quests
 {
     public class SpawnPmcPatch : ModulePatch
     {

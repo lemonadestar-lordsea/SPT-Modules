@@ -2,13 +2,13 @@
 using Aki.Common.Utils;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
-using Aki.SinglePlayer.Models;
+using Aki.Custom.Models;
 using EFT.UI;
 using HarmonyLib;
 using System.Linq;
 using System.Reflection;
 
-namespace Aki.SinglePlayer.Patches.MainMenu
+namespace Aki.Custom.Patches
 {
     public class VersionLabelPatch : ModulePatch
     {

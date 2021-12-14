@@ -1,6 +1,6 @@
-using EFT.Bots;
+﻿using EFT.Bots;
 
-namespace Aki.SinglePlayer.Models
+namespace Aki.Custom.Models
 {
     public class DefaultRaidSettings
     {

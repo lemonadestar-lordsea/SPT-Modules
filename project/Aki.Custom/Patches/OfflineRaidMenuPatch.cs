@@ -1,15 +1,15 @@
 using Aki.Common.Http;
 using Aki.Common.Utils;
 using Aki.Reflection.Patching;
-using Aki.SinglePlayer.Models;
+using Aki.Custom.Models;
 using EFT.UI;
 using EFT.UI.Matchmaker;
 using System.Reflection;
 using UnityEngine;
 
-namespace Aki.SinglePlayer.Patches.MainMenu
+namespace Aki.Custom.Patches
 {
-    public class MatchmakerOfflineRaidPatch : ModulePatch
+    public class OfflineRaidMenuPatch : ModulePatch
     {
         protected override MethodBase GetTargetMethod()
         {
