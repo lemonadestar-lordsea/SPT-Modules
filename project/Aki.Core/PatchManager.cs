@@ -15,7 +15,8 @@ namespace Aki.Core
                 new ConsistencyMultiPatch(),
                 new BattlEyePatch(),
                 new SslCertificatePatch(),
-                new UnityWebRequestPatch()
+                new UnityWebRequestPatch(),
+                new WebSocketPatch()
             };
         }
     }

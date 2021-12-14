@@ -68,7 +68,6 @@
     <Compile Include="Models\EBodyPartEffect.cs" />
     <Compile Include="Models\PlayerHealth.cs" />
     <Compile Include="Models\SaveProfileRequest.cs" />
-    <Compile Include="Patches\Https\WebSocketPatch.cs" />
     <Compile Include="Patches\Quests\EndByTimerPatch.cs" />
     <Compile Include="Patches\Quests\SpawnPmcPatch.cs" />
     <Compile Include="PatchManager.cs" />
