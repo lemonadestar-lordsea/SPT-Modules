@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Aki.Common;
+using Aki.Common.Utils;
 using HarmonyLib;
 
 namespace Aki.Reflection.Patching

@@ -1,7 +1,7 @@
+using Aki.Common.Http;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models;
-using Aki.SinglePlayer.Utils;
 using Aki.SinglePlayer.Utils.Progression;
 using Comfort.Common;
 using EFT;

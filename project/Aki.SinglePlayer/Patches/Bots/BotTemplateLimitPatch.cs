@@ -1,6 +1,6 @@
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
-using Aki.SinglePlayer.Utils;
+using Aki.Common.Http;
 using System;
 using System.Collections.Generic;
 using System.Reflection;

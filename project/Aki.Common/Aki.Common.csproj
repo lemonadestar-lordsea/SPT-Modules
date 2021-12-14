@@ -44,11 +44,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Json.cs" />
-    <Compile Include="Log.cs" />
-    <Compile Include="Request.cs" />
-    <Compile Include="VFS.cs" />
-    <Compile Include="Zlib.cs" />
+    <Compile Include="Http\WebConstants.cs" />
+    <Compile Include="Http\RequestHandler.cs" />
+    <Compile Include="Http\ServerConfig.cs" />
+    <Compile Include="Utils\Json.cs" />
+    <Compile Include="Utils\Log.cs" />
+    <Compile Include="Http\Request.cs" />
+    <Compile Include="Utils\VFS.cs" />
+    <Compile Include="Utils\Zlib.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json">

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using ComponentAce.Compression.Libs.zlib;
 
-namespace Aki.Common
+namespace Aki.Common.Utils
 {
 	public enum ZlibCompression
 	{

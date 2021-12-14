@@ -124,7 +124,6 @@
     <Compile Include="Patches\MainMenu\MatchmakerOfflineRaidPatch.cs" />
     <Compile Include="Patches\Progression\OfflineSavePatch.cs" />
     <Compile Include="Patches\Dev\CoordinatesPatch.cs" />
-    <Compile Include="Utils\RequestHandler.cs" />
     <Compile Include="Utils\Bundles\EasyBundleHelper.cs" />
     <Compile Include="Utils\Bundles\BundleSettings.cs" />
     <Compile Include="Utils\Healing\HealthListener.cs" />

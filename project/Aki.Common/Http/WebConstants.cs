@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 
-namespace Aki.Common
+namespace Aki.Common.Http
 {
-    public static class HttpConstants
+    public static class WebConstants
     {
         /// <summary>
         /// HTML GET method.
@@ -53,7 +50,7 @@ namespace Aki.Common
         /// </summary>
         public static Dictionary<string, string> Mime { get; private set; }
 
-        static HttpConstants()
+        static WebConstants()
         {
             Mime = new Dictionary<string, string>()
             {
@@ -94,79 +91,4 @@ namespace Aki.Common
             return Mime.Any(x => x.Value == mime);
         }
     }
-
-    public class Request
-    {
-		/// <summary>
-		/// Send a request to remote endpoint and optionally receive a response body.
-		/// Deflate is the accepted compression format.
-		/// </summary>
-		public byte[] Send(string url, string method, byte[] data = null, bool compress = true, string mime = null, Dictionary<string, string> headers = null)
-		{
-            if (!HttpConstants.IsValidMethod(method))
-			{
-				throw new ArgumentException("request method is invalid");
-			}
-
-			Uri uri = new Uri(url);
-			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-
-			if (uri.Scheme == "https")
-			{
-				ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-				request.ServerCertificateValidationCallback = delegate { return true; };
-            }
-
-            request.Timeout = 1000;
-			request.Method = method;
-			request.Headers.Add("Accept-Encoding", "deflate");
-
-			if (headers != null)
-			{
-				foreach (KeyValuePair<string, string> item in headers)
-				{
-					request.Headers.Add(item.Key, item.Value);
-				}
-			}
-
-			if (method != HttpConstants.Get && method != HttpConstants.Head && data != null)
-			{
-				byte[] body = (compress) ? Zlib.Compress(data, ZlibCompression.Maximum) : data;
-
-				request.ContentType = HttpConstants.IsValidMime(mime) ? mime : "application/octet-stream";
-				request.ContentLength = body.Length;
-
-				if (compress)
-				{
-					request.Headers.Add("Content-Encoding", "deflate");
-				}
-
-				using (Stream stream = request.GetRequestStream())
-				{
-					stream.Write(body, 0, body.Length);
-				}
-			}
-
-			using (WebResponse response = request.GetResponse())
-            {
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    response.GetResponseStream().CopyTo(ms);
-                    byte[] body = ms.ToArray();
-
-                    if (body.Length == 0)
-                    {
-                        return null;
-                    }                    
-
-                    if (Zlib.IsCompressed(body))
-                    {
-                        return Zlib.Decompress(body);
-                    }
-
-                    return body;
-                }
-            }
-		}
-	}
 }

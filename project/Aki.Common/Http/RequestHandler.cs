@@ -1,10 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Aki.Common;
-using Aki.SinglePlayer.Models;
+using Aki.Common.Utils;
 
-namespace Aki.SinglePlayer.Utils
+namespace Aki.Common.Http
 {
     public static class RequestHandler
     {
@@ -22,13 +21,13 @@ namespace Aki.SinglePlayer.Utils
         {
             _request = new Request();
 
-            var args = Environment.GetCommandLineArgs();
+            string[] args = Environment.GetCommandLineArgs();
 
-            foreach (var arg in args)
+            foreach (string arg in args)
             {
                 if (arg.Contains("BackendUrl"))
                 {
-                    var json = arg.Replace("-config=", string.Empty);
+                    string json = arg.Replace("-config=", string.Empty);
                     _host = Json.Deserialize<ServerConfig>(json).BackendUrl;
                 }
 
@@ -66,42 +65,42 @@ namespace Aki.SinglePlayer.Utils
 
         public static byte[] GetData(string path)
         {
-            var url = _host + path;
+            string url = _host + path;
 
             Log.Info($"Request GET data: {_session}:{url}");
-            var result = _request.Send(url, "GET", null, headers: _headers);
-            
+            byte[] result = _request.Send(url, "GET", null, headers: _headers);
+
             ValidateData(result);
             return result;
         }
 
         public static string GetJson(string path)
         {
-            var url = _host + path;
+            string url = _host + path;
 
             Log.Info($"Request GET json: {_session}:{url}");
-            var data = _request.Send(url, "GET", headers: _headers);
-            var result = Encoding.UTF8.GetString(data);
-            
+            byte[] data = _request.Send(url, "GET", headers: _headers);
+            string result = Encoding.UTF8.GetString(data);
+
             ValidateJson(result);
             return result;
         }
 
         public static string PostJson(string path, string json)
         {
-            var url = _host + path;
+            string url = _host + path;
 
             Log.Info($"Request POST json: {_session}:{url}");
-            var data = _request.Send(url, "POST", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
-            var result = Encoding.UTF8.GetString(data);
-            
+            byte[] data = _request.Send(url, "POST", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
+            string result = Encoding.UTF8.GetString(data);
+
             ValidateJson(result);
             return result;
         }
 
         public static void PutJson(string path, string json)
         {
-            var url = _host + path;
+            string url = _host + path;
             Log.Info($"Request PUT json: {_session}:{url}");
             _request.Send(url, "PUT", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
         }

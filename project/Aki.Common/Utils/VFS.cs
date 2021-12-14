@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Aki.Common
+namespace Aki.Common.Utils
 {
     public static class VFS
     {

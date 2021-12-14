@@ -1,8 +1,8 @@
-﻿using Aki.Common;
+﻿using Aki.Common.Http;
+using Aki.Common.Utils;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models;
-using Aki.SinglePlayer.Utils;
 using EFT.UI;
 using HarmonyLib;
 using System.Linq;
