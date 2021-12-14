@@ -7,8 +7,9 @@ namespace Aki.Bundles
     {
         static void Main(string[] args)
         {
-            Log.Info("Loading: Aki.SinglePlayer");
+            Log.Info("Loading: Aki.Bundles");
             BundleSettings.GetBundles();
+            PatchManager.Patches.EnableAll();
         }
     }
 }
