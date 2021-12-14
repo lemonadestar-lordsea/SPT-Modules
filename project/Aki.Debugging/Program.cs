@@ -8,7 +8,7 @@ namespace Aki.Debugging
         static void Main(string[] args)
         {
             Log.Info("Loading: Aki.Debugging");
-            new CoordinatesPatch().Enable();
+            // new CoordinatesPatch().Enable();
         }
     }
 }
