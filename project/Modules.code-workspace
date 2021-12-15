@@ -25,7 +25,6 @@
 	},
 	"settings": {
 		"window.title": "SPT-AKI Modules",
-		"terminal.integrated.shellArgs.windows": ["-ExecutionPolicy ByPass"],
 		"git-graph.commitDetailsView.location": "Docked to Bottom"
 	}
 }
