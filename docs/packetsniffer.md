@@ -2,6 +2,13 @@
 
 Patches are based on version 0.12.12.1.16069
 
+## Deobfuscate
+
+```bash
+de4dot-x64.exe Assembly-CSharp.dll
+de4dot-x64.exe --un-name "!^<>[a-z0-9]$&!^<>[a-z0-9]__.*$&![A-Z][A-Z]\$<>.*$&^[a-zA-Z_<{$][a-zA-Z_0-9<>{}$.`-]*$" "Assembly-CSharp-cleaned.dll" --strtyp delegate --strtok "YOUR TOKEN HERE"
+```
+
 ## Assembly-CSharp.dll
 
 ### Save requests
