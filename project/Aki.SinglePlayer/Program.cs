@@ -31,6 +31,7 @@ namespace Aki.SinglePlayer
             new ScavExfilPatch().Enable();
             new ExfilPointManagerPatch().Enable();
             new TinnitusFixPatch().Enable();
+            new MaxBotPatch().Enable();
         }
     }
 }

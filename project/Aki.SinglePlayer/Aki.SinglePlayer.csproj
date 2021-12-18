@@ -62,6 +62,7 @@
     <Compile Include="Models\Progression\SaveProfileRequest.cs" />
     <Compile Include="Patches\Quests\EndByTimerPatch.cs" />
     <Compile Include="Patches\Quests\SpawnPmcPatch.cs" />
+    <Compile Include="Patches\RaidFix\MaxBotPatch.cs" />
     <Compile Include="Patches\RaidFix\TinnitusFixPatch.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Patches\RaidFix\BotTemplateLimitPatch.cs" />
