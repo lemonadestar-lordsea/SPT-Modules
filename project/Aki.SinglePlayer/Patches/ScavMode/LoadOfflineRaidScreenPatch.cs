@@ -13,6 +13,7 @@ using System.Reflection.Emit;
 using OfflineRaidAction = System.Action<bool, WeatherSettings, BotsSettings, WavesSettings>;
 
 // DON'T FORGET TO UPDATE REFERENCES IN CONSTRUCTOR
+// AND IN THE LoadOfflineRaidScreenForScavs METHOD AS WELL
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
@@ -34,7 +35,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
             var menuControllerType = typeof(MainMenuController);
 
-            _onReadyScreenMethod = menuControllerType.GetMethod("method_40", PatchConstants.PrivateFlags);
+            _onReadyScreenMethod = menuControllerType.GetMethod("method_39", PatchConstants.PrivateFlags);
             _isLocalField = menuControllerType.GetField("bool_0", PatchConstants.PrivateFlags);
             _menuControllerField = typeof(MainApplication).GetFields(PatchConstants.PrivateFlags).FirstOrDefault(x => x.FieldType == typeof(MainMenuController));
 
@@ -116,7 +117,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             gclass.OnShowNextScreen += LoadOfflineRaidNextScreen;
 
             // ready method
-            gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, "method_62");
+            gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, "method_61");
             gclass.ShowScreen(EScreenState.Queued);
         }
     }
