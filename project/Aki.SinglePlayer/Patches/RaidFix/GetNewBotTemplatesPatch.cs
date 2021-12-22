@@ -73,7 +73,7 @@ namespace Aki.SinglePlayer.Patches.RaidFix
         private static Profile GetFirstResult(Task<Profile[]> task)
         {
             var result = task.Result[0];
-            Log.Info($"Loading bot profile from server {result.Info.Settings.Role} {result.Side}");
+            Log.Info($"Loading bot profile from server role: {result.Info.Settings.Role} side: {result.Side}");
             return result;
         }
     }
