@@ -64,7 +64,6 @@ namespace Aki.SinglePlayer.Patches.RaidFix
             var source = data.PrepareToLoadBackend(1).ToList();
             taskAwaiter = PatchConstants.BackEndSession.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
 
-
             // load bundles for bot profile
             var continuation = new BundleLoader(taskScheduler);
             __result = taskAwaiter.ContinueWith(continuation.LoadBundles, taskScheduler).Unwrap();
