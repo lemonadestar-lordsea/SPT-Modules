@@ -37,7 +37,6 @@ namespace Aki.Custom.Patches
         [PatchPrefix]
         private static bool PatchPrefix(ref bool __result, object __instance, GInterface62 requester)
         {
-            var random = new Random();
             var side = (EPlayerSide)_sideField.GetValue(__instance);
             var enemies = (Dictionary<GInterface62, GClass487>)_enemiesField.GetValue(__instance);
 
@@ -52,7 +51,7 @@ namespace Aki.Custom.Patches
                     if (requester.Side == EPlayerSide.Usec)
                     {
                         //add 80% chance of being enemy
-                        __result = random.Next(1, 10) > 3;
+                        __result = false;
                     }
 
                     // everyone else is an enemy to usecs
@@ -64,7 +63,7 @@ namespace Aki.Custom.Patches
                     if (requester.Side == EPlayerSide.Bear)
                     {
                         //add 80% chance of being enemy
-                        __result = random.Next(1, 10) > 3;
+                        __result = false;
                     }
 
                     // everyone else is an enemy to bears
