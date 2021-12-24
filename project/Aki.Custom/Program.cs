@@ -15,6 +15,7 @@ namespace Aki.Custom
             new OfflineRaidMenuPatch().Enable();
             new SessionIdPatch().Enable();
             new VersionLabelPatch().Enable();
+            new IsEnemyPatch().Enable();
         }
     }
 }

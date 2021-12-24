@@ -59,10 +59,17 @@ namespace Aki.SinglePlayer.Patches.RaidFix
             var taskAwaiter = (Task<Profile>)null;
             var profile = (Profile)_getNewProfileMethod.Invoke(__instance, new object[] { data });
 
-
-            // load from server
-            var source = data.PrepareToLoadBackend(1).ToList();
-            taskAwaiter = PatchConstants.BackEndSession.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
+            if (profile == null)
+            {
+                // load from server
+                var source = data.PrepareToLoadBackend(1).ToList();
+                taskAwaiter = PatchConstants.BackEndSession.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
+            }
+            else
+            {
+                // get cached
+                taskAwaiter = Task.FromResult(profile);
+            }
 
             // load bundles for bot profile
             var continuation = new BundleLoader(taskScheduler);
@@ -73,7 +80,7 @@ namespace Aki.SinglePlayer.Patches.RaidFix
         private static Profile GetFirstResult(Task<Profile[]> task)
         {
             var result = task.Result[0];
-            Log.Info($"Loading bot profile from server role: {result.Info.Settings.Role} side: {result.Side}");
+            Log.Info($"Loading bot profile from server. role: {result.Info.Settings.Role} side: {result.Side}");
             return result;
         }
     }

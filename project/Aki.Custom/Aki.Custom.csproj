@@ -59,6 +59,7 @@
     <Compile Include="Patches\BossSpawnChancePatch.cs" />
     <Compile Include="Patches\BotDifficultyPatch.cs" />
     <Compile Include="Patches\CoreDifficultyPatch.cs" />
+    <Compile Include="Patches\IsEnemyPatch.cs" />
     <Compile Include="Patches\OfflineRaidMenuPatch.cs" />
     <Compile Include="Patches\SessionIdPatch.cs" />
     <Compile Include="Patches\VersionLabelPatch.cs" />
