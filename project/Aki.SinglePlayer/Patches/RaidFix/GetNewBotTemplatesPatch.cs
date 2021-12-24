@@ -68,6 +68,7 @@ namespace Aki.SinglePlayer.Patches.RaidFix
             else
             {
                 // get cached
+                Log.Info($"Loading bot profile from cache. role: {profile.Info.Settings.Role} side: {profile.Side}");
                 taskAwaiter = Task.FromResult(profile);
             }
 
