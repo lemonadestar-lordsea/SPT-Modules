@@ -6,8 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aki.Custom.Patches
 {
@@ -19,9 +17,20 @@ namespace Aki.Custom.Patches
 
         public IsEnemyPatch()
         {
-            _targetType = typeof(GClass480);
+            _targetType = PatchConstants.EftTypes.Single(IsTargetType);
             _sideField = _targetType.GetField("Side");
             _enemiesField = _targetType.GetField("Enemies");
+        }
+
+        private bool IsTargetType(Type type)
+        {
+            if (type.GetMethod("AddEnemy") != null && type.GetMethod("AddEnemyGroupIfAllowed") != null)
+            {
+                Log.Info($"IsEnemyPatch: {type.FullName}");
+                return true;
+            }
+
+            return false;
         }
 
         protected override MethodBase GetTargetMethod()
@@ -35,10 +44,10 @@ namespace Aki.Custom.Patches
         /// Check enemy cache list first, if not found, choose a value
         /// </summary>
         [PatchPrefix]
-        private static bool PatchPrefix(ref bool __result, object __instance, GInterface62 requester)
+        private static bool PatchPrefix(ref bool __result, object __instance, IAIDetails requester)
         {
             var side = (EPlayerSide)_sideField.GetValue(__instance);
-            var enemies = (Dictionary<GInterface62, GClass487>)_enemiesField.GetValue(__instance);
+            var enemies = (Dictionary<IAIDetails, BotSettingsClass>)_enemiesField.GetValue(__instance);
 
             if (enemies.Any(x=> x.Value.Player.Id == requester.Id))
             {
@@ -50,7 +59,6 @@ namespace Aki.Custom.Patches
                 {
                     if (requester.Side == EPlayerSide.Usec)
                     {
-                        //add 80% chance of being enemy
                         __result = false;
                     }
 
@@ -62,7 +70,6 @@ namespace Aki.Custom.Patches
                 {
                     if (requester.Side == EPlayerSide.Bear)
                     {
-                        //add 80% chance of being enemy
                         __result = false;
                     }
 
