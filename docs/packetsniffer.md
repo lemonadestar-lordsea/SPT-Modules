@@ -1,13 +1,28 @@
 # Packet Sniffer
 
-Patches are based on version 0.12.12.1.16069
+References are based on version 0.12.12.1.16266
+
+## Deobfuscation
+
+```cs
+// Token: 0x0600D578 RID: 54648 RVA: 0x00127273 File Offset: 0x00125473
+Class1085.smethod_0()
+{
+    return (string)((Hashtable)AppDomain.CurrentDomain.GetData(Class2085.string_0))[int_0];
+}
+```
+
+```bash
+de4dot-x64.exe --un-name "!^<>[a-z0-9]$&!^<>[a-z0-9]__.*$&![A-Z][A-Z]\$<>.*$&^[a-zA-Z_<{$][a-zA-Z_0-9<>{}$.`-]*$" "Assembly-CSharp-cleaned.dll" --strtyp delegate --strtok 0x0600D578
+pause
+```
 
 ## Assembly-CSharp.dll
 
 ### Save requests
 
 ```cs
-// Token: 0x06001E99 RID: 7833 RVA: 0x001A54CC File Offset: 0x001A36CC
+// Token: 0x06001EB2 RID: 7858 RVA: 0x001A58EC File Offset: 0x001A3AEC
 [postfix]
 Class180.method_2()
 {
@@ -26,7 +41,7 @@ Class180.method_2()
 ### Save responses
 
 ```cs
-// Token: 0x06001EA5 RID: 7845 RVA: 0x001A5BB8 File Offset: 0x001A3DB8
+// Token: 0x06001EBE RID: 7870 RVA: 0x001A5FD8 File Offset: 0x001A41D8
 [postfix]
 Class180.method_12()
 {
@@ -42,11 +57,12 @@ Class180.method_12()
         System.IO.File.WriteAllText($@"{path}resp.{file}_{time}.json", text3);
     }
 }
+```
 
 ### Disable SSL certification
 
 ```cs
-// Token: 0x06005017 RID: 20503 RVA: 0x0027CF90 File Offset: 0x0027B190
+// Token: 0x06005039 RID: 20537 RVA: 0x0027D4AC File Offset: 0x0027B6AC
 [prefix]
 Class519.ValidateCertificate()
 {
@@ -57,9 +73,9 @@ Class519.ValidateCertificate()
 ### Battleye
 
 ```cs
-// Token: 0x06006ABB RID: 27323 RVA: 0x002D3354 File Offset: 0x002D1554
+// Token: 0x06006ADF RID: 27359 RVA: 0x002D3AA8 File Offset: 0x002D1CA8
 [prefix]
-Class833.RunValidation()
+Class803.RunValidation()
 {
     this.Succeed = true;
 }
