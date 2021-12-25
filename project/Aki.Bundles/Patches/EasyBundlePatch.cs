@@ -32,7 +32,7 @@ namespace Aki.Bundles.Patches
 
             if (BundleSettings.Bundles.TryGetValue(key, out BundleInfo bundle))
             {
-                dependencyKeys = (dependencyKeys.Length > 0) ? dependencyKeys.Union(bundle.DependencyKeys).ToArray(): bundle.DependencyKeys;
+                dependencyKeys = (dependencyKeys.Length > 0) ? dependencyKeys.Union(bundle.DependencyKeys).ToArray() : bundle.DependencyKeys;
                 path = bundle.Path;
             }
 
