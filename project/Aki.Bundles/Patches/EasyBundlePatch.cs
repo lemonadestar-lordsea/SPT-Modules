@@ -3,6 +3,7 @@ using Aki.Bundles.Utils;
 using Aki.Reflection.Patching;
 using Diz.DependencyManager;
 using UnityEngine.Build.Pipeline;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -27,7 +28,7 @@ namespace Aki.Bundles.Patches
         private static void PatchPostfix(object __instance, string key, string rootPath, CompatibilityAssetBundleManifest manifest, IBundleLock bundleLock)
         {
             var path = rootPath + key;
-            var dependencyKeys = manifest.GetDirectDependencies(key) ?? new string[0];
+            var dependencyKeys = manifest.GetDirectDependencies(key);
 
             if (BundleSettings.Bundles.TryGetValue(key, out BundleInfo bundle))
             {
