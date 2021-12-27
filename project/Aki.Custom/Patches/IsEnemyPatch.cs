@@ -98,8 +98,6 @@ namespace Aki.Custom.Patches
                 }
             }
 
-            Log.Info($"Should {side} attack {requester.Side}? = {result}");
-
             __result = result;
 
             return false;
