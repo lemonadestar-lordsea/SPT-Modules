@@ -33,9 +33,9 @@ namespace Aki.SinglePlayer.Patches.Progression
         [PatchPrefix]
         private static bool PatchPrefix(ref ISpawnPoint __result, object __instance, ESpawnCategory category, EPlayerSide side, string infiltration)
         {
-            var ginterface240_0 = Traverse.Create(__instance).Field<ISpawnPoints>("ginterface240_0").Value;
+            var ginterface241_0 = Traverse.Create(__instance).Field<ISpawnPoints>("ginterface241_0").Value;
 
-            var spawnPoints = ginterface240_0.ToList();
+            var spawnPoints = ginterface241_0.ToList();
             var unfilteredSpawnPoints = spawnPoints.ToList();
 
             spawnPoints = spawnPoints.Where(sp => sp?.Infiltration != null && (string.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();

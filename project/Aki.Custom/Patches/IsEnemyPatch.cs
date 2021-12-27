@@ -49,9 +49,10 @@ namespace Aki.Custom.Patches
             var side = (EPlayerSide)_sideField.GetValue(__instance);
             var enemies = (Dictionary<IAIDetails, BotSettingsClass>)_enemiesField.GetValue(__instance);
 
+            var result = false; // default not an enemy
             if (enemies.Any(x=> x.Value.Player.Id == requester.Id))
             {
-                __result = true;
+                result = true;
             }
             else
             {
@@ -59,35 +60,45 @@ namespace Aki.Custom.Patches
                 {
                     if (requester.Side == EPlayerSide.Usec)
                     {
-                        __result = false;
+                        result = false;
                     }
-
-                    // everyone else is an enemy to usecs
-                    __result = true;
+                    else
+                    {
+                        // everyone else is an enemy to usecs
+                        result = true;
+                    }
                 }
-
-                if (side == EPlayerSide.Bear)
+                else if (side == EPlayerSide.Bear)
                 {
                     if (requester.Side == EPlayerSide.Bear)
                     {
-                        __result = false;
+                        result = false;
                     }
-
-                    // everyone else is an enemy to bears
-                    __result = true;
+                    else
+                    {
+                        // everyone else is an enemy to bears
+                        result = true;
+                    }
                 }
-
-                if (side == EPlayerSide.Savage)
+                else if (side == EPlayerSide.Savage)
                 {
                     if (requester.Side == EPlayerSide.Savage)
                     {
-                        __result = false;
+                        result = false;
                     }
-
-                    // everyone else is an enemy to savage (scavs)
-                    __result = true;
+                    else
+                    {
+                        // everyone else is an enemy to savage (scavs)
+                        result = true;
+                    }
+                }
+                else // no matches found so no enemies
+                {
+                    result = false;
                 }
             }
+
+            __result = result;
 
             return false;
         }
