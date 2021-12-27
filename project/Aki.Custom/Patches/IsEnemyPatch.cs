@@ -62,33 +62,43 @@ namespace Aki.Custom.Patches
                     {
                         result = false;
                     }
-
-                    // everyone else is an enemy to usecs
-                    result = true;
+                    else
+                    {
+                        // everyone else is an enemy to usecs
+                        result = true;
+                    }
                 }
-
-                if (side == EPlayerSide.Bear)
+                else if (side == EPlayerSide.Bear)
                 {
                     if (requester.Side == EPlayerSide.Bear)
                     {
                         result = false;
                     }
-
-                    // everyone else is an enemy to bears
-                    result = true;
+                    else
+                    {
+                        // everyone else is an enemy to bears
+                        result = true;
+                    }
                 }
-
-                if (side == EPlayerSide.Savage)
+                else if (side == EPlayerSide.Savage)
                 {
                     if (requester.Side == EPlayerSide.Savage)
                     {
                         result = false;
                     }
-
-                    // everyone else is an enemy to savage (scavs)
-                    result = true;
+                    else
+                    {
+                        // everyone else is an enemy to savage (scavs)
+                        result = true;
+                    }
+                }
+                else // no matches found so no enemies
+                {
+                    result = false;
                 }
             }
+
+            Log.Info($"Should {side} attack {requester.Side}? = {result}");
 
             __result = result;
 
