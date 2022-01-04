@@ -16,7 +16,7 @@ Aki.Build          | Build script
 
 ## Requirements
 
-- Escape From Tarkov 0.12.12.0.16367
+- Escape From Tarkov 0.12.12.0.16432
 - Visual Studio Build Tools (.NET desktop workload)
 - .NET Framework 4.7.2
 - VSCodium

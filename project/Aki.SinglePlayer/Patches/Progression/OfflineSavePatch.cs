@@ -1,4 +1,5 @@
 using Aki.Common.Http;
+using Aki.Common.Utils;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models.Progression;
@@ -29,8 +30,15 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         protected override MethodBase GetTargetMethod()
         {
-            return PatchConstants.EftTypes.Single(x => x.Name == "MainApplication")
-                .GetMethod("method_44", PatchConstants.PrivateFlags);
+            // method_45 - as of 16432
+            var type = PatchConstants.EftTypes.Single(x => x.Name == "MainApplication");
+            return Array.Find(type.GetMethods(PatchConstants.PrivateFlags), Match);
+        }
+
+        private bool Match(MethodInfo arg)
+        {
+            var parameters = arg.GetParameters();
+            return parameters.Length > 5 && parameters[0]?.Name == "profileId" && parameters[1]?.Name == "savageProfile" && arg.ReturnType == typeof(void);
         }
 
         [PatchPrefix]
