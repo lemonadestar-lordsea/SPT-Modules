@@ -15,9 +15,6 @@ namespace Aki.SinglePlayer.Patches.RaidFix
             var methodName = "SetSettings";
             return PatchConstants.EftTypes.Single(x => x.GetMethod(methodName, flags) != null && IsTargetMethod(x.GetMethod(methodName, flags)))
                 .GetMethod(methodName, flags);
-
-            Log.Error("MaxBotPatch() didnt find target method");
-            return null;
         }
         
         private static bool IsTargetMethod(MethodInfo mi)
