@@ -11,8 +11,9 @@ namespace Aki.Custom.Patches
     {
         protected override MethodBase GetTargetMethod()
         {
-            var type = PatchConstants.EftTypes.Single(x => x.Name == "MainApplication");
-            return Array.Find(type.GetMethods(PatchConstants.PrivateFlags), IsTargetMethod);
+            return PatchConstants.EftTypes.Single(x => x.Name == "MainApplication")
+                 .GetMethods(PatchConstants.PrivateFlags)
+                 .SingleOrDefault(x => IsTargetMethod(x));
         }
 
         private static bool IsTargetMethod(MethodInfo mi)
