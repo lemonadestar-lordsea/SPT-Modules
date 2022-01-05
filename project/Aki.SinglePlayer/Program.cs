@@ -33,7 +33,6 @@ namespace Aki.SinglePlayer
             new TinnitusFixPatch().Enable();
             new MaxBotPatch().Enable();
             new SpawnPmcPatch().Enable();
-            new AfkTimerPatch().Enable();
             
         }
     }

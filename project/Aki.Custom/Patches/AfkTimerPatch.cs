@@ -1,10 +1,11 @@
-﻿using Aki.Reflection.Patching;
+﻿using Aki.Common.Http;
+using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Aki.SinglePlayer.Patches.MainMenu
+namespace Aki.Custom.Patches
 {
     class AfkTimerPatch : ModulePatch
     {
@@ -25,7 +26,9 @@ namespace Aki.SinglePlayer.Patches.MainMenu
         [PatchPrefix]
         private static bool PatchPrefix(ref float afkTimeOut)
         {
-            afkTimeOut = 21600f; // in seconds
+            var json = RequestHandler.GetJson("/singleplayer/settings/afkTimeOut");
+            var isParsable = float.TryParse(json, out afkTimeOut);
+            afkTimeOut = isParsable ? afkTimeOut : 86400;
             return true;
         }
     }
