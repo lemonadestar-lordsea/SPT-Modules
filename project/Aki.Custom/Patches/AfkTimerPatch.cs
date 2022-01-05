@@ -1,19 +1,19 @@
-﻿using Aki.Common.Http;
-using Aki.Reflection.Patching;
+﻿using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
-using System;
 using System.Linq;
 using System.Reflection;
 
 namespace Aki.Custom.Patches
 {
-    class AfkTimerPatch : ModulePatch
+    public class AfkTimerPatch : ModulePatch
     {
+        private const float AfkTimeOut = 7 * 24 * 60 * 60; // 1 week
+
         protected override MethodBase GetTargetMethod()
         {
             return PatchConstants.EftTypes.Single(x => x.Name == "MainApplication")
                  .GetMethods(PatchConstants.PrivateFlags)
-                 .SingleOrDefault(x => IsTargetMethod(x));
+                 .SingleOrDefault(IsTargetMethod);
         }
 
         private static bool IsTargetMethod(MethodInfo mi)
@@ -24,14 +24,9 @@ namespace Aki.Custom.Patches
         }
 
         [PatchPrefix]
-        private static bool PatchPrefix(ref float afkTimeOut)
+        private static void PatchPrefix(ref float afkTimeOut)
         {
-            var json = RequestHandler.GetJson("/singleplayer/settings/afkTimeOut");
-            var isParsable = float.TryParse(json, out afkTimeOut);
-
-            // time is in seconds
-            afkTimeOut = isParsable ? afkTimeOut : 86400;
-            return true;
+            afkTimeOut = AfkTimeOut;
         }
     }
 }   
