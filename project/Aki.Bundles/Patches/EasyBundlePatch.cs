@@ -28,12 +28,11 @@ namespace Aki.Bundles.Patches
         private static void PatchPostfix(object __instance, string key, string rootPath, CompatibilityAssetBundleManifest manifest, IBundleLock bundleLock)
         {
             var path = rootPath + key;
-            var dependencyKeys = manifest.GetDirectDependencies(key);
+            var dependencyKeys = manifest.GetDirectDependencies(key) ?? new string[0];
 
             if (BundleSettings.Bundles.TryGetValue(key, out BundleInfo bundle))
             {
-                var result = dependencyKeys == null ? new List<string>() : dependencyKeys.ToList();
-                dependencyKeys = result.Union(bundle.DependencyKeys).ToArray();
+                dependencyKeys = (dependencyKeys.Length > 0) ? dependencyKeys.Union(bundle.DependencyKeys).ToArray() : bundle.DependencyKeys;
                 path = bundle.Path;
             }
 
