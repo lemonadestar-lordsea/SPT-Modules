@@ -16,13 +16,13 @@ namespace Aki.Custom.Patches
         }
 
         private static bool IsTargetMethod(MethodInfo mi)
-        {   
+        {
             var parameters = mi.GetParameters();
             return parameters.Length == 1
                 && parameters[0].Name == "afkTimeOut";
         }
 
-        [PatchPrefix] 
+        [PatchPrefix]
         private static bool PatchPrefix(ref float afkTimeOut)
         {
             var json = RequestHandler.GetJson("/singleplayer/settings/afkTimeOut");
