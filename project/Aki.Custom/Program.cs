@@ -17,6 +17,7 @@ namespace Aki.Custom
             new VersionLabelPatch().Enable();
             new IsEnemyPatch().Enable();
             new AfkTimerPatch().Enable();
+            new BotEnemyTargetPatch().Enable();
         }
     }
 }
