@@ -171,7 +171,7 @@ if (Test-Path $LicenseFilePath)
 }
 else
 {
-    Write-Host "WARNING! LICENSE.md file not found. If you're making a release, please don't forget to include the license file!" -ForegroundColor Red
+    Write-Warning "LICENSE.md file not found. If you're making a release, please don't forget to include the license file!"
 }
 
 Write-Host ""
