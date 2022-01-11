@@ -7,10 +7,18 @@ function CopyAndVerifyFile
     (
         [System.IO.FileInfo]$File,
         [string]$DestinationPath,
-        $OverrideFileName = $null
+        $OverrideFileName = $null,
+		$UseFriendlyName = $true
     )
 
-    $friendlyName = "$($file.Directory.Parent.Parent.Name) - $($File.Name)"
+	if ($UseFriendlyName)
+	{
+		$friendlyName = "$($file.Directory.Parent.Parent.Name) - $($File.Name)"
+	}
+	else
+	{
+		$friendlyName = $File.Name;
+	}
 
     Write-Host "Copying $($friendlyName) " -NoNewLine
     
@@ -153,6 +161,17 @@ foreach($file in $dllAndExeFiles)
     {
         CopyAndVerifyFile $file $managedFolder
     }
+}
+
+# Check if license file exists and copy it to Build folder
+$LicenseFilePath = "$($rootPath)/../LICENSE.md"
+if (Test-Path $LicenseFilePath)
+{
+	CopyAndVerifyFile $LicenseFilePath $buildDir $null $false
+}
+else
+{
+	Write-Host "WARNING! LICENSE.md file not found. If you're making a release, please don't forget to include the license file!" -ForegroundColor Red
 }
 
 Write-Host ""
