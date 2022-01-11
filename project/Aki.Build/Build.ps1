@@ -8,17 +8,17 @@ function CopyAndVerifyFile
         [System.IO.FileInfo]$File,
         [string]$DestinationPath,
         $OverrideFileName = $null,
-		$UseFriendlyName = $true
+        $UseFriendlyName = $true
     )
 
-	if ($UseFriendlyName)
-	{
-		$friendlyName = "$($file.Directory.Parent.Parent.Name) - $($File.Name)"
-	}
-	else
-	{
-		$friendlyName = $File.Name;
-	}
+    if ($UseFriendlyName)
+    {
+        $friendlyName = "$($file.Directory.Parent.Parent.Name) - $($File.Name)"
+    }
+    else
+    {
+        $friendlyName = $File.Name;
+    }
 
     Write-Host "Copying $($friendlyName) " -NoNewLine
     
@@ -167,11 +167,11 @@ foreach($file in $dllAndExeFiles)
 $LicenseFilePath = "$($rootPath)/../LICENSE.md"
 if (Test-Path $LicenseFilePath)
 {
-	CopyAndVerifyFile $LicenseFilePath $buildDir $null $false
+    CopyAndVerifyFile $LicenseFilePath $buildDir $null $false
 }
 else
 {
-	Write-Host "WARNING! LICENSE.md file not found. If you're making a release, please don't forget to include the license file!" -ForegroundColor Red
+    Write-Host "WARNING! LICENSE.md file not found. If you're making a release, please don't forget to include the license file!" -ForegroundColor Red
 }
 
 Write-Host ""
