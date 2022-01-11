@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using Aki.Reflection.Patching;
-using EFT;
+﻿using Aki.Reflection.Patching;
 using HarmonyLib;
+using System;
+using System.Reflection;
+using TraderInfo = EFT.Profile.GClass1466;
 
 namespace Aki.SinglePlayer.Patches.RaidFix
 {
@@ -11,14 +10,17 @@ namespace Aki.SinglePlayer.Patches.RaidFix
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(Profile).GetNestedTypes()
-                .Single(x => x.GetMethod("UpdateLevel", BindingFlags.NonPublic | BindingFlags.Instance)?.IsVirtual ?? false)
-                .GetMethod("UpdateLevel", BindingFlags.NonPublic | BindingFlags.Instance);
+            return typeof(TraderInfo).GetMethod("UpdateLevel", BindingFlags.NonPublic | BindingFlags.Instance);
         }
 
         [PatchPrefix]
-        protected static void PatchPrefix(Profile.GClass1466 __instance)
+        protected static void PatchPrefix(TraderInfo __instance)
         {
+            if (__instance.Settings == null)
+            {
+                return;
+            }
+
             var loyaltyLevel = __instance.Settings.GetLoyaltyLevel(__instance);
             var loyaltyLevelSettings = __instance.Settings.GetLoyaltyLevelSettings(loyaltyLevel);
 
@@ -27,7 +29,7 @@ namespace Aki.SinglePlayer.Patches.RaidFix
                 throw new IndexOutOfRangeException($"Loyalty level {loyaltyLevel} not found.");
             }
 
-            Traverse.Create(__instance).Property("CurrentLoyalty").SetValue(loyaltyLevelSettings.Value);
+            Traverse.Create(__instance).Field("traderLoyaltyLevel_0").SetValue(loyaltyLevelSettings.Value);
         }
     }
 }
