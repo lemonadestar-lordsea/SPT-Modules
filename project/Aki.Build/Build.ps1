@@ -167,7 +167,7 @@ foreach($file in $dllAndExeFiles)
 $LicenseFilePath = "$($rootPath)/../LICENSE.md"
 if (Test-Path $LicenseFilePath)
 {
-    CopyAndVerifyFile $LicenseFilePath $buildDir $null $false
+    CopyAndVerifyFile $LicenseFilePath $buildDir "LICENSE-Modules.txt" $false
 }
 else
 {
