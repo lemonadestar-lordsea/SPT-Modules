@@ -29,6 +29,7 @@ namespace Aki.SinglePlayer.Patches.RaidFix
                 throw new IndexOutOfRangeException($"Loyalty level {loyaltyLevel} not found.");
             }
 
+            // Backing field of the "CurrentLoyalty" property
             Traverse.Create(__instance).Field("traderLoyaltyLevel_0").SetValue(loyaltyLevelSettings.Value);
         }
     }
