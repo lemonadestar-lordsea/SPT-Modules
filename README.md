@@ -23,9 +23,11 @@ Aki.Build          | Build script
 
 ## Build
 
-1. VSCodium > File > Open Workspace > Modules.code-workspace
-2. VSCodium > Terminal > Run Build Task...
-3. Copy-paste content inside `Build` into `%gamedir%`, overwrite when prompted.
+1. Copy your tarkov DLLs from live\EscapeFromTarkov_Data\Managed to Modules\project\Shared
+2. Deobfuscate and remap your live\EscapeFromTarkov_Data\Managed\Assembly-CSharp.dll, copy to Modules\project\Shared
+3. VSCodium > File > Open Workspace > Modules.code-workspace
+4. VSCodium > Terminal > Run Build Task...
+5. Copy-paste content inside `Build` into `%gamedir%`, overwrite when prompted.
 
 ## Authors
 
