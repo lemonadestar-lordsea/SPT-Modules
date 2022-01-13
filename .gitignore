@@ -5,7 +5,13 @@
 
 # Aki
 [Bb]uild/
-[Ss]hared/
+
+# Shared DLLs
+!project/Shared/
+project/Shared/*
+!project/Shared/References/
+project/Shared/References/*
+!project/Shared/References/Assembly-CSharp.dll
 
 # User-specific files
 *.rsuser
