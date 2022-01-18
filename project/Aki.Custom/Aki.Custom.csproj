@@ -61,6 +61,7 @@
     <Compile Include="Patches\BotDifficultyPatch.cs" />
     <Compile Include="Patches\BotEnemyTargetPatch.cs" />
     <Compile Include="Patches\CoreDifficultyPatch.cs" />
+    <Compile Include="Patches\IsEnemyPatch2.cs" />
     <Compile Include="Patches\IsEnemyPatch.cs" />
     <Compile Include="Patches\OfflineRaidMenuPatch.cs" />
     <Compile Include="Patches\SessionIdPatch.cs" />
