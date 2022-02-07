@@ -18,12 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aki.Bundles\Aki.Bundles.csproj">
-    <ProjectReference Include="..\Aki.Common\Aki.Common.csproj">
-    <ProjectReference Include="..\Aki.Core\Aki.Core.csproj">
-    <ProjectReference Include="..\Aki.Loader\Aki.Loader.csproj">
-    <ProjectReference Include="..\Aki.Reflection\Aki.Reflection.csproj">
-    <ProjectReference Include="..\Aki.SinglePlayer\Aki.SinglePlayer.csproj">
+    <ProjectReference Include="..\Aki.Bundles\Aki.Bundles.csproj" />
+    <ProjectReference Include="..\Aki.Common\Aki.Common.csproj" />
+    <ProjectReference Include="..\Aki.Core\Aki.Core.csproj" />
+    <ProjectReference Include="..\Aki.Loader\Aki.Loader.csproj" />
+    <ProjectReference Include="..\Aki.Reflection\Aki.Reflection.csproj" />
+    <ProjectReference Include="..\Aki.SinglePlayer\Aki.SinglePlayer.csproj" />
   </ItemGroup>
 
 </Project>

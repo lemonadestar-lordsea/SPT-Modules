@@ -12,23 +12,23 @@
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\Shared\References\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\Shared\Hollowed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.ScriptableBuildPipeline">
-      <HintPath>..\Shared\References\Unity.ScriptableBuildPipeline.dll</HintPath>
+      <HintPath>..\Shared\Managed\Unity.ScriptableBuildPipeline.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\Shared\References\UnityEngine.dll</HintPath>
+      <HintPath>..\Shared\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
-      <HintPath>..\Shared\References\UnityEngine.AssetBundleModule.dll</HintPath>
+      <HintPath>..\Shared\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\Shared\References\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\Shared\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -39,8 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aki.Common\Aki.Common.csproj">
-    <ProjectReference Include="..\Aki.Reflection\Aki.Reflection.csproj">
+    <ProjectReference Include="..\Aki.Common\Aki.Common.csproj" />
+    <ProjectReference Include="..\Aki.Reflection\Aki.Reflection.csproj" />
   </ItemGroup>
 
 </Project>

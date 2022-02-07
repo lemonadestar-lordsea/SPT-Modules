@@ -11,13 +11,14 @@
 
   <ItemGroup>
     <Reference Include="bsg.componentace.compression.libs.zlib">
-      <HintPath>..\Shared\References\bsg.componentace.compression.libs.zlib.dll</HintPath>
+      <HintPath>..\Shared\Managed\bsg.componentace.compression.libs.zlib.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" ExcludeAssets="runtime" PrivateAssets="All" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
 </Project>

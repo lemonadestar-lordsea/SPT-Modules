@@ -16,20 +16,27 @@ Aki.Build          | Build script
 
 ## Requirements
 
-- Escape From Tarkov 0.12.12.0.16584
-- Visual Studio Build Tools (.NET desktop workload)
-- .NET Framework 4.7.2
-- VSCodium
+- Escape From Tarkov 0.12.12.15.16584
+- Visual Studio Code
+- Dotnet 6 SDK
+
+## Setup
+
+Copy-paste your EFT's `EscapeFromTarkov_Data/Managed/` folder to Modules' `Project/Shared/` folder
 
 ## Build
 
-1. Copy your tarkov DLLs (EXCEPT Assembly-CSharp.dll) from live\EscapeFromTarkov_Data\Managed to Modules\project\Shared\References
-2. VSCodium > File > Open Workspace > Modules.code-workspace
-3. VSCodium > Terminal > Run Build Task...
+### Visual Studio Code
 
-4. If using Visual Studio, set solution configuration to 'release' and build
+1. File > Open Workspace > Modules.code-workspace
+2. Terminal > Run Build Task...
+3. Copy-paste content inside `Build` into `%gamedir%`, overwrite when prompted.
 
-6. Copy-paste content inside `Build` into `%gamedir%`, overwrite when prompted.
+### Visual Studio
+
+1. Set solution configuration to "Release"
+2. Build > Rebuild Solution
+3. Copy-paste content inside `Build` into `%gamedir%`, overwrite when prompted.
 
 ## Authors
 

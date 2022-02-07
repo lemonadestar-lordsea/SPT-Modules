@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aki.Common\Aki.Common.csproj">
+    <ProjectReference Include="..\Aki.Common\Aki.Common.csproj" />
   </ItemGroup>
 
 </Project>

@@ -118,7 +118,7 @@ if(Test-Path $postBuildObj)
 }
 
 #get all release dlls and exe files
-$dllAndExeFiles = Resolve-Path -Path "*\bin\release\" | % {Get-ChildItem -Path $_} | where {$_.Name -like "*.dll" -or $_.Name -like "*.exe"}
+$dllAndExeFiles = Resolve-Path -Path "*\bin\release\net472" | % {Get-ChildItem -Path $_} | where {$_.Name -like "*.dll" -or $_.Name -like "*.exe"}
 
 #create the build directory structure
 [System.IO.Directory]::CreateDirectory($managedFolder) | Out-Null
