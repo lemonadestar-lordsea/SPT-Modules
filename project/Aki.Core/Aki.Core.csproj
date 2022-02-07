@@ -35,10 +35,6 @@
       <HintPath>..\Shared\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>..\Shared\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="UnityEngine.UnityWebRequestTextureModule">
       <HintPath>..\Shared\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
       <Private>False</Private>
