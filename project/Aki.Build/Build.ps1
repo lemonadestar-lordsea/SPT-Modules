@@ -67,32 +67,9 @@ function CopyAndVerifyFile
 
 if(-not $VSBuilt)
 {
-    # locate msbuild
-    Write-Host "Scanning for build tools..."
-
-    $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-
-    if (($vsWhere -eq("")) -or(-not(Test-Path $vsWhere)))
-    {
-        Write-Warning "  Could not find VSWhere.exe, please install BuildTools 2017 or newer"
-        return
-    }
-
-    $msbuild = & $vsWhere -latest -products * -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe
-
-    if (($msbuild -eq("")) -or(-Not(Test-Path $msbuild)))
-    {
-        # make sure msbuild ins't empty and that the path exists, otherwise warn and exit.
-        Write-Warning "  Could not find Microsoft Buildtools"
-        return
-    }
-
-    Write-Host "  Found MSBuild.exe" -ForegroundColor Green
-    Write-Host ""
-
     # restore nuget packages and build project
     Write-Host "Building Modules..." -ForegroundColor Cyan
-    $buildProcess = Start-Process -FilePath $msbuild -NoNewWindow -ArgumentList "-nologo /verbosity:minimal -consoleloggerparameters:Summary -t:Restore;Rebuild -p:Configuration=Release Modules.sln" -PassThru
+    $buildProcess = Start-Process "dotnet" -PassThru -NoNewWindow -ArgumentList "build --nologo --verbosity minimal --configuration Release Modules.sln"
     Wait-Process -InputObject $buildProcess
     Write-Host "Done" -ForegroundColor Cyan
     Write-Host ""
