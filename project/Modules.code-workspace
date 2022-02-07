@@ -20,7 +20,7 @@
 	},
 	"extensions": {
 		"recommendations": [
-			"mhutchie.git-graph"
+			"ms-dotnettools.csharp"
 		]
 	},
 	"settings": {
