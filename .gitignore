@@ -4,14 +4,8 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # Aki
-[Bb]uild/
-
-# Shared DLLs
-!project/Shared/
-project/Shared/*
-!project/Shared/References/
-project/Shared/References/*
-!project/Shared/References/Assembly-CSharp.dll
+**/Build/
+**/Shared/Managed/*
 
 # User-specific files
 *.rsuser
