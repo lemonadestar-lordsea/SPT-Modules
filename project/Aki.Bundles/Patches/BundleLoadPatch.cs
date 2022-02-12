@@ -43,7 +43,7 @@ namespace Aki.Bundles.Patches
 
             if (path.Contains("http"))
             {
-                var data = RequestHandler.GetData(path);
+                var data = RequestHandler.GetData(path, true);
 
                 if (data != null)
                 {
