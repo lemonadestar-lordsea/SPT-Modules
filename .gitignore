@@ -6,6 +6,7 @@
 # Aki
 **/Build/
 **/Shared/Managed/*
+**/tools/
 
 # User-specific files
 *.rsuser
