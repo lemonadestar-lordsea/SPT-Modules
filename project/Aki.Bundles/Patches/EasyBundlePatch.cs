@@ -30,7 +30,7 @@ namespace Aki.Bundles.Patches
             var path = rootPath + key;
             var dependencyKeys = manifest.GetDirectDependencies(key) ?? new string[0];
 
-            if (BundleSettings.Bundles.TryGetValue(key, out BundleInfo bundle))
+            if (BundleManager.Bundles.TryGetValue(key, out BundleInfo bundle))
             {
                 dependencyKeys = (dependencyKeys.Length > 0) ? dependencyKeys.Union(bundle.DependencyKeys).ToArray() : bundle.DependencyKeys;
                 path = bundle.Path;
