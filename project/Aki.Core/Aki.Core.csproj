@@ -19,9 +19,6 @@
       <HintPath>..\Shared\Managed\Assembly-CSharp-firstpass.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="BepInEx">
-      <HintPath>..\Shared\References\BepInEx.dll</HintPath>
-    </Reference>
     <Reference Include="FilesChecker">
       <HintPath>..\Shared\Managed\FilesChecker.dll</HintPath>
       <Private>False</Private>
@@ -45,7 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" ExcludeAssets="runtime" PrivateAssets="All" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 

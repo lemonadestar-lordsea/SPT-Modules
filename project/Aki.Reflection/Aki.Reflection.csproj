@@ -14,9 +14,6 @@
       <HintPath>..\Shared\Hollowed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="BepInEx">
-      <HintPath>..\Shared\References\BepInEx.dll</HintPath>
-    </Reference>
     <Reference Include="bsg.componentace.compression.libs.zlib">
       <HintPath>..\Shared\Managed\bsg.componentace.compression.libs.zlib.dll</HintPath>
       <Private>False</Private>
@@ -40,11 +37,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="HarmonyX" Version="2.7.0" />
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" ExcludeAssets="runtime" PrivateAssets="All" />
-    <PackageReference Include="Mono.Cecil" Version="0.11.4" />
-    <PackageReference Include="MonoMod.RuntimeDetour" Version="21.12.13.1" />
-    <PackageReference Include="MonoMod.Utils" Version="21.12.13.1" />
+    <PackageReference Include="BepInEx.Analyzers" Version="1.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="BepInEx.Core" Version="5.4.17" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="1.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 

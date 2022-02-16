@@ -59,6 +59,7 @@ Task("CopyBuildData")
     .IsDependentOn("Build")
     .Does(() =>
     {
+        CleanDirectory(buildDir);
         CreateDirectory(managedFolder);
         CreateDirectory(bepInExPluginsFolder);
         CopyFile(licenseFile, string.Format("{0}/LICENSE-Modules.txt", buildDir));
@@ -74,7 +75,7 @@ Task("CopyBuildData")
         
             CopyFile(dllPath, moduleTransferPath);
         }
-        else 
+        else if (dllPath.GetFilename().ToString().StartsWith("Aki.")) // Only copy the custom-built dll's to Managed
         {
             //Incase you want to see what is being copied for debuging
             //Spectre.Console.AnsiConsole.WriteLine(string.Format("Adding managed dll: {0}", dllPath.GetFilename()));

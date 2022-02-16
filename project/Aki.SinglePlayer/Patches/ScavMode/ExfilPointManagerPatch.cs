@@ -24,7 +24,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         }
 
         [PatchTranspiler]
-        private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        private static IEnumerable<CodeInstruction> PatchTranspile(IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
             var searchCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(PatchConstants.ExfilPointManagerType, "RemoveProfileIdFromPoints"));
