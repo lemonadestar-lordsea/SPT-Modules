@@ -16,7 +16,7 @@ namespace Aki.Common.Http
 
         static RequestHandler()
         {
-            _logger = new ManualLogSource("modules"); // TODO
+            _logger = Logger.CreateLogSource(nameof(RequestHandler));
             Initialize();
         }
 

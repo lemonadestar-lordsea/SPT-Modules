@@ -15,11 +15,14 @@ namespace Aki.Reflection.Patching
         private readonly List<HarmonyMethod> _finalizerList;
         private readonly List<HarmonyMethod> _ilmanipulatorList;
 
-        public static ManualLogSource Logger { get; private set; }
+        protected static ManualLogSource Logger { get; private set; }
 
         protected ModulePatch() : this(null)
         {
-            Logger = new ManualLogSource("AKI.Reflection");
+            if (Logger == null)
+            {
+                Logger = BepInEx.Logging.Logger.CreateLogSource(nameof(ModulePatch));
+            }
         }
 
         /// <summary>
@@ -29,7 +32,6 @@ namespace Aki.Reflection.Patching
         protected ModulePatch(string name = null)
         {
             _harmony = new Harmony(name ?? GetType().Name);
-            Logger = new ManualLogSource("modules"); // TODO
             _prefixList = GetPatchMethods(typeof(PatchPrefixAttribute));
             _postfixList = GetPatchMethods(typeof(PatchPostfixAttribute));
             _transpilerList = GetPatchMethods(typeof(PatchTranspilerAttribute));
@@ -111,7 +113,7 @@ namespace Aki.Reflection.Patching
                 {
 		            _harmony.Patch(target, ilmanipulator: ilmanipulator);
                 }
-                
+
                 Logger.LogInfo($"Enabled patch {_harmony.Id}");
             }
             catch (Exception ex)
