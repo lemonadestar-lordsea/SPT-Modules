@@ -15,6 +15,9 @@
       <HintPath>..\Shared\Hollowed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>..\Shared\References\BepInEx.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\Shared\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>

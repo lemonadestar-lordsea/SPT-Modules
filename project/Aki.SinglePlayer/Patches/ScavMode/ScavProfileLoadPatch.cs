@@ -49,7 +49,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             // Patch failed.
             if (searchIndex == -1)
             {
-                Log.Error(string.Format("Patch {0} failed: Could not find reference code.", MethodBase.GetCurrentMethod()));
+                Logger.LogError(string.Format("Patch {0} failed: Could not find reference code.", MethodBase.GetCurrentMethod()));
                 return instructions;
             }
 

@@ -1,13 +1,14 @@
-using Aki.Common.Utils;
 using Aki.Core.Patches;
+using BepInEx;
 
 namespace Aki.Core
 {
-	class Program
+    [BepInPlugin("com.spt-aki.core", "AKI.Core", "1.0.0")]
+	class AkiCorePlugin : BaseUnityPlugin
 	{
-		static void Main(string[] args)
-		{
-            Log.Info("Loading: Aki.Core");
+        public AkiCorePlugin()
+        {
+            Logger.LogInfo("Loading: Aki.Core");
 
             new ConsistencySinglePatch().Enable();
             new ConsistencyMultiPatch().Enable();
@@ -16,5 +17,5 @@ namespace Aki.Core
             new UnityWebRequestPatch().Enable();
             new WebSocketPatch().Enable();
         }
-	}
+    }
 }

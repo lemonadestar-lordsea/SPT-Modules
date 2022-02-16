@@ -14,6 +14,9 @@
       <HintPath>..\Shared\Hollowed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>..\Shared\References\BepInEx.dll</HintPath>
+    </Reference>
     <Reference Include="bsg.componentace.compression.libs.zlib">
       <HintPath>..\Shared\Managed\bsg.componentace.compression.libs.zlib.dll</HintPath>
       <Private>False</Private>

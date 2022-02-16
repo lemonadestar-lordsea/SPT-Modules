@@ -9,7 +9,7 @@ var buildDir = "./Build";
 var delPaths = GetDirectories("./**/*(obj|bin)");
 var licenseFile = "../LICENSE.md";
 var managedFolder = string.Format("{0}/{1}/{2}", buildDir, "EscapeFromTarkov_Data", "Managed");
-var akiModulesFolder = string.Format("{0}/{1}/{2}", buildDir, "Aki_Data", "Modules");
+var bepInExPluginsFolder = string.Format("{0}/{1}/{2}", buildDir, "BepInEx", "plugins");
 var solutionPath = "./Modules.sln";
 
 Setup(context => 
@@ -60,7 +60,7 @@ Task("CopyBuildData")
     .Does(() =>
     {
         CreateDirectory(managedFolder);
-        CreateDirectory(akiModulesFolder);
+        CreateDirectory(bepInExPluginsFolder);
         CopyFile(licenseFile, string.Format("{0}/LICENSE-Modules.txt", buildDir));
     })
     .DoesForEach(GetFiles("./Aki.*/bin/Release/net472/*.dll"), (dllPath) => //copy modules 
@@ -69,11 +69,9 @@ Task("CopyBuildData")
         {
             //Incase you want to see what is being copied for debuging
             //Spectre.Console.AnsiConsole.WriteLine(string.Format("Adding Module: {0}", dllPath.GetFilename()));
-            string moduleFolder = string.Format("{0}/{1}", akiModulesFolder, dllPath.GetFilenameWithoutExtension());
         
-            string moduleTransferPath = string.Format("{0}/{1}", moduleFolder, "module.dll");
+            string moduleTransferPath = string.Format("{0}/{1}", bepInExPluginsFolder, dllPath.GetFilename());
         
-            CreateDirectory(moduleFolder);
             CopyFile(dllPath, moduleTransferPath);
         }
         else 

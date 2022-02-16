@@ -14,14 +14,13 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Aki.Common.Utils;
 
 namespace Aki.Loader
 {
     public static class RunUtil
     {
         private static string _depDir;
-        private static bool _hasHooked = false;
+        private static bool _hasHooked;
 
         public static void LoadAndRun(string dllPath, params string[] args)
         {
@@ -38,14 +37,13 @@ namespace Aki.Loader
             }
             catch (Exception ex)
             {
-                Log.Error(ex.Message);
+                Program.Logger.LogFatal(ex);
 
                 Exception innerEx = ex.InnerException;
 
                 while (innerEx != null)
                 {
-                    Log.Error(innerEx.Message);
-                    Log.Write(innerEx.StackTrace);
+                    Program.Logger.LogFatal(innerEx);
                     innerEx = innerEx.InnerException;
                 }
             }
@@ -204,7 +202,7 @@ namespace Aki.Loader
             string dllName = $"{args.Name.Split(',')[0].Trim()}.dll";
             string path = Path.Combine(root, dllName);
 
-            Log.Info($"Loading dependency '{dllName}' from '{root}'... ");
+            Program.Logger.LogInfo($"Loading dependency '{dllName}' from '{root}'... ");
             return LoadAssembly(path);
         }
     }

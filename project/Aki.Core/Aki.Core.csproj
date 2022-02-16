@@ -19,6 +19,9 @@
       <HintPath>..\Shared\Managed\Assembly-CSharp-firstpass.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>..\Shared\References\BepInEx.dll</HintPath>
+    </Reference>
     <Reference Include="FilesChecker">
       <HintPath>..\Shared\Managed\FilesChecker.dll</HintPath>
       <Private>False</Private>

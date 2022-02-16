@@ -26,13 +26,12 @@ namespace Aki.Loader
             try
             {
                 RunUtil.LoadAndRun(filepath);
-                Log.Info($"Aki.Loader: Successfully loaded '{filepath}'");
+                Program.Logger.LogInfo($"Aki.Loader: Successfully loaded '{filepath}'");
             }
             catch (Exception ex)
             {
-                Log.Error($"Aki.Loader: Failed to load '{filepath}'");
-                Log.Write(ex.Message);
-                Log.Write(ex.StackTrace);
+                Program.Logger.LogError($"Aki.Loader: Failed to load '{filepath}'");
+                Program.Logger.LogFatal(ex);
             }
         }
 
@@ -47,7 +46,7 @@ namespace Aki.Loader
 
                 if (VFS.Exists(file))
                 {
-                    Log.Info($"Aki.Loader: Found module.dll in '{dir}'");
+                    Program.Logger.LogInfo($"Aki.Loader: Found module.dll in '{dir}'");
                     files.Add(file);
                 }
             }

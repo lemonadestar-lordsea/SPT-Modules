@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Aki.Common.Utils;
+using BepInEx.Logging;
 using HarmonyLib;
 
 namespace Aki.Reflection.Patching
@@ -15,9 +15,11 @@ namespace Aki.Reflection.Patching
         private readonly List<HarmonyMethod> _finalizerList;
         private readonly List<HarmonyMethod> _ilmanipulatorList;
 
-        // required?
+        public static ManualLogSource Logger { get; private set; }
+
         protected ModulePatch() : this(null)
         {
+            Logger = new ManualLogSource("AKI.Reflection");
         }
 
         /// <summary>
@@ -27,6 +29,7 @@ namespace Aki.Reflection.Patching
         protected ModulePatch(string name = null)
         {
             _harmony = new Harmony(name ?? GetType().Name);
+            Logger = new ManualLogSource("modules"); // TODO
             _prefixList = GetPatchMethods(typeof(PatchPrefixAttribute));
             _postfixList = GetPatchMethods(typeof(PatchPostfixAttribute));
             _transpilerList = GetPatchMethods(typeof(PatchTranspilerAttribute));
@@ -109,7 +112,7 @@ namespace Aki.Reflection.Patching
 		            _harmony.Patch(target, ilmanipulator: ilmanipulator);
                 }
                 
-                Log.Info($"Enabled patch {_harmony.Id}");
+                Logger.LogInfo($"Enabled patch {_harmony.Id}");
             }
             catch (Exception ex)
             {
@@ -132,7 +135,7 @@ namespace Aki.Reflection.Patching
             try
             {
                 _harmony.Unpatch(target, HarmonyPatchType.All, _harmony.Id);
-                Log.Info($"Disabled patch {_harmony.Id}");
+                Logger.LogInfo($"Disabled patch {_harmony.Id}");
             }
             catch (Exception ex)
             {

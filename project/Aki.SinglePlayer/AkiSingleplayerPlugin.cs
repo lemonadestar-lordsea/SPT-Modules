@@ -1,18 +1,19 @@
-using Aki.Common.Utils;
 using Aki.SinglePlayer.Patches.Healing;
 using Aki.SinglePlayer.Patches.MainMenu;
 using Aki.SinglePlayer.Patches.Progression;
 using Aki.SinglePlayer.Patches.Quests;
 using Aki.SinglePlayer.Patches.RaidFix;
 using Aki.SinglePlayer.Patches.ScavMode;
+using BepInEx;
 
 namespace Aki.SinglePlayer
 {
-    class Program
+    [BepInPlugin("com.spt-aki.singleplayer", "AKI.Singleplayer", "1.0.0")]
+    class AkiSingleplayerPlugin : BaseUnityPlugin
     {
-        static void Main(string[] args)
+        public AkiSingleplayerPlugin()
         {
-            Log.Info("Loading: Aki.SinglePlayer");
+            Logger.LogInfo("Loading: Aki.SinglePlayer");
 
             new OfflineSaveProfilePatch().Enable();
             new OfflineSpawnPointPatch().Enable();

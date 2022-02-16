@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Aki.Common.Utils;
+using BepInEx.Logging;
 
 namespace Aki.Common.Http
 {
@@ -11,9 +12,11 @@ namespace Aki.Common.Http
         private static string _session;
         private static Request _request;
         private static Dictionary<string, string> _headers;
+        private static ManualLogSource _logger;
 
         static RequestHandler()
         {
+            _logger = new ManualLogSource("modules"); // TODO
             Initialize();
         }
 
@@ -47,27 +50,27 @@ namespace Aki.Common.Http
         {
             if (data == null)
             {
-                Log.Error($"Request failed, body is null");
+                _logger.LogError($"Request failed, body is null");
             }
 
-            Log.Info($"Request was successful");
+            _logger.LogInfo($"Request was successful");
         }
 
         private static void ValidateJson(string json)
         {
             if (string.IsNullOrWhiteSpace(json))
             {
-                Log.Error($"Request failed, body is null");
+                _logger.LogError($"Request failed, body is null");
             }
 
-            Log.Info($"Request was successful");
+            _logger.LogInfo($"Request was successful");
         }
 
         public static byte[] GetData(string path)
         {
             string url = _host + path;
 
-            Log.Info($"Request GET data: {_session}:{url}");
+            _logger.LogInfo($"Request GET data: {_session}:{url}");
             byte[] result = _request.Send(url, "GET", null, headers: _headers);
 
             ValidateData(result);
@@ -78,7 +81,7 @@ namespace Aki.Common.Http
         {
             string url = _host + path;
 
-            Log.Info($"Request GET json: {_session}:{url}");
+            _logger.LogInfo($"Request GET json: {_session}:{url}");
             byte[] data = _request.Send(url, "GET", headers: _headers);
             string result = Encoding.UTF8.GetString(data);
 
@@ -90,7 +93,7 @@ namespace Aki.Common.Http
         {
             string url = _host + path;
 
-            Log.Info($"Request POST json: {_session}:{url}");
+            _logger.LogInfo($"Request POST json: {_session}:{url}");
             byte[] data = _request.Send(url, "POST", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
             string result = Encoding.UTF8.GetString(data);
 
@@ -101,7 +104,7 @@ namespace Aki.Common.Http
         public static void PutJson(string path, string json)
         {
             string url = _host + path;
-            Log.Info($"Request PUT json: {_session}:{url}");
+            _logger.LogInfo($"Request PUT json: {_session}:{url}");
             _request.Send(url, "PUT", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
         }
     }
