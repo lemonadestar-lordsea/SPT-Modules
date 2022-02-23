@@ -16,7 +16,7 @@ Aki.Build          | Build script
 
 ## Requirements
 
-- Escape From Tarkov 0.12.12.15.16584
+- Escape From Tarkov 0.12.12.15.16909
 - Visual Studio Code
 - Dotnet 6 SDK
 
