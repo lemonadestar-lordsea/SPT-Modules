@@ -63,9 +63,9 @@ namespace Aki.Common.Http
             Log.Info($"Request was successful");
         }
 
-        public static byte[] GetData(string path)
+        public static byte[] GetData(string path, bool hasHost = false)
         {
-            string url = _host + path;
+            string url = (hasHost) ? path : _host + path;
 
             Log.Info($"Request GET data: {_session}:{url}");
             byte[] result = _request.Send(url, "GET", null, headers: _headers);
@@ -74,9 +74,9 @@ namespace Aki.Common.Http
             return result;
         }
 
-        public static string GetJson(string path)
+        public static string GetJson(string path, bool hasHost = false)
         {
-            string url = _host + path;
+            string url = (hasHost) ? path : _host + path;
 
             Log.Info($"Request GET json: {_session}:{url}");
             byte[] data = _request.Send(url, "GET", headers: _headers);
@@ -86,9 +86,9 @@ namespace Aki.Common.Http
             return result;
         }
 
-        public static string PostJson(string path, string json)
+        public static string PostJson(string path, string json, bool hasHost = false)
         {
-            string url = _host + path;
+            string url = (hasHost) ? path : _host + path;
 
             Log.Info($"Request POST json: {_session}:{url}");
             byte[] data = _request.Send(url, "POST", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
@@ -98,9 +98,9 @@ namespace Aki.Common.Http
             return result;
         }
 
-        public static void PutJson(string path, string json)
+        public static void PutJson(string path, string json, bool hasHost = false)
         {
-            string url = _host + path;
+            string url = (hasHost) ? path : _host + path;
             Log.Info($"Request PUT json: {_session}:{url}");
             _request.Send(url, "PUT", Encoding.UTF8.GetBytes(json), true, "application/json", _headers);
         }

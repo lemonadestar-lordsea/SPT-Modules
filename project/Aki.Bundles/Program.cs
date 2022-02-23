@@ -9,12 +9,9 @@ namespace Aki.Bundles
         static void Main(string[] args)
         {
             Log.Info("Loading: Aki.Bundles");
-
-            BundleSettings.GetBundles();
-
+            BundleManager.GetBundles();
             new EasyAssetsPatch().Enable();
             new EasyBundlePatch().Enable();
-            new BundleLoadPatch().Enable();
         }
     }
 }
