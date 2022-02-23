@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Aki.SinglePlayer\Aki.SinglePlayer.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="dotnet cake &quot;../build.cake&quot; --vsbuilt=true" />
+  </Target>
+
 </Project>

@@ -17,7 +17,6 @@ namespace Aki.Custom
             new VersionLabelPatch().Enable();
             new IsEnemyPatch().Enable();
             new IsEnemyPatch2().Enable();
-            //new AfkTimerPatch().Enable(); // bsg moved this to GClass1524, patch needs to be reworked
             new BotEnemyTargetPatch().Enable();
         }
     }
