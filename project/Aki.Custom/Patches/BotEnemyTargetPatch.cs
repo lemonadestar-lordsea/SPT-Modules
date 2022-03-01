@@ -1,4 +1,3 @@
-using Aki.Common.Utils;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using EFT;
@@ -22,7 +21,7 @@ namespace Aki.Custom.Patches
         {
             if (type.Name == nameof(BotControllerClass) && type.GetMethod(methodName) != null)
             {
-                Log.Info($"{methodName}: {type.FullName}");
+                Logger.LogInfo($"{methodName}: {type.FullName}");
                 return true;
             }
 

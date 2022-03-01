@@ -26,7 +26,7 @@ namespace Aki.Custom.Patches
         {
             if (type.GetMethod("AddEnemy") != null && type.GetMethod("AddEnemyGroupIfAllowed") != null)
             {
-                Log.Info($"IsEnemyPatch: {type.FullName}");
+                Logger.LogInfo($"IsEnemyPatch: {type.FullName}");
                 return true;
             }
 

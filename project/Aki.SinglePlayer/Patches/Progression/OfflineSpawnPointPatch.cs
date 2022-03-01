@@ -1,4 +1,3 @@
-using Aki.Common.Utils;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using EFT;
@@ -50,13 +49,13 @@ namespace Aki.SinglePlayer.Patches.Progression
             spawnPoints = spawnPoints.Where(sp => sp.Sides.Contain(side)).ToList();
 
             __result = spawnPoints.Count == 0 ? GetFallBackSpawnPoint(unfilteredSpawnPoints, category, side, infiltration) : spawnPoints.RandomElement();
-            Log.Info($"PatchPrefix SelectSpawnPoint: {__result.Id}");
+            Logger.LogInfo($"PatchPrefix SelectSpawnPoint: {__result.Id}");
             return false;
         }
 
         private static ISpawnPoint GetFallBackSpawnPoint(List<ISpawnPoint> spawnPoints, ESpawnCategory category, EPlayerSide side, string infiltration)
         {
-            Log.Warning($"PatchPrefix SelectSpawnPoint: Couldn't find any spawn points for:  {category}  |  {side}  |  {infiltration}");
+            Logger.LogWarning($"PatchPrefix SelectSpawnPoint: Couldn't find any spawn points for:  {category}  |  {side}  |  {infiltration}");
             return spawnPoints.Where(sp => sp.Categories.Contain(ESpawnCategory.Player)).RandomElement();
         }
     }

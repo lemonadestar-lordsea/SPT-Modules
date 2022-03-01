@@ -1,28 +1,28 @@
 # Modules
 
-Client-side modifications to alter Escape From Tarkov's behaviour
+BepInEx plugins to alter Escape From Tarkov's behaviour
 
 **Project**        | **Function**
 ------------------ | --------------------------------------------
-Aki.Loader         | Loads custom assemblies into the game
 Aki.Common         | Common utilities used across projects
 Aki.Reflection     | Reflection utilities used across the project
 Aki.Core           | Required patches to start the game
 Aki.Bundles        | External bundle loader
-Aki.SinglePlayer   | Simulating online game offline
+Aki.SinglePlayer   | Simulating online game while offline
 Aki.Custom         | SPT-AKI enhancements to EFT
-Aki.Debugging      | Debug utilities
+Aki.Debugging      | Debug utilities (disabled in release builds)
 Aki.Build          | Build script
 
 ## Requirements
 
 - Escape From Tarkov 0.12.12.15.16909
-- Visual Studio Code
-- Dotnet 6 SDK
+- BepInEx 5.4.19
+- Visual Studio Code -OR- Visual Studio 2019 or newer
+- .NET 6 SDK
 
 ## Setup
 
-Copy-paste your EFT's `EscapeFromTarkov_Data/Managed/` folder to Modules' `Project/Shared/` folder
+Copy-paste your EFT's `EscapeFromTarkov_Data/Managed/` folder to Modules' `Project/Shared/Managed/` folder
 
 ## Build
 

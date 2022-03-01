@@ -1,14 +1,15 @@
 ﻿using Aki.Bundles.Patches;
 using Aki.Bundles.Utils;
-using Aki.Common.Utils;
+using BepInEx;
 
 namespace Aki.Bundles
 {
-    public class Program
+    [BepInPlugin("com.spt-aki.bundles", "AKI.Bundles", "1.0.0")]
+    public class AkiBundlesPlugin : BaseUnityPlugin
     {
-        static void Main(string[] args)
+        public AkiBundlesPlugin()
         {
-            Log.Info("Loading: Aki.Bundles");
+            Logger.LogInfo("Loading: Aki.Bundles");
             BundleManager.GetBundles();
             new EasyAssetsPatch().Enable();
             new EasyBundlePatch().Enable();

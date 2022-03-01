@@ -1,5 +1,4 @@
-﻿using Aki.Common.Utils;
-using Aki.Reflection.Patching;
+﻿using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using EFT;
 using EFT.UI.Matchmaker;
@@ -41,7 +40,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
             if (_menuControllerField == null)
             {
-                Log.Error("LoadOfflineRaidScreenPatch() menuControllerField is null and could not be found in MainApplication class");
+                Logger.LogError("LoadOfflineRaidScreenPatch() menuControllerField is null and could not be found in MainApplication class");
             }
 
             foreach (var field in menuControllerType.GetFields(PatchConstants.PrivateFlags))

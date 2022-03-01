@@ -1,4 +1,3 @@
-using Aki.Common.Utils;
 using Aki.Reflection.CodeWrapper;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
@@ -25,7 +24,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         }
 
         [PatchTranspiler]
-        private static IEnumerable<CodeInstruction> PatchTranspile(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        private static IEnumerable<CodeInstruction> PatchTranspile(IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
             var searchCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(PatchConstants.ExfilPointManagerType, "RemoveProfileIdFromPoints"));
@@ -43,7 +42,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             // Patch failed.
             if (searchIndex == -1)
             {
-                Log.Error(string.Format("Patch {0} failed: Could not find reference code.", MethodBase.GetCurrentMethod()));
+                Logger.LogError(string.Format("Patch {0} failed: Could not find reference code.", MethodBase.GetCurrentMethod()));
                 return instructions;
             }
 

@@ -1,13 +1,14 @@
-﻿using Aki.Common.Utils;
-using Aki.Custom.Patches;
+﻿using Aki.Custom.Patches;
+using BepInEx;
 
 namespace Aki.Custom
 {
-    class Program
+    [BepInPlugin("com.spt-aki.custom", "AKI.Custom", "1.0.0")]
+    class AkiCustomPlugin : BaseUnityPlugin
     {
-        static void Main(string[] args)
+        public AkiCustomPlugin()
         {
-            Log.Info("Loading: Aki.Custom");
+            Logger.LogInfo("Loading: Aki.Custom");
 
             new BossSpawnChancePatch().Enable();
             new BotDifficultyPatch().Enable();
