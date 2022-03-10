@@ -16,7 +16,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Sirenix.Serialization">
-      <HintPath>..\..\..\chompBotMonitor\src\References\Sirenix.Serialization.dll</HintPath>
+      <HintPath>..\Shared\Managed\Sirenix.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\Shared\Managed\UnityEngine.dll</HintPath>
