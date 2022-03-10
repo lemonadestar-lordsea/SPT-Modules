@@ -19,8 +19,8 @@ namespace Aki.Custom.Patches
         [PatchPostfix]
         private static void PatchPostfix(UpdatableToggle ____offlineModeToggle,
             UpdatableToggle ____botsEnabledToggle,
-            TMPDropDownBox ____aiAmountDropdown,
-            TMPDropDownBox ____aiDifficultyDropdown,
+            DropDownBox ____aiAmountDropdown,
+            DropDownBox ____aiDifficultyDropdown,
             UpdatableToggle ____enableBosses,
             UpdatableToggle ____scavWars,
             UpdatableToggle ____taggedAndCursed)
