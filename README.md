@@ -35,8 +35,9 @@ Copy-paste your EFT's `EscapeFromTarkov_Data/Managed/` folder to Modules' `Proje
 ### Visual Studio
 
 1. Set solution configuration to "Release"
-2. Build > Rebuild Solution
-3. Copy-paste content inside `Build` into `%gamedir%`, overwrite when prompted.
+2. Add a new nuget package source: https://nuget.bepinex.dev/v3/index.json
+3. Build > Rebuild Solution
+4. Copy-paste content inside `Build` into `%gamedir%`, overwrite when prompted.
 
 ## Authors
 
