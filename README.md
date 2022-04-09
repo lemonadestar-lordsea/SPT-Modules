@@ -15,7 +15,7 @@ Aki.Build          | Build script
 
 ## Requirements
 
-- Escape From Tarkov 0.12.12.15.16909
+- Escape From Tarkov 0.12.12.15.17349
 - BepInEx 5.4.19
 - Visual Studio Code -OR- Visual Studio 2019 or newer
 - .NET 6 SDK
