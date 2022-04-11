@@ -13,15 +13,9 @@ Class1085.smethod_0()
 ```
 
 ```bash
+de4dot-x64.exe Assembly-CSharp.dll
 de4dot-x64.exe --un-name "!^<>[a-z0-9]$&!^<>[a-z0-9]__.*$&![A-Z][A-Z]\$<>.*$&^[a-zA-Z_<{$][a-zA-Z_0-9<>{}$.`-]*$" "Assembly-CSharp-cleaned.dll" --strtyp delegate --strtok 0x0600D578
 pause
-```
-
-## Deobfuscate
-
-```bash
-de4dot-x64.exe Assembly-CSharp.dll
-de4dot-x64.exe --un-name "!^<>[a-z0-9]$&!^<>[a-z0-9]__.*$&![A-Z][A-Z]\$<>.*$&^[a-zA-Z_<{$][a-zA-Z_0-9<>{}$.`-]*$" "Assembly-CSharp-cleaned.dll" --strtyp delegate --strtok "YOUR TOKEN HERE"
 ```
 
 ## Assembly-CSharp.dll
@@ -53,6 +47,7 @@ Class180.method_2()
 Class180.method_12()
 {
     // add this at the end, before "return text3;"
+    // in case you turn this into a harmony patch, text3 = __result
     var uri = new Uri(url);
     var path = (System.IO.Directory.GetCurrentDirectory() + "\\HTTP_DATA\\").Replace("\\\\", "\\");
     var file = uri.LocalPath.Replace('/', '.').Remove(0, 1);
@@ -60,7 +55,6 @@ Class180.method_12()
 
     if (System.IO.Directory.CreateDirectory(path).Exists)
     {
-        // in case you turn this into a patch, text3 = __result
         System.IO.File.WriteAllText($@"{path}resp.{file}_{time}.json", text3);
     }
 }
