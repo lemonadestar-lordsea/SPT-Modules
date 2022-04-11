@@ -1,4 +1,3 @@
-using Aki.Common.Utils;
 using Aki.Reflection.Patching;
 using EFT;
 using EFT.InventoryLogic;
@@ -40,7 +39,7 @@ namespace Aki.SinglePlayer.Patches.Quests
             
             if (dogtagItem == null)
             {
-                Log.Error("DogtagPatch error > DogTag slot item is null somehow.");
+                Logger.LogError("DogtagPatch error > DogTag slot item is null somehow.");
                 return;
             }
 
@@ -48,7 +47,7 @@ namespace Aki.SinglePlayer.Patches.Quests
 
             if (itemComponent == null)
             {
-                Log.Error("DogtagPatch error > DogTagComponent on dog tag slot is null. Something went horrifically wrong!");
+                Logger.LogError("DogtagPatch error > DogTagComponent on dog tag slot is null. Something went horrifically wrong!");
                 return;
             }
 

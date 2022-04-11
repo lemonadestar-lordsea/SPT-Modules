@@ -1,5 +1,4 @@
-﻿using Aki.Common.Utils;
-using Aki.Reflection.Patching;
+﻿using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using EFT;
 using EFT.UI.Matchmaker;
@@ -13,6 +12,7 @@ using System.Reflection.Emit;
 using OfflineRaidAction = System.Action<bool, WeatherSettings, BotsSettings, WavesSettings>;
 
 // DON'T FORGET TO UPDATE REFERENCES IN CONSTRUCTOR
+// AND IN THE LoadOfflineRaidScreenForScavs METHOD AS WELL
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
@@ -34,13 +34,13 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
             var menuControllerType = typeof(MainMenuController);
 
-            _onReadyScreenMethod = menuControllerType.GetMethod("method_40", PatchConstants.PrivateFlags);
+            _onReadyScreenMethod = menuControllerType.GetMethod("method_39", PatchConstants.PrivateFlags);
             _isLocalField = menuControllerType.GetField("bool_0", PatchConstants.PrivateFlags);
             _menuControllerField = typeof(MainApplication).GetFields(PatchConstants.PrivateFlags).FirstOrDefault(x => x.FieldType == typeof(MainMenuController));
 
             if (_menuControllerField == null)
             {
-                Log.Error("LoadOfflineRaidScreenPatch() menuControllerField is null and could not be found in MainApplication class");
+                Logger.LogError("LoadOfflineRaidScreenPatch() menuControllerField is null and could not be found in MainApplication class");
             }
 
             foreach (var field in menuControllerType.GetFields(PatchConstants.PrivateFlags))
@@ -111,12 +111,12 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         private static void LoadOfflineRaidScreenForScav()
         {
             var menuController = (object)GetMenuController();
-            var gclass = new MatchmakerOfflineRaid.GClass2394();
+            var gclass = new MatchmakerOfflineRaid.GClass2412();
 
             gclass.OnShowNextScreen += LoadOfflineRaidNextScreen;
 
             // ready method
-            gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, "method_62");
+            gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, "method_61");
             gclass.ShowScreen(EScreenState.Queued);
         }
     }

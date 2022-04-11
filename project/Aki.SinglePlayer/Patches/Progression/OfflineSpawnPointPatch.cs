@@ -1,4 +1,3 @@
-using Aki.Common.Utils;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using EFT;
@@ -31,11 +30,18 @@ namespace Aki.SinglePlayer.Patches.Progression
         }
 
         [PatchPrefix]
-        private static bool PatchPrefix(ref ISpawnPoint __result, object __instance, ESpawnCategory category, EPlayerSide side, string infiltration)
+        private static bool PatchPrefix(
+            ref ISpawnPoint __result,
+            object __instance,
+            ESpawnCategory category,
+            EPlayerSide side,
+            string groupId,
+            IAIDetails person,
+            string infiltration)
         {
-            var ginterface240_0 = Traverse.Create(__instance).Field<ISpawnPoints>("ginterface240_0").Value;
+            var ginterface243_0 = Traverse.Create(__instance).Field<ISpawnPoints>("ginterface243_0").Value;
 
-            var spawnPoints = ginterface240_0.ToList();
+            var spawnPoints = ginterface243_0.ToList();
             var unfilteredSpawnPoints = spawnPoints.ToList();
 
             spawnPoints = spawnPoints.Where(sp => sp?.Infiltration != null && (string.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();
@@ -43,13 +49,13 @@ namespace Aki.SinglePlayer.Patches.Progression
             spawnPoints = spawnPoints.Where(sp => sp.Sides.Contain(side)).ToList();
 
             __result = spawnPoints.Count == 0 ? GetFallBackSpawnPoint(unfilteredSpawnPoints, category, side, infiltration) : spawnPoints.RandomElement();
-            Log.Info($"PatchPrefix SelectSpawnPoint: {__result.Id}");
+            Logger.LogInfo($"PatchPrefix SelectSpawnPoint: {__result.Id}");
             return false;
         }
 
         private static ISpawnPoint GetFallBackSpawnPoint(List<ISpawnPoint> spawnPoints, ESpawnCategory category, EPlayerSide side, string infiltration)
         {
-            Log.Warning($"PatchPrefix SelectSpawnPoint: Couldn't find any spawn points for:  {category}  |  {side}  |  {infiltration}");
+            Logger.LogWarning($"PatchPrefix SelectSpawnPoint: Couldn't find any spawn points for:  {category}  |  {side}  |  {infiltration}");
             return spawnPoints.Where(sp => sp.Categories.Contain(ESpawnCategory.Player)).RandomElement();
         }
     }

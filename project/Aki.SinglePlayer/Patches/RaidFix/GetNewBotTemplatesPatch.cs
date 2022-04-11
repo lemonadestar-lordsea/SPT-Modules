@@ -2,7 +2,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using EFT;
-using Aki.Common.Utils;
 using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using Aki.SinglePlayer.Models.RaidFix;
@@ -45,7 +44,7 @@ namespace Aki.SinglePlayer.Patches.RaidFix
         private static bool PatchPrefix(ref Task<Profile> __result, BotsPresets __instance, IBotData data)
         {
             /*
-                in short when client wants new bot and GetNewProfile() return null (if not more available templates or they don't satisfied by Role and Difficulty condition)
+                in short when client wants new bot and GetNewProfile() return null (if not more available templates or they don't satisfy by Role and Difficulty condition)
                 then client gets new piece of WaveInfo collection (with Limit = 30 by default) and make request to server
                 but use only first value in response (this creates a lot of garbage and cause freezes)
                 after patch we request only 1 template from server
@@ -59,19 +58,9 @@ namespace Aki.SinglePlayer.Patches.RaidFix
             var taskAwaiter = (Task<Profile>)null;
             var profile = (Profile)_getNewProfileMethod.Invoke(__instance, new object[] { data });
 
-            if (profile == null)
-            {
-                // load from server
-                Log.Info("Loading bot profile from server");
-                var source = data.PrepareToLoadBackend(1).ToList();
-                taskAwaiter = PatchConstants.BackEndSession.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
-            }
-            else
-            {
-                // return cached profile
-                Log.Info("Loading bot profile from cache");
-                taskAwaiter = Task.FromResult(profile);
-            }
+            // load from server
+            var source = data.PrepareToLoadBackend(1).ToList();
+            taskAwaiter = PatchConstants.BackEndSession.LoadBots(source).ContinueWith(GetFirstResult, taskScheduler);
 
             // load bundles for bot profile
             var continuation = new BundleLoader(taskScheduler);
@@ -81,7 +70,9 @@ namespace Aki.SinglePlayer.Patches.RaidFix
 
         private static Profile GetFirstResult(Task<Profile[]> task)
         {
-            return task.Result[0];
+            var result = task.Result[0];
+            Logger.LogInfo($"Loading bot profile from server. role: {result.Info.Settings.Role} side: {result.Side}");
+            return result;
         }
     }
 }

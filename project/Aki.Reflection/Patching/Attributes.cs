@@ -1,28 +1,34 @@
 using System;
+using JetBrains.Annotations;
 
 namespace Aki.Reflection.Patching
 {
+    [MeansImplicitUse]
 	[AttributeUsage(AttributeTargets.Method)]
 	public class PatchPrefixAttribute : Attribute
     {
     }
 
-	[AttributeUsage(AttributeTargets.Method)]
+    [MeansImplicitUse]
+    [AttributeUsage(AttributeTargets.Method)]
 	public class PatchPostfixAttribute : Attribute
     {
     }
 
-	[AttributeUsage(AttributeTargets.Method)]
+    [MeansImplicitUse]
+    [AttributeUsage(AttributeTargets.Method)]
 	public class PatchTranspilerAttribute : Attribute
     {
     }
 
-	[AttributeUsage(AttributeTargets.Method)]
+    [MeansImplicitUse]
+    [AttributeUsage(AttributeTargets.Method)]
 	public class PatchFinalizerAttribute : Attribute
     {
     }
 
-	[AttributeUsage(AttributeTargets.Method)]
+    [MeansImplicitUse]
+    [AttributeUsage(AttributeTargets.Method)]
 	public class PatchILManipulatorAttribute : Attribute
     {
     }

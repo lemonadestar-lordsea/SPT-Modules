@@ -3,7 +3,6 @@ using Aki.Bundles.Utils;
 using Aki.Reflection.Patching;
 using Diz.DependencyManager;
 using UnityEngine.Build.Pipeline;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -24,27 +23,16 @@ namespace Aki.Bundles.Patches
             return EasyBundleHelper.Type.GetConstructors()[0];
         }
 
-        [PatchPrefix]
-        private static bool PatchPrefix(object __instance, string key, string rootPath, CompatibilityAssetBundleManifest manifest, IBundleLock bundleLock)
+        [PatchPostfix]
+        private static void PatchPostfix(object __instance, string key, string rootPath, CompatibilityAssetBundleManifest manifest, IBundleLock bundleLock)
         {
             var path = rootPath + key;
-            var dependencyKeys = manifest.GetDirectDependencies(key);
+            var dependencyKeys = manifest.GetDirectDependencies(key) ?? new string[0];
 
-            if (BundleSettings.Bundles.TryGetValue(key, out BundleInfo bundle))
+            if (BundleManager.Bundles.TryGetValue(key, out BundleInfo bundle))
             {
+                dependencyKeys = (dependencyKeys.Length > 0) ? dependencyKeys.Union(bundle.DependencyKeys).ToArray() : bundle.DependencyKeys;
                 path = bundle.Path;
-            }
-
-            foreach (KeyValuePair<string, BundleInfo> kvp in BundleSettings.Bundles)
-            {
-                if (!key.Equals(kvp.Key))
-                {
-                    continue;
-                }
-
-                var result = dependencyKeys == null ? new List<string>() : dependencyKeys.ToList();
-                dependencyKeys = result.Union(kvp.Value.DependencyKeys).ToArray();
-                break;
             }
 
             _ = new EasyBundleHelper(__instance)
@@ -56,8 +44,6 @@ namespace Aki.Bundles.Patches
                 LoadState = new BindableState<ELoadState>(ELoadState.Unloaded, null),
                 BundleLock = bundleLock
             };
-
-            return false;
         }
     }
 }
