@@ -10,10 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="bsg.componentace.compression.libs.zlib">
-      <HintPath>..\Shared\Managed\bsg.componentace.compression.libs.zlib.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="bsg.componentace.compression.libs.zlib" HintPath="..\Shared\Managed\bsg.componentace.compression.libs.zlib.dll" Private="False" />
   </ItemGroup>
 
   <ItemGroup>
