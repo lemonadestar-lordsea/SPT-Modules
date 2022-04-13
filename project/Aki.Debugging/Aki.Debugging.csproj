@@ -50,4 +50,8 @@
     <ProjectReference Include="..\Aki.Reflection\Aki.Reflection.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" ExcludeAssets="runtime" PrivateAssets="All" />
+  </ItemGroup>
+
 </Project>
