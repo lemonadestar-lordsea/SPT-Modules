@@ -2,6 +2,11 @@
 
 References are based on version 0.12.12.1.16266
 
+## Requirements
+
+- de4dot
+- dnspy
+
 ## Deobfuscation
 
 ```cs
@@ -13,13 +18,16 @@ Class1085.smethod_0()
 ```
 
 ```bash
+de4dot-x64.exe Assembly-CSharp.dll
 de4dot-x64.exe --un-name "!^<>[a-z0-9]$&!^<>[a-z0-9]__.*$&![A-Z][A-Z]\$<>.*$&^[a-zA-Z_<{$][a-zA-Z_0-9<>{}$.`-]*$" "Assembly-CSharp-cleaned.dll" --strtyp delegate --strtok 0x0600D578
 pause
 ```
 
-## Assembly-CSharp.dll
+## Modifications
 
-### Save requests
+### Assembly-CSharp.dll
+
+#### Save requests
 
 ```cs
 // Token: 0x06001EB2 RID: 7858 RVA: 0x001A58EC File Offset: 0x001A3AEC
@@ -38,7 +46,7 @@ Class180.method_2()
 }
 ```
 
-### Save responses
+#### Save responses
 
 ```cs
 // Token: 0x06001EBE RID: 7870 RVA: 0x001A5FD8 File Offset: 0x001A41D8
@@ -46,6 +54,7 @@ Class180.method_2()
 Class180.method_12()
 {
     // add this at the end, before "return text3;"
+    // in case you turn this into a harmony patch, text3 = __result
     var uri = new Uri(url);
     var path = (System.IO.Directory.GetCurrentDirectory() + "\\HTTP_DATA\\").Replace("\\\\", "\\");
     var file = uri.LocalPath.Replace('/', '.').Remove(0, 1);
@@ -53,13 +62,12 @@ Class180.method_12()
 
     if (System.IO.Directory.CreateDirectory(path).Exists)
     {
-        // in case you turn this into a patch, text3 = __result
         System.IO.File.WriteAllText($@"{path}resp.{file}_{time}.json", text3);
     }
 }
 ```
 
-### Disable SSL certification
+#### Disable SSL certification
 
 ```cs
 // Token: 0x06005039 RID: 20537 RVA: 0x0027D4AC File Offset: 0x0027B6AC
@@ -70,7 +78,7 @@ Class519.ValidateCertificate()
 }
 ```
 
-### Battleye
+#### Battleye
 
 ```cs
 // Token: 0x06006ADF RID: 27359 RVA: 0x002D3AA8 File Offset: 0x002D1CA8
@@ -81,9 +89,9 @@ Class803.RunValidation()
 }
 ```
 
-## FilesChecker.dll
+### FilesChecker.dll
 
-### Consistency multi
+#### Consistency multi
 
 ```cs
 // Token: 0x06000054 RID: 84 RVA: 0x00002A38 File Offset: 0x00000C38
@@ -95,7 +103,7 @@ ConsistencyController.EnsureConsistency()
 }
 ```
 
-### Consistency single
+#### Consistency single
 
 ```cs
 // Token: 0x06000053 RID: 83 RVA: 0x000028D4 File Offset: 0x00000AD4
