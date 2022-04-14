@@ -83,6 +83,15 @@ Class537.ValidateCertificate()
 }
 ```
 
+```cs
+// Token: 0x0600509E RID: 20638 RVA: 0x0027D2B4 File Offset: 0x0027B4B4
+[prefix]
+Class537.ValidateCertificate()
+{
+    return true;
+}
+```
+
 #### Battleye
 
 ```cs
