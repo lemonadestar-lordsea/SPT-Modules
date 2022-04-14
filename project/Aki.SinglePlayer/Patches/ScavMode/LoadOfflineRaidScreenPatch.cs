@@ -67,7 +67,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         protected override MethodBase GetTargetMethod()
         {
             return typeof(MainMenuController).GetNestedTypes(BindingFlags.NonPublic)
-                .Single(x => x.IsNested && x.GetField("selectLocationScreenController", BindingFlags.Public | BindingFlags.Instance) != null);
+                .Single(x => x.IsNested && x.GetField("selectLocationScreenController", BindingFlags.Public | BindingFlags.Instance) != null)
                 .GetMethod("method_2", PatchConstants.PrivateFlags);
         }
 
