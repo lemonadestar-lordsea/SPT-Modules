@@ -25,6 +25,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         private static bool IsTargetType(Type type)
         {
+            //GClass1812 as of 17349
             return (type.GetMethods(PatchConstants.PrivateFlags).Any(x => x.Name.IndexOf("CheckFarthestFromOtherPlayers", StringComparison.OrdinalIgnoreCase) != -1)
                 && type.IsClass);
         }
@@ -39,9 +40,9 @@ namespace Aki.SinglePlayer.Patches.Progression
             IAIDetails person,
             string infiltration)
         {
-            var ginterface243_0 = Traverse.Create(__instance).Field<ISpawnPoints>("ginterface243_0").Value;
+            var ginterface249_0 = Traverse.Create(__instance).Field<ISpawnPoints>("ginterface249_0").Value;
 
-            var spawnPoints = ginterface243_0.ToList();
+            var spawnPoints = ginterface249_0.ToList();
             var unfilteredSpawnPoints = spawnPoints.ToList();
 
             spawnPoints = spawnPoints.Where(sp => sp?.Infiltration != null && (string.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();
@@ -55,7 +56,7 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         private static ISpawnPoint GetFallBackSpawnPoint(List<ISpawnPoint> spawnPoints, ESpawnCategory category, EPlayerSide side, string infiltration)
         {
-            Logger.LogWarning($"PatchPrefix SelectSpawnPoint: Couldn't find any spawn points for:  {category}  |  {side}  |  {infiltration}");
+            Logger.LogWarning($"PatchPrefix SelectSpawnPoint: Couldn't find any spawn points for: {category} | {side} | {infiltration} using random unfiltered spawn instead");
             return spawnPoints.Where(sp => sp.Categories.Contain(ESpawnCategory.Player)).RandomElement();
         }
     }
