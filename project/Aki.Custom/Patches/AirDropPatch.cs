@@ -57,7 +57,7 @@ namespace Aki.Custom.Patches
         public bool doNotRun;
         public GameWorld gameWorld;
 
-        public AirDrop()
+        public void Awake() // https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html - this method is another form of Ctor
         {
             planeEnabled = false;
             boxEnabled = false;
@@ -76,43 +76,67 @@ namespace Aki.Custom.Patches
             gameWorld = Singleton<GameWorld>.Instance;
         }
 
-        public void FixedUpdate()
+        public void FixedUpdate() // https://docs.unity3d.com/ScriptReference/MonoBehaviour.FixedUpdate.html
         {
             if (gameWorld == null)
-            return;
+            {
+                return;
+            }
 
             timer += 0.02f;
+
             if (timer >= timeToDrop && !planeEnabled && amountDropped != 1 && !doNotRun)
-            ScriptStart();
+            {
+                ScriptStart();
+            }
 
             if (timer >= timeToDrop && planeEnabled && !doNotRun)
             {
                 plane.transform.Translate(Vector3.forward, Space.Self);
+
                 switch (planeObjId)
                 {
                     case 1:
                         if (plane.transform.position.z >= planePositivePosition && planeEnabled)
-                        DisablePlane();
+                        {
+                            DisablePlane();
+                        }
+
                         if (plane.transform.position.z >= randomAirdropPoint.transform.position.z && !boxEnabled)
-                        InitDrop();
+                        {
+                            InitDrop();
+                        }
                         break;
                     case 2:
                         if (plane.transform.position.x >= planePositivePosition && planeEnabled)
-                        DisablePlane();
+                        {
+                            DisablePlane();
+                        }
+
                         if (plane.transform.position.x >= randomAirdropPoint.transform.position.x && !boxEnabled)
-                        InitDrop();
+                        {
+                            InitDrop();
+                        }
                         break;
                     case 3:
                         if (plane.transform.position.z <= planeNegativePosition && planeEnabled)
-                        DisablePlane();
+                        {
+                            DisablePlane();
+                        }
                         if (plane.transform.position.z <= randomAirdropPoint.transform.position.z && !boxEnabled)
-                        InitDrop();
+                        {
+                            InitDrop();
+                        }
                         break;
                     case 4:
                         if (plane.transform.position.x <= planeNegativePosition && planeEnabled)
-                        DisablePlane();
+                        {
+                            DisablePlane();
+                        }
                         if (plane.transform.position.x <= randomAirdropPoint.transform.position.x && !boxEnabled)
-                        InitDrop();
+                        {
+                            InitDrop();
+                        }
                         break;
                 }
             }
@@ -120,7 +144,7 @@ namespace Aki.Custom.Patches
 
         public bool ShouldAirdropOccur()
         {
-            return (RandomChanceGen(1, 99) <= dropChance);
+            return RandomChanceGen(1, 99) <= dropChance;
         }
 
         public void DoNotRun()
@@ -133,7 +157,6 @@ namespace Aki.Custom.Patches
             System.Random chance = new System.Random();
             return chance.Next(minValue, maxValue);
         }
-
 
         public void ScriptStart()
         {
@@ -150,7 +173,9 @@ namespace Aki.Custom.Patches
             }
 
             if (plane != null)
-            PlanePositionGen();
+            {
+                PlanePositionGen();
+            }
         }
 
         public void InitPlane()
@@ -211,11 +236,6 @@ namespace Aki.Custom.Patches
             planeEnabled = false;
             amountDropped = 1;
             plane.ReturnToPool();
-        }
-
-        public void OnDestroy()
-        {
-            Destroy(this);
         }
     }
 }
