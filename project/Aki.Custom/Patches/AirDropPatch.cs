@@ -11,7 +11,8 @@ namespace Aki.Custom.Patches
 {
     public class AirDropPatch : ModulePatch
     {
-        public static GameWorld gameWorld = null;
+        private static GameWorld gameWorld = null;
+        private static int points = 0;
 
         protected override MethodBase GetTargetMethod()
         {
@@ -22,13 +23,10 @@ namespace Aki.Custom.Patches
         public static void PatchPostFix()
         {
             gameWorld = Singleton<GameWorld>.Instance;
+            points = LocationScene.GetAll<AirdropPoint>().Count();
 
-            if (gameWorld != null)
+            if (gameWorld != null && points != 0)
             {
-                var player = gameWorld.RegisteredPlayers[0];
-                if (player != null && (player.Location.Contains("factory") || player.Location.Contains("laboratory") || player.Location.Contains("hideout")))
-                return;
-
                 gameWorld.GetOrAddComponent<AirDrop>();
             }
         }
@@ -36,28 +34,28 @@ namespace Aki.Custom.Patches
 
     public class AirDrop : MonoBehaviour
     {
-        public SynchronizableObject plane;
-        public SynchronizableObject box;
-        public bool planeEnabled;
-        public bool boxEnabled;
-        public int amountDropped;
-        public int dropChance;
-        public List<AirdropPoint> airdropPoints;
-        public AirdropPoint randomAirdropPoint;
-        public int boxObjId;
-        public Vector3 boxPosition;
-        public Vector3 planeStartPosition;
-        public Vector3 planeStartRotation;
-        public int planeObjId;
-        public float planePositivePosition;
-        public float planeNegativePosition;
-        public float defaultDropHeight;
-        public float timer;
-        public float timeToDrop;
-        public bool doNotRun;
-        public GameWorld gameWorld;
+        private SynchronizableObject plane;
+        private SynchronizableObject box;
+        private bool planeEnabled;
+        private bool boxEnabled;
+        private int amountDropped;
+        private int dropChance;
+        private List<AirdropPoint> airdropPoints;
+        private AirdropPoint randomAirdropPoint;
+        private int boxObjId;
+        private Vector3 boxPosition;
+        private Vector3 planeStartPosition;
+        private Vector3 planeStartRotation;
+        private int planeObjId;
+        private float planePositivePosition;
+        private float planeNegativePosition;
+        private float defaultDropHeight;
+        private float timer;
+        private float timeToDrop;
+        private bool doNotRun;
+        private GameWorld gameWorld;
 
-        public void Awake() // https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html - this method is another form of Ctor
+        public void Awake(SynchronizableObject planes) // https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html - this method is another form of Ctor
         {
             planeEnabled = false;
             boxEnabled = false;
@@ -147,7 +145,7 @@ namespace Aki.Custom.Patches
             return RandomChanceGen(1, 99) <= dropChance;
         }
 
-        public void DoNotRun()
+        public void DoNotRun() // currently not doing anything, could be used later for multiple drops
         {
             doNotRun = true;
         }
