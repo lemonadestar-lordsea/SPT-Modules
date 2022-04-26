@@ -19,7 +19,8 @@ namespace Aki.Custom
             new IsEnemyPatch().Enable();
             new IsEnemyPatch2().Enable();
             new BotEnemyTargetPatch().Enable();
-            new AirDropPatch().Enable();
+            new DropBoxPatch().Enable();
+            new AirdropPatch().Enable();
         }
     }
 }

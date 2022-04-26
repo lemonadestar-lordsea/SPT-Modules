@@ -6,13 +6,44 @@ using UnityEngine;
 using Comfort.Common;
 using System.Collections.Generic;
 using System.Linq;
+using Aki.Common.Http;
+using Newtonsoft.Json;
 
 namespace Aki.Custom.Patches
 {
-    public class AirDropPatch : ModulePatch
+    public class DropBoxPatch : ModulePatch
+    {
+        public static int height = 0;
+        protected override MethodBase GetTargetMethod()
+        {
+            return typeof(AirdropLogic2Class).GetMethod("method_17", BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+
+        [PatchPrefix]
+        public static bool PatchPreFix(Vector3 point, ref float distance, RaycastHit raycastHit, LayerMask mask)
+        {
+            if (height == 0)
+            {
+                var json = RequestHandler.GetJson("/singleplayer/airdrop/config");
+                var converted = JsonConvert.DeserializeObject<AirdropConfig>(json);
+                height = RandomChance(converted.airdropMinOpenHeight, converted.airdropMaxOpenHeight);
+            }
+
+            distance = height;
+            return true;
+        }
+
+        public static int RandomChance(int minValue, int maxValue)
+        {
+            System.Random chance = new System.Random();
+            return chance.Next(minValue, maxValue);
+        }
+    }
+
+    public class AirdropPatch : ModulePatch
     {
         private static GameWorld gameWorld = null;
-        private static int points = 0;
+        private static bool points;
 
         protected override MethodBase GetTargetMethod()
         {
@@ -23,16 +54,16 @@ namespace Aki.Custom.Patches
         public static void PatchPostFix()
         {
             gameWorld = Singleton<GameWorld>.Instance;
-            points = LocationScene.GetAll<AirdropPoint>().Count();
+            points = LocationScene.GetAll<AirdropPoint>().Any();
 
-            if (gameWorld != null && points != 0)
+            if (gameWorld != null && points)
             {
-                gameWorld.GetOrAddComponent<AirDrop>();
+                gameWorld.GetOrAddComponent<AirdropComponent>();
             }
         }
     }
 
-    public class AirDrop : MonoBehaviour
+    public class AirdropComponent : MonoBehaviour
     {
         private SynchronizableObject plane;
         private SynchronizableObject box;
@@ -49,29 +80,32 @@ namespace Aki.Custom.Patches
         private int planeObjId;
         private float planePositivePosition;
         private float planeNegativePosition;
-        private float defaultDropHeight;
+        private float dropHeight;
         private float timer;
         private float timeToDrop;
         private bool doNotRun;
         private GameWorld gameWorld;
+        private AirdropConfig config;
 
-        public void Awake(SynchronizableObject planes) // https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html - this method is another form of Ctor
+        public void Start() // https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html - this method is another form of Ctor
         {
+            gameWorld = Singleton<GameWorld>.Instance;
             planeEnabled = false;
             boxEnabled = false;
-            dropChance = 100; // 20
+            amountDropped = 0;
+            doNotRun = false;
             boxObjId = 10;
             planePositivePosition = 3000f;
             planeNegativePosition = -3000f;
-            defaultDropHeight = 400f;
-            doNotRun = false;
-            timeToDrop = RandomChanceGen(60, 70); // 60, 900
+            config = GetConfigFromServer();
+            dropChance = ChanceToSpawn();
+            dropHeight = RandomChanceGen(config.planeMinFlyHeight, config.planeMaxFlyHeight);
+            timeToDrop = RandomChanceGen(config.airdropMinStartTimeSeconds, config.airdropMaxStartTimeSeconds);
             planeObjId = RandomChanceGen(1, 4);
             plane = LocationScene.GetAll<SynchronizableObject>().First(x => x.name.Contains("IL76MD-90"));
             box = LocationScene.GetAll<SynchronizableObject>().First(x => x.name.Contains("scontainer_airdrop_box_04"));
             airdropPoints = LocationScene.GetAll<AirdropPoint>().ToList();
             randomAirdropPoint = airdropPoints.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
-            gameWorld = Singleton<GameWorld>.Instance;
         }
 
         public void FixedUpdate() // https://docs.unity3d.com/ScriptReference/MonoBehaviour.FixedUpdate.html
@@ -140,6 +174,54 @@ namespace Aki.Custom.Patches
             }
         }
 
+        private int ChanceToSpawn()
+        {
+            var location = gameWorld.RegisteredPlayers[0].Location;
+            int result = 20;
+            switch (location)
+            {
+                case "bigmap":
+                    {
+                        result = config.airdropChancePercent.bigmap;
+                        break;
+                    }
+                case "interchange":
+                    {
+                        result = config.airdropChancePercent.interchange;
+                        break;
+                    }
+                case "reserve":
+                    {
+                        result = config.airdropChancePercent.reserve;
+                        break;
+                    }
+                case "shoreline":
+                    {
+                        result = config.airdropChancePercent.shoreline;
+                        break;
+                    }
+                case "woods":
+                    {
+                        result = config.airdropChancePercent.woods;
+                        break;
+                    }
+                case "lighthouse":
+                    {
+                        result = config.airdropChancePercent.lighthouse;
+                        break;
+                    }
+            }
+
+            return result;
+        }
+
+        private AirdropConfig GetConfigFromServer()
+        {
+            var json = RequestHandler.GetJson("/singleplayer/airdrop/config");
+
+            return JsonConvert.DeserializeObject<AirdropConfig>(json);
+        }
+
         public bool ShouldAirdropOccur()
         {
             return RandomChanceGen(1, 99) <= dropChance;
@@ -167,7 +249,7 @@ namespace Aki.Custom.Patches
             if (box != null)
             {
                 boxPosition = randomAirdropPoint.transform.position;
-                boxPosition.y = defaultDropHeight;
+                boxPosition.y = dropHeight;
             }
 
             if (plane != null)
@@ -209,19 +291,19 @@ namespace Aki.Custom.Patches
             switch (planeObjId)
             {
                 case 1:
-                    planeStartPosition = new Vector3(0, defaultDropHeight, planeNegativePosition);
+                    planeStartPosition = new Vector3(0, dropHeight, planeNegativePosition);
                     planeStartRotation = new Vector3(0, 0, 0);
                     break;
                 case 2:
-                    planeStartPosition = new Vector3(planeNegativePosition, defaultDropHeight, 0);
+                    planeStartPosition = new Vector3(planeNegativePosition, dropHeight, 0);
                     planeStartRotation = new Vector3(0, 90, 0);
                     break;
                 case 3:
-                    planeStartPosition = new Vector3(0, defaultDropHeight, planePositivePosition);
+                    planeStartPosition = new Vector3(0, dropHeight, planePositivePosition);
                     planeStartRotation = new Vector3(0, 180, 0);
                     break;
                 case 4:
-                    planeStartPosition = new Vector3(planePositivePosition, defaultDropHeight, 0);
+                    planeStartPosition = new Vector3(planePositivePosition, dropHeight, 0);
                     planeStartRotation = new Vector3(0, 270, 0);
                     break;
             }
@@ -232,8 +314,29 @@ namespace Aki.Custom.Patches
         public void DisablePlane()
         {
             planeEnabled = false;
-            amountDropped = 1;
+            amountDropped++;
             plane.ReturnToPool();
         }
+    }
+
+    public class AirdropChancePercent
+    {
+        public int bigmap { get; set; }
+        public int woods { get; set; }
+        public int lighthouse { get; set; }
+        public int shoreline { get; set; }
+        public int interchange { get; set; }
+        public int reserve { get; set; }
+    }
+
+    public class AirdropConfig
+    {
+        public AirdropChancePercent airdropChancePercent { get; set; }
+        public int airdropMinStartTimeSeconds { get; set; }
+        public int airdropMaxStartTimeSeconds { get; set; }
+        public int airdropMinOpenHeight { get; set; }
+        public int airdropMaxOpenHeight { get; set; }
+        public int planeMinFlyHeight { get; set; }
+        public int planeMaxFlyHeight { get; set; }
     }
 }
