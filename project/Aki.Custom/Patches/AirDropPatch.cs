@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace Aki.Custom.Patches
 {
-    public class DropBoxPatch : ModulePatch
+    public class AirdropBoxPatch : ModulePatch
     {
         public static int height = 0;
         protected override MethodBase GetTargetMethod()
@@ -25,8 +25,8 @@ namespace Aki.Custom.Patches
             if (height == 0)
             {
                 var json = RequestHandler.GetJson("/singleplayer/airdrop/config");
-                var converted = JsonConvert.DeserializeObject<AirdropConfig>(json);
-                height = RandomChance(converted.airdropMinOpenHeight, converted.airdropMaxOpenHeight);
+                var config = JsonConvert.DeserializeObject<AirdropConfig>(json);
+                height = RandomChance(config.airdropMinOpenHeight, config.airdropMaxOpenHeight);
             }
 
             distance = height;
@@ -102,8 +102,8 @@ namespace Aki.Custom.Patches
             dropHeight = RandomChanceGen(config.planeMinFlyHeight, config.planeMaxFlyHeight);
             timeToDrop = RandomChanceGen(config.airdropMinStartTimeSeconds, config.airdropMaxStartTimeSeconds);
             planeObjId = RandomChanceGen(1, 4);
-            plane = LocationScene.GetAll<SynchronizableObject>().First(x => x.name.Contains("IL76MD-90"));
-            box = LocationScene.GetAll<SynchronizableObject>().First(x => x.name.Contains("scontainer_airdrop_box_04"));
+            plane = LocationScene.GetAll<SynchronizableObject>().First(x => x.GetComponent<AirplaneSynchronizableObject>());
+            box = LocationScene.GetAll<SynchronizableObject>().First(x => x.GetComponent<AirdropSynchronizableObject>());
             airdropPoints = LocationScene.GetAll<AirdropPoint>().ToList();
             randomAirdropPoint = airdropPoints.OrderBy(_ => Guid.NewGuid()).FirstOrDefault();
         }
@@ -177,7 +177,7 @@ namespace Aki.Custom.Patches
         private int ChanceToSpawn()
         {
             var location = gameWorld.RegisteredPlayers[0].Location;
-            int result = 20;
+            int result = 25;
             switch (location)
             {
                 case "bigmap":
