@@ -267,7 +267,7 @@ namespace Aki.Custom.Patches
             plane.ManualUpdate(0);
 
             var sound = plane.GetComponentInChildren<AudioSource>();
-            sound.volume = 1f;
+            sound.volume = config.planeVolume;
             sound.dopplerLevel = 0;
             sound.Play();
         }
@@ -338,5 +338,6 @@ namespace Aki.Custom.Patches
         public int airdropMaxOpenHeight { get; set; }
         public int planeMinFlyHeight { get; set; }
         public int planeMaxFlyHeight { get; set; }
+        public int planeVolume { get; set; }
     }
 }
