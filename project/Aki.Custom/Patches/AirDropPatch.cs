@@ -338,6 +338,6 @@ namespace Aki.Custom.Patches
         public int airdropMaxOpenHeight { get; set; }
         public int planeMinFlyHeight { get; set; }
         public int planeMaxFlyHeight { get; set; }
-        public int planeVolume { get; set; }
+        public float planeVolume { get; set; }
     }
 }
