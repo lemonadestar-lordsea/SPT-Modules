@@ -26,17 +26,11 @@ namespace Aki.Custom.Patches
             {
                 var json = RequestHandler.GetJson("/singleplayer/airdrop/config");
                 var config = JsonConvert.DeserializeObject<AirdropConfig>(json);
-                height = RandomChance(config.airdropMinOpenHeight, config.airdropMaxOpenHeight);
+                height = UnityEngine.Random.Range(config.airdropMinOpenHeight, config.airdropMaxOpenHeight);
             }
 
             distance = height;
             return true;
-        }
-
-        public static int RandomChance(int minValue, int maxValue)
-        {
-            System.Random chance = new System.Random();
-            return chance.Next(minValue, maxValue);
         }
     }
 
@@ -87,7 +81,7 @@ namespace Aki.Custom.Patches
         private GameWorld gameWorld;
         private AirdropConfig config;
 
-        public void Start() // https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html - this method is another form of Ctor
+        public void Start()
         {
             gameWorld = Singleton<GameWorld>.Instance;
             planeEnabled = false;
@@ -99,9 +93,9 @@ namespace Aki.Custom.Patches
             planeNegativePosition = -3000f;
             config = GetConfigFromServer();
             dropChance = ChanceToSpawn();
-            dropHeight = RandomChanceGen(config.planeMinFlyHeight, config.planeMaxFlyHeight);
-            timeToDrop = RandomChanceGen(config.airdropMinStartTimeSeconds, config.airdropMaxStartTimeSeconds);
-            planeObjId = RandomChanceGen(1, 4);
+            dropHeight = UnityEngine.Random.Range(config.planeMinFlyHeight, config.planeMaxFlyHeight);
+            timeToDrop = UnityEngine.Random.Range(config.airdropMinStartTimeSeconds, config.airdropMaxStartTimeSeconds);
+            planeObjId = UnityEngine.Random.Range(1, 4);
             plane = LocationScene.GetAll<SynchronizableObject>().First(x => x.GetComponent<AirplaneSynchronizableObject>());
             box = LocationScene.GetAll<SynchronizableObject>().First(x => x.GetComponent<AirdropSynchronizableObject>());
             airdropPoints = LocationScene.GetAll<AirdropPoint>().ToList();
@@ -178,7 +172,8 @@ namespace Aki.Custom.Patches
         {
             var location = gameWorld.RegisteredPlayers[0].Location;
             int result = 25;
-            switch (location)
+
+            switch (location.ToLower())
             {
                 case "bigmap":
                     {
@@ -190,7 +185,7 @@ namespace Aki.Custom.Patches
                         result = config.airdropChancePercent.interchange;
                         break;
                     }
-                case "reserve":
+                case "rezervbase":
                     {
                         result = config.airdropChancePercent.reserve;
                         break;
@@ -224,18 +219,12 @@ namespace Aki.Custom.Patches
 
         public bool ShouldAirdropOccur()
         {
-            return RandomChanceGen(1, 99) <= dropChance;
+            return UnityEngine.Random.Range(1, 99) <= dropChance;
         }
 
         public void DoNotRun() // currently not doing anything, could be used later for multiple drops
         {
             doNotRun = true;
-        }
-
-        public int RandomChanceGen(int minValue, int maxValue)
-        {
-            System.Random chance = new System.Random();
-            return chance.Next(minValue, maxValue);
         }
 
         public void ScriptStart()
