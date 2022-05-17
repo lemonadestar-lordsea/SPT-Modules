@@ -40,9 +40,9 @@ namespace Aki.SinglePlayer.Patches.Progression
             IAIDetails person,
             string infiltration)
         {
-            var ginterface249_0 = Traverse.Create(__instance).Field<ISpawnPoints>("ginterface249_0").Value;
+            var ginterface250_0 = Traverse.Create(__instance).Field<ISpawnPoints>("ginterface250_0").Value;
 
-            var spawnPoints = ginterface249_0.ToList();
+            var spawnPoints = ginterface250_0.ToList();
             var unfilteredSpawnPoints = spawnPoints.ToList();
 
             spawnPoints = spawnPoints.Where(sp => sp?.Infiltration != null && (string.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();
