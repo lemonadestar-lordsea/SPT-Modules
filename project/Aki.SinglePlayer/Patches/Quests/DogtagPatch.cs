@@ -13,7 +13,7 @@ namespace Aki.SinglePlayer.Patches.Quests
 
         static DogtagPatch()
         {
-            _ = nameof(Equipment.GetSlot);
+            _ = nameof(GClass2053.GetSlot);
             _ = nameof(DamageInfo.Weapon);
 
             _flags = BindingFlags.Instance | BindingFlags.NonPublic;
@@ -33,7 +33,7 @@ namespace Aki.SinglePlayer.Patches.Quests
                 return;
             }
 
-            var equipment = (Equipment)_getEquipmentProperty.GetValue(__instance);
+            var equipment = (GClass2053)_getEquipmentProperty.GetValue(__instance);
             var dogtagSlot = equipment.GetSlot(EquipmentSlot.Dogtag);
             var dogtagItem = dogtagSlot.ContainedItem;
             
