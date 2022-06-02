@@ -112,7 +112,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         {
             var profile = PatchConstants.BackEndSession.Profile;
             var menuController = (object)GetMenuController();
-            var gclass = new MatchmakerOfflineRaid.GClass2430((profile != null) ? profile.Info : null);
+            var gclass = new MatchmakerOfflineRaid.GClass2432((profile != null) ? profile.Info : null);
 
             gclass.OnShowNextScreen += LoadOfflineRaidNextScreen;
 
