@@ -64,7 +64,8 @@ namespace Aki.Custom.Patches
         private static bool ShouldAttack(IAIDetails attacker, IAIDetails victim, BotGroupClass groupToCheck)
         {
             // Group should target if player attack a victim on the same side or if the group is not on the same side as the player.
-            bool shouldAttack = attacker.Side != groupToCheck.Side || attacker.Side == victim.Side;
+            bool shouldAttack = attacker.Side != groupToCheck.Side
+                                || attacker.Side == victim.Side;
 
             return !groupToCheck.HaveMemberWithRole(WildSpawnType.gifter) && groupToCheck.ShallRevengeFor(victim) && shouldAttack;
         }
