@@ -8,15 +8,16 @@ using System.Reflection;
 
 namespace Aki.Custom.Patches
 {
-    public class IsEnemyPatch2 : ModulePatch
+    public class CheckAndAddEnemyPatch : ModulePatch
     {
         private static Type _targetType;
         private static FieldInfo _sideField;
         private static FieldInfo _enemiesField;
         private static FieldInfo _spawnTypeField;
         private static MethodInfo _addEnemy;
+        private readonly string _targetMethodName = "CheckAndAddEnemy";
 
-        public IsEnemyPatch2()
+        public CheckAndAddEnemyPatch()
         {
             _targetType = PatchConstants.EftTypes.Single(IsTargetType);
             _sideField = _targetType.GetField("Side");
@@ -37,36 +38,33 @@ namespace Aki.Custom.Patches
 
         protected override MethodBase GetTargetMethod()
         {
-            return _targetType.GetMethod("CheckAndAddEnemy");
+            return _targetType.GetMethod(_targetMethodName);
         }
 
         /// <summary>
         /// IsEnemy()
-        /// Goal: if current entity is a boss/follower/raider AND target is usec/bear, add them to the entities' enemy list
-        /// This patch lets bosses shoot back once a PMC has shot them
+        /// Goal: This patch lets bosses shoot back once a PMC has shot them
+        /// removes the !player.AIData.IsAI  check
         /// </summary>
         [PatchPrefix]
         private static bool PatchPrefix(object __instance, IAIDetails player, bool ignoreAI = false)
         {
             //var side = (EPlayerSide)_sideField.GetValue(__instance);
-            var botType = (WildSpawnType)_spawnTypeField.GetValue(__instance);
-            //var enemies = (Dictionary<IAIDetails, BotSettingsClass>)_enemiesField.GetValue(__instance);
+            //var botType = (WildSpawnType)_spawnTypeField.GetValue(__instance);
+            var enemies = (Dictionary<IAIDetails, BotSettingsClass>)_enemiesField.GetValue(__instance);
 
             if (!player.HealthController.IsAlive)
             {
-                return false; // skip original
+                return false; // do nothing and skip
             }
 
-            var bosses = new Enum[] { WildSpawnType.bossTagilla, WildSpawnType.bossBully, WildSpawnType.bossGluhar, WildSpawnType.bossKilla, WildSpawnType.bossKojaniy, WildSpawnType.bossSanitar, WildSpawnType.bossTagilla };
-            if ((bosses.Contains(botType) || botType == WildSpawnType.pmcBot || botType.ToString().StartsWith("follower"))
-                && player.Side != EPlayerSide.Savage)
+            // Add enemy to list
+            if (!enemies.ContainsKey(player))
             {
                 _addEnemy.Invoke(__instance, new object[] { player });
-                return false; // skip original
             }
-            
-            // perform original
-            return true;
+         
+            return false;
         }
     }
 }
