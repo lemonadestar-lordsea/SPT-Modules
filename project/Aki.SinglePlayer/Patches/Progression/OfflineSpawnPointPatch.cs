@@ -42,27 +42,34 @@ namespace Aki.SinglePlayer.Patches.Progression
         {
             var ginterface250_0 = Traverse.Create(__instance).Field<ISpawnPoints>("ginterface250_0").Value;
 
-            var spawnPoints = ginterface250_0.ToList();
+            var mapSpawnPoints = ginterface250_0.ToList();
+            var unfilteredFilteredSpawnPoints = mapSpawnPoints.ToList();
 
-            // filter by 'customs', "woods"
-            spawnPoints = spawnPoints.Where(sp => sp?.Infiltration != null && (string.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();
+            // filter by e.g. 'Boiler Tanks' (always seems to be map name?)
+            //mapSpawnPoints = mapSpawnPoints.Where(sp => sp?.Infiltration != null && (string.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();
 
-            // Filter by 'player'
-            spawnPoints = spawnPoints.Where(sp => sp.Categories.Contain(category)).ToList();
+            if (side == EPlayerSide.Savage)
+            {
+                // Filter by 'category' and 'side'
+                mapSpawnPoints = mapSpawnPoints.Where(sp => sp.Categories.Contain(ESpawnCategory.Bot) && sp.Sides.Contain(EPlayerSide.Savage)).ToList();
+            }
+            else
+            {
+                // Filter by 'player' and by ('usec', 'bear')
+                mapSpawnPoints = mapSpawnPoints.Where(sp => sp.Categories.Contain(category) && sp.Sides.Contain(side)).ToList();
+            }
 
-            var partiallyFilteredSpawnPoints = spawnPoints.ToList();
+            __result = mapSpawnPoints.Count == 0
+                    ? GetFallBackSpawnPoint(unfilteredFilteredSpawnPoints, category, side, infiltration)
+                    : mapSpawnPoints.RandomElement();
 
-            // Filter by 'usec', 'bear', 'scav'
-            spawnPoints = spawnPoints.Where(sp => sp.Sides.Contain(side)).ToList();
-
-            __result = spawnPoints.Count == 0 ? GetFallBackSpawnPoint(partiallyFilteredSpawnPoints, category, side, infiltration) : spawnPoints.RandomElement();
-            Logger.LogInfo($"PatchPrefix SelectSpawnPoint: {__result.Id}");
+            Logger.LogInfo($"PatchPrefix SelectSpawnPoint: [{__result.Id}] [{__result.Name}] [{__result.Categories}] [{__result.Sides}] [{__result.Infiltration}]");
             return false;
         }
 
         private static ISpawnPoint GetFallBackSpawnPoint(List<ISpawnPoint> spawnPoints, ESpawnCategory category, EPlayerSide side, string infiltration)
         {
-            Logger.LogWarning($"PatchPrefix SelectSpawnPoint: Couldn't find any spawn points for: {category} | {side} | {infiltration} using random partially filtered spawn instead");
+            Logger.LogWarning($"PatchPrefix SelectSpawnPoint: Couldn't find any spawn points for: {category} | {side} | {infiltration} using random filtered spawn instead");
             return spawnPoints.Where(sp => sp.Categories.Contain(ESpawnCategory.Player)).RandomElement();
         }
     }
