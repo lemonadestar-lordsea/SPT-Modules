@@ -49,11 +49,6 @@ namespace Aki.Custom.Patches
         [PatchPrefix]
         private static bool PatchPrefix(object __instance, ref IAIDetails player, ref bool ignoreAI)
         {
-            if (player.Side == EPlayerSide.Usec || player.Side == EPlayerSide.Bear)
-            {
-                ignoreAI = true;
-            }
-
             //var side = (EPlayerSide)_sideField.GetValue(__instance);
             //var botType = (WildSpawnType)_spawnTypeField.GetValue(__instance);
 
