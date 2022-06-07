@@ -16,8 +16,8 @@ namespace Aki.Custom
             new OfflineRaidMenuPatch().Enable();
             new SessionIdPatch().Enable();
             new VersionLabelPatch().Enable();
-            //new IsEnemyPatch().Enable();
-            //new CheckAndAddEnemyPatch().Enable();
+            new IsEnemyPatch().Enable();
+            new CheckAndAddEnemyPatch().Enable();
             //new AddEnemyToAllGroupsInBotZonePatch().Enable();
             new AirdropBoxPatch().Enable();
             new AirdropPatch().Enable();

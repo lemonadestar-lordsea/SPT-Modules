@@ -62,11 +62,6 @@ namespace Aki.Custom.Patches
                 {
                     if (requester.Side == EPlayerSide.Usec)
                     {
-                        result = false;
-                    }
-                    else
-                    {
-                        // everyone else is an enemy to usecs
                         result = true;
                     }
                 }
@@ -74,11 +69,6 @@ namespace Aki.Custom.Patches
                 {
                     if (requester.Side == EPlayerSide.Bear)
                     {
-                        result = false;
-                    }
-                    else
-                    {
-                        // everyone else is an enemy to bears
                         result = true;
                     }
                 }
