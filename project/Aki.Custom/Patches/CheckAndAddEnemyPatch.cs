@@ -42,28 +42,36 @@ namespace Aki.Custom.Patches
         }
 
         /// <summary>
-        /// IsEnemy()
+        /// CheckAndAddEnemy()
         /// Goal: This patch lets bosses shoot back once a PMC has shot them
         /// removes the !player.AIData.IsAI  check
         /// </summary>
         [PatchPrefix]
-        private static bool PatchPrefix(object __instance, IAIDetails player, bool ignoreAI = false)
+        private static bool PatchPrefix(object __instance, ref IAIDetails player, ref bool ignoreAI)
         {
+            if (player.Side == EPlayerSide.Usec || player.Side == EPlayerSide.Bear)
+            {
+                ignoreAI = true;
+            }
+
             //var side = (EPlayerSide)_sideField.GetValue(__instance);
             //var botType = (WildSpawnType)_spawnTypeField.GetValue(__instance);
-            var enemies = (Dictionary<IAIDetails, BotSettingsClass>)_enemiesField.GetValue(__instance);
 
             if (!player.HealthController.IsAlive)
             {
                 return false; // do nothing and skip
             }
 
-            // Add enemy to list
-            if (!enemies.ContainsKey(player))
+            var enemies = (Dictionary<IAIDetails, BotSettingsClass>)_enemiesField.GetValue(__instance);
+            if (enemies.ContainsKey(player))
             {
-                _addEnemy.Invoke(__instance, new object[] { player });
+                return false;// do nothing and skip
             }
-         
+
+            // Add enemy to list
+            //if (!enemies.ContainsKey(player) && (!playerIsAi || ignoreAI))
+            _addEnemy.Invoke(__instance, new IAIDetails[] { player });
+
             return false;
         }
     }
