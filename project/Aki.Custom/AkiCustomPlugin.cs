@@ -18,6 +18,7 @@ namespace Aki.Custom
             new VersionLabelPatch().Enable();
             new IsEnemyPatch().Enable();
             new CheckAndAddEnemyPatch().Enable();
+            new BotSelfEnemyPatch().Enable();
             //new AddEnemyToAllGroupsInBotZonePatch().Enable();
             new AirdropBoxPatch().Enable();
             new AirdropPatch().Enable();
