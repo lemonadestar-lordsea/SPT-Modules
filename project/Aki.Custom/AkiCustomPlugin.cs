@@ -17,6 +17,7 @@ namespace Aki.Custom
             new SessionIdPatch().Enable();
             new VersionLabelPatch().Enable();
             new IsEnemyPatch().Enable();
+            new AddEnemyPatch().Enable();
             new CheckAndAddEnemyPatch().Enable();
             new BotSelfEnemyPatch().Enable();
             //new AddEnemyToAllGroupsInBotZonePatch().Enable();
