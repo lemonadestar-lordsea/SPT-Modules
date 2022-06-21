@@ -25,7 +25,6 @@ namespace Aki.Custom.Patches
             var botOwners = (List<BotOwner>)__instance.GetType().GetField("list_1", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(__instance);
             if (botOwners.Any(x => x.Id == person.Id))
             {
-                Logger.LogInfo($"match found; id: {person.Id}");
                 return false;
             }
 
