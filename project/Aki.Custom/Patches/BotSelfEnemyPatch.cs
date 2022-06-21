@@ -19,17 +19,13 @@ namespace Aki.Custom.Patches
         [PatchPrefix]
         private static bool PatchPrefix(BotOwner __instance, BotGroupClass group)
         {
-            // TODO: remove logging after testing
-            Logger.LogInfo($"self ID key: {__instance.Id}");
             IAIDetails selfToRemove = null;
 
             foreach (var enemy in group.Enemies)
             {
-                Logger.LogInfo($"enemy key: {enemy.Key.Id}");
                 if (enemy.Key.Id == __instance.Id)
                 {
                     selfToRemove = enemy.Key;
-                    Logger.LogInfo($"match found {enemy.Key.Id}");
                     break;
                 }
             }
