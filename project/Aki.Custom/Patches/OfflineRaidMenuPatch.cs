@@ -13,7 +13,7 @@ namespace Aki.Custom.Patches
     {
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MatchmakerOfflineRaid).GetMethod(nameof(MatchmakerOfflineRaid.Show));
+            return typeof(MatchmakerOfflineRaidScreen).GetMethod(nameof(MatchmakerOfflineRaidScreen.Show));
         }
 
         [PatchPostfix]
