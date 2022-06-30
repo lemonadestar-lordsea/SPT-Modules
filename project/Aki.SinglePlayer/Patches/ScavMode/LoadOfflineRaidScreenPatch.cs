@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using OfflineRaidAction = System.Action<bool, WeatherSettings, BotsSettings, WavesSettings>;
+using OfflineRaidAction = System.Action;
 
 // DON'T FORGET TO UPDATE REFERENCES IN CONSTRUCTOR
 // AND IN THE LoadOfflineRaidScreenForScavs METHOD AS WELL
@@ -89,20 +89,22 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             return _menuControllerField.GetValue(ClientAppUtils.GetMainApp()) as MainMenuController;
         }
 
-        private static void LoadOfflineRaidNextScreen(bool local, WeatherSettings weatherSettings, BotsSettings botsSettings, WavesSettings wavesSettings)
+        private static void LoadOfflineRaidNextScreen()
         {
             var menuController = GetMenuController();
 
-            if (menuController.SelectedLocation.Id == "laboratory")
+            var raidSettings = Traverse.Create(menuController).Field("raidSettings_0").GetValue<RaidSettings>();
+
+            if (raidSettings.SelectedLocation.Id == "laboratory")
             {
-                wavesSettings.IsBosses = true;
+                raidSettings.WavesSettings.IsBosses = true;
             }
 
             // set offline raid values
-            _weatherSettingsField.SetValue(menuController, weatherSettings);
-            _botsSettingsField.SetValue(menuController, botsSettings);
-            _waveSettingsField.SetValue(menuController, wavesSettings);
-            _isLocalField.SetValue(menuController, local);
+            _weatherSettingsField.SetValue(menuController, raidSettings.TimeAndWeather);
+            _botsSettingsField.SetValue(menuController, raidSettings.BotSettings);
+            _waveSettingsField.SetValue(menuController, raidSettings.WavesSettings);
+            _isLocalField.SetValue(menuController, raidSettings.Local);
 
             // load ready screen method
             _onReadyScreenMethod.Invoke(menuController, null);
@@ -112,12 +114,13 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         {
             var profile = PatchConstants.BackEndSession.Profile;
             var menuController = (object)GetMenuController();
-            var gclass = new MatchmakerOfflineRaidScreen.GClass2503((profile != null) ? profile.Info : null);
+            var raidSettings = Traverse.Create(menuController).Field("raidSettings_0").GetValue<RaidSettings>();
+            var gclass = new MatchmakerOfflineRaidScreen.GClass2503(profile?.Info, ref raidSettings);
 
             gclass.OnShowNextScreen += LoadOfflineRaidNextScreen;
 
             // ready method
-            gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, "method_61");
+            gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, "method_63");
             gclass.ShowScreen(EScreenState.Queued);
         }
     }
