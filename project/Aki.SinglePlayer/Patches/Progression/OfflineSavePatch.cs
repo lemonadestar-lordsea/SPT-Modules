@@ -37,20 +37,25 @@ namespace Aki.SinglePlayer.Patches.Progression
         private bool Match(MethodInfo arg)
         {
             var parameters = arg.GetParameters();
-            return parameters.Length > 5 && parameters[0]?.Name == "profileId" && parameters[1]?.Name == "savageProfile" && arg.ReturnType == typeof(void);
+            return parameters.Length > 4
+                && parameters[0]?.Name == "profileId"
+                && parameters[1]?.Name == "savageProfile"
+                && parameters[2]?.Name == "location"
+                && arg.ReturnType == typeof(void);
         }
 
         [PatchPrefix]
-        private static void PatchPrefix(ESideType ___esideType_0, Result<ExitStatus, TimeSpan, ClientMetrics> result)
+        private static void PatchPrefix(string profileId, RaidSettings ____raidSettings, Result<ExitStatus, TimeSpan, ClientMetrics> result)
         {
             var session = PatchConstants.BackEndSession;
+            var profile = session.GetProfiles().Result.FirstOrDefault(x => x.Id == profileId);
 
             SaveProfileRequest request = new SaveProfileRequest
 			{
 				Exit = result.Value0.ToString().ToLowerInvariant(),
-				Profile = (___esideType_0 == ESideType.Savage) ? session.ProfileOfPet : session.Profile,
+				Profile = profile,
 				Health = Utils.Healing.HealthListener.Instance.CurrentHealth,
-				IsPlayerScav = (___esideType_0 == ESideType.Savage)
+				IsPlayerScav = (____raidSettings.Side == ESideType.Savage)
 			};
 
 			RequestHandler.PutJson("/raid/profile/save", request.ToJson(_defaultJsonConverters.AddItem(new NotesJsonConverter()).ToArray()));
