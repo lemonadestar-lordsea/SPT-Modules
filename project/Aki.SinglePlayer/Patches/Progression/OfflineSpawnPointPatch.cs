@@ -40,8 +40,7 @@ namespace Aki.SinglePlayer.Patches.Progression
             IAIDetails person,
             string infiltration)
         {
-            var spawnPointsField = (ISpawnPoints)__instance.GetType().GetFields().SingleOrDefault(f => f.FieldType == typeof(ISpawnPoints))?.GetValue(__instance);
-
+            var spawnPointsField = (ISpawnPoints)__instance.GetType().GetFields(PatchConstants.PrivateFlags).SingleOrDefault(f => f.FieldType == typeof(ISpawnPoints))?.GetValue(__instance);
             if (spawnPointsField == null)
             {
                 throw new Exception($"OfflineSpawnPointPatch: Failed to locate field of {nameof(ISpawnPoints)} on class instance ({__instance.GetType().Name})");

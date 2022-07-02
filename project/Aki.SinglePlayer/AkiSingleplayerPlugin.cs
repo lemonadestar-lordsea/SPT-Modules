@@ -26,7 +26,7 @@ namespace Aki.SinglePlayer
             new GetNewBotTemplatesPatch().Enable();
             new RemoveUsedBotProfilePatch().Enable();
             new DogtagPatch().Enable();
-            new LoadOfflineRaidScreenPatch().Enable();
+            //new LoadOfflineRaidScreenPatch().Enable();
             new ScavPrefabLoadPatch().Enable();
             new ScavProfileLoadPatch().Enable();
             new ScavExfilPatch().Enable();
