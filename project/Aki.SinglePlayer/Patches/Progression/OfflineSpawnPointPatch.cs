@@ -2,7 +2,6 @@ using Aki.Reflection.Patching;
 using Aki.Reflection.Utils;
 using EFT;
 using EFT.Game.Spawning;
-using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +24,8 @@ namespace Aki.SinglePlayer.Patches.Progression
 
         private static bool IsTargetType(Type type)
         {
-            //GClass1812 as of 17349
+            // GClass1812 as of 17349
+            // GClass1886 as of 18876
             return (type.GetMethods(PatchConstants.PrivateFlags).Any(x => x.Name.IndexOf("CheckFarthestFromOtherPlayers", StringComparison.OrdinalIgnoreCase) != -1)
                 && type.IsClass);
         }
@@ -40,9 +40,14 @@ namespace Aki.SinglePlayer.Patches.Progression
             IAIDetails person,
             string infiltration)
         {
-            var ginterface250_0 = Traverse.Create(__instance).Field<ISpawnPoints>("ginterface250_0").Value;
+            var spawnPointsField = (ISpawnPoints)__instance.GetType().GetFields().SingleOrDefault(f => f.FieldType == typeof(ISpawnPoints))?.GetValue(__instance);
 
-            var mapSpawnPoints = ginterface250_0.ToList();
+            if (spawnPointsField == null)
+            {
+                throw new Exception($"OfflineSpawnPointPatch: Failed to locate field of {nameof(ISpawnPoints)} on class instance ({__instance.GetType().Name})");
+            }
+
+            var mapSpawnPoints = spawnPointsField.ToList();
             var unfilteredFilteredSpawnPoints = mapSpawnPoints.ToList();
 
             // filter by e.g. 'Boiler Tanks' (always seems to be map name?)
