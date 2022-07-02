@@ -30,7 +30,9 @@ namespace Aki.SinglePlayer.Patches.Progression
         protected override MethodBase GetTargetMethod()
         {
             // method_45 - as of 16432
+            // method_43 - as of 18876
             var type = PatchConstants.EftTypes.Single(x => x.Name == "MainApplication");
+
             return Array.Find(type.GetMethods(PatchConstants.PrivateFlags), Match);
         }
 
@@ -45,17 +47,16 @@ namespace Aki.SinglePlayer.Patches.Progression
         }
 
         [PatchPrefix]
-        private static void PatchPrefix(string profileId, RaidSettings ____raidSettings, Result<ExitStatus, TimeSpan, ClientMetrics> result)
+        private static void PatchPrefix(string profileId, RaidSettings ____raidSettings, GInterface29 ____backEnd,Result<ExitStatus, TimeSpan, ClientMetrics> result)
         {
-            var session = PatchConstants.BackEndSession;
-            var profile = session.GetProfiles().Result.FirstOrDefault(x => x.Id == profileId);
+            var profile = ____backEnd.Session.Profile;
 
             SaveProfileRequest request = new SaveProfileRequest
 			{
 				Exit = result.Value0.ToString().ToLowerInvariant(),
 				Profile = profile,
 				Health = Utils.Healing.HealthListener.Instance.CurrentHealth,
-				IsPlayerScav = (____raidSettings.Side == ESideType.Savage)
+				IsPlayerScav = ____raidSettings.IsScav
 			};
 
 			RequestHandler.PutJson("/raid/profile/save", request.ToJson(_defaultJsonConverters.AddItem(new NotesJsonConverter()).ToArray()));
