@@ -70,27 +70,61 @@ namespace Aki.SinglePlayer.Patches.ScavMode
         }
 
         [PatchTranspiler]
-        private static IEnumerable<CodeInstruction> PatchTranspiler(IEnumerable<CodeInstruction> instructions)
+        private static IEnumerable<CodeInstruction> PatchTranspiler(ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
-            int i = 0;
-            foreach (var code in codes)
+
+            // The original method call that we want to replace
+            var onReadyScreenMethodIndex = -1;
+            var onReadyScreenMethodCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MainMenuController), _onReadyScreenMethod.Name));
+
+            // We additionally need to replace an instruction that jumps to a label on certain conditions, since we change the jump target instruction
+            var jumpWhenFalse_Index = -1;
+
+            for (var i = 0; i < codes.Count; i++)
             {
-                i ++;
-                Logger.LogInfo($"{i} - op: { code.opcode} - operand: {code.operand} - {code.ToString()}");
+                if (codes[i].opcode == onReadyScreenMethodCode.opcode && codes[i].operand == onReadyScreenMethodCode.operand)
+                {
+                    onReadyScreenMethodIndex = i;
+                    continue;
+                }
+
+                if (codes[i].opcode == OpCodes.Brfalse_S)
+                {
+                    if (jumpWhenFalse_Index != -1)
+                    {
+                        // If this warning is ever logged, the condition for locating the exact brfalse.s instruction will have to be updated
+                        Logger.LogWarning($"[{nameof(LoadOfflineRaidScreenPatch)}] Found extra instructions with the brfalse.s opcode! " +
+                                          "This breaks an old assumption that there is only one such instruction in the method body and is now very likely to cause bugs!");
+                    }
+                    jumpWhenFalse_Index = i;
+                }
             }
-            //var index = 26;
-            //var callCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(LoadOfflineRaidScreenPatch), "LoadOfflineRaidScreenForScav"));
 
-            //codes[index].opcode = OpCodes.Nop;
-            //codes[index + 1] = callCode;
-            //codes.RemoveAt(index + 2);
+            if (onReadyScreenMethodIndex == -1)
+            {
+                throw new Exception($"{nameof(LoadOfflineRaidScreenPatch)} failed: Could not find {nameof(_onReadyScreenMethod)} reference code.");
+            }
 
-            var index = 16;
-            var callCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(LoadOfflineRaidScreenPatch), "LoadOfflineRaidScreenForScav"));
+            if (jumpWhenFalse_Index == -1)
+            {
+                throw new Exception($"{nameof(LoadOfflineRaidScreenPatch)} failed: Could not find jump (brfalse.s) reference code.");
+            }
 
-            codes[index] = callCode;
-            //codes.RemoveAt(index + 1);
+            // Define the new jump label
+            var brFalseLabel = generator.DefineLabel();
+
+            // We build the method call for our substituted method and replace the initial method call with our own, also adding our new label
+            var callCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(LoadOfflineRaidScreenPatch), nameof(LoadOfflineRaidScreenForScav))) { labels = { brFalseLabel }};
+            codes[onReadyScreenMethodIndex] = callCode;
+
+            // We build a new brfalse.s instruction and give it our new label, then replace the original brfalse.s instruction
+            var newBrFalseCode = new CodeInstruction(OpCodes.Brfalse_S, brFalseLabel);
+            codes[jumpWhenFalse_Index] = newBrFalseCode;
+
+            // This will remove a stray ldarg.0 instruction. It's only needed if we wanted to reference something from `this` in the method body.
+            // This is done last to ensure that previous instruction indexes don't shift around (probably why this used to just turn it into a Nop OpCode)
+            codes.RemoveAt(onReadyScreenMethodIndex - 1);
 
             return codes.AsEnumerable();
         }
