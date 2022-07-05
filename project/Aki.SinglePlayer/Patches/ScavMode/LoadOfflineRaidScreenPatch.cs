@@ -19,9 +19,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
     public class LoadOfflineRaidScreenPatch : ModulePatch
     {
         private static readonly MethodInfo _onReadyScreenMethod;
-        private static readonly FieldInfo _weatherSettingsField;
-        private static readonly FieldInfo _botsSettingsField;
-        private static readonly FieldInfo _waveSettingsField;
         private static readonly FieldInfo _isLocalField;
         private static readonly FieldInfo _menuControllerField;
 
@@ -41,26 +38,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             if (_menuControllerField == null)
             {
                 Logger.LogError("LoadOfflineRaidScreenPatch() menuControllerField is null and could not be found in MainApplication class");
-            }
-
-            foreach (var field in menuControllerType.GetFields(PatchConstants.PrivateFlags))
-            {
-                if (field.FieldType == typeof(WeatherSettings))
-                {
-                    _weatherSettingsField = field;
-                    continue;
-                }
-
-                if (field.FieldType == typeof(WavesSettings))
-                {
-                    _waveSettingsField = field;
-                    continue;
-                }
-
-                if (field.FieldType == typeof(BotsSettings))
-                {
-                    _botsSettingsField = field;
-                }
             }
         }
 
@@ -141,9 +118,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             }
 
             // set offline raid values
-            _weatherSettingsField.SetValue(menuController, raidSettings.TimeAndWeather);
-            _botsSettingsField.SetValue(menuController, raidSettings.BotSettings);
-            _waveSettingsField.SetValue(menuController, raidSettings.WavesSettings);
             _isLocalField.SetValue(menuController, raidSettings.Local);
 
             // load ready screen method
