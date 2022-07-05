@@ -34,7 +34,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
             var menuControllerType = typeof(MainMenuController);
 
-            _onReadyScreenMethod = menuControllerType.GetMethod("method_39", PatchConstants.PrivateFlags);
+            _onReadyScreenMethod = menuControllerType.GetMethod("method_37", PatchConstants.PrivateFlags);
             _isLocalField = menuControllerType.GetField("bool_0", PatchConstants.PrivateFlags);
             _menuControllerField = typeof(MainApplication).GetFields(PatchConstants.PrivateFlags).FirstOrDefault(x => x.FieldType == typeof(MainMenuController));
 
@@ -66,27 +66,33 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
         protected override MethodBase GetTargetMethod()
         {
-            return typeof(MainMenuController).GetNestedTypes(BindingFlags.NonPublic)
-                .Single(x => x.IsNested && x.GetField("selectLocationScreenController", BindingFlags.Public | BindingFlags.Instance) != null)
-                .GetMethod("method_2", PatchConstants.PrivateFlags);
+            return typeof(MainMenuController).GetMethod("method_58", PatchConstants.PrivateFlags);
         }
 
         [PatchTranspiler]
         private static IEnumerable<CodeInstruction> PatchTranspiler(IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
-            var index = 26;
+            int i = 0;
+            foreach (var code in codes)
+            {
+                i ++;
+                Logger.LogInfo($"{i} - op: { code.opcode} - operand: {code.operand} - {code.ToString()}");
+            }
+            //var index = 26;
+            //var callCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(LoadOfflineRaidScreenPatch), "LoadOfflineRaidScreenForScav"));
+
+            //codes[index].opcode = OpCodes.Nop;
+            //codes[index + 1] = callCode;
+            //codes.RemoveAt(index + 2);
+
+            var index = 16;
             var callCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(LoadOfflineRaidScreenPatch), "LoadOfflineRaidScreenForScav"));
 
-            codes[index].opcode = OpCodes.Nop;
-            codes[index + 1] = callCode;
-            codes.RemoveAt(index + 2);
-            return codes.AsEnumerable();
-        }
+            codes[index] = callCode;
+            //codes.RemoveAt(index + 1);
 
-        private static MainMenuController GetMenuController()
-        {
-            return _menuControllerField.GetValue(ClientAppUtils.GetMainApp()) as MainMenuController;
+            return codes.AsEnumerable();
         }
 
         private static void LoadOfflineRaidNextScreen()
@@ -122,6 +128,11 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             // ready method
             gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, "method_63");
             gclass.ShowScreen(EScreenState.Queued);
+        }
+
+        private static MainMenuController GetMenuController()
+        {
+            return _menuControllerField.GetValue(ClientAppUtils.GetMainApp()) as MainMenuController;
         }
     }
 }
