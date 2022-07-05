@@ -89,12 +89,12 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                     continue;
                 }
 
-                if (codes[i].opcode == OpCodes.Brfalse_S)
+                if (codes[i].opcode == OpCodes.Brfalse)
                 {
                     if (jumpWhenFalse_Index != -1)
                     {
-                        // If this warning is ever logged, the condition for locating the exact brfalse.s instruction will have to be updated
-                        Logger.LogWarning($"[{nameof(LoadOfflineRaidScreenPatch)}] Found extra instructions with the brfalse.s opcode! " +
+                        // If this warning is ever logged, the condition for locating the exact brfalse instruction will have to be updated
+                        Logger.LogWarning($"[{nameof(LoadOfflineRaidScreenPatch)}] Found extra instructions with the brfalse opcode! " +
                                           "This breaks an old assumption that there is only one such instruction in the method body and is now very likely to cause bugs!");
                     }
                     jumpWhenFalse_Index = i;
@@ -108,7 +108,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
 
             if (jumpWhenFalse_Index == -1)
             {
-                throw new Exception($"{nameof(LoadOfflineRaidScreenPatch)} failed: Could not find jump (brfalse.s) reference code.");
+                throw new Exception($"{nameof(LoadOfflineRaidScreenPatch)} failed: Could not find jump (brfalse) reference code.");
             }
 
             // Define the new jump label
@@ -118,8 +118,8 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var callCode = new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(LoadOfflineRaidScreenPatch), nameof(LoadOfflineRaidScreenForScav))) { labels = { brFalseLabel }};
             codes[onReadyScreenMethodIndex] = callCode;
 
-            // We build a new brfalse.s instruction and give it our new label, then replace the original brfalse.s instruction
-            var newBrFalseCode = new CodeInstruction(OpCodes.Brfalse_S, brFalseLabel);
+            // We build a new brfalse instruction and give it our new label, then replace the original brfalse instruction
+            var newBrFalseCode = new CodeInstruction(OpCodes.Brfalse, brFalseLabel);
             codes[jumpWhenFalse_Index] = newBrFalseCode;
 
             // This will remove a stray ldarg.0 instruction. It's only needed if we wanted to reference something from `this` in the method body.
