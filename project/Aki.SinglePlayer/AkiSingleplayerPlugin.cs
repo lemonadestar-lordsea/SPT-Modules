@@ -36,6 +36,7 @@ namespace Aki.SinglePlayer
             new SpawnPmcPatch().Enable();
             new PostRaidHealingPricePatch().Enable();
             new EndByTimerPatch().Enable();
+            new PostRaidHealScreenPatch().Enable();
         }
     }
 }
