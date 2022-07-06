@@ -50,7 +50,7 @@ namespace Aki.SinglePlayer.Patches.Progression
             var unfilteredFilteredSpawnPoints = mapSpawnPoints.ToList();
 
             // filter by e.g. 'Boiler Tanks' (always seems to be map name?)
-            //mapSpawnPoints = mapSpawnPoints.Where(sp => sp?.Infiltration != null && (string.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();
+            mapSpawnPoints = mapSpawnPoints.Where(sp => sp?.Infiltration != null && (string.IsNullOrEmpty(infiltration) || sp.Infiltration.Equals(infiltration))).ToList();
 
             if (side == EPlayerSide.Savage)
             {
