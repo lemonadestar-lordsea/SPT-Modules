@@ -22,12 +22,12 @@ namespace Aki.SinglePlayer.Patches.Healing
         private static bool IsTargetMethod(MethodInfo mi)
         {
             var parameters = mi.GetParameters();
-            return (parameters.Length > 4
-                || parameters[0].Name != "profileId"
-                || parameters[1].Name != "savageProfile"
-                || parameters[2].Name != "location"
-                || parameters[3].Name != "exitStatus"
-                || parameters[4].Name != "exitTime") ? false : true;
+            return (parameters.Length > 5
+                && parameters[0].Name == "profileId"
+                && parameters[1].Name == "savageProfile"
+                && parameters[2].Name == "location"
+                && parameters[3].Name == "exitStatus"
+                && parameters[4].Name == "exitTime") ? true : false;
         }
 
         [PatchPrefix]
@@ -35,9 +35,21 @@ namespace Aki.SinglePlayer.Patches.Healing
             MainApplication __instance,
             RaidSettings ____raidSettings)
         {
-            ____raidSettings.RaidMode = ERaidMode.Online;
+            Logger.LogInfo($"pre prefix {____raidSettings.RaidMode}");
+            ____raidSettings.RaidMode = ERaidMode.Local;
+            Logger.LogInfo($"post prefix{____raidSettings.RaidMode}");
 
             return true;
+        }
+
+        [PatchPostfix]
+        private static void PatchPostfix(
+            MainApplication __instance,
+            RaidSettings ____raidSettings)
+        {
+            Logger.LogInfo($"pre postfix {____raidSettings.RaidMode}");
+            ____raidSettings.RaidMode = ERaidMode.Online;
+            Logger.LogInfo($"post postfix {____raidSettings.RaidMode}");
         }
     }
 }
