@@ -47,7 +47,7 @@ namespace Aki.SinglePlayer.Patches.Progression
         }
 
         [PatchPrefix]
-        private static void PatchPrefix(string profileId, RaidSettings ____raidSettings, GInterface29 ____backEnd,Result<ExitStatus, TimeSpan, ClientMetrics> result)
+        private static void PatchPrefix(string profileId, RaidSettings ____raidSettings, IBackendInterface ____backEnd,Result<ExitStatus, TimeSpan, ClientMetrics> result)
         {
             var profile = ____backEnd.Session.Profile;
 

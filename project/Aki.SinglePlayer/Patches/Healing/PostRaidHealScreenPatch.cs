@@ -7,49 +7,46 @@ using System.Reflection;
 namespace Aki.SinglePlayer.Patches.Healing
 {
     /// <summary>
-    /// We want to alter the _raidsettings.raidmode to online prior to calling this line of code:
-    /// Class1049 @class = Class1049.smethod_0(_backEnd, profileId, savageProfile, location, exitStatus, exitTime, _raidSettings.RaidMode);
-    /// The post-raid heal page only shows when raidmode = online
+    /// We need to alter Class1049.smethod_0().
+    /// Set the passed in ERaidMode to online, this ensures the heal screen shows.
+    /// It cannot be changed in the calling method as doing so causes the post-raid exp display to remain at 0
     /// </summary>
     public class PostRaidHealScreenPatch : ModulePatch
     {
         protected override MethodBase GetTargetMethod()
         {
-            // method_44 as of 18913
-            return typeof(MainApplication).GetMethods(PatchConstants.PrivateFlags).Single(IsTargetMethod);
+            // Class1049.smethod_0 as of 18969
+            //internal static Class1049 smethod_0(GInterface29 backend, string profileId, Profile savageProfile, LocationSettingsClass.GClass1097 location, ExitStatus exitStatus, TimeSpan exitTime, ERaidMode raidMode)
+            var typeWanted = PatchConstants.EftTypes.Single(x => x.Name == "PostRaidHealthScreenClass");
+            var privateStaticMethods = typeWanted.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
+
+            foreach (var item in privateStaticMethods)
+            {
+                Logger.LogInfo($"{item.Name} {item.GetParameters().Length}");
+            }
+
+            return privateStaticMethods.Single(IsTargetMethod);
         }
 
         private static bool IsTargetMethod(MethodInfo mi)
         {
             var parameters = mi.GetParameters();
-            return (parameters.Length > 5
-                && parameters[0].Name == "profileId"
-                && parameters[1].Name == "savageProfile"
-                && parameters[2].Name == "location"
-                && parameters[3].Name == "exitStatus"
-                && parameters[4].Name == "exitTime") ? true : false;
+            return parameters.Length == 7
+                && parameters[0].Name == "backend"
+                && parameters[1].Name == "profileId"
+                && parameters[2].Name == "savageProfile"
+                && parameters[3].Name == "location"
+                && parameters[4].Name == "exitStatus"
+                && parameters[5].Name == "exitTime"
+                && parameters[6].Name == "raidMode";
         }
 
         [PatchPrefix]
-        private static bool PatchPrefix(
-            MainApplication __instance,
-            RaidSettings ____raidSettings)
+        private static bool PatchPrefix(MainApplication __instance, ref ERaidMode raidMode)
         {
-            Logger.LogInfo($"pre prefix {____raidSettings.RaidMode}");
-            ____raidSettings.RaidMode = ERaidMode.Local;
-            Logger.LogInfo($"post prefix{____raidSettings.RaidMode}");
+            raidMode = ERaidMode.Online;
 
-            return true;
-        }
-
-        [PatchPostfix]
-        private static void PatchPostfix(
-            MainApplication __instance,
-            RaidSettings ____raidSettings)
-        {
-            Logger.LogInfo($"pre postfix {____raidSettings.RaidMode}");
-            ____raidSettings.RaidMode = ERaidMode.Online;
-            Logger.LogInfo($"post postfix {____raidSettings.RaidMode}");
+            return true; // Perform original method
         }
     }
 }

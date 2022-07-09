@@ -106,24 +106,6 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             return codes.AsEnumerable();
         }
 
-        private static void LoadOfflineRaidNextScreen()
-        {
-            var menuController = GetMenuController();
-
-            var raidSettings = Traverse.Create(menuController).Field("raidSettings_0").GetValue<RaidSettings>();
-
-            if (raidSettings.SelectedLocation.Id == "laboratory")
-            {
-                raidSettings.WavesSettings.IsBosses = true;
-            }
-
-            // set offline raid values
-            _isLocalField.SetValue(menuController, raidSettings.Local);
-
-            // load ready screen method
-            _onReadyScreenMethod.Invoke(menuController, null);
-        }
-
         private static void LoadOfflineRaidScreenForScav()
         {
             var profile = PatchConstants.BackEndSession.Profile;
@@ -136,6 +118,23 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             // ready method
             gclass.OnShowReadyScreen += (OfflineRaidAction)Delegate.CreateDelegate(typeof(OfflineRaidAction), menuController, "method_63");
             gclass.ShowScreen(EScreenState.Queued);
+        }
+
+        private static void LoadOfflineRaidNextScreen()
+        {
+            var menuController = GetMenuController();
+
+            var raidSettings = Traverse.Create(menuController).Field("raidSettings_0").GetValue<RaidSettings>();
+            if (raidSettings.SelectedLocation.Id == "laboratory")
+            {
+                raidSettings.WavesSettings.IsBosses = true;
+            }
+
+            // set offline raid values
+            _isLocalField.SetValue(menuController, raidSettings.Local);
+
+            // load ready screen method
+            _onReadyScreenMethod.Invoke(menuController, null);
         }
 
         private static MainMenuController GetMenuController()
