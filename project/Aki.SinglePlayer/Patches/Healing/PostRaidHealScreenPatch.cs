@@ -20,11 +20,6 @@ namespace Aki.SinglePlayer.Patches.Healing
             var typeWanted = PatchConstants.EftTypes.Single(x => x.Name == "PostRaidHealthScreenClass");
             var privateStaticMethods = typeWanted.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
 
-            foreach (var item in privateStaticMethods)
-            {
-                Logger.LogInfo($"{item.Name} {item.GetParameters().Length}");
-            }
-
             return privateStaticMethods.Single(IsTargetMethod);
         }
 
