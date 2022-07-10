@@ -49,7 +49,10 @@ namespace Aki.SinglePlayer.Patches.Progression
         [PatchPrefix]
         private static void PatchPrefix(string profileId, RaidSettings ____raidSettings, IBackendInterface ____backEnd,Result<ExitStatus, TimeSpan, ClientMetrics> result)
         {
-            var profile = ____backEnd.Session.Profile;
+            // Get scav or pmc profile based on IsScav value
+            var profile = (____raidSettings.IsScav)
+                ? ____backEnd.Session.ProfileOfPet
+                : ____backEnd.Session.Profile;
 
             SaveProfileRequest request = new SaveProfileRequest
 			{
