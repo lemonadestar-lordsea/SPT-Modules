@@ -33,8 +33,7 @@ namespace Aki.Custom.Patches
             ____offlineModeToggle.isOn = true;
             ____offlineModeToggle.gameObject.SetActive(false);
 
-            // enable bots by defaults
-            ____botsEnabledToggle.isOn = true;
+            
 
             // get settings from server
             var json = RequestHandler.GetJson("/singleplayer/settings/raid/menu");
@@ -42,6 +41,7 @@ namespace Aki.Custom.Patches
 
             if (settings != null)
             {
+                ____botsEnabledToggle.isOn = settings.EnablePve;
                 ____aiAmountDropdown.UpdateValue((int)settings.AiAmount, false);
                 ____aiDifficultyDropdown.UpdateValue((int)settings.AiDifficulty, false);
                 ____enableBosses.isOn = settings.BossEnabled;
