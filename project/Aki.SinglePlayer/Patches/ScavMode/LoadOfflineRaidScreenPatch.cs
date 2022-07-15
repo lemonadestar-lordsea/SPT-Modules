@@ -111,7 +111,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var profile = PatchConstants.BackEndSession.Profile;
             var menuController = (object)GetMenuController();
             var raidSettings = Traverse.Create(menuController).Field("raidSettings_0").GetValue<RaidSettings>();
-            var gclass = new MatchmakerOfflineRaidScreen.GClass2503(profile?.Info, ref raidSettings);
+            var gclass = new MatchmakerOfflineRaidScreen.GClass2507(profile?.Info, ref raidSettings);
 
             gclass.OnShowNextScreen += LoadOfflineRaidNextScreen;
 
