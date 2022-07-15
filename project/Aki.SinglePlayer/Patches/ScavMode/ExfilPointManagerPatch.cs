@@ -31,8 +31,9 @@ namespace Aki.SinglePlayer.Patches.ScavMode
             var exfilController = gameWorld.ExfiltrationController;
 
             // only disables PMC extracts if current player is a scav.
-            if (player.Fraction == ETagStatus.Scav)
+            if (player.Fraction == ETagStatus.Scav && player.Location != "hideout")
             {
+                // these are PMC extracts only, scav extracts are under a different field called ScavExfiltrationPoints.
                 foreach (var exfil in exfilController.ExfiltrationPoints)
                 {
                     exfil.Disable();
