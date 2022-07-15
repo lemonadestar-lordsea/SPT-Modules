@@ -15,7 +15,7 @@ Aki.SinglePlayer   | Simulating online game while offline
 
 ## Requirements
 
-- Escape From Tarkov 18913
+- Escape From Tarkov 19047
 - BepInEx 5.4.19
 - Visual Studio Code
 - .NET 6 SDK
