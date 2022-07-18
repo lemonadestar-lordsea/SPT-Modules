@@ -2,7 +2,6 @@ using Aki.Reflection.Patching;
 using Comfort.Common;
 using EFT;
 using System.Reflection;
-using UnityEngine;
 
 namespace Aki.SinglePlayer.Patches.ScavMode
 {
@@ -37,7 +36,7 @@ namespace Aki.SinglePlayer.Patches.ScavMode
                 // these are PMC extracts only, scav extracts are under a different field called ScavExfiltrationPoints.
                 foreach (var exfil in exfilController.ExfiltrationPoints)
                 {
-                    Object.Destroy(exfil);
+                    exfil.Disable();
                 }
             }
         }
