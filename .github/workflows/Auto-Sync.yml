@@ -16,6 +16,7 @@ jobs:
       with:
         persist-credentials: false
     - name: repo-sync
+      id: sync
       uses: lemonadestar-lordsea/github-sync@v2.3.1
       with:
         source_repo: "https://dev.sp-tarkov.com/SPT-AKI/Modules.git"
@@ -23,3 +24,5 @@ jobs:
         destination_branch: "*"
         github_token: ${{ secrets.PAT }}
         sync_tags: "true"
+    - name: print results
+      run: echo "{${{ steps.sync.outputs.result_push }}}"
