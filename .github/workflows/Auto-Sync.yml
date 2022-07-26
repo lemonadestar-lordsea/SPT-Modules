@@ -16,7 +16,7 @@ jobs:
       with:
         persist-credentials: false
     - name: ls
-      run: ls -l
+      run: ls -la
     - name: repo-sync
       id: sync
       uses: lemonadestar-lordsea/github-sync@v2.3.1
