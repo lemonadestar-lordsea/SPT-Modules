@@ -17,9 +17,7 @@ jobs:
         persist-credentials: false
     - name: ls
       run: ls -la
-    
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3.11
+
     
     - name: repo-sync
       id: sync
@@ -29,6 +27,11 @@ jobs:
         source_branch: "*"
         destination_branch: "*"
         github_token: ${{ secrets.PAT }}
-        sync_tags: "true"
+        sync_tags: "true"    
+    
+    - name: Setup tmate session
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3.11
+    
     - name: print results
       run: echo "{${{ steps.sync.outputs.result_push }}}"
