@@ -12,14 +12,14 @@ jobs:
   repo-sync:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         persist-credentials: false
     - name: ls
       run: ls -la
     - name: repo-sync
       id: sync
-      uses: lemonadestar-lordsea/github-sync@v2.3.1
+      uses: lemonadestar-lordsea/github-sync@dev
       with:
         source_repo: "https://dev.sp-tarkov.com/SPT-AKI/Modules.git"
         source_branch: "*"
