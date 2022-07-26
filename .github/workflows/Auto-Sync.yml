@@ -19,7 +19,7 @@ jobs:
       run: ls -la
     
     - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
+      uses: mxschmitt/action-tmate@v3.11
     
     - name: repo-sync
       id: sync
